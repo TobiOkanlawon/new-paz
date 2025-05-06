@@ -12,7 +12,7 @@ export default function Home() {
           <h1>Welcome</h1>
           <p>Powering Your Dreams!</p>
           <div className={styles.spacer}></div>
-          <Image src={'/PazIlls2.png'} alt="PazIlls" width={736.59} height={488} className={styles.PazIlls}/>
+          <Image src={'/PazIlls2.png'} alt="Paz background" width={736.59} height={488} className={styles.PazIlls}/>
         </div>
         <div className={styles.right}>
           <h3>Login to your account</h3>
