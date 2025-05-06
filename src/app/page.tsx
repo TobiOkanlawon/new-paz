@@ -34,6 +34,29 @@ export default function Home() {
             <a href="#" className={styles.createNewAccount}>Create New Account <FaArrowRight/> </a>
           </form>
         </div>
+        <div className={styles.mobile}>
+          <Image src={'/PAZLogo.png'} alt="Logo" width={127} height={42.61} className={styles.logo} />
+          <div className={styles.mobileContainer}>
+            <h3>Log in to your account</h3>
+            <form action="GET" className={styles.form}>
+              <label htmlFor="email">Email Address</label>
+              <input type="email" placeholder="Enter your email address" name="email" id="email" />
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" placeholder="Enter your password" id="password" />
+              <div className={styles.formBottom}>
+                <div className={styles.rememberMe}>
+                  <input type="checkbox" className={styles.remember} name="remember" id="remember" />
+                  <label htmlFor="remember">Remember me</label>
+                </div>
+                <div>
+                  <a href="#">Forgot Password?</a>
+                </div>
+              </div>
+              <button className={styles.login} type="submit">Login</button>
+              <a href="#" className={styles.createNewAccount}>Create New Account <FaArrowRight/> </a>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );
