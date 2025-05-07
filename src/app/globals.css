@@ -1,3 +1,27 @@
 h1{
   font-family: 'Inter', sans-serif;
 }
+
+button {
+    cursor: pointer;
+}
+
+button.primary {
+    background-color: #3475DF;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    width: 20rem;
+    font-family: var(--font-montserrat);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    border: none  ;
+    margin: 2rem; 
+}
+
+button:hover {
+    
+}
