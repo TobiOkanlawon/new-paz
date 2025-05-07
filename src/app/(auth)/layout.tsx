@@ -1,4 +1,5 @@
 import styles from "./layout.module.css";
+
 export default function AuthLayout({
   children,
 }: {
@@ -6,7 +7,8 @@ export default function AuthLayout({
 }) {
   return (
     <div className={styles.container}>
-      <aside>{children}</aside>
+      <aside></aside>
+      <main>{children}</main>
     </div>
   );
 }
