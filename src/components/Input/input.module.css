@@ -1,0 +1,30 @@
+.label {
+  font-family: Montserrat, "sans-serif";
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #292727;
+  display: block;
+  padding: 0.5rem 1rem;
+  align-self: flex-start;
+}
+
+.input {
+  font-family: Montserrat, "sans-serif";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  color: #d9d9d9;
+  padding: 1rem;
+  border-radius: 8px;
+  border: solid 1px #c4c4c4;
+}
+
+.input::placeholder {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
