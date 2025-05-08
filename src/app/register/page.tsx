@@ -2,6 +2,13 @@ import React from 'react'
 import styles from './register.module.css'
 import Image from 'next/image'
 import { FaArrowLeft, FaEyeSlash } from 'react-icons/fa'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const RegisterForm = dynamic(() => import('./RegisterForm'));
+
 
 const register = () => {
 
@@ -20,35 +27,54 @@ const register = () => {
         <Image src={'/Coin.png'} alt="Coin" width={142} height={157} className={styles.coin} />
         <Image src={'/target.png'} alt="Target" width={110} height={140} className={styles.target} />
       </div>
-      <div className={styles.right}>
+      <RegisterForm />
+      {/* <div className={styles.right}>
         <h3>Create a secure account</h3>
-        <form action="GET" className={styles.form}>
-          <label htmlFor="email">Email Address</label>
-          <input type="email" placeholder="Enter your email address" name="email" id="email" />
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" placeholder="Enter your password" id="password" />
-          <label htmlFor="confirmPassword">Re - Password</label>
-          <input type="password" name="confirmPassword" placeholder="Enter the password you entered in the box above" id="confirmPassword" />
+        <form className={styles.form}>
+          <Input
+           label="Email Address" 
+           type="email" 
+           placeholder="Enter your email address" 
+           name="email" 
+           id="email" 
+          />
+          <Input 
+          label="Password" 
+          type="password" 
+          placeholder="Enter your password" 
+          name="password" 
+          id="password"
+          />
+          <Input 
+          label="Re - Password" 
+          type="password" 
+          placeholder="Enter the password you entered in the box above" 
+          name="confirmPassword" 
+          id="confirmPassword" 
+          />
           <p>By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
-          <button className={styles.register} type="submit">Create account</button>
+          <Button 
+          type="submit" 
+          className={styles.register} 
+          label="Create accounts">
+            Create Account
+          </Button>
         </form>
-        <a href="#"><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </a>
-      </div>
+        <Link href="/login"><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
+      </div> */}
       <div className={styles.mobile}>
         <Image src={'/PAZLogo2.png'} alt="Logo" width={104} height={34.76} className={styles.logo} />
         <div className={styles.mobileContainer}>
             <h3>Create a secure account</h3>
             <form action="GET" className={styles.form}>
-                <label htmlFor="email">Email Address</label>
-                <input type="email" placeholder="Enter your email address" name="email" id="email" />
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" placeholder="Enter your password" id="password" />
-                <label htmlFor="confirmPassword">Re - Password</label>
-                <input type="password" name="confirmPassword" placeholder="Enter the password you entered in the box above" id="confirmPassword" />
+              <Input label="Email Address" type="email" placeholder="Enter your email address" name="email" id="email" />
+              <Input label="Password" type="password" placeholder="Enter your password" name="password" id="password"/>
+              <Input label="Re - Password" type="password" placeholder="Enter the password you entered in the box above" name="confirmPassword" id="confirmPassword" />
                 <p>By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
-                <button className={styles.register} type="submit">Create account</button>
+                <Button type="submit" className={styles.register} label="Create accounts">Create Account</Button>
+
             </form>
-            <a href="#"><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </a>
+            <Link href="/login"><FaArrowLeft/> Return to Log in </Link>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  overflow-x: hidden;
-  width: 100vw;
+  /* overflow-x: hidden;
+  width: 100vw; */
 }
 .logo {
   padding: 2rem;
@@ -53,13 +53,13 @@ body {
 
 .right {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   padding: 2rem;
   width: 40vw;
 }
 .right h3 {
-  font-family: Poppins;
+  font-family: var(--font-poppins);
   font-weight: 700;
   font-size: 24px;
   line-height: 60px;
@@ -69,18 +69,9 @@ body {
   margin-top: 6rem;
 }
 
-.right form {
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-}
-
 .formBottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   margin-top: 1rem;
   width: 22rem;
@@ -98,7 +89,7 @@ body {
 }
 
 .remember {
-  width: 1rem !important;
+  width: 3rem !important;
 }
 
 .formBottom div a {
@@ -162,12 +153,6 @@ body {
   }
   .right h3 {
     margin-top: 2rem;
-  }
-  .right form input {
-    width: 90%;
-  }
-  .right form label {
-    width: 70%;
   }
   .formBottom {
     width: 90%;

@@ -19,6 +19,8 @@
   padding: 1rem;
   border-radius: 8px;
   border: solid 1px #c4c4c4;
+  width: 90%;
+  margin-bottom: 1.5rem;
 }
 
 .input::placeholder {
@@ -27,4 +29,10 @@
   font-size: 12px;
   line-height: 100%;
   letter-spacing: 0%;
+}
+@media screen and (max-width: 768px) {
+  .right form label {
+    width: 70%;
+  }
+  
 }

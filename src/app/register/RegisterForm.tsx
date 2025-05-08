@@ -1,9 +1,9 @@
 "use client";
-import styles from "./page.module.css";
+import styles from "./register.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
@@ -35,7 +35,7 @@ const LoginForm = () => {
   });
   return (
     <div className={styles.right}>
-      <h3>Login to your account</h3>
+      <h3>Create a secure account</h3>
 
       <form
         action="POST"
@@ -56,29 +56,18 @@ const LoginForm = () => {
           id="password"
           {...formik.getFieldProps("password")}
         />
-        <div className={styles.formBottom}>
-          <div className={styles.rememberMe}>
-            <input
-              type="checkbox"
-              className={styles.remember}
-              id="remember"
-              {...formik.getFieldProps("remember")}
-            />
-            <label htmlFor="remember">Remember me</label>
-          </div>
-          <div>
-            <Link href="/forgot-password">Forgot Password?</Link>
-          </div>
-        </div>
-        {/* <button className="primary" type="submit">
-          Login
-        </button> */}
+        <Input
+          label="Re - Password"
+          type="password"
+          placeholder="Enter the password you entered in the box above"
+          id="confirmPassword"
+          {...formik.getFieldProps("password")}
+        />
+        <p>By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
         <Button type="submit" className={styles.primary} label="Login">
-          Login
+          Create Account
         </Button>
-        <Link href="/register" className={styles.createNewAccount}>
-          Create New Account <FaArrowRight />
-        </Link>
+        <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
       </form>
     </div>
   );
