@@ -34,7 +34,7 @@ const LoginForm = () => {
     },
   });
   return (
-    <div className={styles.right}>
+    <>
       <h3>Create a secure account</h3>
 
       <form
@@ -69,7 +69,7 @@ const LoginForm = () => {
         </Button>
         <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
       </form>
-    </div>
+    </>
   );
 };
 

@@ -71,7 +71,7 @@ body {
 
 .formBottom {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
   width: 22rem;
@@ -86,10 +86,6 @@ body {
   line-height: 100%;
   letter-spacing: 0%;
   color: #292727;
-}
-
-.remember {
-  width: 3rem !important;
 }
 
 .formBottom div a {
@@ -123,7 +119,7 @@ body {
   text-align: center;
   font-family: var(--font-montserrat);
   font-weight: 600;
-  font-size: 10px;
+  font-size: .9rem;
   line-height: 100%;
   letter-spacing: 0%;
   text-decoration: none;
@@ -155,7 +151,7 @@ body {
     margin-top: 2rem;
   }
   .formBottom {
-    width: 90%;
+    width: 100%;
   }
 }
 @media screen and (max-width: 480px) {
