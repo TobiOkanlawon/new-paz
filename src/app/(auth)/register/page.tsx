@@ -1,10 +1,7 @@
 import React from 'react'
 import styles from './register.module.css'
 import Image from 'next/image'
-import { FaArrowLeft, FaEyeSlash } from 'react-icons/fa'
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import Link from 'next/link'
+
 import dynamic from 'next/dynamic'
 
 const RegisterForm = dynamic(() => import('./RegisterForm'));
