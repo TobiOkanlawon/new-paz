@@ -10,10 +10,10 @@ const registerSuccess = () => {
       <div className={styles.right}>
         <h3>Create Account Succesfully</h3>
         <Image
-          src={"/authenticate.png"}
-          alt="Authenticate"
-          width={225}
-          height={212}
+          src={"/forgotPassword.png"}
+          alt="Password Reset"
+          width={270}
+          height={195}
           className={styles.authenticate}
         />
         <p>Please check your email to verify your account and login</p>
@@ -31,8 +31,8 @@ const registerSuccess = () => {
         />
         <h3>Create Account Succesfully</h3>
         <Image
-          src={"/authenticate.png"}
-          alt="Authenticate"
+          src={"/forgotPassword.png"}
+          alt="Password Reset"
           width={225}
           height={212}
           className={styles.authenticate}

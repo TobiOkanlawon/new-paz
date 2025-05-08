@@ -28,14 +28,16 @@ export default function Login() {
             className={styles.PazIlls}
           />
         </div>
-        <LoginForm />
+        <div className={styles.right}>
+          <LoginForm />
+        </div>
       </div>
       <div className={styles.mobile}>
-        <Image src={'/PAZLogo2.png'} alt="Logo" width={104} height={34.76} className={styles.logo} />
+        <Image src={'/PAZLogo.png'} alt="Logo" width={104} height={34.76} className={styles.logo} />
         <div className={styles.mobileContainer}>
           <LoginForm />
-            </div>
         </div>
+      </div>
     </>
   );
 }

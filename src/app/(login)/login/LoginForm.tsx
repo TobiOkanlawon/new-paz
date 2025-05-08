@@ -34,7 +34,7 @@ const LoginForm = () => {
     },
   });
   return (
-    <div className={styles.right}>
+    <>
       <h3>Login to your account</h3>
 
       <form
@@ -80,7 +80,7 @@ const LoginForm = () => {
           Create New Account <FaArrowRight />
         </Link>
       </form>
-    </div>
+    </>
   );
 };
 

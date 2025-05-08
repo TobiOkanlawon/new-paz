@@ -1,5 +1,5 @@
 "use client";
-import styles from "./register.module.css";
+import styles from "./forgot.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
@@ -19,9 +19,9 @@ const schema = yup.object({
   remember: yup.boolean(),
 });
 
-type RegisterSchema = yup.InferType<typeof schema>;
-const RegisterForm = () => {
-  const formik = useFormik<RegisterSchema>({
+type ForgotPasswordSchema = yup.InferType<typeof schema>;
+const ForgotPasswordForm = () => {
+  const formik = useFormik<ForgotPasswordSchema>({
     initialValues: {
       email: "",
       password: "",
@@ -34,7 +34,7 @@ const RegisterForm = () => {
   });
   return (
     <>
-      <h3>Create a secure account</h3>
+      <h3>Forgot Your Password</h3>
 
       <form
         action="POST"
@@ -44,27 +44,13 @@ const RegisterForm = () => {
         <Input
           label="Email Address"
           type="email"
-          placeholder="Enter your email address"
+          placeholder="Enter the email address you registered"
           id="email"
           {...formik.getFieldProps("email")}
         />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          id="password"
-          {...formik.getFieldProps("password")}
-        />
-        <Input
-          label="Re - Password"
-          type="password"
-          placeholder="Enter the password you entered in the box above"
-          id="confirmPassword"
-          {...formik.getFieldProps("password")}
-        />
-        <p>By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
+        <p>Still having trouble? <a href="#">Contact support</a></p>
         <Button type="submit" className={styles.primary} label="Login">
-          Create Account
+          Reset Password
         </Button>
         <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
       </form>
@@ -72,4 +58,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ForgotPasswordForm;

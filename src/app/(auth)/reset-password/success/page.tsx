@@ -8,7 +8,7 @@ const registerSuccess = () => {
   return (
     <>
       <div className={styles.right}>
-        <h3>Create Account Succesfully</h3>
+        <h3>Success!</h3>
         <Image
           src={"/authenticate.png"}
           alt="Authenticate"
@@ -16,7 +16,7 @@ const registerSuccess = () => {
           height={212}
           className={styles.authenticate}
         />
-        <p>Please check your email to verify your account and login</p>
+        <p>You have successfully created a new password. You can now login with your new password</p>
         <Link href={"/login"} className={styles.link}>
           <Button>Go to Login</Button>
         </Link>
@@ -29,7 +29,7 @@ const registerSuccess = () => {
           height={42.61}
           className={styles.logo}
         />
-        <h3>Create Account Succesfully</h3>
+        <h3>Success!</h3>
         <Image
           src={"/authenticate.png"}
           alt="Authenticate"
@@ -37,7 +37,7 @@ const registerSuccess = () => {
           height={212}
           className={styles.authenticate}
         />
-        <p>Please check your email to verify your account and login</p>
+        <p>You have successfully created a new password. You can now login with your new password</p>
         <Link href={"/login"} className={styles.link}>
           <Button>Go to Login</Button>
         </Link>

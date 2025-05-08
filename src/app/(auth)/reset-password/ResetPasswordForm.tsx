@@ -1,5 +1,5 @@
 "use client";
-import styles from "./register.module.css";
+import styles from "./reset.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
@@ -19,9 +19,9 @@ const schema = yup.object({
   remember: yup.boolean(),
 });
 
-type RegisterSchema = yup.InferType<typeof schema>;
-const RegisterForm = () => {
-  const formik = useFormik<RegisterSchema>({
+type ResetPasswordSchema = yup.InferType<typeof schema>;
+const ResetPasswordForm = () => {
+  const formik = useFormik<ResetPasswordSchema>({
     initialValues: {
       email: "",
       password: "",
@@ -34,7 +34,7 @@ const RegisterForm = () => {
   });
   return (
     <>
-      <h3>Create a secure account</h3>
+      <h3>Reset Your Password</h3>
 
       <form
         action="POST"
@@ -42,29 +42,21 @@ const RegisterForm = () => {
         className={styles.form}
       >
         <Input
-          label="Email Address"
-          type="email"
-          placeholder="Enter your email address"
-          id="email"
-          {...formik.getFieldProps("email")}
-        />
-        <Input
-          label="Password"
+          label="New password"
           type="password"
-          placeholder="Enter your password"
+          placeholder="Enter a new password"
           id="password"
           {...formik.getFieldProps("password")}
         />
         <Input
-          label="Re - Password"
+          label="Verify new password"
           type="password"
-          placeholder="Enter the password you entered in the box above"
-          id="confirmPassword"
+          placeholder="Repeat the new password"
+          id="password"
           {...formik.getFieldProps("password")}
         />
-        <p>By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
         <Button type="submit" className={styles.primary} label="Login">
-          Create Account
+          Create new password
         </Button>
         <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
       </form>
@@ -72,4 +64,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ResetPasswordForm;

@@ -138,7 +138,7 @@ body {
     height: auto;
   }
   .left {
-    width: 60vw;
+    width: 100vw;
     height: auto;
     margin: 0;
     padding: 0 2rem;
@@ -166,14 +166,13 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 700px;
+    height: 100vh;
     background-color: #243d7d;
   }
   .logo {
     padding: 4rem 2rem 2rem 2rem;
   }
   .mobileContainer {
-    margin: 0 3rem;
     padding: 2rem;
     background-color: #fff;
     width: 70vw;
@@ -220,7 +219,6 @@ body {
     padding: 1rem;
     border-radius: 8px;
     border: solid 1px #204d88;
-    width: 90%;
   }
 
   .mobileContainer form input::placeholder {
@@ -246,12 +244,7 @@ body {
     font-weight: 500;
     font-size: 12px;
     line-height: 100%;
-    letter-spacing: 0%;
     color: #292727;
-  }
-
-  .remember {
-    width: 1rem !important;
   }
 
   .formBottom div a {

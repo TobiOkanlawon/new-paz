@@ -8,7 +8,6 @@ export default function AuthLayout({
 }) {
   return (
     <div className={styles.container}>
-      <aside>
         <div className={styles.left}>
           <Image
             src={"/PAZLogo.png"}
@@ -58,8 +57,7 @@ export default function AuthLayout({
             className={styles.target}
           />
         </div>
-      </aside>
-      <main>{children}</main>
+        {children}
     </div>
   );
 }

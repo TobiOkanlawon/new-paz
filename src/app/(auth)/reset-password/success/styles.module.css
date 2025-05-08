@@ -28,9 +28,10 @@ body {
   font-size: 12px;
   line-height: 19.5px;
   letter-spacing: 0px;
-  text-align: start;
+  text-align: center;
   color: #4e5a66;
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 1rem 1rem 1rem;
+  width: 60%;
 }
 .right button {
   font-family: var(--font-montserrat);
@@ -102,6 +103,10 @@ body {
   .right h3 {
     margin-top: 2rem;
   }
+  .right p {
+    width: 50%;
+    margin: 2rem auto 1rem auto;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -137,6 +142,7 @@ body {
     font-size: 0.75rem;
     color: #4e5a66;
     line-height: 1.5;
+    width: 70%;
   }
 
   .register {
@@ -173,7 +179,7 @@ body {
     font-size: 12px;
     line-height: 19.5px;
     letter-spacing: 0px;
-    text-align: start;
+    text-align: center;
     color: #4e5a66;
     margin: 2rem 0 1rem 0;
   }
