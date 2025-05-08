@@ -1,14 +1,14 @@
 import "./globals.css";
 import { Poppins, Montserrat, Inter } from "next/font/google";
 
-const poppins = Poppins({ 
-  subsets: ["latin"], 
+const poppins = Poppins({
+  subsets: ["latin"],
   weight: ["700"],
   variable: "--font-poppins",
 });
 
-const montserrat = Montserrat({ 
-  subsets: ["latin"], 
+const montserrat = Montserrat({
+  subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-montserrat",
 });
@@ -20,8 +20,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'PAZ',
-  description: 'Best app ever',
+  title: "PAZ",
+  description: "Best app ever",
 };
 
 export default function RootLayout({
@@ -31,9 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
