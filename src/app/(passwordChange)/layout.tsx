@@ -25,7 +25,7 @@ export default function AuthLayout({
               height={52.5}
               className={styles.lightbulb}
             />
-            <p>S.L.I.D.E. with PAZ</p>
+            <p>Bank the PAZ way!</p>
             <h1>Tips on becoming financially stable all year round!</h1>
           </div>
           <div className={styles.spacer}></div>
