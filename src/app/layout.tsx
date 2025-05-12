@@ -21,7 +21,7 @@ const inter = Inter({
 
 export const metadata = {
   title: "PAZ",
-  description: "Best app ever",
+  description: "Powering Dreams",
 };
 
 export default function RootLayout({
