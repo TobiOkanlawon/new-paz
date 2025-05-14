@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+}
+.container{
+    display: flex;
+}
+.h2{
+    font-family: var(--font-montserrat);
+    flex: 1 1 0%;
+    text-align: center;
+
+}

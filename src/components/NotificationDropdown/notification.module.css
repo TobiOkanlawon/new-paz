@@ -1,0 +1,61 @@
+.notificationContainer {
+  position: relative;
+  font-family: var(--font-montserrat);
+}
+
+
+.notificationBell {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+
+.notificationDropdown {
+  position: absolute;
+  top: 50px; 
+  right: 0; 
+  width: 300px; 
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+
+.notificationDropdown.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+.notificationHeader {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #4a4a4a;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+.notificationList {
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+
+.notificationItem {
+  padding: 12px;
+  font-size: 14px;
+  color: #4a4a4a;
+  text-align: center;
+}
