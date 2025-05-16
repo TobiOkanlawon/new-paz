@@ -1,15 +1,14 @@
 .sidebar {
-  width: 20%;
+  width: 25%;
   background-color: #FAFAFA;
-  height: max-content;
   padding-top: 1rem;
-  position: absolute;
 }
 
 .sidebarContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 .sidebarContainer h3{
@@ -20,6 +19,8 @@
     line-height: 16px;
     letter-spacing: 0px;
     vertical-align: middle;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
 }
 
 .sidebarContent {
@@ -47,7 +48,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: 8rem;
+    margin-top: 20rem;
     margin-bottom: 4rem;
     color: #4E5A66;
     text-decoration: none;
@@ -73,6 +74,13 @@
   }
   .collapsed {
   display: none;
+ }
+}
+@media screen and (max-width: 950px) {
+ .sidebar{
+    left: 0;
+    top: 4.6rem;
+    height: 80rem;
  }
 }
 @media screen and (max-width: 450px) {

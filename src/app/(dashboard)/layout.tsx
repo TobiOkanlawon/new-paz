@@ -18,8 +18,10 @@ export default function DashboardLayout({
     return ( 
         <>
         <Navbar onToggleSidebar={toggleSidebar} />
-        <Sidebar isOpen={isSidebarOpen} />
-        {children}
+        <main className={styles.dashboardMain}>
+            <Sidebar isOpen={isSidebarOpen} />
+            {children}
+        </main>
         </>
     );
 }
