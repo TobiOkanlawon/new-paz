@@ -2,6 +2,7 @@
   width: 25%;
   background-color: #FAFAFA;
   padding-top: 1rem;
+  z-index: 100;
 }
 
 .sidebarContainer {

@@ -1,10 +1,20 @@
-import React from 'react'
+"use client"
+import React, { useRef } from 'react'
 import styles from './dashboard.module.css'
 import Image from 'next/image' 
 import Link from 'next/link' 
 import Button from '@/components/Button'
+import CardScrollIndicator from '@/components/CardScrollIndicator'
 
 const Dashboard = () => {
+  // Refs for scrollable containers
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const mobileSavingVaultRef = useRef<HTMLDivElement>(null);
+
+  // Set the number of cards for each scrollable section
+  const mobileScrollCards = 3; // Adjust if you have more/less cards
+  const mobileVaultCards = 2;  // Adjust if you have more/less vault cards
+
   return (
     <>
     <div className={styles.container}>        
@@ -124,7 +134,8 @@ const Dashboard = () => {
     </div>
     <div className={styles.mobileContainer}>
         <h1>Welcome <strong>Biodun</strong></h1>
-        <div className={styles.mobileScroll}>
+        <div className={styles.mobileScrollWrapper}>
+            <div className={styles.mobileScroll} ref={mobileScrollRef}>
                 <div className={styles.mobileTotals}>
                     <div className={`${styles.mobileTotalCategories} ${styles.lightBlue}`}>
                         <div className={styles.textIcon}>
@@ -172,6 +183,12 @@ const Dashboard = () => {
                         </h3>
                     </div>
                 </div>
+            </div>
+
+            <CardScrollIndicator
+                    totalCards={mobileScrollCards}
+                    containerRef={mobileScrollRef}
+            />
         </div>
         <div className={styles.mobileBankActions}>
             <div className={styles.bankActions}>
@@ -187,34 +204,41 @@ const Dashboard = () => {
                 <Image src='/mobileThrifts.png' alt='Mobile Thrifts' width={40} height={40}  />
             </div>
         </div>
-        <div className={styles.mobileSavingVault}>
-            <div className={styles.pazSaver}>
-                <div className={styles.header}>
-                    <Image 
-                        src='/dashboardLock.png' alt='Dashboard Lock' width={40} height={38}
-                    />
-                    <h3>Become a PAZ Saver!</h3>
+        <div className={styles.vaultWrapper}>
+            <div className={styles.mobileSavingVault} ref={mobileSavingVaultRef}>
+                <div className={styles.pazSaver}>
+                    <div className={styles.header}>
+                        <Image 
+                            src='/dashboardLock.png' alt='Dashboard Lock' width={40} height={38}
+                        />
+                        <h3>Become a PAZ Saver!</h3>
+                    </div>
+                    <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
+                    <button className={`${styles.mobileButton}`}>Get started!</button>
                 </div>
-                <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
-                <button className={`${styles.mobileButton}`}>Get started!</button>
-            </div>
-            <div className={`${styles.mobileFamilyVault} ${styles.purple}`}>
-                <div className={styles.header}>
-                    <Image 
-                        src='/dashboardFamily.png' alt='Dashboard Family' width={40} height={38}
-                    />
-                    <h3>Become a PAZ Saver!</h3>
+                <div className={`${styles.mobileFamilyVault} ${styles.purple}`}>
+                    <div className={styles.header}>
+                        <Image 
+                            src='/dashboardFamily.png' alt='Dashboard Family' width={40} height={38}
+                        />
+                        <h3>Become a PAZ Saver!</h3>
+                    </div>
+                    <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
+                    <button className={styles.mobileButton}>Get started!</button>
                 </div>
-                <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
-                <button className={styles.mobileButton}>Get started!</button>
+                {/* CardScrollIndicator for mobileSavingVault */}
             </div>
+            <CardScrollIndicator
+                totalCards={mobileVaultCards}
+                containerRef={mobileSavingVaultRef}
+            />
         </div>
         <div className={styles.mobileLoanReminder}>
             <div className={styles.mobileLoanReminderText}>
                 <p>Upcoming Loan Repayment</p>
                 <h3>₦ 20,000 <span>Due by Feb 6th</span></h3>
             </div>
-            <button className={styles.mobileButton}>Repay Loan</button>
+            <button className={styles.loanButton}>Repay Loan</button>
         </div>
         <div className={styles.mobileRecentActivities}>
             <h3>Recent activity</h3>

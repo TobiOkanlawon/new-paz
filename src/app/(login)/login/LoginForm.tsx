@@ -20,7 +20,7 @@ const schema = yup.object({
   remember: yup.boolean(),
 });
 
-type Log  inSchema = yup.InferType<typeof schema>;
+type LoginSchema = yup.InferType<typeof schema>;
 const LoginForm = () => {
   const formik = useFormik<LoginSchema>({
     initialValues: {

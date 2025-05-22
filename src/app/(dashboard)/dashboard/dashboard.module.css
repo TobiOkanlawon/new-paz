@@ -262,6 +262,7 @@ body{
         display: none;
     }
     .mobileContainer{
+        overflow-x: hidden;
         display: flex;
         flex-direction: column;
         margin: 3rem 0;
@@ -269,37 +270,48 @@ body{
     }
     .mobileContainer h1{
         font-family: var(--font-montserrat);
-        font-weight: 500;
-        font-size: 1.5rem;
+        font-weight: 400;
+        font-size: 1.6rem;
         line-height: 16px;
         letter-spacing: 0px;
         vertical-align: middle;
         text-align: start;
         color: #204D88;
         margin: 2rem 3rem;
+        width: 100%;
     }
     .mobileContainer strong{
-        font-weight: 700;
+        font-weight: 800;
     }
     .mobileScroll{
-        white-space: nowrap;
+        display: flex;
         overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+    }
+    .mobileScrollWrapper {
+        /* position: relative; */
+        width: 100%;
+        display: grid;
+        grid-template-rows: auto auto;
+        align-items: flex-start;
+        padding: 0 2rem;
     }
     .mobileTotals{
         display: flex;
         width: max-content;
-        scrollbar-width: none;
-        margin: 1rem 1rem;
     }
     .mobileTotalCategories{
+        scroll-snap-align: center;
+        flex: 0 0 80vw; /* Adjust width as needed for your design */
+        margin-right: 1.4rem; /* space between cards */
         width: 100%;
         border-radius: 1rem;
         padding: 1rem 2rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin: 0 2rem;
     }
     .mobileTotalCategories p{
         font-family: var(--font-montserrat);
@@ -321,24 +333,49 @@ body{
     }
     .bankActions{
         border: 2px solid #ACB5BD;
-        border-radius: 2rem;
-        width: 19%;
+        border-radius: 1.3rem;
+        width: 13%;
         text-align: center;
-        padding: 1.5rem 0;
+        padding: .7rem 0;
+    }
+    .bankActions img{
+        width: 20px;
+        height: 20px;
+    }
+    .vaultWrapper{
+        display: grid;
+        grid-template-rows: auto auto;
+        margin-left: 2rem;
     }
     .mobileSavingVault{
         display: flex;
-        width: 100vw;
+        flex-direction: row;
         overflow-x: auto;
-        white-space: nowrap;
-        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px; /* Optional: space between cards */
+        padding-bottom: 8px; /* Optional: for scroll bar space */
+         -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;   
+    }
+    .mobileSavingVault::-webkit-scrollbar {
+        display: none;
+        }
+    .pazSaver,
+    .mobileFamilyVault {
+        flex: 0 0 60vw; /* or your preferred card width */
+        scroll-snap-align: center;
+        min-width: 250px; /* fallback minimum width */
     }
     .pazSaver{
-        box-shadow: 0px 0px 20px 0px #00000040;
-        width: 60%;
+        box-shadow: 0px 0px 15px 0px #00000040;
+        width: 25%;
+        /* height: 40%; */
         border-radius: 1rem;
-        padding: 2rem;
+        padding: 1rem 2rem;
         margin: 2rem;
+        margin-left: 0;
+        margin-bottom: .5rem;
     }
     .header{
         display: flex;
@@ -346,81 +383,100 @@ body{
         gap: 10px;
     }
     .header h3{
+        margin-top: 1rem;
         font-family: var(--font-montserrat);
         font-weight: 800;
-        font-size: 1.8rem;
+        font-size: 3.5cqw;
         line-height: 16px;
         letter-spacing: 0px;
         vertical-align: middle;
     }
     .pazSaver p{
-        font-family: Montserrat;
+        font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 1rem;
+        font-size: 2.5cqw;
         line-height: 100%;
         letter-spacing: 0%;
         white-space: wrap;
         color: #204D88;
     }
     .mobileButton{
-        border-radius: 2rem;
-        border: none;
-        padding: 1rem;
+        width: 50%;
+        padding: .6rem .7rem;
+        border-radius: 1rem;
+        border-color: transparent;
         background-color: #8DCCFE;
         color: #fff;
+        font-size: 2.4cqw;
+        font-weight: 300;
+        font-family: var(--font-montserrat);
         display: flex;
         justify-self: end;
-        font-size: 1.3rem;
-        font-weight: 400;
+        justify-content: center;
     }
     .mobileFamilyVault{
-        box-shadow: 0px 0px 20px 0px #00000040;
-        width: 60%;
+        box-shadow: 0px 0px 15px 0px #00000040;
+        width: 25%;
+        /* height: 40%; */
         border-radius: 1rem;
-        padding: 2rem;
-        margin: 2rem;       
+        padding: 1rem 2rem;
+        margin: 2rem;
+        margin-left: 0;
+        margin-bottom: .5rem;
     }
     .mobileFamilyVault p{
-        font-family: Montserrat;
+        font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 1rem;
+        font-size: 2.5cqw;
         line-height: 100%;
         letter-spacing: 0%;
-        color: #fff;
         white-space: wrap;
+        color: #fff;
     }
     .mobileLoanReminder{
         background-color: #8DCCFE33;
         border: 2px solid #03A9F4;
-        margin: 1rem 3rem;
+        margin: 1rem 2rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-radius: 2rem;
-        padding: 1rem;
+        padding: 1rem 2rem;
+    }
+    .loanButton{
+        width: 30%;
+        padding: .6rem .7rem;
+        border-radius: .8rem;
+        border-color: transparent;
+        background-color: #8DCCFE;
+        color: #fff;
+        font-size: 2.4cqw;
+        font-weight: 300;
+        font-family: var(--font-montserrat);
     }
     .mobileLoanReminderText p{
-        font-family: Poppins;
+        font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 1.3rem;
+        font-size: 3cqw;
         line-height: 16px;
         letter-spacing: 0px;
         vertical-align: middle;
         color: #535353;
+        margin: .8rem 0;
     }
     .mobileLoanReminderText h3{
-        font-family: Montserrat;
-        font-weight: 700;
-        font-size: 2rem;
+        margin-top: 1rem;
+        font-family: var(--font-montserrat);
+        font-weight: 800;
+        font-size: 3.5cqw;
         line-height: 16px;
         letter-spacing: 0px;
         vertical-align: middle;
-        color: #535353;
     }
      .mobileLoanReminderText span{
         font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 1rem;
+        font-size: 2.3cqw;
         line-height: 16px;
         letter-spacing: 0px;
         vertical-align: middle;
@@ -431,7 +487,7 @@ body{
      .mobileRecentActivities h3{
         font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 2rem;
+        font-size: 4.5cqw;
         line-height: 16px;
         letter-spacing: 0px;
         vertical-align: middle;
@@ -452,7 +508,7 @@ body{
         color: #204D88;
         font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 1.5rem;
+        font-size: 3.5cqw;
         line-height: 1px;
         letter-spacing: 0%;
         margin: 1.5rem 0;
@@ -461,9 +517,35 @@ body{
         color: #535353;
         font-family: var(--font-montserrat);
         font-weight: 500;
-        font-size: 1.4rem;
+        font-size: 2.7cqw;
         line-height: 1px;
         letter-spacing: 0%;
         margin: 0;
+     }
+}
+@media screen and (max-width: 600px) {
+    .cardScrollIndicatorDot {
+        width: 7px !important;
+        height: 7px !important;
+    }
+}
+@media screen and (min-width: 900px) {
+    .mobileScrollWrapper > div:first-child {
+        display: none;
+    }
+}
+@media screen and (max-width: 425px){
+    .mobileScroll{
+        padding-left: 0%;
+    }
+    .mobileContainer h1{
+        font-size: 1.4rem;
+    }
+    .mobileLoanReminder{
+        margin: 1rem .7rem;
+        padding: 1rem .9rem;
+    }
+    .mobileRecentActivities{
+        margin: 1.3rem;
      }
 }
