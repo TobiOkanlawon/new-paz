@@ -62,11 +62,16 @@ const RegisterForm = () => {
           id="confirmPassword"
           {...formik.getFieldProps("password")}
         />
-        <p>By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a> and <a href="#">terms of service</a>.</p>
+        <p>
+          By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a>{" "}
+          and <a href="#">terms of service</a>.
+        </p>
         <Button type="submit" className={styles.primary} label="Login">
           Create Account
         </Button>
-        <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
+        <Link href="/login" className={styles.returnToLogin}>
+          <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
+        </Link>
       </form>
     </>
   );

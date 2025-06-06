@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import styles from "./reset.module.css";
 import Image from "next/image";
 import Button from "@/components/Button";
@@ -12,17 +12,23 @@ const ResetPasswordForm = dynamic(() => import("./ResetPasswordForm"));
 const ForgotPassword = () => {
   return (
     <>
-        <div className={styles.right}>
-            <ResetPasswordForm />
+      <div className={styles.right}>
+        <ResetPasswordForm />
+      </div>
+      <div className={styles.mobile}>
+        <Image
+          src={"/PAZLogo2.png"}
+          alt="Logo"
+          width={104}
+          height={34.76}
+          className={styles.logo}
+        />
+        <div className={styles.mobileContainer}>
+          <ResetPasswordForm />
         </div>
-        <div className={styles.mobile}>
-          <Image src={'/PAZLogo2.png'} alt="Logo" width={104} height={34.76} className={styles.logo} />
-          <div className={styles.mobileContainer}>
-            <ResetPasswordForm />
-          </div>
-        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

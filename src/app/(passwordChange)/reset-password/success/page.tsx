@@ -16,7 +16,10 @@ const registerSuccess = () => {
           height={212}
           className={styles.authenticate}
         />
-        <p>You have successfully created a new password. You can now login with your new password</p>
+        <p>
+          You have successfully created a new password. You can now login with
+          your new password
+        </p>
         <Link href={"/login"} className={styles.link}>
           <Button>Go to Login</Button>
         </Link>
@@ -37,7 +40,10 @@ const registerSuccess = () => {
           height={212}
           className={styles.authenticate}
         />
-        <p>You have successfully created a new password. You can now login with your new password</p>
+        <p>
+          You have successfully created a new password. You can now login with
+          your new password
+        </p>
         <Link href={"/login"} className={styles.link}>
           <Button>Go to Login</Button>
         </Link>

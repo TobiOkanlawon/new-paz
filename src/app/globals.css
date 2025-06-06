@@ -1,3 +1,7 @@
+:root {
+  --primary-blue: #3475df;
+}
+
 h1 {
   font-family: "Inter", sans-serif;
 }
@@ -23,4 +27,34 @@ button.primary {
 }
 
 button:hover {
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder,
+input[type="tel"]::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+
+@media not prefers-reduced-motion {
+  .special-underline {
+    position: relative;
+  }
+
+  .special-underline::after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    top: 15;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background-color: var(--primary-blue);
+    transition: width 0.2s;
+  }
+
+  .special-underline:hover:after {
+    width: 100%;
+  }
 }

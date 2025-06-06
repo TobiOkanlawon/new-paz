@@ -48,11 +48,15 @@ const ForgotPasswordForm = () => {
           id="email"
           {...formik.getFieldProps("email")}
         />
-        <p>Still having trouble? <a href="#">Contact support</a></p>
+        <p>
+          Still having trouble? <a href="#">Contact support</a>
+        </p>
         <Button type="submit" className={styles.primary} label="Login">
           Reset Password
         </Button>
-        <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
+        <Link href="/login" className={styles.returnToLogin}>
+          <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
+        </Link>
       </form>
     </>
   );

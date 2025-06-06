@@ -33,7 +33,13 @@ export default function Login() {
         </div>
       </div>
       <div className={styles.mobile}>
-        <Image src={'/PAZLogo.png'} alt="Logo" width={104} height={34.76} className={styles.logo} />
+        <Image
+          src={"/PAZLogo.png"}
+          alt="Logo"
+          width={104}
+          height={34.76}
+          className={styles.logo}
+        />
         <div className={styles.mobileContainer}>
           <LoginForm />
         </div>

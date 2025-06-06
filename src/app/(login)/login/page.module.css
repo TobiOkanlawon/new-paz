@@ -3,13 +3,17 @@ body {
   /* overflow-x: hidden;
   width: 100vw; */
 }
+
 .logo {
   padding: 2rem;
 }
+
 .container {
   display: flex;
   height: 100vh;
+  overflow-y: hidden;
 }
+
 .left {
   background-color: #243d7d;
   color: white;
@@ -74,8 +78,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
-  width: 22rem;
+  width: 100%;
 }
 
 .rememberMe {
@@ -87,6 +90,10 @@ body {
   line-height: 100%;
   letter-spacing: 0%;
   color: #292727;
+}
+
+.form {
+  width: 22rem;
 }
 
 .formBottom div a {
@@ -120,10 +127,9 @@ body {
   text-align: center;
   font-family: var(--font-montserrat);
   font-weight: 600;
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 100%;
   letter-spacing: 0%;
-  text-decoration: none;
 }
 
 .mobile {

@@ -58,7 +58,9 @@ const ResetPasswordForm = () => {
         <Button type="submit" className={styles.primary} label="Login">
           Create new password
         </Button>
-        <Link href="/login" className={styles.returnToLogin}><FaArrowLeft className={styles.arrowLeft}/> Return to Log in </Link>
+        <Link href="/login" className={styles.returnToLogin}>
+          <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
+        </Link>
       </form>
     </>
   );

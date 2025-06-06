@@ -2,11 +2,11 @@
 import styles from "./page.module.css";
 import * as yup from "yup";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaArrowRight } from "react-icons/fa";
 import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import clsx from "clsx";
 
 const schema = yup.object({
   email: yup.string().email("Enter a valid email").required(),
@@ -78,9 +78,16 @@ const LoginForm = () => {
         <Button type="submit" className={styles.primary} label="Login">
           Login
         </Button>
-        <Link href="/register" className={styles.createNewAccount}>
-          Create New Account <FaArrowRight />
-        </Link>
+        <div className={styles.linkContainer}>
+          <div className={styles.linkWrapper}>
+            <Link
+              href="/register"
+              className={clsx("special-underline", styles.createNewAccount)}
+            >
+              Create New Account <FaArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
       </form>
     </>
   );
