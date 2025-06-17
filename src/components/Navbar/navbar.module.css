@@ -1,9 +1,18 @@
+.nav{
+    height: 8.51vh;
+    z-index: 100;
+    position: sticky;
+}
 .navContainer{
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #243D7D; 
     padding: 17px 40px;
+}
+.logo{
+    height: 4.53vh;
+    object-fit: contain;
 }
 .logoContainer{
     display: flex;
@@ -24,7 +33,7 @@
 .hamburger{
     display: none;
 }
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1200px) {
     .navContainer{
         padding: 17px 20px;
     }

@@ -10,7 +10,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({onToggleSidebar}) => {
   return (
     <>
-        <nav>
+        <nav className={styles.nav}>
             <div className={styles.navContainer}>
                 <div className={styles.logoContainer}>
                     <Image 
@@ -24,8 +24,8 @@ const Navbar: React.FC<NavbarProps> = ({onToggleSidebar}) => {
                     <Image
                         src="/PAZLogo.png"
                         alt="Logo"
-                        width={127}
-                        height={42.61}
+                        width={87}
+                        height={22.61}
                         className={styles.logo}
                     />
                 </div>
@@ -35,15 +35,15 @@ const Navbar: React.FC<NavbarProps> = ({onToggleSidebar}) => {
                         <Image
                             src="/defaultDP.png"
                             alt="User"
-                            width={40}
-                            height={40}
+                            width={30}
+                            height={30}
                             className="cursor-pointer"
                         />
                         <Image
                             src="/userDropdown.png"
                             alt="Arrow"
-                            width={12}
-                            height={6}
+                            width={8}
+                            height={4}
                             className="cursor-pointer"
                         />
                     </div>    

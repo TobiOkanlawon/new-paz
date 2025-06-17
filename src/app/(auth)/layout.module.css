@@ -8,7 +8,8 @@ body{
   justify-content: center;
   align-items: center;
   width: 100vw;
-  min-width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -18,7 +19,7 @@ body{
   flex-direction: column;
   align-items: center;
   width: 50vw;
-  height: 100vh;
+  height: 100%;
   /* flex: 1; */
   background-color: #243d7d;
   z-index: 2;

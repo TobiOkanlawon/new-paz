@@ -47,6 +47,7 @@ const LoginForm = () => {
           type="email"
           placeholder="Enter your email address"
           id="email"
+          className={styles.email}
           {...formik.getFieldProps("email")}
         />
         <Input
@@ -54,6 +55,7 @@ const LoginForm = () => {
           type="password"
           placeholder="Enter your password"
           id="password"
+          className={styles.password}
           {...formik.getFieldProps("password")}
         />
         <div className={styles.formBottom}>

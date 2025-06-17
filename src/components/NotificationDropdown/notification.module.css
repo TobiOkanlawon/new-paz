@@ -1,13 +1,16 @@
 .notificationContainer {
-  position: relative;
+  display: flex;
+  align-items: center;
   font-family: var(--font-montserrat);
+  justify-content: space-around;
 }
 
 
 .notificationBell {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 20px;
   cursor: pointer;
+  margin: auto 0;
 }
 
 
