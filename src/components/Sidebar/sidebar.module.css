@@ -2,7 +2,7 @@
   width: 17.29vw;
   background-color: #FAFAFA;
   z-index: 99;
-  height: 91.49vh;
+  height: 100%;
 }
 
 .sidebarContainer {
@@ -70,6 +70,7 @@
     width: 40%;
     padding: 1rem;
     position: absolute;
+    top: 4rem;
   }
   .collapsed {
   display: none;

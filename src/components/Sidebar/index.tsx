@@ -17,7 +17,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
             />
             <p>Home</p>
         </Link>
-        <Link href="/" className={styles.sidebarContent}>
+        <Link href="/profile" className={styles.sidebarContent}>
             <Image
                 src="/sidebarProfile.png"
                 alt="Home"

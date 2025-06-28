@@ -1,0 +1,32 @@
+.container{
+    margin-left: 6.59vh;
+    margin-top: 53px;
+    font-family: 'Montserrat', sans-serif;
+}
+.header{
+    font-weight: 700;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    font-size: 20px;
+}
+.textGroupContainer{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 7vw;
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 990px){
+    .textGroupContainer{
+        flex-direction: column;
+        gap: 1vh;
+    }
+}
+@media screen and (max-width: 495px){
+    .container{
+        margin-left: 3vw;
+    }
+}
