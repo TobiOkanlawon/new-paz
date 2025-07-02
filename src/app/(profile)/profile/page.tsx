@@ -55,9 +55,10 @@ const Profile = () => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+    const [isActive, setIsActive] = useState(false)
   return (
     <>
-        <ProfileAlert isSuccessful={true} alertType={'Profile Photo'} />
+        <ProfileAlert onClose={() => setIsActive(false)} isActive={false} isSuccessful={false} alertType={'Profile Photo'} />
         <form className={styles.container} id='CONTAINER'>
             <section className={styles.headers}>
                 <div className={styles.profileContainer}>

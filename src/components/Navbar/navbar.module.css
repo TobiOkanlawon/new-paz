@@ -25,10 +25,12 @@
     justify-content: space-around;
     width: 13rem;
 }
-.userContainer{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+
+.notificationBell {
+  width: 16px;
+  height: 20px;
+  cursor: pointer;
+  margin: auto 0;
 }
 .hamburger{
     display: none;

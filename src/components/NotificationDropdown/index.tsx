@@ -1,6 +1,8 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import styles from './notification.module.css';
+import Link from 'next/link';
 
 export default function NotificationDropdown() {
   const [open, setOpen] = useState(false);
@@ -27,23 +29,38 @@ export default function NotificationDropdown() {
 
   return (
     <div className={styles.notificationContainer} ref={dropdownRef}>
-      <img
-        src="/notificationBell.png"
-        alt="Notifications"
-        className={styles.notificationBell}
-        onClick={handleBellClick}
-        aria-expanded={open}
-        aria-controls="notification-dropdown"
-      />
+      <div className={styles.userContainer}>
+        <Image
+          src="/defaultDP.png"
+          alt="User"
+          width={30}
+          height={30}
+          onClick={handleBellClick}
+          aria-expanded={open}
+          aria-controls="notification-dropdown"
+          className="cursor-pointer"
+        />
+        <Image
+          src="/userDropdown.png"
+          alt="Arrow"
+          width={8}
+          height={4}
+          className="cursor-pointer"
+        />
+      </div>
 
       <div
         id="notification-dropdown"
-        className={`${styles.notificationDropdown} ${open ? styles.open : ''}`}
+        className={`${styles.navDropdown} ${open ? styles.open : ''}`}
       >
-        <p className={styles.notificationHeader}>Notifications</p>
-        <ul className={styles.notificationList}>
-          <li className={styles.notificationItem}>No messages</li>
-        </ul>
+        <Link href='/profile'>
+          <Image src={'/profileDropdown.png'} alt='Profile Icon' width={20} height={20}/>
+          <p>Profile</p>
+        </Link>
+        <Link href='/setting'>
+          <Image src={'/settingDropdown.png'} alt='Settings Icon' width={20} height={20}/>
+          <p>Setting</p>
+        </Link>
       </div>
     </div>
   );

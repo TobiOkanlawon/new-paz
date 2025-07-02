@@ -30,23 +30,14 @@ const Navbar: React.FC<NavbarProps> = ({onToggleSidebar}) => {
                     />
                 </div>
                 <div className={styles.opContainer}>
-                    <NotificationDropdown />
-                    <div className={styles.userContainer}>
-                        <Image
-                            src="/defaultDP.png"
-                            alt="User"
-                            width={30}
-                            height={30}
-                            className="cursor-pointer"
+                    <Image
+                        src="/notificationBell.png"
+                        alt="Notifications"
+                        className={styles.notificationBell}
+                        width={16}
+                        height={20}
                         />
-                        <Image
-                            src="/userDropdown.png"
-                            alt="Arrow"
-                            width={8}
-                            height={4}
-                            className="cursor-pointer"
-                        />
-                    </div>    
+                    <NotificationDropdown />    
                 </div>
             </div>
         </nav>
