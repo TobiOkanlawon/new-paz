@@ -243,7 +243,7 @@ body{
 }
 
 .toggleSwitch input:checked + .slider {
-  background-color: #4caf50;
+  background-color: #3475DF;
 }
 
 .toggleSwitch input:checked + .slider::before {
@@ -280,8 +280,9 @@ body{
     vertical-align: middle;
     color: #4E5A66;
 }
-.contactSupport p{
+.contactSupport a{
     font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
     font-weight: 500;
     font-size: 1.59vh;
     line-height: 20.79px;

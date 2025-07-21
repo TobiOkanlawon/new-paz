@@ -1,0 +1,287 @@
+body{
+    margin: 0;
+    overflow-y: hidden;
+}
+.container{
+    padding: 4.5vh 0 0 2.64vw;
+    color: #243D7D;
+}
+.header{
+    font-size: 3.4vh;
+    margin-top: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    line-height: 46px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    margin-bottom: 1.06vh;
+}
+.headingText{
+    font-size: 1.7vh;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: 0;
+}
+
+.topCardSet{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5.55vw;
+    margin-bottom: 5.3vh;
+}
+
+.cardTypes{
+    border-radius: 15px;
+    border: 1px solid transparent;
+    width: 26.9vw;
+    height: 16.81vh;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    font-family: 'Montserrat', sans-serif;
+    padding: 0 1vw;
+}
+.cardTypes img{
+    object-fit: contain;
+    height: 10.53vh;
+}
+.cardTypes div{
+    padding-bottom: 1.2rem;
+}
+.cardTypes div h4{
+    font-size: 2.13vh;
+    color: black;
+    margin: 0;
+}
+.cardTypes div p{
+    font-size: 1.3vh;
+
+}
+.cardTypes div button{
+    display: flex;
+    justify-self: end;
+    margin-right: 1rem;
+    padding: .5vh 1vw;
+    border-color: transparent;
+    background-color: #4F85E3;
+    color: white;
+    border-radius: 5px;
+}
+.modalContainer{
+    width: 39.47vw
+}
+.modalContainer h1{
+    text-align: center;
+    color: #3475DF;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 3.4vh;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContainer p{
+    color: #292727;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 1.75vh ;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContainer label{
+    display: block;
+    color: #292727;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalContainer input::placeholder{
+    color: #2927279b;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.famNameContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+.famNameContainer input{
+    border: 1px solid #D9D9D9;
+    padding: 15px 0px 15px 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+.addFam{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+.addFam input{
+    border: 1px solid #D9D9D9;
+    padding: 15px 0px 15px 10px;
+    width: 70%;
+    border-radius: 5px;
+}
+.addFam button{
+    height: max-content;
+    width: 126px;
+    height: 45px;
+    margin: 0;
+    opacity: 1;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background-color: #7131DA;
+}
+.frequentSavings{
+    margin-top: 1rem;
+}
+.preferredAmount{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.preferredAmountLabel{
+    margin-top: 1rem;
+}
+.preferredAmount input::placeholder{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.preferredAmount input{
+    border: 1px solid #D9D9D9;
+    width: 179px;
+    height: 45px;
+    border-radius: 8px;
+    border-width: 1px;
+}
+.preferredAmount button{
+    border: none;
+    box-shadow: 0px 0px 15px 0px #0000001A;
+    background-color: white;
+    width: 73px;
+    height: 4.79vh;
+    border-radius: 10px;
+    padding: auto 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 1.57vh;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    margin: 2rem 0;
+}
+.savingsDuration{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.savingsDurationLabel{
+    margin-top: 1rem;
+    display: block;
+}
+.savingsDuration input::placeholder{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.savingsDuration input{
+    border: 1px solid #D9D9D9;
+    width: 179px;
+    height: 45px;
+    border-radius: 8px;
+    border-width: 1px;
+}
+.savingsDuration button{
+    border: none;
+    box-shadow: 0px 0px 15px 0px #0000001A;
+    background-color: white;
+    width: 73px;
+    height: 4.79vh;
+    border-radius: 10px;
+    padding: auto 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 1.57vh;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    margin: 2rem .4rem;
+}
+.frequentSavings select{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    border: 1px solid #D9D9D9;
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    border-width: 1px;
+    padding: 0 1rem;
+}
+
+.submitButton{
+    width: 12.5vw;
+    height: 4.79vh;
+    border-radius: 8px;
+    background-color: #3475DF;
+    color: white;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 2.02vh;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+@media screen and (max-width: 951px){
+    .cardTypes{
+        width: 20rem;
+    }
+}
+@media screen and (max-width: 751px){
+    .cardTypes{
+        width: 15rem;
+    }
+}
+@media screen and (max-width: 560px){
+    .topCardSet{
+        flex-direction: column;
+    }
+}

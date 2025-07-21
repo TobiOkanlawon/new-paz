@@ -1,0 +1,40 @@
+.alertContainer{
+    position: absolute;
+    top: 60px;
+    left: 40%;
+    color: #fff;
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    z-index: 1000;
+}
+.success{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 15px 10px;
+    border: 1px solid #44BF50;
+    background-color: #44BF50B2;
+    border-radius: 15px;
+}
+.nosuccess{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 15px 10px;
+    border: 1px solid #E14242;
+    background-color: #e14242ec;
+    border-radius: 15px;
+}
+@media screen and (max-width: 700px){
+    .alertContainer{
+        left: 17vw;
+        font-size: 10px;
+    }
+}

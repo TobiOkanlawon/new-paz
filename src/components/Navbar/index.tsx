@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './navbar.module.css'
 import Image from 'next/image'
 import NotificationDropdown from '@/components/NotificationDropdown'
+import Link from 'next/link'
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -30,13 +31,15 @@ const Navbar: React.FC<NavbarProps> = ({onToggleSidebar}) => {
                     />
                 </div>
                 <div className={styles.opContainer}>
-                    <Image
-                        src="/notificationBell.png"
-                        alt="Notifications"
-                        className={styles.notificationBell}
-                        width={16}
-                        height={20}
-                        />
+                    <Link href='/notification'>
+                        <Image
+                            src="/notificationBell.png"
+                            alt="Notifications"
+                            className={styles.notificationBell}
+                            width={16}
+                            height={20}
+                            />
+                    </Link>
                     <NotificationDropdown />    
                 </div>
             </div>

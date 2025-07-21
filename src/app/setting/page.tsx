@@ -3,12 +3,17 @@ import React from 'react'
 import styles from './setting.module.css'
 import Image from 'next/image'
 import { useState } from 'react'
+import {useRouter} from 'next/navigation'
 
 const Setting = () => {
     const [enabled, setEnabled] = useState(false);
+    const [toggled, setToggled] = useState(false)
+    const router = useRouter()
   return (
     <div className={styles.container}>
-        <div className={styles.backContainer}>
+        <div onClick={() =>{
+            router.back()
+        }} className={styles.backContainer}>
             <Image
                 src={'/ArrowLeft.png'}
                 className={styles.arrowBack}
@@ -29,11 +34,11 @@ const Setting = () => {
                 <>
                     <div className={styles.contactSupport}>
                         <h2>Customer Care Line</h2>
-                        <p>+234 703 333 4444</p>
+                        <a href='tel:+234 703 333 4444'>+234 703 333 4444</a>
                     </div>
                     <div className={styles.contactSupport}>
                         <h2>Send us a mail</h2>
-                        <p>inquiry@mypazfinance.com</p>
+                        <a href="mailto:inquiry@mypazfinance.com">inquiry@mypazfinance.com</a>
                     </div>
                 </>
             ) : (<div>
@@ -51,7 +56,7 @@ const Setting = () => {
                 </div>
                 <label className={styles.toggleSwitch}>
                     <span>Enable</span>
-                    <input type="checkbox" checked={enabled} onChange={() => setEnabled(prev => !prev)} />
+                    <input type="checkbox" checked={toggled} onChange={() => setToggled(prev => !prev)} />
                     <span className={styles.slider} />
                 </label>
             </div>
