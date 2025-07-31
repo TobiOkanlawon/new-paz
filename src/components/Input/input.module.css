@@ -1,3 +1,6 @@
+.formGroup{
+  width: 97%;
+}
 .label {
   font-family: var(--font-montserrat);
   font-weight: 500;
@@ -6,7 +9,7 @@
   letter-spacing: 0%;
   color: #292727;
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
   align-self: flex-start;
 }
 
@@ -16,10 +19,10 @@
   font-size: 16px;
   line-height: 100%;
   color: #d9d9d9;
-  padding: 1rem;
+  padding: 1rem 0 1rem 1rem;
   border-radius: 8px;
   border: solid 1px #c4c4c4;
-  width: 90%;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -38,5 +41,23 @@
 @media screen and (min-width: 1440px){
   .input::placeholder {
     font-size: 1rem;
+  }
+}
+@media screen and (max-width: 803px){
+  .input{
+    width: 97%;
+  }
+}
+@media screen and (min-width: 522px) and (max-width: 801px){
+  .formGroup{
+    width: 100%;
+  }
+  /* .input{
+    width: 92%;
+  } */
+}
+@media screen and (max-width: 522px) {
+  .input{
+    width: 96%;
   }
 }

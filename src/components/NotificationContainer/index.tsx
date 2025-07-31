@@ -20,11 +20,11 @@ const NotificationContainer = ({message, time, amount=''}: NotificationContainer
                 alt='Paz Logo'
             />
             <div className={styles.messageContainer}>
-            <p className={styles.notificationMessage}>{message}</p>
-            {
-                amount ? (<p className={styles.notificationAmount}>{amount}</p>) :
-                ('')
-            }
+                <p className={styles.notificationMessage}>{message}</p>
+                {
+                    amount ? (<p className={styles.notificationAmount}>{amount}</p>) :
+                    ('')
+                }
             </div>
         </div>
         <p className={styles.date}>{time}</p>

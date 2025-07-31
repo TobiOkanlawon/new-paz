@@ -1,9 +1,30 @@
 .inputGroup {
-  width: 431px;
+  width: 100%;
   height: 74px;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+}
+
+.inputError {
+  border: 1px solid red;
+}
+
+.inputError {
+  border: 1px solid red;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
 }
 
 .label {
@@ -48,6 +69,11 @@
 }
 @media screen and (max-width: 475px){
     .inputGroup{
-        width: 89vw !important;
+        width: 100% !important;
     }
+}
+@media screen and (min-width: 522px) and (max-width: 720px){
+  .inputGroup{
+    width: 100%;
+  }
 }

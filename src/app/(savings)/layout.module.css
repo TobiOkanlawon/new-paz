@@ -1,7 +1,8 @@
 .dashboardMain{
     display:flex;
     flex-direction: row;
-    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 100vh;
 }
 @media screen and (max-width: 950px) {
  .dashboardMain{
@@ -12,6 +13,6 @@
 @media screen and (max-width: 743px) {
     .dashboardMain{
        justify-content: start;
-       align-items: center;
+       align-items: start;
     }   
 }

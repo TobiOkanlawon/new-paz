@@ -1,10 +1,13 @@
 'use client'
 import React, { useState, ReactNode } from 'react'
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import styles from './totalBalanceCard.module.css'
 import Image from 'next/image'
 import { FaPlus } from 'react-icons/fa'
 import Modal from '../Modal/index'
 import InputGroup from '../InputGroup'
+import SelectGroup from '../InputGroup/SelectGroup';
 import Link from 'next/link'
 
 interface TotalBalanceCardProps {
@@ -23,45 +26,144 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({ header, money, butt
   const [isToppedUp, setIsToppedUp] = useState(true)
   const safeMoney = typeof money === 'number' ? money : 0;
 
+  // Top-up formik and validation
+  const [inputActive, setInputActive] = useState(false);
+  const topupFormik = useFormik({
+    initialValues: {
+      amount: '',
+      account: '',
+      cardNumber: '',
+    },
+    validationSchema: Yup.object({
+      amount: Yup.number().typeError('Amount must be a number').required('Amount is required').positive('Amount must be positive'),
+      account: Yup.string().required('Account is required'),
+      cardNumber: Yup.string(),
+    }),
+    onSubmit: (values, actions) => {
+      setIsToppedUp(true);
+      handleCloseModal();
+      setInputActive(false);
+      actions.resetForm();
+    },
+  });
+
+  // Withdraw formik and validation
+  const withdrawFormik = useFormik({
+    initialValues: {
+      amount: '',
+      account: '',
+    },
+    validationSchema: Yup.object({
+      amount: Yup.number().typeError('Amount must be a number').required('Amount is required').positive('Amount must be positive'),
+      account: Yup.string().required('Account is required'),
+    }),
+    onSubmit: (values, actions) => {
+      setShowModal2(false);
+      actions.resetForm();
+    },
+  });
+
+
+
   const handleToggle = () => setShowMoney((prev) => !prev);
   const handleButtonClick = () => setShowModal(true);
   const handleButtonClick2 = () => setShowModal2(true);
   const handleCloseModal = () => setShowModal(false);
   const handleCloseModal2 = () => setShowModal2(false);
 
-
+  const banks = [
+    { value: 'bank1', label: 'Bank 1' },
+    { value: 'bank2', label: 'Bank 2' },
+    { value: 'bank3', label: 'Bank 3' },
+  ];
+  // Default modal content if none is passed
   // Default modal content if none is passed
   const defaultModalContent = (
-    <div className={styles.modalContainer}>
+    <form className={styles.modalContainer} onSubmit={topupFormik.handleSubmit}>
       <h2>Top-up your savings</h2>
       <p>Save up that money you do want to regret spending</p>
       <div className={styles.modalFormContainer}>
-        <InputGroup label='Top-up amount*' placeholder='Enter how much you want to top-up' />
-        <InputGroup label='Select account to withdraw from*' placeholder='Select ban to withdraw into' />
+        <InputGroup
+          label='Top-up amount*'
+          placeholder='Enter how much you want to top-up'
+          id='amount'
+          type='number'
+          value={topupFormik.values.amount}
+          onChange={topupFormik.handleChange}
+          onBlur={topupFormik.handleBlur}
+        />
+        {topupFormik.touched.amount && topupFormik.errors.amount && (
+          <div style={{ color: 'red', fontSize: '0.8rem' }}>{topupFormik.errors.amount}</div>
+        )}
+        <SelectGroup
+          label='Select account to withdraw from*'
+          placeholder='Select bank to withdraw into'
+          id='account'
+          value={topupFormik.values.account}
+          onChange={topupFormik.handleChange}
+          onBlur={topupFormik.handleBlur}
+          options={banks}
+        />
+        {topupFormik.touched.account && topupFormik.errors.account && (
+          <div style={{ color: 'red', fontSize: '0.8rem' }}>{topupFormik.errors.account}</div>
+        )}
+        <div style={inputActive ? {display: 'flex'} : {display: 'none'}} className={styles.addCard}>
+          <Image
+            src={'/visa.png'}
+            alt={'Visa icon'}
+            height={24}
+            width={24}
+          />
+          <input
+            type="text"
+            name="cardNumber"
+            id="cardNumber"
+            placeholder='Visa Card ******************657'
+            value={topupFormik.values.cardNumber}
+            onChange={topupFormik.handleChange}
+            onBlur={topupFormik.handleBlur}
+          />
+        </div>
+        <span style={inputActive ? {display: 'none'} : {display: 'block'}} onClick={() => setInputActive(true)}>Add new debit-card</span>
+      </div>
+      <button type='submit'>Save</button>
+    </form>
+  );
+
+  const pendingModalContent = (
+    <form className={styles.modalContainer} onSubmit={withdrawFormik.handleSubmit}>
+      <h2>Withdraw Funds</h2>
+      <p>Get funds from your savings by filling the form below</p>
+      <div className={styles.modalFormContainer}>
+        <InputGroup
+          label='Withdrawal amount*'
+          placeholder='Enter how much you want to withdraw'
+          id='amount'
+          type='number'
+          value={withdrawFormik.values.amount}
+          onChange={withdrawFormik.handleChange}
+          onBlur={withdrawFormik.handleBlur}
+        />
+        {withdrawFormik.touched.amount && withdrawFormik.errors.amount && (
+          <div style={{ color: 'red', fontSize: '0.8rem' }}>{withdrawFormik.errors.amount}</div>
+        )}
+        <SelectGroup
+          label='Select account to domicile cash*'
+          placeholder='Select bank to withdraw into'
+          id='account'
+          value={withdrawFormik.values.account}
+          onChange={withdrawFormik.handleChange}
+          onBlur={withdrawFormik.handleBlur}
+          options={banks}
+        />
+        {withdrawFormik.touched.account && withdrawFormik.errors.account && (
+          <div style={{ color: 'red', fontSize: '0.8rem' }}>{withdrawFormik.errors.account}</div>
+        )}
         <Link href={'#'}>Add new debit-card</Link>
       </div>
-      <button onClick={ () =>{
-        if(isToppedUp){
-          handleCloseModal()
-        }
-      }
-      }>Save</button>
-    </div>
+      <button type='submit'>Withdraw</button>
+    </form>
   );
-  const pendingModalContent = (
-    <div className={styles.modalContainer}>
-      <h2>Cancel pending withdrawal</h2>
-      <p>Do you really want to cancel your pending withdrawal?</p>
-      <button onClick={ () =>{
-        if(isToppedUp){
-          handleCloseModal2();
-          // handleStopPending();
-          onCancelPending?.();
-        }
-      }
-      }>Continue</button>
-    </div>
-  )
 
   return (
     <div style={isPending ? { minWidth: '45vw', flexGrow: '1' } : undefined} className={styles.totalBalanceCard}>
@@ -90,7 +192,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({ header, money, butt
             <div className={styles.pendingContainer}>
               <p>Pending withdrawal</p>
               <button onClick={() => {
-                handleButtonClick2()
+                onCancelPending && onCancelPending()
               }}>Cancel</button>
             </div>
           )

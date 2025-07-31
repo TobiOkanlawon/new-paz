@@ -304,7 +304,7 @@ body {
 }
 @media screen and (min-width: 1440px){
   .right{
-    padding-top: 10rem;
+    padding-top: 5rem;
   }
   .form{
     width: 70%;

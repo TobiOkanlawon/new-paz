@@ -22,13 +22,13 @@ const Navbar: React.FC<NavbarProps> = ({onToggleSidebar}) => {
                         onClick={onToggleSidebar} 
                         className={styles.hamburger}
                     />
-                    <Image
+                    <Link href="/"><Image
                         src="/PAZLogo.png"
                         alt="Logo"
                         width={87}
                         height={22.61}
                         className={styles.logo}
-                    />
+                    /></Link>
                 </div>
                 <div className={styles.opContainer}>
                     <Link href='/notification'>

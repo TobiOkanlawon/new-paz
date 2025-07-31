@@ -1,6 +1,5 @@
 body{
     margin: 0;
-    overflow-y: hidden;
 }
 .container{
     padding: 3.4vh 2.2vw 0;
@@ -46,7 +45,7 @@ body{
 }
 .widFunds{
     background-color: #243D7D;
-    padding: 5px 15px;
+    padding: 10px 15px;
     border-radius: 10px;
     color: white;
     border: 1px solid transparent;
@@ -83,6 +82,7 @@ body{
 .cardContainers{
     display: flex;
     gap: 2rem;
+    margin-bottom: 2rem;
 }
 .modalContainer{
     text-align: center;
@@ -98,4 +98,18 @@ body{
     background-color: #3475DF ;
     border: none;
     border-radius: 10px;
+}
+@media screen and (max-width: 1200px){
+    .container{
+        width: 95vw;
+    }
+}
+@media screen and (max-width: 800px) {
+.cardContainers{
+    flex-direction: column;
+    gap: 2rem;
+}
+.cardContainers div{
+    margin: 0 !important;
+}
 }

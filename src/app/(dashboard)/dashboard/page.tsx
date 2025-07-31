@@ -1,10 +1,10 @@
 "use client"
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation';
 import styles from './dashboard.module.css'
 import Image from 'next/image' 
-import Link from 'next/link' 
-import Button from '@/components/Button'
 import CardScrollIndicator from '@/components/CardScrollIndicator'
+import {LuEye, LuEyeOff} from 'react-icons/lu'
 
 const Dashboard = () => {
   // Refs for scrollable containers
@@ -14,6 +14,13 @@ const Dashboard = () => {
   // Set the number of cards for each scrollable section
   const mobileScrollCards = 3; // Adjust if you have more/less cards
   const mobileVaultCards = 2;  // Adjust if you have more/less vault cards
+
+  // Eye toggle state for each card
+  const [showSavings, setShowSavings] = useState(true);
+  const [showLoans, setShowLoans] = useState(true);
+  const [showInvestments, setShowInvestments] = useState(true);
+
+  const router = useRouter();
 
   return (
     <>
@@ -29,7 +36,12 @@ const Dashboard = () => {
                         alt='Savings'
                     />
                 </div>
-                <h3>₦ 20,000 <Image src='/eyeOff.png' alt='eyes off' width={12} height={12}/></h3>
+                <h3>
+                  ₦ {showSavings ? '20,000' : '****'}{' '}
+                  <span style={{cursor:'pointer'}} onClick={() => setShowSavings(s => !s)}>
+                    <Image src={showSavings ? '/eyeOff.png' : '/eyeOff2.png'} alt='eyes off' width={12} height={12}/>
+                  </span>
+                </h3>
             </div>
             <div className={`${styles.totalCategories} ${styles.darkBlue}`}>
                 <div className={styles.textIcon}>
@@ -41,7 +53,12 @@ const Dashboard = () => {
                         alt='Savings'
                     />
                 </div>
-                <h3>₦ 20,000 <Image src='/eyeOff2.png' alt='eyes off' width={12} height={12}/></h3>
+                <h3>
+                  ₦ {showLoans ? '20,000' : '****'}{' '}
+                  <span style={{cursor:'pointer'}} onClick={() => setShowLoans(s => !s)}>
+                    <Image src={showLoans ? '/eyeOff2.png' : '/eyeOff.png'} alt='eyes off' width={12} height={12}/>
+                  </span>
+                </h3>
             </div>
             <div className={`${styles.totalCategories} ${styles.purple}`}>
                 <div className={styles.textIcon}>
@@ -53,7 +70,12 @@ const Dashboard = () => {
                         alt='Savings'
                     />
                 </div>
-                <h3>₦ 20,000 <Image src='/eyeOff2.png' alt='eyes off' width={12} height={12}/></h3>
+                <h3>
+                  ₦ {showInvestments ? '20,000' : '****'}{' '}
+                  <span style={{cursor:'pointer'}} onClick={() => setShowInvestments(s => !s)}>
+                    <Image src={showInvestments ? '/eyeOff2.png' : '/eyeOff.png'} alt='eyes off' width={12} height={12}/>
+                  </span>
+                </h3>
             </div>
         </div>
         <div className={styles.savingsActivities}>    
@@ -69,7 +91,7 @@ const Dashboard = () => {
                         <h3>Become a PAZ Saver!</h3>
                         <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
                     </div>
-                    <button className={styles.loanAndInvestmentButton}>Get Started!</button>
+                    <button className={styles.loanAndInvestmentButton} onClick={() => router.push('/savings')}>Get Started!</button>
                 </div>
                 <div className={styles.familyVault}>
                     <Image
@@ -82,7 +104,7 @@ const Dashboard = () => {
                         <h3>PAZ Family Vault</h3>
                         <p>Start saving with your family members today and stand a chance to earn higher returns annually</p>
                     </div>
-                    <button className={styles.loanAndInvestmentButton}>Get Started!</button>
+                    <button className={styles.loanAndInvestmentButton} onClick={() => router.push('/savings/familyVault')}>Get Started!</button>
                 </div>
                 <div className={styles.activities}>
                     <h5>Recent activitiy</h5>
@@ -116,7 +138,7 @@ const Dashboard = () => {
             <div className={styles.loansAndInvestment}>
                 <div className={styles.loanCard}>
                     <h3>Avoid Embarrassing Emergencies. Get a Quick Loan today!</h3>
-                    <button className={styles.loanAndInvestmentButton}>Get Loan</button>
+                    <button className={styles.loanAndInvestmentButton} onClick={() => router.push('/loans')}>Get Loan</button>
                     <Image
                         src='/loan.png'
                         alt='Get Loan'
@@ -127,7 +149,7 @@ const Dashboard = () => {
                 <div className={styles.investments}>
                     <h3>Secure Your Future Today with PAZ’s Investment Options</h3>
                     <p>Edge your funds against inflation and devaluation with our secure treasury instruments.</p>
-                    <button className={styles.loanAndInvestmentButton}>Get Started</button>
+                    <button className={styles.loanAndInvestmentButton} onClick={() => router.push('/investments')}>Get Started</button>
                 </div>
             </div>
         </div>
@@ -214,7 +236,7 @@ const Dashboard = () => {
                         <h3>Become a PAZ Saver!</h3>
                     </div>
                     <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
-                    <button className={`${styles.mobileButton}`}>Get started!</button>
+                    <button className={`${styles.mobileButton}`} onClick={() => router.push('/savings')}>Get started!</button>
                 </div>
                 <div className={`${styles.mobileFamilyVault} ${styles.purple}`}>
                     <div className={styles.header}>
@@ -224,7 +246,7 @@ const Dashboard = () => {
                         <h3>Become a PAZ Saver!</h3>
                     </div>
                     <p>Start saving today and stand a chance to earn up to 12% per annum.</p>
-                    <button className={styles.mobileButton}>Get started!</button>
+                    <button className={styles.mobileButton} onClick={() => router.push('/family-vault')}>Get started!</button>
                 </div>
                 {/* CardScrollIndicator for mobileSavingVault */}
             </div>
@@ -238,7 +260,7 @@ const Dashboard = () => {
                 <p>Upcoming Loan Repayment</p>
                 <h3>₦ 20,000 <span>Due by Feb 6th</span></h3>
             </div>
-            <button className={styles.loanButton}>Repay Loan</button>
+            <button className={styles.loanButton} onClick={() => router.push('/loans')}>Repay Loan</button>
         </div>
         <div className={styles.mobileRecentActivities}>
             <h3>Recent activity</h3>

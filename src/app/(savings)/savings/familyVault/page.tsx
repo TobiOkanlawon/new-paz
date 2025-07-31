@@ -1,17 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./familyVault.module.css";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import TotalBalanceCard from "@/components/TotalBalanceCard";
-import NotificationContainer from "@/components/NotificationContainer";
 import TopUpModal from "@/components/TopupModal";
 import Modal from "@/components/Modal";
 import WithdrawModal from "@/components/WithdrawModal";
 import TotalFamilyCard from "@/components/TotalFamilyCard";
+import Back from "@/components/BackContainer";
+import Notifications from "@/components/Notifications";
 
 const FamilyVault = () => {
-  const router = useRouter();
   interface Notification {
     id: string;
     message: string;
@@ -42,21 +40,7 @@ const FamilyVault = () => {
 
   return (
     <div className={styles.container}>
-      <div
-        onClick={() => {
-          router.back();
-        }}
-        className={styles.backContainer}
-      >
-        <Image
-          src={"/ArrowLeft.png"}
-          className={styles.arrowBack}
-          width={24}
-          height={24}
-          alt="Arrow Back"
-        />
-        <p>Back</p>
-      </div>
+      <Back />
       <div className={styles.headerContainer}>
         <div>
           <h2 className={styles.header}>Olowo Family</h2>
@@ -78,28 +62,8 @@ const FamilyVault = () => {
         <TotalFamilyCard header="Family Members" buttonText="Add new members" />
       </div>
 
-      <div className={styles.activities}>
-        <h5>Recent activitiy</h5>
-        {notifications.length !== 0 ? (
-          notifications.map((notification) => (
-            <NotificationContainer
-              key={notification.id}
-              message={notification.message}
-              time={notification.time}
-              amount={notification.amount ? notification.amount : ""}
-            />
-          ))
-        ) : (
-          <div className={styles.emptyContainer}>
-            <Image
-              src={"/noNotification.png"}
-              alt="No notification image"
-              width={193}
-              height={193}
-            />
-            <p>You have no recent actiities yet!</p>
-          </div>
-        )}
+      <div className={styles.notificationContainer}>
+      <Notifications header="Recent activity" />
       </div>
       {isWithdrawModalOpen && (
         <Modal

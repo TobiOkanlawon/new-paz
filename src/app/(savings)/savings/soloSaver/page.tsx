@@ -2,23 +2,24 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./soloSaver.module.css";
-import { useRouter } from "next/navigation";
 import TotalBalanceCard from "@/components/TotalBalanceCard";
 import NotificationContainer from "@/components/NotificationContainer";
 import TopUpModal from "@/components/TopupModal";
 import Modal from "@/components/Modal";
 import WithdrawModal from "@/components/WithdrawModal";
+import Back from "@/components/BackContainer";
+import Notifications from '@/components/Notifications'
 
 const SoloSaver = () => {
-  const router = useRouter();
   interface Notification {
-    id: string;
+    id: number;
     message: string;
     time: string;
     amount?: string;
   }
 
-  const notifications: Notification[] = [];
+  const notifications: Notification[] = [
+  ];
 
   const handleCloseModal = () => {
     setIsActive(false);
@@ -30,21 +31,7 @@ const SoloSaver = () => {
   let [isActive, setIsActive] = useState(false)
   return (
     <div className={styles.container}>
-      <div
-        onClick={() => {
-          router.back();
-        }}
-        className={styles.backContainer}
-      >
-        <Image
-          src={"/ArrowLeft.png"}
-          className={styles.arrowBack}
-          width={24}
-          height={24}
-          alt="Arrow Back"
-        />
-        <p>Back</p>
-      </div>
+      <Back />
       <div className={styles.headerContainer}>
         <div>
           <h2 className={styles.header}>PAZ Solo Saver</h2>
@@ -68,7 +55,7 @@ const SoloSaver = () => {
       </div>
 
       <div className={styles.activities}>
-        <h5>Recent activitiy</h5>
+        {/* <h5>Recent activitiy</h5>
         {notifications.length !== 0 ? (
           notifications.map((notification) => (
             <NotificationContainer
@@ -83,12 +70,13 @@ const SoloSaver = () => {
             <Image
               src={"/noNotification.png"}
               alt="No notification image"
-              width={193}
-              height={193}
+              width={100}
+              height={100}
             />
             <p>You have no recent actiities yet!</p>
           </div>
-        )}
+        )} */}
+        <Notifications header="Recent activities" notifications={notifications} />
       </div>
        {isActive && (
         <Modal isOpen={isActive} onClose={handleCloseModal}>

@@ -9,6 +9,8 @@
     justify-content: space-between;
     align-items: center;    
     margin-bottom: 2.4vh;
+    font-family: 'Montserrat', sans-serif !important;
+    gap: 1rem;
 }
 .textcontainer{
     display: flex;
@@ -40,11 +42,24 @@
 .messageContainer{
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 700px){
+    .container{
+        /* flex-direction: column;
+        justify-content: center;
+        align-items: start; */
+        gap: 0;
+    }
     .messageContainer{
         flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        gap: .6rem;
+    }
+    .notificationMessage{
+        font-size: 1rem;
     }
 }
 

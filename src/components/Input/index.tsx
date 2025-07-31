@@ -10,7 +10,7 @@ type Props = {
 
 const Input = ({ label, id, className, ...rest }: Props) => {
   return (
-    <div className="form-group">
+    <div className={styles.formGroup}>
       <label className={styles.label} htmlFor={id}>
         {label}
       </label>

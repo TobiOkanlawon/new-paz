@@ -2,7 +2,8 @@
   width: 17.29vw;
   background-color: #FAFAFA;
   z-index: 99;
-  height: 100%;
+  height: auto;
+  min-height: 100vh;
 }
 
 .sidebarContainer {
@@ -42,6 +43,10 @@
 .sidebarContent:hover {
   background-color: #339AF01A;
   border-radius: 10px;
+  width: 100%;
+}
+.sidebarContent:hover img{
+  margin-left: 20%;
 }
 
 .logout{
@@ -63,7 +68,21 @@
 .logout:hover {
   background-color: #339AF01A;
   border-radius: 10px;
+  width: 100%;
 }
+
+.logout:hover img{
+  margin-left: 20%;
+}
+
+.active{
+  background-color: #339AF01A;
+  width: 100%;
+}
+.active img{
+  margin-left: 20%;
+}
+
 
 @media screen and (max-width: 1200px) {
   .sidebar {
@@ -79,7 +98,7 @@
 @media screen and (max-width: 950px) {
  .sidebar{
     left: 0;
-    top: 4.6rem;
+    top: 2.6rem;
     height: 80rem;
  }
 }

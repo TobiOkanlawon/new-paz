@@ -10,6 +10,7 @@ import Modal from "@/components/Modal";
 import WithdrawModal from "@/components/WithdrawModal";
 import ToggleSwitch from '@/components/ToggleSwitch';
 import WithdrawalOptions from "@/components/WithdrawalOptions";
+import Notifications from '@/components/Notifications'
 
 
 
@@ -97,27 +98,7 @@ const TargetSavings = () => {
       </div>
 
       <div className={styles.activities}>
-        <h5>Recent activitiy</h5>
-        {notifications.length !== 0 ? (
-          notifications.map((notification) => (
-            <NotificationContainer
-              key={notification.id}
-              message={notification.message}
-              time={notification.time}
-              amount={notification.amount ? notification.amount : ""}
-            />
-          ))
-        ) : (
-          <div className={styles.emptyContainer}>
-            <Image
-              src={"/noNotification.png"}
-              alt="No notification image"
-              width={193}
-              height={193}
-            />
-            <p>You have no recent actiities yet!</p>
-          </div>
-        )}
+        <Notifications header={'Recent activity'} />
       </div>
        {isActive && (
         <Modal isOpen={isActive} onClose={handleCloseModal}>

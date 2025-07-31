@@ -8,7 +8,7 @@
     flex-direction: column;
     min-width: 24.43vw;
     height: 9vh;
-    padding: 1.27vh 0 3vh 1.1vw;
+    padding: 1.27vh 0 3vh 1.9vw;
 }
 .totalBalanceCard p{
     font-size: 1.7vh;
@@ -115,7 +115,7 @@
     padding: 13px 27px;
     border-radius: 1rem;
     color: white;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-style: Bold;
     font-size: 16px;
@@ -127,5 +127,30 @@
 @media screen and (max-width: 951px){
     .totalBalanceCard{
         width: 20rem;
+    }
+}
+@media screen and (max-width: 345px){
+    .totalBalanceCard{
+        width: 90vw
+    }
+}
+@media screen and (max-width: 700px){
+    .totalBalanceCard{
+        height: 7rem;
+        margin-bottom: 0;
+    }
+    .totalBalanceCard p{
+        font-size: .8rem;
+    }
+    .totalBalanceCard h3{
+        font-size: 2rem;
+    }
+    .contentContainer{
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+    .cardButton{
+        width: 10rem !important;
     }
 }

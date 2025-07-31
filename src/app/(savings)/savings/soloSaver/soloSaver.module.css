@@ -1,9 +1,9 @@
 body{
     margin: 0;
-    overflow-y: hidden;
+    overflow-x: hidden;
 }
 .container{
-    padding: 3.4vh 2.2vw 0;
+    padding: 4vh 2.2vw 0;
     color: #243D7D;
     width: 70vw;
 }
@@ -39,6 +39,8 @@ body{
     color: #204D88;
     font-size: 2.1vh;
     margin: 0;
+    border: none;
+    background-color: transparent;
 }
 .backContainer p{
     margin: 0;
@@ -50,6 +52,14 @@ body{
     border-radius: 10px;
     color: white;
     border: 1px solid transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 30px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: .41rem;
 }
 .activities h5{
     font-family: 'Poppins', sans-serif;
@@ -75,4 +85,31 @@ body{
 }
 .activities div p{
     margin: 0;
+}
+@media (max-width: 1200px) {
+    .container{
+        width: 95vw;
+    }
+}
+@media screen and (max-width: 700px){
+    .headerContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+    .header{
+        font-size: 1.9rem;
+    }
+    .container{
+        padding-top: 19px;
+    }
+    .backContainer{
+        margin-bottom: 1.2rem;
+    }
+    .headingText{
+        margin-top: 0 !important;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
 }

@@ -44,22 +44,25 @@ const TotalFamilyCard: React.FC<totalFamilyCardProps> = ({ header, money, button
     <div className={styles.totalFamilyCard}>
       <p>{header}</p>
       <div className={styles.contentContainer}>
-        <h3>
-          {familyMembers.length}
-        </h3>
-        {
-          familyMembers.map((member) => (
-            <Image 
-            src={member.href}
-            alt={member.href}
-            key={member.key}
-            width={45}
-            height={45}
-            className={styles.cardImages}
-            />
-          ))
-        }
-
+        <div>
+          <h3>
+            {familyMembers.length}
+          </h3>
+          <div className={styles.familyImages} >
+            {
+              familyMembers.map((member) => (
+                <Image 
+                src={member.href}
+                alt={member.href}
+                key={member.key}
+                width={45}
+                height={45}
+                className={styles.cardImages}
+                />
+              ))
+            }
+          </div>
+        </div>
         {buttonText && (
           <button className={styles.cardButton} onClick={handleButtonClick}>
             {buttonText} <FaPlus />

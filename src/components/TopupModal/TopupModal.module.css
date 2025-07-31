@@ -71,6 +71,7 @@
     padding: 1vh 0 1vh 2vw;
     position: relative;
     height: 4vh;
+    width: 100%;
 }
 .addCard img{
     position: absolute;
@@ -91,4 +92,24 @@
     line-height: 100%;
     letter-spacing: 0%;
     vertical-align: middle;
+}
+@media screen and (max-width: 700px){
+    .modalContainer h2{
+        font-size: 1.5rem;
+        margin-bottom: .5rem;
+    }
+    .modalContainer p{
+        font-size: .9rem;
+        margin: 0 0 1rem 0;
+    }
+    .modalFormContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        gap: 1rem;
+    }
+    .modalContainer button{
+        margin-top: 1rem;
+    }
 }
