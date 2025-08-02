@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./globals.css";
 import { Poppins, Montserrat, Inter } from "next/font/google";
+import Providers from "@/components/globals/providers";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,18 +25,16 @@ export const metadata = {
   description: "Powering Dreams",
 };
 
-const queryClient = new QueryClient();
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
-        <body>{children}</body>
-      </html>
-    </QueryClientProvider>
+    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
   );
 }
