@@ -1,0 +1,266 @@
+.totalBalanceCard{
+    margin-top: 3.62vh;
+    margin-bottom: 2.38vh;
+    border: 1px solid #ACB5BD;
+    border-radius: 15px;
+    width: auto;
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 20.43vw;
+    height: 9vh;
+    padding: 1.27vh 1.1vw 3vh 1.1vw;
+}
+.totalBalanceCardStacked{
+    height: 17vh !important;
+    padding-left: .4rem;
+}
+.totalBalanceCard p{
+    font-size: 1.7vh;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: .1rem;
+}
+.totalBalanceCard h3{
+    font-size: 4.89vh;
+    margin: 0 1.8rem 0 .5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-style: Bold;
+    line-height: 46px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    width: 100%;
+}
+/* Default: horizontal layout */
+.contentContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+/* Stacked layout for overflow */
+.stack {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: .3rem;
+}
+.contentContainer button{
+    font-family: 'Montserrat', sans-serif;
+    width: 1rem;
+    height: 5.59vh;
+    padding: 1px 15px;
+    background-color: #4F85E3;
+    border: 1px solid transparent;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-style: Bold;
+    line-height: 30px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.38vh;
+}
+.cardButton{
+    margin-right: 1rem;
+    width: 100%;
+}
+
+
+.pendingContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-right: 1rem;
+}
+.pendingContainer button{
+    text-decoration: underline;   
+    background-color: transparent;
+    font-size: 1.4vh;
+    color: #204D88;
+}
+ .pendingContainer p{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 1.4vh;
+    margin: 0;
+    text-align: center;
+    width: 7rem;
+    vertical-align: middle;
+    color: #fff;
+    border-radius: .7rem;
+    padding: .7rem 1rem;
+}
+
+.modalContainer{
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+.modalContainer h2{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 4vh;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #3475DF;
+    margin-bottom: 0;
+}
+.modalContainer p{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 2vh;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #292727;
+    margin: 2rem 0;
+}
+.modalContainer button{
+    border: none;
+    background-color: #3475DF;
+    padding: 13px 27px;
+    border-radius: 1rem;
+    color: white;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.WithdrawalModalContainer{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+.WithdrawalModalContainer h2{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 4vh;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #3475DF;
+    margin-bottom: 0;
+}
+.WithdrawalModalContainer p{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 2vh;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #292727;
+    margin: 2rem 0;
+}
+.WithdrawalModalContainer button{
+    border: none;
+    background-color: #3475DF;
+    padding: 13px 27px;
+    border-radius: 1rem;
+    color: white;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: 1rem;
+}
+.withdrawalmodalFormContainer{
+    text-align: start;
+}
+.withdrawalmodalFormContainer p{
+    text-align: start;
+    font-size: 14px;
+    margin: 0;
+}
+.withdrawalmodalFormContainer h4{
+    margin: .5rem 0 1rem;
+    background-color: #FAFAFA;
+    padding: 1rem 1.5rem;
+    border-radius: .9rem;
+}
+.withdrawalmodalFormContainer label{
+    color:#292727;
+    font-weight: 500;
+}
+.withdrawalmodalFormContainer input::placeholder{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.withdrawalmodalFormContainer a{
+    color: #204D88;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.amountHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  transition: all 0.2s ease;
+}
+
+.stack {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.amountHeader span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 951px){
+    .totalBalanceCard{
+        width: 25rem;
+    }
+}
+@media screen and (max-width: 540px){
+    .totalBalanceCard{
+        width: 99%;
+        /* height: 9rem; */
+    }
+    .totalBalanceCard h3{
+        font-size: 3.79vh;
+    }
+    .contentContainer{
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: start;
+    }
+    .contentContainer button{
+        width: 9.5rem !important;
+    }
+}
+@media screen and (max-width: 321px){
+    .totalBalanceCard{
+        width: 90vw;
+        min-width: 70vw;
+    }
+}
+@media (max-width: 184px) {
+    
+}

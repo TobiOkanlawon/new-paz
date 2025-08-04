@@ -1,0 +1,115 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+}
+.container{
+    padding: 4vh 2.2vw 0;
+    color: #243D7D;
+    width: 70vw;
+}
+.headerContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.header{
+    font-size: 4vh;
+    margin-top: 0;
+    margin-bottom: 0rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    line-height: 46px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.headingText{
+    font-size: 2.13vh;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.backContainer{
+    display:flex;
+    align-items: center;
+    gap: .5rem;
+    color: #204D88;
+    font-size: 2.1vh;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+}
+.backContainer p{
+    margin: 0;
+    font-family: 'Monserrat', sans-serif;
+}
+.widFunds{
+    background-color: #243D7D;
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 30px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: .41rem;
+}
+.activities h5{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #292727;
+}
+.activities .emptyContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-style: Medium;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #979CA0;
+}
+.activities div p{
+    margin: 0;
+}
+@media (max-width: 1200px) {
+    .container{
+        width: 95vw;
+    }
+}
+@media screen and (max-width: 700px){
+    .headerContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+    .header{
+        font-size: 1.9rem;
+    }
+    .container{
+        padding-top: 19px;
+    }
+    .backContainer{
+        margin-bottom: 1.2rem;
+    }
+    .headingText{
+        margin-top: 0 !important;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+}

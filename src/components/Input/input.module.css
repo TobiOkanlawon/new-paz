@@ -1,0 +1,64 @@
+.formGroup{
+  width: 97%;
+}
+.label {
+  font-family: var(--font-montserrat);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #292727;
+  display: block;
+  padding: 0.5rem 0rem;
+  align-self: flex-start;
+}
+
+.input {
+  font-family: var(--font-montserrat);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  color: #d9d9d9;
+  padding: 1rem 0 1rem 1rem;
+  border-radius: 8px;
+  border: solid 1px #c4c4c4;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.input::placeholder {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #292727;
+}
+@media screen and (max-width: 768px) {
+  .right form label {
+    width: 70%;
+  } 
+}
+@media screen and (min-width: 1440px){
+  .input::placeholder {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 803px){
+  .input{
+    width: 97%;
+  }
+}
+@media screen and (min-width: 522px) and (max-width: 801px){
+  .formGroup{
+    width: 100%;
+  }
+  /* .input{
+    width: 92%;
+  } */
+}
+@media screen and (max-width: 522px) {
+  .input{
+    width: 96%;
+  }
+}

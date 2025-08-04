@@ -1,0 +1,45 @@
+body{
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.container h2 h3 h4 h5 h6 p{
+    margin: 0;
+}
+.container{
+    width: 100vw;
+    margin: 3.4vh 2.2vw;
+}
+.backContainer{
+    display:flex;
+    align-items: center;
+    gap: .5rem;
+    color: #204D88;
+    font-size: 2.1vh;
+    margin: 0;
+}
+.backContainer p{
+    margin: 0;
+}
+.header{
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.4vh;
+    margin: 2.2vh 0 !important;
+    color: #204D88;
+    font-weight: 700;
+}
+.headerText{
+    font-size: 1.7vh;
+    font-weight: 500;
+    color: #204D88;
+    margin: .8vh 0;
+}
+.notificationWrapper{
+    width: 71.46vw;
+    margin-top: 6.06vh;
+}
+
+@media screen and (max-width: 1200px){
+    .notificationWrapper{
+        width: 90vw;
+    }
+}

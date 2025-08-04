@@ -1,0 +1,277 @@
+body{
+    margin: 0;
+}
+.container{
+    padding: 3.38vh 3vw 0 2.63vw;
+    width: 78vw;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 3.4vh;
+    line-height: 46px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #243D7D;
+}
+.header p{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2.13vh;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #204D88;
+}
+.header button{
+    background-color: #243D7D;
+    color: #fff;
+    width: 99px;
+    height: 36px;
+    border-radius: 10px;
+    padding-top: 3px;
+    padding-right: 15px;
+    padding-bottom: 3px;
+    padding-left: 15px;
+    border: none;
+}
+.totalAmountCardContainer{
+    color: #204D88;
+}
+.totalAmountCardContainer h3{
+    color: #243D7D !important;
+}
+.recentActivityHeader{
+    font-family: 'Poppins';
+}
+.modalTitle{
+    color: #3475DF;
+    margin: 2rem 0 .8rem 0;
+}
+.modalDescription{
+    font-family: 'Montserrat', sans-serif;
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+
+.modalForm label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalForm input::placeholder{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #292727;
+}
+.modalForm select{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #292727;
+
+    appearance: none; /* Remove default arrow in most browsers */
+    -webkit-appearance: none; /* Safari/Chrome */
+    -moz-appearance: none; /* Firefox */
+    background: url('../../../../public/selectDropDown.png');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2rem; /* Space for the arrow */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.modalForm button{
+    border: none;
+    background-color: #3475DF;
+    color: #fff;
+    padding: .6rem 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    border-radius: .4rem;
+}
+.eligibilityDetails{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+}
+.eligibilityDetails h3{
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #3475DF;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+}
+.eligibilityDetails p{
+    color: #292727;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.eligibilityDetails h1{
+    color: #3475DF;
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: .1rem 0 2.5rem 0;
+}
+.eligibilityDetails h6{
+    color: #292727;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 2rem;
+}
+.eligibilityDetails h6 span{
+    font-weight: 700;
+    font-size: 17px;
+}
+.eligibilityDetails button{
+    border: none;
+    background-color: #3475DF;
+    color: #fff;
+    padding: .6rem 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    border-radius: .4rem;
+}
+.modalForm{
+    text-align: start;
+    width: 80%;
+}
+.modalForm>input{
+    height: 54px;
+    border-radius: 8px;
+    border-width: 1px;
+    border: 1px solid #D9D9D9;
+}
+.modalForm label{
+    display: block;
+}
+
+.loanSummary{
+    font-family: 'Montserrat', sans-serif;
+}
+.loanSummary h2{
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    color: #3475DF;
+}
+.loanSummary p{
+    text-align: center;
+
+}
+.formDetails{
+    margin: 1.5rem;
+}
+.formDetails p{
+    text-align: start;
+    margin-bottom: .4rem;
+    margin-left: 0 !important;
+}
+.formDetails h3{
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    background-color: #FAFAFA;
+    padding: .5rem 1rem;
+}
+.loanSummary p:last-of-type{
+    text-align: start;
+    margin: 0 2rem 1rem;
+}
+.loanSummary button{
+    border: none;
+    padding: 1rem 1.5rem;
+    background-color: #3475DF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #fff;
+    border-radius: 1rem;
+    margin-left: 2rem;
+}
+@media screen and (max-width: 900px){
+    .modalTitle{
+        margin: 0.8rem 1rem .5rem;
+        text-align: center;
+        font-size: 20px;
+    }
+    .modalDescription{
+        font-size: 13px;
+    }
+    .modalForm{
+        margin: auto;
+    }
+    .modalForm2{
+        margin: 0;
+        width: 100%;
+    }
+    /* .modalForm input{
+        width: 15rem;
+    } */
+    /* .modalForm select{
+        width: 16rem;
+    } */
+    .modalForm label{
+        padding-left: 0;
+        font-size: 12px;
+    }
+}
+@media screen and (max-width: 744px){
+    .container{
+        width: 100vw;
+    }
+}
+@media screen and (max-width: 522px) {
+    .container{
+        padding-top: 0;
+    }
+    .modalForm{
+        width: 85vw;
+    }
+    .modalForm2{
+        width: 90%;
+        margin: auto;
+    }
+}
+@media screen and (max-width: 978px){
+    .eligibilityDetails h3{
+        font-size: 20px;
+        margin-bottom: 1rem;
+    }
+    .eligibilityDetails p{
+        font-size: 13px;
+        margin-bottom: 2rem;
+    }
+}

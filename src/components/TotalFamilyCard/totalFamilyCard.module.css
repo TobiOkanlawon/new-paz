@@ -1,0 +1,96 @@
+.totalFamilyCard{
+    margin-top: 3.62vh;
+    margin-bottom: 6.38vh;
+    border: 1px solid #ACB5BD;
+    border-radius: 15px;
+    width: 25.43vw;
+    min-width: 25rem;
+    height: 9vh;
+    padding: 1.27vh 0 3vh 1.1vw;
+}
+.totalFamilyCard p{
+    font-size: 1.7vh;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-style: Medium;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.totalFamilyCard h3{
+    font-size: 4.89vh;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-style: Bold;
+    line-height: 46px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.contentContainer{
+    display: flex;
+    align-items: center;
+}
+.contentContainer div:first-of-type{
+        display: flex;
+    }
+.familyImages{
+    position: relative;
+    padding: 0;
+}
+.familyImages img{
+    border: 2px solid #fff;
+    border-radius: 100%;
+    padding: 0;
+}
+.familyImages img:first-of-type{
+    position: relative;
+    left: 0;
+}
+.familyImages img:nth-of-type(2){
+    position: relative;
+    left: -10%;
+}
+.familyImages img:nth-of-type(3){
+    position: relative;
+    left: -20%;
+}
+.contentContainer button{
+    font-family: 'Montserrat', sans-serif;
+    padding: 1px 15px;
+    background-color: #4F85E3;
+    border: 1px solid transparent;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-style: Bold;
+    line-height: 30px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1.38vh;
+    bottom: 30%;
+}
+
+.cardImages{
+    object-fit: contain;
+    height: 4.7vh;
+}
+
+@media screen and (max-width: 951px){
+    .totalFamilyCard{
+        min-width: 20rem;
+    }
+}
+@media screen and (max-width: 600px){
+    .contentContainer{
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+    }
+    .totalFamilyCard{
+        height: 13vh;
+    }
+}

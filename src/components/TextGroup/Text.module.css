@@ -1,0 +1,34 @@
+.header{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.texts{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    background-color: #FAFAFA;
+    padding: 15px 10px;
+}
+.textContainer{
+    width: 431px;
+    height: 74px;
+    border-radius: 8px;
+    margin-bottom: 29px;
+}
+
+@media screen and (min-width: 500px) and (max-width: 990px){
+    .textContainer{
+        width: 80vw;
+    }
+}
+
+@media screen and (max-width: 495px){
+    .textContainer{
+        width: 95vw;
+    }
+}

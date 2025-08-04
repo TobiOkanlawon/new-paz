@@ -1,0 +1,62 @@
+.modalContainer{
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+.modalContainer h2{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 32px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContainer p{
+    color: #292727;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContainer label{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #292727;
+}
+.modalContainer input::placeholder{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalContainer a{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    color: #292727;
+}
+.modalContainer button{
+    background-color: #3475DF;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    padding: .6rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalFormContainer{
+    margin: 3rem 0;
+}

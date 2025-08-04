@@ -1,0 +1,23 @@
+.progressBarContainer {
+  width: 15.1vw;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  margin: 8px 0 4px 0;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.progressText {
+  font-size: 1.56vh;
+  color: #444;
+  white-space: nowrap;
+  font-family: 'Montserrat', sans-serif;
+}

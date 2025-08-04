@@ -1,0 +1,58 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  width: 51.25vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 30px;
+  position: relative;
+  animation: fadeIn 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Optional fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media screen and (min-width: 522px) and (max-width: 700px){
+    .modal{
+      width: 70.25vw;
+    }
+}
+@media screen and (max-width: 522px){
+  .modal{
+    width: 85vw;
+    padding: 30px 1rem;
+  }
+}

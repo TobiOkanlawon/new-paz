@@ -1,0 +1,51 @@
+.cardTypes{
+    border-radius: 15px;
+    border: 1px solid transparent;
+    width: 22.9vw;
+    height: 16.81vh;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    font-family: 'Montserrat', sans-serif;
+    padding: 0 1vw;
+    background-color: #3475DF0D;
+    margin-top: 4.38vh;
+}
+.cardTypes img{
+    object-fit: contain;
+    height: 10.53vh;
+}
+.cardTypes div{
+    padding-bottom: 1.2rem;
+    width: 70%;
+}
+.cardTypes div h4{
+    font-size: 2.13vh;
+    color: black;
+    margin: 0;
+}
+.cardTypes div p{
+    font-size: 1.3vh;
+    color: #204D88;
+}
+.cardTypes div button{
+    display: flex;
+    justify-self: end;
+    margin-right: 1rem;
+    padding: .5vh 1vw;
+    border-color: transparent;
+    background-color: #4F85E3;
+    color: white;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 951px){
+    .cardTypes{
+        width: 20rem !important;
+    }
+}
+@media screen and (max-width: 351px){
+    .cardTypes{
+        width: 17rem !important;
+    }
+}

@@ -1,0 +1,19 @@
+.backContainer{
+    display:flex;
+    align-items: center;
+    gap: .5rem;
+    color: #204D88;
+    font-size: 2.1vh;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+}
+.backContainer p{
+    margin: 0;
+    font-family: 'Monserrat', sans-serif;
+}
+@media screen and (max-width: 700px){
+    .backContainer{
+        margin-bottom: 1.2rem;
+    }
+}

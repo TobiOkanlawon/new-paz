@@ -1,0 +1,23 @@
+.header{
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.4vh;
+    margin: 2.2vh 0 !important;
+    color: #204D88;
+    font-weight: 700;
+}
+.headerText{
+    font-size: 1.7vh;
+    font-weight: 500;
+    color: #204D88;
+    margin: .8vh 0;
+}
+.notificationWrapper{
+    width: 71.46vw;
+    margin-top: 6.06vh;
+}
+
+@media screen and (max-width: 1200px){
+    .notificationWrapper{
+        width: 90vw;
+    }
+}

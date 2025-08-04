@@ -1,0 +1,61 @@
+.button{
+    font-family: var(--font-montserrat);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    height: 45px;
+    border-radius: 8px;
+    border: none;
+    background-color: #3475DF;
+    color: #FFFFFF;
+    width: 100%;
+    margin: 1.7rem 0 1.5rem;
+}
+.button:hover {
+  background-color: #8dccfe;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #b1b1b1;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  from{
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 480px) {
+    .button{
+        padding: 0.75rem;
+        font-size: 1rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        background-color: #3475DF;
+        color: white;
+      }
+      .button:hover {
+        background-color: #8DCCFE;
+        cursor: pointer;
+    }
+  }
+@media screen and (max-width: 700px){
+ .button{
+    width: 100% !important;
+ }   
+}

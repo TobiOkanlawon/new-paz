@@ -1,0 +1,245 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+.left {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 50vw;
+  height: 100vh;
+  /* flex: 1; */
+  background-color: #243d7d;
+  z-index: 2;
+}
+.lightbulb {
+  margin-top: rem;
+}
+.spacer {
+  flex-grow: 1;
+}
+.logo {
+  margin: 2rem;
+  align-self: start;
+}
+.leftContainer {
+  text-align: start;
+  width: 70%;
+  margin: 7rem 0;
+  position: relative;
+  z-index: 2;
+}
+.leftContainer p {
+  font-family: var(--font-montserrat);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #8dccfe;
+}
+.leftContainer h1 {
+  font-family: var(--font-poppins);
+  font-weight: 700;
+  font-size: 2.3rem;
+  line-height: 60px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #ffffff;
+  max-width: 419px;
+  z-index: 1;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50vw;
+  /* height: 100vh;   */
+  /* flex: 1; */
+}
+.right h3 {
+  color: #243d7d;
+  font-family: var(--font-poppins);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 60px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  margin-top: 5rem;
+}
+.right form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  /* align-items: center; */
+}
+.returnToLogin {
+  color: #204d88;
+  display: block;
+  text-align: center;
+  font-family: var(--font-montserrat);
+  font-weight: 400;
+  font-size: 0.8rem;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-decoration: none;
+}
+.right form p {
+  font-family: var(--font-montserrat);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 19.5px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #4e5a66;
+}
+
+.primary {
+  width: 2rem;
+}
+
+.right form p a {
+  font-family: var(--font-montserrat);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 19.5px;
+  letter-spacing: 0px;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 0%;
+  color: #4e5a66;
+}
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .logo {
+    margin: 2rem auto;
+  }
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+  .left {
+    width: 100vw;
+    height: auto;
+    margin: 0;
+    padding: 0 2rem;
+  }
+  .right {
+    width: 100vw;
+    height: auto;
+  }
+  .right h3 {
+    margin-top: 2rem;
+  }
+  .right form input {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+    background-color: #fff;
+  }
+  .mobileContainer {
+    width: 100%;
+    max-width: 400px;
+  }
+  .left {
+    display: none;
+  }
+  .right {
+    display: none;
+  }
+  .mobileContainer h3 {
+    font-family: var(--font-montserrat);
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #243d7d;
+    text-align: center;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .form label {
+    font-family: var(--font-montserrat);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #292727;
+  }
+
+  .form input {
+    width: 90%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-family: var(--font-montserrat);
+    margin-bottom: 1rem;
+  }
+
+  .form input::placeholder {
+    color: #aaa;
+    font-weight: 500;
+  }
+
+  .form p {
+    font-size: 0.65rem;
+    color: #4e5a66;
+    line-height: 1.5;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  .form p a {
+    display: inline;
+    font-weight: 300;
+    text-decoration: underline;
+    color: #4e5a66;
+    font-size: 0.65rem;
+  }
+
+  .arrowLeft {
+    margin-right: 0.5rem;
+    color: #204d88;
+  }
+
+  .mobile a {
+    font-size: 0.875rem;
+    color: #204d88;
+    margin-top: 1.5rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mobile {
+    width: 90vw;
+  }
+}

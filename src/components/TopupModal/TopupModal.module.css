@@ -1,0 +1,115 @@
+.modalContainer{
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+.modalContainer h2{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 32px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContainer p{
+    color: #292727;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContainer label{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #292727;
+}
+.modalContainer input::placeholder{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalContainer span{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    color: #292727;
+}
+.modalContainer button{
+    background-color: #3475DF;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    padding: .6rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalFormContainer{
+    margin: 3rem 0;
+}
+
+.addCard{
+    color: #fff;
+    box-shadow: 0px 0px 15px 0px #0000001A;
+    display: none;
+    justify-content: start;
+    align-items: center;
+    gap: 2.2rem;
+    padding: 1vh 0 1vh 2vw;
+    position: relative;
+    height: 4vh;
+    width: 100%;
+}
+.addCard img{
+    position: absolute;
+    z-index: 10;
+}
+.addCard input{
+    height: 100%;
+    width: 80%;
+    right: 0;
+    position: absolute;
+    border: none;
+}
+.addCard input::placeholder{
+    color: #292727;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+@media screen and (max-width: 700px){
+    .modalContainer h2{
+        font-size: 1.5rem;
+        margin-bottom: .5rem;
+    }
+    .modalContainer p{
+        font-size: .9rem;
+        margin: 0 0 1rem 0;
+    }
+    .modalFormContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        gap: 1rem;
+    }
+    .modalContainer button{
+        margin-top: 1rem;
+    }
+}
