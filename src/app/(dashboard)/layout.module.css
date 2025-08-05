@@ -1,19 +1,20 @@
-.dashboardMain{
-    display:flex;
-    flex-direction: row;
+.dashboardMain {
+  display: flex;
+  flex-direction: row;
 }
-body{
-    overflow: hidden;
+.body {
+  overflow: hidden;
 }
 @media screen and (max-width: 950px) {
- .dashboardMain{
+  .dashboardMain {
     justify-content: center;
     align-items: center;
-}   
+  }
 }
+
 @media screen and (max-width: 743px) {
-    .dashboardMain{
-       justify-content: start;
-       align-items: center;
-    }   
+  .dashboardMain {
+    justify-content: start;
+    align-items: center;
+  }
 }
