@@ -1,4 +1,5 @@
 :root {
+  --primary: #243d7d;
   --primary-blue: #3475df;
 }
 
@@ -7,8 +8,8 @@ h1 {
 }
 
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 button {
