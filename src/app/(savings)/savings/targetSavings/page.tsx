@@ -8,11 +8,9 @@ import NotificationContainer from "@/components/NotificationContainer";
 import TopUpModal from "@/components/TopupModal";
 import Modal from "@/components/Modal";
 import WithdrawModal from "@/components/WithdrawModal";
-import ToggleSwitch from '@/components/ToggleSwitch';
+import ToggleSwitch from "@/components/ToggleSwitch";
 import WithdrawalOptions from "@/components/WithdrawalOptions";
-import Notifications from '@/components/Notifications'
-
-
+import Notifications from "@/components/Notifications";
 
 const TargetSavings = () => {
   const router = useRouter();
@@ -27,23 +25,23 @@ const TargetSavings = () => {
 
   const handleCloseModal = () => {
     setIsActive(false);
-  }
+  };
   const handleOpenModal = () => {
     setIsActive(true);
-  }
+  };
   const handleCloseModal1 = () => {
     setIsActive2(false);
-  }
+  };
   const handleOpenModal1 = () => {
     setIsActive2(true);
-  }
+  };
 
-  let [isActive, setIsActive]  = useState(false)
-  let [isActive2, setIsActive2]  = useState(false)
+  const [isActive, setIsActive] = useState(false);
+  const [isActive2, setIsActive2] = useState(false);
   const [fundsLocked, setFundsLocked] = useState(false);
-  
+
   const [isPending, setIsPending] = useState(false);
-  const handlePending = () => setIsPending(true)
+  const handlePending = () => setIsPending(true);
 
   return (
     <div className={styles.container}>
@@ -65,13 +63,22 @@ const TargetSavings = () => {
       <div className={styles.headerContainer}>
         <div>
           <h2 className={styles.header}>Project New Car</h2>
-          <p className={styles.headingText}>
-            I must buy Camaro
-          </p>
+          <p className={styles.headingText}>I must buy Camaro</p>
         </div>
         <div className={styles.actionsContainer}>
-          <p style={{color: '#7131DA', fontWeight: '500'}}><Image style={{marginTop: '.1rem'}} src={'/share.svg'} alt="share icon" width={13.5} height={14.94}/> Share payement link</p>
-          <button onClick={handleOpenModal} className={styles.widFunds}>Withdraw Funds</button>
+          <p style={{ color: "#7131DA", fontWeight: "500" }}>
+            <Image
+              style={{ marginTop: ".1rem" }}
+              src={"/share.svg"}
+              alt="share icon"
+              width={13.5}
+              height={14.94}
+            />{" "}
+            Share payement link
+          </p>
+          <button onClick={handleOpenModal} className={styles.widFunds}>
+            Withdraw Funds
+          </button>
           <ToggleSwitch
             checked={fundsLocked}
             onChange={setFundsLocked}
@@ -80,35 +87,33 @@ const TargetSavings = () => {
         </div>
       </div>
 
-      <div style={{display: 'flex', gap: '2rem'}}>
+      <div style={{ display: "flex", gap: "2rem" }}>
         <TotalBalanceCard
           header="PAZ saver balance"
           buttonText="Instant top-up "
           isPending={isPending}
           money={50000}
           onCancelPending={() => setIsPending(false)}
-          modalContent={
-            <TopUpModal />
-          }
+          modalContent={<TopUpModal />}
         />
-        <TotalBalanceCard
-        header="Your Target"
-        money={50000000}
-        />
+        <TotalBalanceCard header="Your Target" money={50000000} />
       </div>
 
       <div className={styles.activities}>
-        <Notifications header={'Recent activity'} />
+        <Notifications header={"Recent activity"} />
       </div>
-       {isActive && (
+      {isActive && (
         <Modal isOpen={isActive} onClose={handleCloseModal}>
-          {(
+          {
             // <WithdrawModal />
-            <WithdrawalOptions handlePending={handlePending} onClose={handleCloseModal}/>
-          )}
+            <WithdrawalOptions
+              handlePending={handlePending}
+              onClose={handleCloseModal}
+            />
+          }
         </Modal>
       )}
-       {/* {isActive2 && (
+      {/* {isActive2 && (
         <Modal isOpen={isActive2} onClose={handleCloseModal1}>
           {(
             <WithdrawModal />

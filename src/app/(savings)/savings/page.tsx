@@ -44,7 +44,8 @@ const Savings = () => {
       color: "#243D7D1A",
     },
   ];
-  const familyForm = (
+
+  const FamilyForm = (
     <form className={styles.modalContainer}>
       <h1>PAZ Family Vault</h1>
       <p>Begin your journey to financial freedom</p>
@@ -114,7 +115,7 @@ const Savings = () => {
       </button>
     </form>
   );
-  const targetForm = (
+  const TargetForm = (
     <form className={styles.modalContainer}>
       <h1>Set-up Your PAZ Target Saver Account</h1>
       <p>Begin your journey to financial freedom</p>
@@ -270,17 +271,10 @@ const Savings = () => {
         </div>
       </div>
       {isActive && (
-        <Modal
-          isOpen={isActive}
-          onClose={handleCloseModal}
-          children={
-            modalType === "family"
-              ? familyForm
-              : modalType === "target"
-                ? targetForm
-                : null
-          }
-        />
+        <Modal isOpen={isActive} onClose={handleCloseModal}>
+          modalType === "family" ? FamilyForm : modalType === "target" ?
+          TargetForm : null
+        </Modal>
       )}
     </div>
   );

@@ -28,7 +28,7 @@ const RegisterForm = () => {
       remember: false,
     },
     validationSchema: schema,
-    onSubmit: (values, formikHelpers) => {
+    onSubmit: (values) => {
       alert(values);
     },
   });

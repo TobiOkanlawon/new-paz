@@ -8,7 +8,7 @@ import TopUpModal from "@/components/TopupModal";
 import Modal from "@/components/Modal";
 import WithdrawModal from "@/components/WithdrawModal";
 import Back from "@/components/BackContainer";
-import Notifications from '@/components/Notifications'
+import Notifications from "@/components/Notifications";
 
 const SoloSaver = () => {
   interface Notification {
@@ -18,17 +18,16 @@ const SoloSaver = () => {
     amount?: string;
   }
 
-  const notifications: Notification[] = [
-  ];
+  const notifications: Notification[] = [];
 
   const handleCloseModal = () => {
     setIsActive(false);
-  }
+  };
   const handleOpenModal = () => {
     setIsActive(true);
-  }
+  };
 
-  let [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(false);
   return (
     <div className={styles.container}>
       <Back />
@@ -40,7 +39,9 @@ const SoloSaver = () => {
           </p>
         </div>
         <div>
-          <button onClick={handleOpenModal} className={styles.widFunds}>Withdraw Funds</button>
+          <button onClick={handleOpenModal} className={styles.widFunds}>
+            Withdraw Funds
+          </button>
         </div>
       </div>
 
@@ -48,9 +49,7 @@ const SoloSaver = () => {
         <TotalBalanceCard
           header="PAZ saver balance"
           buttonText="Instant top-up "
-          modalContent={
-            <TopUpModal />
-          }
+          modalContent={<TopUpModal />}
         />
       </div>
 
@@ -76,13 +75,14 @@ const SoloSaver = () => {
             <p>You have no recent actiities yet!</p>
           </div>
         )} */}
-        <Notifications header="Recent activities" notifications={notifications} />
+        <Notifications
+          header="Recent activities"
+          notifications={notifications}
+        />
       </div>
-       {isActive && (
+      {isActive && (
         <Modal isOpen={isActive} onClose={handleCloseModal}>
-          {(
-            <WithdrawModal />
-          )}
+          {<WithdrawModal />}
         </Modal>
       )}
     </div>

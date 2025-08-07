@@ -1,11 +1,11 @@
-'use client'
-import React, { useEffect, useRef, useState } from 'react'
-import styles from './loanBalanceCard.module.css'
-import Image from 'next/image'
-import { FaPlus } from 'react-icons/fa'
-import Modal from '../Modal/index'
-import InputGroup from '../InputGroup'
-import Link from 'next/link'
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./loanBalanceCard.module.css";
+import Image from "next/image";
+import { FaPlus } from "react-icons/fa";
+import Modal from "../Modal/index";
+import InputGroup from "../InputGroup";
+import Link from "next/link";
 
 type LoanStatus = "pending" | "approved" | "withdrawn" | "repaid" | "non";
 
@@ -15,12 +15,17 @@ interface TotalBalanceCardProps {
   onUpdateStatus: (status: LoanStatus) => void;
 }
 
-const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStatus, onUpdateStatus }) => {
+const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({
+  loanAmount,
+  loanStatus,
+  onUpdateStatus,
+}) => {
   const [showMoney, setShowMoney] = useState(true);
 
-  const displayAmount = loanStatus === "withdrawn" && loanAmount
-    ? (-loanAmount).toLocaleString()
-    : loanAmount.toLocaleString();
+  const displayAmount =
+    loanStatus === "withdrawn" && loanAmount
+      ? (-loanAmount).toLocaleString()
+      : loanAmount.toLocaleString();
   // const [loanStatus, setLoanStatus] = useState<LoanStatus>("non");
 
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -39,7 +44,7 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
       }
     }, 10000);
     return () => clearTimeout(timer);
-  }, [loanStatus]);
+  }, [loanStatus, onUpdateStatus]);
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
@@ -51,7 +56,13 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
   }, []);
 
   return (
-    <div className={isStacked && loanStatus !== 'non' && loanStatus !== 'repaid' ? `${styles.totalBalanceCard} ${styles.totalBalanceCardStacked}` : styles.totalBalanceCard}>
+    <div
+      className={
+        isStacked && loanStatus !== "non" && loanStatus !== "repaid"
+          ? `${styles.totalBalanceCard} ${styles.totalBalanceCardStacked}`
+          : styles.totalBalanceCard
+      }
+    >
       <p>Loan balance</p>
       <div
         className={
@@ -61,14 +72,14 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
         }
       >
         <h3 ref={h3Ref} className={styles.amountHeader}>
-          ₦ {showMoney ? displayAmount : '****'}{' '}
+          ₦ {showMoney ? displayAmount : "****"}{" "}
           <span>
             <Image
-              src={showMoney ? '/eyeOff.png' : '/eyeOff.png'}
-              alt='Money Toggle'
+              src={showMoney ? "/eyeOff.png" : "/eyeOff.png"}
+              alt="Money Toggle"
               width={12}
               height={12}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
               onClick={handleToggle}
             />
           </span>
@@ -77,7 +88,7 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
         {/* Pending status */}
         {loanStatus === "pending" && (
           <div className={styles.pendingContainer}>
-            <p style={{ background: '#E3B44F' }}>Pending approval</p>
+            <p style={{ background: "#E3B44F" }}>Pending approval</p>
           </div>
         )}
 
@@ -85,7 +96,7 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
         {loanStatus === "approved" && (
           <button
             className={styles.cardButton}
-            style={{ backgroundColor: '#4F85E3', width: '50%' }}
+            style={{ backgroundColor: "#4F85E3", width: "50%" }}
             onClick={() => setShowWithdrawModal(true)}
           >
             Withdraw Loan <FaPlus />
@@ -96,7 +107,7 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
         {loanStatus === "withdrawn" && (
           <button
             className={styles.cardButton}
-            style={{ backgroundColor: '#4F85E3', width: '60%' }}
+            style={{ backgroundColor: "#4F85E3", width: "60%" }}
             onClick={() => setShowRepayModal(true)}
           >
             Repay Loan <FaPlus />
@@ -106,7 +117,10 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
 
       {/* Withdraw Modal */}
       {showWithdrawModal && (
-        <Modal isOpen={showWithdrawModal} onClose={() => setShowWithdrawModal(false)}>
+        <Modal
+          isOpen={showWithdrawModal}
+          onClose={() => setShowWithdrawModal(false)}
+        >
           <div className={styles.WithdrawalModalContainer}>
             <h2>Withdraw Your Loan</h2>
             <p>Select your withdrawal method</p>
@@ -115,8 +129,11 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
                 <p>Amount due for withdrawal</p>
                 <h4>₦ {loanAmount.toLocaleString()}</h4>
               </div>
-              <InputGroup label="Select account to credit*" placeholder="Select bank to withdraw into" />
-              <Link href={'#'}>+ Add account to PAZ here</Link>
+              <InputGroup
+                label="Select account to credit*"
+                placeholder="Select bank to withdraw into"
+              />
+              <Link href={"#"}>+ Add account to PAZ here</Link>
             </div>
             <button
               onClick={() => {
@@ -137,8 +154,14 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
             <h2>Repay Loan</h2>
             <p>Payback your loan to increase your chance of another one</p>
             <div className={styles.withdrawalmodalFormContainer}>
-              <InputGroup label="Amount to refund*" placeholder="Enter how much you want to pay back " />
-              <InputGroup label="Select account to charge*" placeholder="Select bank to withdraw from" />
+              <InputGroup
+                label="Amount to refund*"
+                placeholder="Enter how much you want to pay back "
+              />
+              <InputGroup
+                label="Select account to charge*"
+                placeholder="Select bank to withdraw from"
+              />
             </div>
             <button
               onClick={() => {
@@ -152,7 +175,7 @@ const LoanBalanceCard: React.FC<TotalBalanceCardProps> = ({ loanAmount, loanStat
         </Modal>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LoanBalanceCard
+export default LoanBalanceCard;

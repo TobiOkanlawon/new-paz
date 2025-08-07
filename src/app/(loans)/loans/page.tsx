@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import SavingsAlert from "@/components/SavingsAlert";
 import FileUploader from "@/components/FIleInput";
-import Notifications from '@/components/Notifications';
+import Notifications from "@/components/Notifications";
 
 const schema = yup.object({
   purpose: yup.string().required("Please select a purpose for the loan"),
@@ -42,11 +42,10 @@ const Loans = () => {
     }
   };
 
-
   const formik = useFormik<LoanSchema>({
     initialValues: {
       purpose: "",
-      amount: 1000, 
+      amount: 1000,
       duration: "",
     },
     validationSchema: schema,
@@ -68,20 +67,19 @@ const Loans = () => {
       handleLoanEligibility(values.amount);
     },
   });
-  type LoanStatus = "non"|"pending" | "approved" | "withdrawn" | "repaid";
+  type LoanStatus = "non" | "pending" | "approved" | "withdrawn" | "repaid";
 
   const [loanAmount, setLoanAmount] = useState<number>(0);
   const [loanStatus, setLoanStatus] = useState<LoanStatus>("non");
 
   useEffect(() => {
-    if (loanStatus === 'repaid') {
+    if (loanStatus === "repaid") {
       setLoanAmount(0);
     }
   }, [loanStatus]);
 
   const [loanPurpose, setLoanPurpose] = useState<string>("");
   const [loanDuration, setLoanDuration] = useState<string>("");
-
 
   const [isVisible, setIsVisible] = useState(false);
   const [isWithdrawalVisible, setIsWithdrawalVisible] = useState(false);
@@ -90,7 +88,6 @@ const Loans = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eligibleAmount, setEligibleAmount] = useState<number>(0);
   const [modalSummary, setModalSummary] = useState<boolean>(false);
-
 
   const handleButtonVisibility = () => setIsVisible(true);
   const handleWithdrawalButtonVisibility = () => setIsWithdrawalVisible(true);
@@ -108,16 +105,14 @@ const Loans = () => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("Loan disbursed successful");
 
-  
-
   return (
     <div className={styles.container}>
-        <SavingsAlert
-          isActive={isAlertVisible}
-          isSuccessful={true}
-          onClose={() => setIsAlertVisible(false)}
-          message={alertMessage}
-        />
+      <SavingsAlert
+        isActive={isAlertVisible}
+        isSuccessful={true}
+        onClose={() => setIsAlertVisible(false)}
+        message={alertMessage}
+      />
       <div className={styles.header}>
         <div>
           <h1>Loans</h1>
@@ -128,11 +123,11 @@ const Loans = () => {
         )}
       </div>
       <div className={styles.totalAmountCardContainer}>
-          <LoanBalanceCard
-            loanAmount={loanAmount}
-            loanStatus={loanStatus}
-            onUpdateStatus={setLoanStatus}
-          />
+        <LoanBalanceCard
+          loanAmount={loanAmount}
+          loanStatus={loanStatus}
+          onUpdateStatus={setLoanStatus}
+        />
       </div>
       {isFirstLoan ? (
         <InstantLoanCard
@@ -150,10 +145,7 @@ const Loans = () => {
           <p className={styles.modalDescription}>
             Get instant loan quick and easy
           </p>
-          <form
-            onSubmit={formik.handleSubmit}
-            className={styles.modalForm}
-          >
+          <form onSubmit={formik.handleSubmit} className={styles.modalForm}>
             <SelectGroup
               id="purpose"
               label="Purpose of loan"
@@ -182,81 +174,97 @@ const Loans = () => {
               {...formik.getFieldProps("duration")}
             />
 
-            <button type="submit">
-              Check Eligibility
-            </button>
+            <button type="submit">Check Eligibility</button>
           </form>
         </Modal>
       )}
       {eligibilityModalOpen && (
-        <Modal onClose={() => setEligibilityModalOpen(false)} isOpen={eligibilityModalOpen}>
-            {isAboveThreshold ? (
-                <div className={`${styles.eligibilityDetails} ${styles.modal2}`}>
-                    <h3>Instant Loan Application Form</h3>
-                    <p>Get instant loan quick and easy</p>
-                    <div className={`${styles.modalForm2}`}>
-                        <FileUploader />
-                        </div>
-                        <button className={styles.button2} onClick={() => {
-                            setEligibilityModalOpen(false);
-                            setModalSummary(true);
-                        }}>Continue</button>
-                    </div>
-                )
-                : (
-                    <div className={styles.eligibilityDetails}>
-                        <h3>Loan Eligibility</h3>
-                        <p>You are only eligible to</p>
-                        <h1>{`₦${eligibleAmount}`}</h1>
-                        <h6>For a period of <span>1 MONTH</span></h6>
-                        <button onClick={() => {
-                            setEligibilityModalOpen(false);
-                            setIsAlertVisible(true);
-                        }}>Take Loan</button>
-                    </div>
-                )
-            }
+        <Modal
+          onClose={() => setEligibilityModalOpen(false)}
+          isOpen={eligibilityModalOpen}
+        >
+          {isAboveThreshold ? (
+            <div className={`${styles.eligibilityDetails} ${styles.modal2}`}>
+              <h3>Instant Loan Application Form</h3>
+              <p>Get instant loan quick and easy</p>
+              <div className={`${styles.modalForm2}`}>
+                <FileUploader />
+              </div>
+              <button
+                className={styles.button2}
+                onClick={() => {
+                  setEligibilityModalOpen(false);
+                  setModalSummary(true);
+                }}
+              >
+                Continue
+              </button>
+            </div>
+          ) : (
+            <div className={styles.eligibilityDetails}>
+              <h3>Loan Eligibility</h3>
+              <p>You are only eligible to</p>
+              <h1>{`₦${eligibleAmount}`}</h1>
+              <h6>
+                For a period of <span>1 MONTH</span>
+              </h6>
+              <button
+                onClick={() => {
+                  setEligibilityModalOpen(false);
+                  setIsAlertVisible(true);
+                }}
+              >
+                Take Loan
+              </button>
+            </div>
+          )}
         </Modal>
       )}
       {/* MODAL LOAN SUMMARY */}
-      {
-          modalSummary && (
-          <Modal onClose={() => setModalSummary(false)} isOpen={modalSummary}>
-              {
-                  <div className={`${styles.loanSummary} ${styles.modal2}`}>
-                      <h2>Loan application summary</h2>
-                      <p>Please look through and verify the form</p>
-                      <div className={styles.formDetails}>
-                          <div>
-                              <p>Loan amount</p>
-                              <h3>{`₦${loanAmount.toLocaleString()}`}</h3>
-                          </div>
-                          <div>
-                              <p>Loans application</p>
-                              <h3>{loanPurpose}</h3>
-                          </div>
-                          <div>
-                              <p>Loan duration</p>
-                              <h3>{loanDuration}</h3>
-                          </div>
-                          <div>
-                              <p>Monthly repayment</p>
-                              <h3>N770,000</h3>
-                          </div>
-                      </div>
-                      <p>By continuing with this request you consent to us charging your acccounts in the event that your default with your loan refund.</p>
-                      <button className={styles.button2} onClick={() => {
-                          setModalSummary(false);
-                          formik.handleSubmit();
-                          setAlertMessage("Loan has been submitted for approval")
-                          // handlePending();
-                          setIsAlertVisible(true);
-                      }}>Get Loan</button>
-                  </div>
-              }
-          </Modal>
-          )
-      }
+      {modalSummary && (
+        <Modal onClose={() => setModalSummary(false)} isOpen={modalSummary}>
+          {
+            <div className={`${styles.loanSummary} ${styles.modal2}`}>
+              <h2>Loan application summary</h2>
+              <p>Please look through and verify the form</p>
+              <div className={styles.formDetails}>
+                <div>
+                  <p>Loan amount</p>
+                  <h3>{`₦${loanAmount.toLocaleString()}`}</h3>
+                </div>
+                <div>
+                  <p>Loans application</p>
+                  <h3>{loanPurpose}</h3>
+                </div>
+                <div>
+                  <p>Loan duration</p>
+                  <h3>{loanDuration}</h3>
+                </div>
+                <div>
+                  <p>Monthly repayment</p>
+                  <h3>N770,000</h3>
+                </div>
+              </div>
+              <p>
+                By continuing with this request you consent to us charging your
+                acccounts in the event that your default with your loan refund.
+              </p>
+              <button
+                className={styles.button2}
+                onClick={() => {
+                  setModalSummary(false);
+                  formik.handleSubmit();
+                  setAlertMessage("Loan has been submitted for approval");
+                  // handlePending();
+                  setIsAlertVisible(true);
+                }}
+              >
+                Get Loan
+              </button>
+            </div>
+          }
+        </Modal>
+      )}
     </div>
   );
 };
