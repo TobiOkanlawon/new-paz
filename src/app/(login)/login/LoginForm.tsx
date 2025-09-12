@@ -30,23 +30,12 @@ const LoginForm = () => {
     },
     validationSchema: schema,
     onSubmit: (values, formikHelpers) => {
-<<<<<<< HEAD
       alert(values);
     },
   });
   return (
     <>
       <h3>Login to your account</h3>
-=======
-      console.log(values);
-      alert(values);
-    },
-  });
-
-  return (
-    <>
-      <h1 className={styles.heading}>Login to your account</h1>
->>>>>>> chore/refactor
 
       <form
         action="POST"
@@ -87,11 +76,7 @@ const LoginForm = () => {
           Login
         </button> */}
         <Button type="submit" className={styles.primary} label="Login">
-<<<<<<< HEAD
           Login
-=======
-          Log in
->>>>>>> chore/refactor
         </Button>
         <div className={styles.linkContainer}>
           <div className={styles.linkWrapper}>

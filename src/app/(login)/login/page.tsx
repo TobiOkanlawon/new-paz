@@ -17,11 +17,7 @@ export default function Login() {
             height={42.61}
             className={styles.logo}
           />
-<<<<<<< HEAD
           <h1>Welcome</h1>
-=======
-          <h2>Welcome</h2>
->>>>>>> chore/refactor
           <p>Powering Your Dreams!</p>
           <div className={styles.spacer}></div>
           <Image

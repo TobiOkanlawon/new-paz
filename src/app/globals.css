@@ -4,20 +4,12 @@
 }
 
 h1 {
-<<<<<<< HEAD
   font-family: "Inter", sans-serif;
-=======
-    font-family: var(--font-inter);
->>>>>>> chore/refactor
 }
 
 body {
   padding: 0;
   margin: 0;
-
-  /* Restricting the minimum size of the window so that we don't have to deal with what things look like lower than that size */
-
-  min-width: 320px;
 }
 
 button {
@@ -38,7 +30,6 @@ button.primary {
   text-align: center;
   border: none;
   margin: 2rem;
-<<<<<<< HEAD
 }
 
 button:hover {
@@ -72,39 +63,4 @@ input[type="tel"]::placeholder {
   .special-underline:hover:after {
     width: 100%;
   }
-=======
->>>>>>> chore/refactor
 }
-
-button:hover {
-}
-
-input[type="email"]::placeholder,
-input[type="password"]::placeholder,
-input[type="text"]::placeholder,
-input[type="tel"]::placeholder {
-  color: #aaa;
-  font-weight: 500;
-}
-
-/* @media not prefers-reduced-motion { */
-/*   .special-underline { */
-/*     position: relative; */
-/*   } */
-
-/*   .special-underline::after { */
-/*     content: ""; */
-/*     position: absolute; */
-/*     height: 5px; */
-/*     top: 15; */
-/*     left: 0; */
-/*     bottom: 0; */
-/*     width: 0; */
-/*     background-color: var(--primary-blue); */
-/*     transition: width 0.2s; */
-/*   } */
-
-/*   .special-underline:hover:after { */
-/*     width: 100%; */
-/*   } */
-/* } */
