@@ -1,6 +1,8 @@
 .formGroup {
-  width: 97%;
+    width: 97%;
+    margin-bottom: 12px;
 }
+
 .label {
   font-family: var(--font-montserrat);
   font-weight: 500;
@@ -23,7 +25,6 @@
   border-radius: 8px;
   border: solid 1px #c4c4c4;
   width: 100%;
-  margin-bottom: 1rem;
 }
 
 .input::placeholder {
@@ -33,6 +34,19 @@
   line-height: 100%;
   letter-spacing: 0%;
   color: #aaa;
+}
+
+.errorsContainer {
+    margin-top: 4px;
+}
+
+.error {
+    color: var(--error-red);
+    font-size: 0.8rem;
+}
+
+.errorInput {
+    border-color: var(--error-red);
 }
 
 @media screen and (max-width: 768px) {

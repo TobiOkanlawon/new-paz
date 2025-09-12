@@ -1,6 +1,8 @@
 :root {
   --primary: #243d7d;
-  --primary-blue: #3475df;
+    --primary-blue: #3475df;
+
+    --error-red: #ff3333;
 }
 
 h1 {

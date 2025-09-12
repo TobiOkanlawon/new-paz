@@ -7,9 +7,13 @@ import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
+import { handleErrorDisplay } from "@/libs/helpers";
 
 const schema = yup.object({
-  email: yup.string().email("Enter a valid email").required(),
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("You must specify an email address"),
   password: yup
     .string()
     .required("Please Enter your password")
@@ -49,6 +53,7 @@ const LoginForm = () => {
           id="email"
           className={styles.email}
           {...formik.getFieldProps("email")}
+          errors={handleErrorDisplay(formik, "email")}
         />
         <Input
           label="Password"
@@ -56,6 +61,7 @@ const LoginForm = () => {
           placeholder="Enter your password"
           id="password"
           className={styles.password}
+          errors={handleErrorDisplay(formik, "password")}
           {...formik.getFieldProps("password")}
         />
         <div className={styles.formBottom}>
