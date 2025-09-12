@@ -130,14 +130,19 @@
   display: none;
 }
 
-@media screen and (min-width: 769px) and (max-width: 1120px){
-  .PazIlls{
+.linkWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (min-width: 769px) and (max-width: 1120px) {
+  .PazIlls {
     object-fit: cover;
     width: 92%;
   }
 }
-@media screen and (width: 1024px) and (height: 600px){
-  .PazIlls{
+@media screen and (width: 1024px) and (height: 600px) {
+  .PazIlls {
     object-fit: cover;
     width: 92%;
     bottom: 40px;
@@ -168,7 +173,7 @@
   .formBottom {
     width: 100%;
   }
-  .form{
+  .form {
     width: 70%;
   }
 }
@@ -302,35 +307,36 @@
     text-decoration: none;
   }
 }
-@media screen and (min-width: 1440px){
-  .right{
+@media screen and (min-width: 1440px) {
+  .right {
     padding-top: 5rem;
   }
-  .form{
+  .form {
     width: 70%;
   }
-  .right h3{
-    font-size: 2.4rem;
+  .right h3 {
+    font-size: 2rem;
     margin-bottom: 3rem;
   }
   .formBottom {
     width: 95%;
   }
 
-  .formBottom div a{
-    font-size: 1.1rem;
+  .formBottom div a {
+    font-size: 0.8rem;
   }
 
-  .form label{
-    font-size: 1.2rem;
+  .form label {
+    font-size: 0.8rem;
   }
 
-  .form input{
-    padding: 1rem 2rem;
+  .form input {
+    padding: 15px 13px;
   }
 
-  .form input::placeholder{
-    font-size: 1rem;
+  .form input[type="email"],
+  .form input[type="password"] {
+    width: 90%;
   }
 
   .createNewAccount {

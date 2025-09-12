@@ -1,4 +1,4 @@
-.formGroup{
+.formGroup {
   width: 97%;
 }
 .label {
@@ -9,7 +9,7 @@
   letter-spacing: 0%;
   color: #292727;
   display: block;
-  padding: 0.5rem 0rem;
+  padding: 12px 4px;
   align-self: flex-start;
 }
 
@@ -18,8 +18,8 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
-  color: #d9d9d9;
-  padding: 1rem 0 1rem 1rem;
+  color: #292727;
+  padding: 1rem;
   border-radius: 8px;
   border: solid 1px #c4c4c4;
   width: 100%;
@@ -32,25 +32,26 @@
   font-size: 12px;
   line-height: 100%;
   letter-spacing: 0%;
-  color: #292727;
+  color: #aaa;
 }
+
 @media screen and (max-width: 768px) {
   .right form label {
     width: 70%;
-  } 
-}
-@media screen and (min-width: 1440px){
-  .input::placeholder {
-    font-size: 1rem;
   }
 }
-@media screen and (max-width: 803px){
-  .input{
+@media screen and (min-width: 1440px) {
+  .input::placeholder {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 803px) {
+  .input {
     width: 97%;
   }
 }
-@media screen and (min-width: 522px) and (max-width: 801px){
-  .formGroup{
+@media screen and (min-width: 522px) and (max-width: 801px) {
+  .formGroup {
     width: 100%;
   }
   /* .input{
@@ -58,7 +59,7 @@
   } */
 }
 @media screen and (max-width: 522px) {
-  .input{
+  .input {
     width: 96%;
   }
 }

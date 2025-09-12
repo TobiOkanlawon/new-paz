@@ -72,9 +72,6 @@ const LoginForm = () => {
             <Link href="/forgot-password">Forgot Password?</Link>
           </div>
         </div>
-        {/* <button className="primary" type="submit">
-          Login
-        </button> */}
         <Button type="submit" className={styles.primary} label="Login">
           Login
         </Button>
