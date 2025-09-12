@@ -17,7 +17,11 @@
   height: 100%;
 }
 
+<<<<<<< HEAD
 .left h1 {
+=======
+.left h2 {
+>>>>>>> chore/refactor
   font-family: var(--font-poppins);
   font-weight: 700;
   font-size: 46px;
@@ -57,10 +61,17 @@
   padding: 2rem;
   width: 40vw;
 }
+<<<<<<< HEAD
 .right h3 {
   font-family: var(--font-poppins);
   font-weight: 700;
   font-size: 24px;
+=======
+.right h1 {
+  font-family: var(--font-poppins);
+  font-weight: 700;
+  font-size: 18px;
+>>>>>>> chore/refactor
   line-height: 60px;
   letter-spacing: 0px;
   vertical-align: middle;
@@ -130,20 +141,32 @@
   display: none;
 }
 
+<<<<<<< HEAD
 @media screen and (min-width: 769px) and (max-width: 1120px){
   .PazIlls{
+=======
+@media screen and (min-width: 769px) and (max-width: 1120px) {
+  .PazIlls {
+>>>>>>> chore/refactor
     object-fit: cover;
     width: 92%;
   }
 }
+<<<<<<< HEAD
 @media screen and (width: 1024px) and (height: 600px){
   .PazIlls{
+=======
+
+@media screen and (width: 1024px) and (height: 600px) {
+  .PazIlls {
+>>>>>>> chore/refactor
     object-fit: cover;
     width: 92%;
     bottom: 40px;
   }
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 768px) {
   .logo {
     margin: 0 auto;
@@ -179,10 +202,53 @@
   .right {
     display: none;
   }
+=======
+/* @media screen and (max-width: 768px) { */
+/*   .logo { */
+/*     margin: 0 auto; */
+/*   } */
+
+/*   .container { */
+/*     flex-direction: column; */
+/*     height: auto; */
+/*   } */
+
+/*   .left { */
+/*     width: 100vw; */
+/*     height: auto; */
+/*     margin: 0; */
+/*     padding: 0 2rem; */
+/*   } */
+
+/*   .right { */
+/*     width: 100vw; */
+/*     height: auto; */
+/*   } */
+
+/*   .right h3 { */
+/*     margin-top: 2rem; */
+/*   } */
+
+/*   .formBottom { */
+/*     width: 100%; */
+/*   } */
+
+/*   .form { */
+/*     width: 70%; */
+/*   } */
+/* } */
+
+@media screen and (max-width: 972px) {
+  .container {
+    display: none;
+  }
+
+>>>>>>> chore/refactor
   .mobile {
     display: flex;
     flex-direction: column;
     align-items: center;
+<<<<<<< HEAD
     width: 100vw;
     height: 100vh;
     background-color: #243d7d;
@@ -197,6 +263,25 @@
     border-radius: 1rem;
   }
   .mobileContainer h3 {
+=======
+    width: 100%;
+    height: 100vh;
+    background-color: #243d7d;
+  }
+
+  .logo {
+    padding: 4em 2em 2em 2em;
+  }
+
+  .mobileContainer {
+    padding: 2rem;
+    background-color: #fff;
+    width: 70%;
+    border-radius: 1rem;
+  }
+
+  .mobileContainer h1 {
+>>>>>>> chore/refactor
     font-family: Poppins;
     font-weight: 700;
     font-size: 16px;
@@ -233,8 +318,13 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
+<<<<<<< HEAD
     color: #d9d9d9;
     padding: 1rem;
+=======
+    /* color: #d9d9d9; */
+    /* padding: 1rem; */
+>>>>>>> chore/refactor
     border-radius: 8px;
     border: solid 1px #204d88;
   }
@@ -302,6 +392,7 @@
     text-decoration: none;
   }
 }
+<<<<<<< HEAD
 @media screen and (min-width: 1440px){
   .right{
     padding-top: 5rem;
@@ -331,9 +422,54 @@
 
   .form input::placeholder{
     font-size: 1rem;
+=======
+
+@media screen and (min-width: 1440px) {
+    /* This is for really large screen sizes */
+    
+  .right {
+    padding-top: 5rem;
+  }
+  .form {
+    width: 70%;
+  }
+  .right h1 {
+    font-size: 1.8rem;
+    margin-bottom: 3rem;
+  }
+
+  .formBottom div a {
+    font-size: 0.9rem;
+>>>>>>> chore/refactor
   }
 
   .createNewAccount {
     font-size: 1rem;
   }
 }
+<<<<<<< HEAD
+=======
+
+@media screen and (max-width: 375px) {
+  /* This is for super small screens like the iPhone SE 2 and below */
+
+  .mobileContainer form input {
+    /* padding: 0px; */
+  }
+
+  .mobileContainer {
+    padding: 6px 12px;
+    width: 90%;
+  }
+
+  .formBottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .remember {
+    margin-bottom: 24px;
+  }
+}
+>>>>>>> chore/refactor

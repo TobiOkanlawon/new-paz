@@ -31,7 +31,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+<<<<<<< HEAD
     <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
+=======
+    <html
+      lang="en"
+      className={`${poppins.variable} ${montserrat.variable} ${inter.variable}`}
+    >
+>>>>>>> chore/refactor
       <body>
         <Providers>{children}</Providers>
       </body>
