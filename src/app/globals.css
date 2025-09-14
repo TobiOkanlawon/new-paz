@@ -1,8 +1,8 @@
 :root {
   --primary: #243d7d;
-    --primary-blue: #3475df;
+  --primary-blue: #3475df;
 
-    --error-red: #ff3333;
+  --error-red: #ff3333;
 }
 
 h1 {
@@ -38,8 +38,8 @@ button.primary {
 
 @media not prefers-reduced-motion {
   .special-underline {
-      position: relative;
-      width: fit-content;
+    position: relative;
+    width: fit-content;
   }
 
   .special-underline::after {

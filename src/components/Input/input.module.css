@@ -43,6 +43,7 @@
 .error {
     color: var(--error-red);
     font-size: 0.8rem;
+    font-family: "Inter", Arial, sans-serif;
 }
 
 .errorInput {
