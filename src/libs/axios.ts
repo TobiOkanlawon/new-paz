@@ -11,7 +11,8 @@ export const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
 });
 
-const excludeUrl: string[] = [
+
+const publicEndpoints: string[] = [
   '/v1/users/signup',
   '/v1/users/signin',
 ];
@@ -21,7 +22,7 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     // Do something before request is sent
     const token = getToken();
-    const isUrlExcluded = excludeUrl.some((url) => url === config.url);
+    const isUrlExcluded = publicEndpoints.some((url) => url === config.url);
     if (!isUrlExcluded) {
       if (token && config.headers) {
         config.headers.authorization = `${token}`;
