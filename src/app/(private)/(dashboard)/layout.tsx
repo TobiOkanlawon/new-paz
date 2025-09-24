@@ -1,8 +1,10 @@
 "use client";
+import React from "react";
 import styles from "./layout.module.css";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { useState } from "react";
+import { RecoilRoot } from "recoil";
 
 export default function DashboardLayout({
   children,
@@ -14,12 +16,14 @@ export default function DashboardLayout({
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
-    <div className={styles.body}>
-      <Navbar onToggleSidebar={toggleSidebar} />
-      <main className={styles.dashboardMain}>
-        <Sidebar isOpen={isSidebarOpen} />
-        {children}
-      </main>
-    </div>
+    <RecoilRoot>
+      <div className={styles.body}>
+        <Navbar onToggleSidebar={toggleSidebar} />
+        <main className={styles.dashboardMain}>
+          <Sidebar isOpen={isSidebarOpen} />
+          {children}
+        </main>
+      </div>
+    </RecoilRoot>
   );
 }

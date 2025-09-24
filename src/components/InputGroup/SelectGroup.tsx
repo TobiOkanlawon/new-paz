@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './InputGroup.module.css'; 
+import React from "react";
+import styles from "./InputGroup.module.css";
 
 type Props = {
   label: string;
@@ -8,20 +8,31 @@ type Props = {
   options: { label: string; value: string }[];
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
-const SelectGroup = ({ label, name, options, placeholder, ...selectProps }: Props) => {
+const SelectGroup = ({
+  label,
+  name,
+  options,
+  placeholder,
+  ...selectProps
+}: Props) => {
   return (
     <div className={styles.inputGroup}>
-      <label className={styles.label} htmlFor={name}>{label}</label>
+      <label className={styles.label} htmlFor={name}>
+        {label}
+      </label>
       <select
         className={styles.selectinput}
         name={name}
         id={name}
-        defaultValue=""
         {...selectProps}
       >
-        <option value="" disabled hidden>{placeholder}</option>
+        <option value="" disabled hidden>
+          {placeholder}
+        </option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
         ))}
       </select>
     </div>

@@ -14,3 +14,9 @@ type TLoginResponse = {
   token: string;
   user: TUser;
 }
+
+type TAddBVNResponse = {
+  "BVN Validated": boolean;
+  responseCode: string;
+  responseMessage: string;
+};

@@ -8,4 +8,4 @@ export const userState = atom<TUser | null>({
 export const authTokenState = atom<string | null>({
   key: "authTokenState",
   default: null,
-})
+});

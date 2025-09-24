@@ -1,8 +1,6 @@
 import { axiosInstance as axios, storeToken } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useSetRecoilState } from "recoil";
-import { authTokenState, userState } from "../atoms";
 
 type SignInData = {
   email: string;
@@ -11,9 +9,6 @@ type SignInData = {
 };
 
 export const useLogin = () => {
-  const setUser = useSetRecoilState(userState);
-  const setAuthState = useSetRecoilState(authTokenState);
-
   return useMutation<TLoginResponse, any, SignInData>({
     mutationKey: ["login"],
     mutationFn: async (data) => {
@@ -30,8 +25,6 @@ export const useLogin = () => {
       if (variables.remember) {
         storeToken("persist", data.token);
       }
-
-      setUser(data.user);
 
       toast("Login successful");
     },
