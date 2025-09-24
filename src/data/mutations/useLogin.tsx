@@ -29,7 +29,6 @@ export const useLogin = () => {
     onSuccess: (data, variables, context) => {
       if (variables.remember) {
         storeToken("persist", data.token);
-        setAuthState(data.token);
       }
 
       setUser(data.user);

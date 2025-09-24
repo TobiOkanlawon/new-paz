@@ -1,18 +1,9 @@
-"use client";
-import { redirect } from "next/navigation";
-import { useRecoilValue } from "recoil";
-import { authTokenState } from "@/data/atoms";
+import PrivateGuard from "./AuthGuard";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const token = useRecoilValue(authTokenState);
-
-  if (!token) {
-    redirect("/login");
-  }
-
-  return { children };
+  return <PrivateGuard>{children}</PrivateGuard>;
 }

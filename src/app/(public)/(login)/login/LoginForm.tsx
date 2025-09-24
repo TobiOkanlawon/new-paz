@@ -10,7 +10,8 @@ import clsx from "clsx";
 import { handleErrorDisplay } from "@/libs/helpers";
 import { useLogin } from "@/data/mutations/useLogin";
 import { useRouter } from "next/navigation";
-import { atom } from "recoil";
+import { atom, useSetRecoilState } from "recoil";
+import { authTokenState } from "@/data/atoms";
 
 const schema = yup.object({
   email: yup
@@ -31,6 +32,7 @@ type LoginSchema = yup.InferType<typeof schema>;
 const LoginForm = () => {
   const mutation = useLogin();
   const router = useRouter();
+  const setAuthState = useSetRecoilState(authTokenState);
   const formik = useFormik<LoginSchema>({
     initialValues: {
       email: "",
@@ -40,7 +42,8 @@ const LoginForm = () => {
     validationSchema: schema,
     onSubmit: (values) => {
       mutation.mutate(values, {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          setAuthState(data.token);
           router.replace("/dashboard");
         },
       });
