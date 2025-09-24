@@ -1,0 +1,19 @@
+meta {
+  name: Get Profile
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/get-profile?email=egbobright1@gmail.com
+  body: json
+  auth: inherit
+}
+
+params:query {
+  email: egbobright1@gmail.com
+}
+
+settings {
+  encodeUrl: true
+}
