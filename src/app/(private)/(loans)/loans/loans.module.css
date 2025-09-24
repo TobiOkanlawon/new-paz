@@ -85,7 +85,7 @@
     appearance: none; /* Remove default arrow in most browsers */
     -webkit-appearance: none; /* Safari/Chrome */
     -moz-appearance: none; /* Firefox */
-    background: url('../../../../public/selectDropDown.png');
+    background: url('/selectDropDown.png');
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 1rem;

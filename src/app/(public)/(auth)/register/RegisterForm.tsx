@@ -77,23 +77,26 @@ const RegisterForm = () => {
         onSubmit={formik.handleSubmit}
         className={styles.form}
       >
-        <Input
-          label="First Name"
-          type="text"
-          placeholder="Enter your first Name"
-          id="firstName"
-          errors={handleErrorDisplay(formik, "firstName")}
-          {...formik.getFieldProps("firstName")}
-        />
-        <Input
-          label="Last Name"
-          type="text"
-          placeholder="Enter your last name"
-          id="lastName"
-          errors={handleErrorDisplay(formik, "lastName")}
-          {...formik.getFieldProps("lastName")}
-        />
-        <Input
+        <div className={styles.flexed}>
+          <Input
+            label="First Name"
+            type="text"
+            placeholder="Enter your first Name"
+            id="firstName"
+            errors={handleErrorDisplay(formik, "firstName")}
+            {...formik.getFieldProps("firstName")}
+          />
+          <Input
+            label="Last Name"
+            type="text"
+            placeholder="Enter your last name"
+            id="lastName"
+            errors={handleErrorDisplay(formik, "lastName")}
+            {...formik.getFieldProps("lastName")}
+          />
+        </div>
+        <div className={styles.flexed}>
+          <Input
           label="Email Address"
           type="email"
           placeholder="Enter your email address"
@@ -109,22 +112,26 @@ const RegisterForm = () => {
           errors={handleErrorDisplay(formik, "phoneNumber")}
           {...formik.getFieldProps("phoneNumber")}
         />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          id="password"
-          errors={handleErrorDisplay(formik, "password")}
-          {...formik.getFieldProps("password")}
-        />
-        <Input
-          label="Re - Password"
-          type="password"
-          placeholder="Enter the password you entered in the box above"
-          id="confirmPassword"
-          errors={handleErrorDisplay(formik, "confirmPassword")}
-          {...formik.getFieldProps("confirmPassword")}
-        />
+        </div>
+        <div className={styles.flexed}>
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            id="password"
+            errors={handleErrorDisplay(formik, "password")}
+            {...formik.getFieldProps("password")}
+          />
+          <Input
+            label="Re - Password"
+            type="password"
+            placeholder="Enter Password Again"
+            id="confirmPassword"
+            errors={handleErrorDisplay(formik, "confirmPassword")}
+            {...formik.getFieldProps("confirmPassword")}
+          />
+        </div>
+        
         <p>
           By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a>{" "}
           and <a href="#">terms of service</a>.
