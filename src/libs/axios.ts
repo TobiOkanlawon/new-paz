@@ -1,21 +1,31 @@
-import axios from 'axios';
+import axios from "axios";
 
-const SS_KEY_FOR_TOKEN = "jwt_token"
+const SS_KEY_FOR_TOKEN = "jwt_token";
 
-const getToken = () => {
+export const getToken = () => {
   // token is stored in the SessionStorage
   return sessionStorage.getItem(SS_KEY_FOR_TOKEN);
+};
+
+export const storeToken = (type: "persist" | "memory", token: string) => {
+  if (type === "persist") {
+    return localStorage.setItem(SS_KEY_FOR_TOKEN, token);
+  } else {
+    return sessionStorage.setItem(SS_KEY_FOR_TOKEN, token);
+  }
+};
+
+export const removeToken = () => {
+  localStorage.removeItem(SS_KEY_FOR_TOKEN);
+  sessionStorage.removeItem(SS_KEY_FOR_TOKEN);
 }
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.BASE_URL,
+  // baseURL: process.env.BASE_URL,
+  baseURL: "http://54.38.215.158:8080",
 });
 
-
-const publicEndpoints: string[] = [
-  '/v1/users/signup',
-  '/v1/users/signin',
-];
+const publicEndpoints: string[] = ["/v1/users/signup", "/v1/users/signin"];
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
@@ -44,7 +54,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     if (error?.response?.status === 400) {
       return Promise.reject({
-        message: error.response?.data?.message || 'Something went wrong',
+        message: error.response?.data?.message || "Something went wrong",
       });
     }
     return Promise.reject(error);

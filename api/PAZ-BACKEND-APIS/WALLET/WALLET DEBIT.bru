@@ -1,0 +1,22 @@
+meta {
+  name: WALLET DEBIT
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:4000/v1/wallet/debit
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "amount":"100",
+      "accountNo":"I9012510256"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

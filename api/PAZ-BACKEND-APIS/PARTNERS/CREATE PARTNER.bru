@@ -1,0 +1,25 @@
+meta {
+  name: CREATE PARTNER
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:4000/v1/partner/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "partnerName":"PAZ2",
+      "collectionAccount":"00439243583",
+      "settlementAccount":"00343456652",
+      "phoneNumber":"08056788352"
+  
+  }
+}
+
+settings {
+  encodeUrl: true
+}

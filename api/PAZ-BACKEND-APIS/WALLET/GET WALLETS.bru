@@ -1,0 +1,15 @@
+meta {
+  name: GET WALLETS
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/wallet/
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

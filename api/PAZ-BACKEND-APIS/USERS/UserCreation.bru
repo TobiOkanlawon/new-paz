@@ -1,0 +1,29 @@
+meta {
+  name: UserCreation
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "mobileNumber": "08064120026",
+    "firstName": "Ogechukwu",
+    "lastName": "Egbo",
+    "email": "egbobright1@gmail.com",
+    "password": "Password@1234"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Here, the response code "00" means that the operation was successful, and it also sends back a field that says "User created", which signals that the sign up was successful. Along with that it sends a `responseMessage` that has a more descriptive message, in this case.
+}

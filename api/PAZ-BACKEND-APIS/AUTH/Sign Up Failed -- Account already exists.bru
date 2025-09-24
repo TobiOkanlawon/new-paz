@@ -1,0 +1,25 @@
+meta {
+  name: Sign Up Failed -- Account already exists
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{protocol}}://{{url}}/api/v1/users/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "first_name": "Tester",
+    "last_name": "One",
+    "mobileNumber": "+2348170206490",
+    "email": "valaj11905@fanwn.com",
+    "password": "Password123#"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

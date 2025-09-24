@@ -1,0 +1,31 @@
+meta {
+  name: Sign Up Failed -- Invalid data
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "firstName": "Tester",
+    "lastName": "One",
+    "mobileNumber": "+2348170206490",
+    "email": "valaj11905@fanwn.com",
+    "password": "Password123#"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  Here, the problem with the data is that the phone number is in the full +234 form.
+  
+  At the moment, the backend only seems to take phone numbers in their eleven-length form, 080XXXXXXXX.
+}

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Poppins, Montserrat, Inter } from "next/font/google";
 import Providers from "@/components/globals/providers";
+import { ToastContainer } from "react-toastify";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,8 +32,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`}
+    >
       <body>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+        />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./dashboard.module.css";
 import Image from "next/image";
@@ -7,7 +7,10 @@ import CardScrollIndicator from "@/components/CardScrollIndicator";
 // import {LuEye, LuEyeOff} from 'react-icons/lu'
 
 const Dashboard = () => {
+  const user = { first_name: "Biodun" };
+
   // Refs for scrollable containers
+
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const mobileSavingVaultRef = useRef<HTMLDivElement>(null);
 
@@ -204,7 +207,7 @@ const Dashboard = () => {
       </div>
       <div className={styles.mobileContainer}>
         <h1>
-          Welcome <strong>Biodun</strong>
+          Welcome <strong>{user?.first_name}</strong>
         </h1>
         <div className={styles.mobileScrollWrapper}>
           <div className={styles.mobileScroll} ref={mobileScrollRef}>

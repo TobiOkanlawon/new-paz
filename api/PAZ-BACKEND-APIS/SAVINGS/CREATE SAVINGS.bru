@@ -1,0 +1,32 @@
+meta {
+  name: CREATE SAVINGS
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/create-savings
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHQxQGdtYWlsLmNvbSIsImV4dCI6MTc1NjgyMDAxNiwiaWQiOjAsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.w3a2l8-W1CjvPI_WATZwBdRVPv1fSaCmxWx5iHf3-wo
+}
+
+body:json {
+  {
+      "title":"PERSONAL",
+      "description":"saving for rent",
+      "currentAmount":0.0,
+      "walletId":"0854962312",
+      "duration":"6 months",
+      "targetAmount":1000000,
+      "frequency":"Yearly",
+      "type":"TARGETSAVINGS"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

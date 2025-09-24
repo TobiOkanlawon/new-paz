@@ -1,0 +1,21 @@
+meta {
+  name: ADD PND TO A WALLET
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:4000/v1/wallet/add-pnd/0
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "pndReason":"Fraud"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

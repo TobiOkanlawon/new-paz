@@ -8,6 +8,9 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import { handleErrorDisplay } from "@/libs/helpers";
+import { useLogin } from "@/data/mutations/useLogin";
+import { useRouter } from "next/navigation";
+import { atom } from "recoil";
 
 const schema = yup.object({
   email: yup
@@ -16,7 +19,7 @@ const schema = yup.object({
     .required("You must specify an email address"),
   password: yup
     .string()
-    .required("Please Enter your password")
+    .required("Please enter your password")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Password must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
@@ -26,6 +29,8 @@ const schema = yup.object({
 
 type LoginSchema = yup.InferType<typeof schema>;
 const LoginForm = () => {
+  const mutation = useLogin();
+  const router = useRouter();
   const formik = useFormik<LoginSchema>({
     initialValues: {
       email: "",
@@ -33,8 +38,12 @@ const LoginForm = () => {
       remember: false,
     },
     validationSchema: schema,
-    onSubmit: (values, formikHelpers) => {
-      alert(values);
+    onSubmit: (values) => {
+      mutation.mutate(values, {
+        onSuccess: () => {
+          router.replace("/dashboard");
+        },
+      });
     },
   });
   return (
@@ -78,7 +87,12 @@ const LoginForm = () => {
             <Link href="/forgot-password">Forgot Password?</Link>
           </div>
         </div>
-        <Button type="submit" className={styles.primary} label="Login">
+        <Button
+          loading={mutation.isPending}
+          type="submit"
+          className={styles.primary}
+          label="Login"
+        >
           Login
         </Button>
         <div className={styles.linkContainer}>

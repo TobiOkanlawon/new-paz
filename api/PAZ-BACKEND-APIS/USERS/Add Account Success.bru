@@ -1,0 +1,24 @@
+meta {
+  name: Add Account Success
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/add-account
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "accountName": "Bright Egbo",
+    "accountNo": "236342901",
+    "bankName": "Wema Bank",
+    "walletId": "0854962312"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

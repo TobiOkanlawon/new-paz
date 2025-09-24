@@ -1,0 +1,21 @@
+meta {
+  name: ADD PNC TO A WALLET
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:4000/v1/wallet/pnc/add-pnc/0
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "pncReason":"Fraud"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
