@@ -6,6 +6,15 @@
   margin-bottom: 1rem;
 }
 
+.label{
+  color: #292727;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
 .inputError {
   border: 1px solid red;
 }
@@ -36,7 +45,13 @@
   display: flex;
   align-items: center;
   border: 1px solid #D9D9D9;
-  border-radius: 4px;
+  border-radius: .6rem;
+}
+.selectinput {
+  display: flex;
+  align-items: center;
+  border: 1px solid #D9D9D9;
+  border-radius: .6rem;
 }
 
 .icon {

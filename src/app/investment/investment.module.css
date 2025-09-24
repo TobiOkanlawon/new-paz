@@ -1,0 +1,172 @@
+.container{
+    padding: 1rem 0 0 1rem;
+}
+.header{
+    color: #243D7D;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 46px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+.headerText{
+    color: #204D88;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: .2rem;
+}
+.filterContainer label{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #204D88;
+}
+.filterContainer select{
+    border: 1px solid #ACB5BD;
+    border-radius: 7px;
+    padding: .1rem;
+    margin-left: 1rem;
+}
+.filterContainer select{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #204D88;
+}
+.investmentBalanceContainer{
+    display: flex;
+    gap: 2rem;
+}
+.investmentCardsContainer{
+    display: grid;
+    grid-template-columns: 380px 380px;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.investmentCard{
+    box-shadow: 0px 0px 30px 0px #00000026;
+    border-radius: 1rem;
+    
+    padding: 20px;
+}
+.investmentCard img{
+    object-fit: contain;
+    height: 57px;
+}
+.investmentCard h3{
+    color: #535353;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.investmentCard p{
+    color: #4E5A66;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.investmentDetails{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.investmentCard button{
+    background-color: #4F85E3;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 30px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    border-radius: .5rem;
+}
+.returns{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #E14242;
+}
+.risk{
+    color: #FFC107;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalContent h2{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #3475DF;
+    margin: 1rem 0;
+}
+.modalContent p{
+    color: #292727;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 0;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.modalContent button{
+    border: none;
+    background-color: #3475DF;
+    border-radius: .7rem;
+    color: white;
+    padding: 1rem 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.modalContent button:hover{
+    background-color: #418aff;
+    color: white;
+}
+.savingModal{
+    text-align: start !important;
+}
+
+@media screen and (max-width: 768px){
+    .investmentBalanceContainer{
+        flex-direction: column;
+    }
+    .investmentCardsContainer{
+        grid-template-columns: 3080px;
+    }
+    .investmentCard {
+        width: 100%;
+    }
+
+}
+@media screen and (max-width: 360px) {
+    .investmentCardsContainer{
+        grid-template-columns: 250px;
+    }
+}

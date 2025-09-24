@@ -11,7 +11,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
     { href: '/profile', icon: '/sidebarProfile.png', label: 'Profile' },
     { href: '/savings', icon: '/sidebarSavings.png', label: 'Savings' },
     { href: '/loans', icon: '/sidebarLoan.png', label: 'Loan' },
-    { href: '/investments', icon: '/sidebarInvestment.png', label: 'Investments' },
+    { href: '/investment', icon: '/sidebarInvestment.png', label: 'Investments' },
     { href: '/thrift', icon: '/sidebarThrift.png', label: 'Thrift' },
   ];
   return (

@@ -5,6 +5,7 @@ import styles from './dashboard.module.css'
 import Image from 'next/image' 
 import CardScrollIndicator from '@/components/CardScrollIndicator'
 import {LuEye, LuEyeOff} from 'react-icons/lu'
+import BVN_Modal from '@/components/BVNModal';
 
 const Dashboard = () => {
   // Refs for scrollable containers
@@ -19,6 +20,8 @@ const Dashboard = () => {
   const [showSavings, setShowSavings] = useState(true);
   const [showLoans, setShowLoans] = useState(true);
   const [showInvestments, setShowInvestments] = useState(true);
+
+  const [isBVNModalOpen, setIsBVNModalOpen] = useState(true);
 
   const router = useRouter();
 
@@ -284,6 +287,15 @@ const Dashboard = () => {
             </div>
         </div>
     </div>
+
+    {
+        isBVNModalOpen && (
+            <BVN_Modal isOpen={isBVNModalOpen} onClose={()=>{
+                setIsBVNModalOpen(false)
+            }}/>
+        )
+    }
+
     </>
   )
 }

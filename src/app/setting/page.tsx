@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
 import styles from './setting.module.css'
-import Image from 'next/image'
 import { useState } from 'react'
 import {useRouter} from 'next/navigation'
+import Back from '@/components/BackContainer'
 
 const Setting = () => {
     const [enabled, setEnabled] = useState(false);
@@ -11,18 +11,7 @@ const Setting = () => {
     const router = useRouter()
   return (
     <div className={styles.container}>
-        <div onClick={() =>{
-            router.back()
-        }} className={styles.backContainer}>
-            <Image
-                src={'/ArrowLeft.png'}
-                className={styles.arrowBack}
-                width={24}
-                height={24}
-                alt='Arrow Back'
-            />
-            <p>Back</p>
-        </div>
+        <Back />
         <h1 className={styles.header}>Settings</h1>
         <p className={styles.headerText}>Get your account concerns sorted in one place</p>
         <div className={styles.toggleButtons}>
@@ -34,11 +23,11 @@ const Setting = () => {
                 <>
                     <div className={styles.contactSupport}>
                         <h2>Customer Care Line</h2>
-                        <a href='tel:+234 703 333 4444'>+234 703 333 4444</a>
+                        <a href='tel:+234 904 422 3377'>+234 904 422 3377</a>
                     </div>
                     <div className={styles.contactSupport}>
                         <h2>Send us a mail</h2>
-                        <a href="mailto:inquiry@mypazfinance.com">inquiry@mypazfinance.com</a>
+                        <a href="mailto:info@mypazfinance.com">info@mypazfinance.com</a>
                     </div>
                 </>
             ) : (<div>
