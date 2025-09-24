@@ -1,0 +1,118 @@
+.modalHeader{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 32px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #292727;
+    margin-bottom: 2.2rem;
+    text-align: center;
+}
+.modalDetails{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-style: Medium;
+    font-size: 18px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #292727;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.formContainer{
+    width: 90%;
+}
+.inputGroup{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    margin: .8rem 0;
+}
+.labels{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #292727;
+    margin-bottom: .5rem;
+}
+.inputs{
+    border: 1px solid #D9D9D9;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #D9D9D9;
+    border-radius: .5rem;
+    width: 100%;
+    padding: 1rem;
+}
+.bvnGuide{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #495057;
+}
+.submitButton{
+    width: 60% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 0 !important;
+    margin-top: .5rem !important;
+}
+.buttonContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.backContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-family: .9rem; 
+    color: #204D88;
+    cursor: pointer;
+    margin-top: 0 !important;
+}
+.errorText {
+font-family: 'Montserrat', sans-serif;
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.success{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 425px){
+    .modalDetails{
+        font-size: 1rem;
+        font-weight: 400;
+        margin-left: 1rem;
+    }
+    .formContainer{
+        width: 90%;
+    }
+    .inputs{
+        width: 90%;
+    }
+}
