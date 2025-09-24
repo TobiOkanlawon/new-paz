@@ -6,6 +6,7 @@ import Image from 'next/image'
 import CardScrollIndicator from '@/components/CardScrollIndicator'
 import {LuEye, LuEyeOff} from 'react-icons/lu'
 import BVN_Modal from '@/components/BVNModal';
+import Account_Modal from '@/components/AddAccount';
 
 const Dashboard = () => {
   // Refs for scrollable containers
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const [showInvestments, setShowInvestments] = useState(true);
 
   const [isBVNModalOpen, setIsBVNModalOpen] = useState(true);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false)
 
   const router = useRouter();
 
@@ -301,10 +303,17 @@ const Dashboard = () => {
         isBVNModalOpen && (
             <BVN_Modal isOpen={isBVNModalOpen} onClose={()=>{
                 setIsBVNModalOpen(false)
+                setIsAccountModalOpen(true)
             }}/>
         )
     }
-
+    {
+         isAccountModalOpen && (
+            <Account_Modal isOpen={isAccountModalOpen} onClose={() =>{
+                setIsAccountModalOpen(false)
+            }} />
+        )
+    }
     </>
   )
 }
