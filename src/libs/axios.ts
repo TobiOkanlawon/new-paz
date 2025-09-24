@@ -8,6 +8,7 @@ export const getToken = () => {
 };
 
 export const storeToken = (type: "persist" | "memory", token: string) => {
+  
   if (type === "persist") {
     return localStorage.setItem(SS_KEY_FOR_TOKEN, token);
   } else {
