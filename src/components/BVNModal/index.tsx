@@ -62,7 +62,6 @@ const BVN_Modal: React.FC<BvnmPropTypes> = ({
               validationSchema={validationSchema}
               onSubmit={(values, actions) => {
                 handleSubmit(values);
-                // Add actual submit logic here (API call, etc)
                 actions.setSubmitting(false);
               }}
             >
