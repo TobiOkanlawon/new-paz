@@ -165,7 +165,7 @@
     padding: 0 2rem;
   }
   .right {
-    width: 100vw;
+    width: 90vw;
     height: auto;
   }
   .right h3 {
@@ -235,7 +235,7 @@
   }
 
   .mobileContainer form input {
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;

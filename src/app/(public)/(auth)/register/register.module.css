@@ -11,7 +11,7 @@
   position: relative;
   flex-direction: column;
   align-items: center;
-  width: 50vw;
+  width: 42vw;
   height: 100vh;
   /* flex: 1; */
   background-color: #243d7d;
@@ -28,7 +28,7 @@
   align-self: start;
 }
 .leftContainer {
-  text-align: start;
+  text-align: center;
   width: 70%;
   margin: 7rem 0;
   position: relative;
@@ -52,13 +52,15 @@
   color: #ffffff;
   max-width: 419px;
   z-index: 1;
+  margin: auto;
 }
 .right {
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 50vw;
+  width: 55vw;
   padding: 0 1rem;
+  margin: auto;
 }
 .right h3 {
   color: #243d7d;
@@ -73,7 +75,7 @@
 .right form {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   /* align-items: center; */
 }
 .returnToLogin {
@@ -120,19 +122,50 @@
 .flexed{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  gap: 5vw;
   align-items: center;
 }
 
 .inputFlex{
-  width: 16.5em;
+  width: 22vw;
 }
 
 .buttonContainer{
   width: 100%;
 }
 
-@media screen and (max-width: 900px) {
+.linkWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1030px) {
+  .right {
+    width: 70vw;
+
+  } 
+  .right h3 {
+    margin-top: 2rem;
+  }
+  .inputFlex{
+    width: 29vw;
+  }
+  .flexed{
+    gap: 10vw;
+  }
+}
+@media screen and (max-width: 850px) {
+  .right {
+    width: 90vw;
+  } 
+  .inputFlex{
+    width: 36vw;
+  }
+}
+@media screen and (max-width: 600px) {
+  .inputFlex{
+    width: 70vw;
+  }
   .flexed{
     flex-direction: column;
   }
@@ -174,7 +207,7 @@
     align-items: center;
     width: 100vw;
     min-height: 100vh;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1rem;
     background-color: #fff;
   }
   .mobileContainer {

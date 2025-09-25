@@ -59,7 +59,7 @@ export default function NotificationDropdown() {
         </Link>
         <Link href='/setting'>
           <Image src={'/settingDropdown.png'} alt='Settings Icon' width={20} height={20}/>
-          <p>Setting</p>
+          <p>Settings</p>
         </Link>
       </div>
     </div>

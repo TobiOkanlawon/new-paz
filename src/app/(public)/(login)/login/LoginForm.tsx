@@ -108,7 +108,7 @@ const LoginForm = () => {
           <div className={styles.linkWrapper}>
             <Link
               href="/register"
-              className={clsx("special-underline", styles.createNewAccount)}
+              className={clsx(" ", styles.createNewAccount)}
             >
               Create New Account <FaArrowRight size={12} />
             </Link>

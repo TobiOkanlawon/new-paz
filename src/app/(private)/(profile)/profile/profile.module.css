@@ -1,58 +1,58 @@
-.container{
-    margin-top: 4.4vh;
-    margin-left: 6.6vw;
-    font-family: 'Montserrat', sans-serif;
-    width: 67.71vw;
-    margin-right: 6.6vw;
+.container {
+  margin-top: 14vh;
+  margin-left: 20vw;
+  font-family: "Montserrat", sans-serif;
+  width: 67.71vw;
+  margin-right: 6.6vw;
 }
-.headers{
-    margin-bottom: 4.88vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.profileContainer{
-    position: relative;
-    width: fit-content;
-}
-.profileWrapper{
-    background-color: #DDE2E5B2;
-    width: fit-content;
-    border-radius: 100%;
-    padding: 2rem;
-}
-.editProfileWrapper{
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #D9D9D9;
-    width: fit-content;
-    border-radius: 100%;
-    padding: 12.25px;
-    object-fit: contain;
+.headers {
+  margin-bottom: 4.88vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.progressWrapper{
-    width: 17.15vw;
+.profileContainer {
+  position: relative;
+  width: fit-content;
+}
+.profileWrapper {
+  background-color: #dde2e5b2;
+  width: fit-content;
+  border-radius: 100%;
+  padding: 2rem;
+}
+.editProfileWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #d9d9d9;
+  width: fit-content;
+  border-radius: 100%;
+  padding: 12.25px;
+  object-fit: contain;
 }
 
-.groupInputs{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 6.39vw;
+.progressWrapper {
+  width: 17.15vw;
 }
 
-.form2 h3{
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
+.groupInputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6.39vw;
 }
 
-.button{
-    width: 164px !important;
-    font-weight: 400 !important;
+.form2 h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.button {
+  width: 164px !important;
+  font-weight: 400 !important;
 }
 
 .overlay {
@@ -88,14 +88,14 @@
   cursor: pointer;
 }
 
-.modalHeader{
-    font-family: Montserrat;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 16px;
-    letter-spacing: 0px;
-    vertical-align: middle;
-    text-align: center;
+.modalHeader {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .profileInputContainer {
@@ -139,21 +139,21 @@
 /* .buttonContainer{
     width: 100%;
 } */
-.profileButton{
-    width: 521px !important;
+.profileButton {
+  width: 521px !important;
 }
-.back{
+.back {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #204D88;
+  color: #204d88;
   margin-top: 0;
 }
-.back>span{
-    margin-top: 5px;
+.back > span {
+  margin-top: 5px;
 }
 
-.postalAddress{
+.postalAddress {
   width: 25rem;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -168,36 +168,36 @@
   flex: 1 1 0%;
 }
 
-.inputs{
+.inputs {
   width: 100%;
 }
-@media screen and (max-width: 748px){
-    .headers{
-        flex-direction: column;
-        gap: 4rem;
-    }
-    .progressWrapper{
-      width: 70vw;
-    }
-    .groupInputs{
-      flex-direction: column;
-      gap: 1rem;
-      width: 90vw;
-      margin-bottom: 1rem;
-    }
+@media screen and (max-width: 748px) {
+  .headers {
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .progressWrapper {
+    width: 70vw;
+  }
+  .groupInputs {
+    flex-direction: column;
+    gap: 1rem;
+    width: 90vw;
+    margin-bottom: 1rem;
+  }
 }
-@media screen and (max-width: 520px){
-    .modalHeader{
-      font-size: 20px;
-    }
+@media screen and (max-width: 520px) {
+  .modalHeader {
+    font-size: 20px;
+  }
 }
-@media screen and (max-width: 700px){
-    .buttonContainer .profileButton{
-      width: 89vw !important;
-    }
+@media screen and (max-width: 700px) {
+  .buttonContainer .profileButton {
+    width: 89vw !important;
+  }
 }
-@media screen and (max-width: 1000px){
-    .profileButton{
+@media screen and (max-width: 1000px) {
+  .profileButton {
     width: 100% !important;
-}
+  }
 }
