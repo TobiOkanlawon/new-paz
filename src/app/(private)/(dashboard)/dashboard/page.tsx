@@ -10,7 +10,6 @@ import { useAddBVN } from "@/data/mutations/useAddBVN";
 import useUser from "@/store/userStore";
 import { toast } from "react-toastify";
 
-
 const Dashboard = () => {
   // Refs for scrollable containers
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -34,14 +33,15 @@ const Dashboard = () => {
   const user = useUser((state) => state.user);
 
   const handleSubmit = (values: { bvn: string; dob: string }) => {
-  if (!user?.email) {
-    toast.error("User email is missing.");
-    return;
-  }
+    if (!user?.email) {
+      // if this case actually gets hit then there's a problem.
+      // We might need to consider logs or something of that sort
+      toast.error("User email is missing.");
+      return;
+    }
 
-  mutation.mutate({ ...values, email: user.email });
-};
-
+    mutation.mutate({ ...values, email: user.email });
+  };
 
   return (
     <>

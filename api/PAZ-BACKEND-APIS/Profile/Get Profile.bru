@@ -1,0 +1,19 @@
+meta {
+  name: Get Profile
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/get-profile?email=tobiinlondon34@gmail.com
+  body: json
+  auth: inherit
+}
+
+params:query {
+  email: tobiinlondon34@gmail.com
+}
+
+settings {
+  encodeUrl: true
+}

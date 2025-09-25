@@ -59,14 +59,17 @@ const RegisterForm = () => {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      signUpMutation.mutate({
-        ...values,
-        mobileNumber: values.phoneNumber,
-      });
-
-      if (signUpMutation.isSuccess) {
-        router.replace("/login");
-      }
+      signUpMutation.mutate(
+        {
+          ...values,
+          mobileNumber: values.phoneNumber,
+        },
+        {
+          onSuccess: () => {
+            router.replace("/login");
+          },
+        },
+      );
     },
   });
   return (

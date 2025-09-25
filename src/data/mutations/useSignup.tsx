@@ -1,5 +1,6 @@
 import { axiosInstance as axios } from "@/libs/axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
 type SignUpRequestBody = {
@@ -21,19 +22,15 @@ const signUpRequest = (args: SignUpRequestBody) => {
 };
 
 export const useSignup = () => {
-  return useMutation({
+  return useMutation<any, AxiosError<ErrorResponse>, any>({
     mutationKey: ["sign up"],
     mutationFn: (data: SignUpRequestBody) => signUpRequest(data),
 
     onSuccess: () => {
-      toast("Sign up successful", {
-        type: "success",
-      });
+      toast.success("Sign up successful. Log in");
     },
-    onError: () => {
-      toast("An error occured while trying to sign up", {
-        type: "error",
-      });
+    onError: (error) => {
+      toast.error(error.response?.data.responseMessage);
     },
   });
 };

@@ -1,5 +1,6 @@
 import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
 // Define your mutation input
@@ -17,7 +18,7 @@ type TAddBVNResponse = {
 };
 
 export const useAddBVN = () => {
-  return useMutation<TAddBVNResponse, Error, AddBVNData>({
+  return useMutation<TAddBVNResponse, AxiosError<ErrorResponse>, AddBVNData>({
     mutationKey: ["add-bvn"],
     mutationFn: async ({ email, bvn, dob }) => {
       const res = await axios.post(
@@ -26,12 +27,11 @@ export const useAddBVN = () => {
       );
       return res.data;
     },
-    onSuccess: (data) => {
-      toast.success("✅ BVN added successfully");
+    onSuccess: () => {
+      toast.success("BVN added successfully");
     },
     onError: (error) => {
-      console.error("BVN error:", error);
-      toast.error("❌ BVN verification failed. Try again.");
+      toast.error(error.response?.data.responseMessage);
     },
   });
 };

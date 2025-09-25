@@ -61,7 +61,7 @@ const BVN_Modal: React.FC<BvnmPropTypes> = ({
               initialValues={{ bvn: "", dob: "" }}
               validationSchema={validationSchema}
               onSubmit={(values, actions) => {
-                handleSubmit(values); // ✅ pass directly
+                handleSubmit(values);
                 actions.setSubmitting(false);
               }}
             >
@@ -106,6 +106,7 @@ const BVN_Modal: React.FC<BvnmPropTypes> = ({
 
                   <div className={styles.buttonContainer}>
                     <Button
+                      type="submit"
                       label="Verify BVN"
                       loading={isSubmitting}
                       className={styles.submitButton}

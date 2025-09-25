@@ -23,13 +23,12 @@ export const useLogin = () => {
     },
     onSuccess: (data, variables, context) => {
       if (variables.remember) {
-        storeToken("persist", data.token);
+        storeToken(data.token);
       }
-
       toast("Login successful");
     },
-    onError: () => {
-      toast("An error occurred during login");
+    onError: (error) => {
+      toast.error(error.response?.data.responseMessage);
     },
   });
 };

@@ -1,10 +1,4 @@
 "use client";
-
-import { useRecoilValue } from "recoil";
-import { authTokenState } from "@/data/atoms";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
 export default function PrivateGuard({
   children,
 }: {
