@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
   return (
     <aside className={clsx(styles.sidebar, !isOpen && styles.collapsed)}>
       <div className={styles.sidebarContainer}>
-        <h3>Welcome {user.first_name}</h3>
+        <h3>Welcome {user?.first_name}</h3>
         {links.map((link) => (
           <Link
             key={link.href}

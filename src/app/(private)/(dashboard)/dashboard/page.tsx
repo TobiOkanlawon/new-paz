@@ -11,6 +11,9 @@ import useUser from "@/store/userStore";
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
+  const user = useUser((state) => state.user) as TUser;
+  const { setUser } = useUser();
+
   // Refs for scrollable containers
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const mobileSavingVaultRef = useRef<HTMLDivElement>(null);
@@ -24,13 +27,11 @@ const Dashboard = () => {
   const [showLoans, setShowLoans] = useState(true);
   const [showInvestments, setShowInvestments] = useState(true);
 
-  const [isBVNModalOpen, setIsBVNModalOpen] = useState(true);
+  const [isBVNModalOpen, setIsBVNModalOpen] = useState(!user.is_bvn_verified);
 
   const router = useRouter();
 
   const mutation = useAddBVN();
-
-  const user = useUser((state) => state.user);
 
   const handleSubmit = (values: { bvn: string; dob: string }) => {
     if (!user?.email) {
@@ -40,7 +41,15 @@ const Dashboard = () => {
       return;
     }
 
-    mutation.mutate({ ...values, email: user.email });
+    mutation.mutate(
+      { ...values, email: user.email },
+      {
+        onSuccess: () => {
+          // set user to all of user but the bvn is verified
+          setUser({ is_bvn_verified: true });
+        },
+      },
+    );
   };
 
   return (
@@ -58,7 +67,7 @@ const Dashboard = () => {
               />
             </div>
             <h3>
-              ₦ {showSavings ? "20,000" : "****"}{" "}
+              ₦ {showSavings ? "0.00" : "****"}{" "}
               <span
                 style={{ cursor: "pointer", fontSize: "1rem" }}
                 onClick={() => setShowSavings((s) => !s)}
@@ -79,7 +88,7 @@ const Dashboard = () => {
               />
             </div>
             <h3>
-              ₦ {showLoans ? "20,000" : "****"}{" "}
+              ₦ {showLoans ? "0.00" : "****"}{" "}
               <span
                 style={{ cursor: "pointer", fontSize: "1rem" }}
                 onClick={() => setShowLoans((s) => !s)}
@@ -100,7 +109,7 @@ const Dashboard = () => {
               />
             </div>
             <h3>
-              ₦ {showInvestments ? "20,000" : "****"}{" "}
+              ₦ {showInvestments ? "0.00" : "****"}{" "}
               <span
                 style={{ cursor: "pointer", fontSize: "1rem" }}
                 onClick={() => setShowInvestments((s) => !s)}
@@ -231,7 +240,7 @@ const Dashboard = () => {
                   />
                 </div>
                 <h3>
-                  ₦ 20,000{" "}
+                  ₦ 0.00{" "}
                   <Image
                     src="/eyeOff.png"
                     alt="eyes off"
@@ -253,7 +262,7 @@ const Dashboard = () => {
                   />
                 </div>
                 <h3>
-                  ₦ 20,000{" "}
+                  ₦ 0.00{" "}
                   <Image
                     src="/eyeOff.png"
                     alt="eyes off"
@@ -275,7 +284,7 @@ const Dashboard = () => {
                   />
                 </div>
                 <h3>
-                  ₦ 20,000{" "}
+                  ₦ 0.00{" "}
                   <Image
                     src="/eyeOff.png"
                     alt="eyes off"
@@ -381,7 +390,7 @@ const Dashboard = () => {
           <div className={styles.mobileLoanReminderText}>
             <p>Upcoming Loan Repayment</p>
             <h3>
-              ₦ 20,000 <span>Due by Feb 6th</span>
+              ₦ 0.00 <span>Due by Feb 6th</span>
             </h3>
           </div>
           <button
@@ -414,7 +423,7 @@ const Dashboard = () => {
             />
             <div className={styles.activityText}>
               <h5>
-                <span>₦ 20,000</span> withdrawn from savings
+                <span>₦ 0.00</span> withdrawn from savings
               </h5>
               <p>2 days ago</p>
             </div>
