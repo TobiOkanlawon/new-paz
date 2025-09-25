@@ -20,3 +20,9 @@ type TAddBVNResponse = {
   responseCode: string;
   responseMessage: string;
 };
+
+type AccountType = {
+  accountName: string;
+  accountNumber: number;
+  bank: string;
+}

@@ -124,6 +124,7 @@
   font-size: 0.9rem;
   line-height: 100%;
   letter-spacing: 0%;
+  text-decoration: none;
 }
 
 .mobile {
@@ -193,7 +194,7 @@
     background-color: #243d7d;
   }
   .logo {
-    padding: 4em 2em 2em 2em;
+    padding: 2em 2em 2em 2em;
   }
   .mobileContainer {
     padding: 2rem;

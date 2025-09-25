@@ -115,64 +115,76 @@ const Profile = () => {
         <section className={styles.form1}>
           <div>
             <div className={styles.groupInputs}>
-              <InputGroup
-                label="Postal Address"
-                placeholder="Enter postal address here"
-                name="postalAddress"
-                type="text"
-                value={formData.postalAddress}
-                onChange={handleChange}
-                required
-                disabled={isSubmitted}
-              />
-              <DateInput
-                label="Birthday"
-                placeholder="Select Date"
-                name="birthday"
-                icon={
-                  <Image
-                    src={"/inputBirthday.png"}
-                    alt="Birthday"
-                    width={20}
-                    height={20}
-                  />
-                }
-                type="date"
-                value={formData.birthday}
-                onChange={handleChange}
-                required
-                disabled={isSubmitted}
-              />
+              <div className={styles.inputs}>
+                <InputGroup
+                  label="Postal Address"
+                  placeholder="Enter postal address here"
+                  name="postalAddress"
+                  type="text"
+                  value={formData.postalAddress}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitted}
+                  className={styles.postalAddress}
+                />
+              </div>
+              <div className={styles.inputs}>
+                <DateInput
+                  label="Birthday"
+                  placeholder="Select Date"
+                  name="birthday"
+                  icon={
+                    <Image
+                      src={"/inputBirthday.png"}
+                      alt="Birthday"
+                      width={20}
+                      height={20}
+                    />
+                  }
+                  type="date"
+                  value={formData.birthday}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitted}
+                />
+              </div>
             </div>
             <div className={styles.groupInputs}>
-              <SelectGroup
+              <div className={styles.inputs}>
+                <SelectGroup
                 label="Gender"
                 name="gender"
                 options={genderOptions}
                 placeholder="Select Date"
-              />
-              <InputGroup
-                label="Email"
-                placeholder="Enter email address"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                disabled={isSubmitted}
-              />
+                />
+              </div>
+              <div className={styles.inputs}>
+                <InputGroup
+                  label="Email"
+                  placeholder="Enter email address"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitted}
+                />
+              </div>
             </div>
             <div className={styles.groupInputs}>
-              <InputGroup
-                label="Phone Number"
-                placeholder="Enter your phone number"
-                name="phoneNumber"
-                type="tel"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                required
-                disabled={isSubmitted}
-              />
+              <div className={styles.inputs}>
+                <InputGroup
+                  label="Phone Number"
+                  placeholder="Enter your phone number"
+                  name="phoneNumber"
+                  type="tel"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitted}
+                />
+              </div>
+              <div className={styles.inputs}></div>
             </div>
           </div>
         </section>
@@ -224,16 +236,19 @@ const Profile = () => {
               />
             </div>
             <div className={styles.groupInputs}>
-              <SelectGroup
-                label="Relationship"
-                name="Relationship"
-                placeholder="Who is the person to you?"
-                options={relationshipOptions}
-                value={formData.relationship}
-                onChange={handleChange}
-                required
-                disabled={isSubmitted}
-              />
+              <div className={styles.inputs}>
+                <SelectGroup
+                  label="Relationship"
+                  name="Relationship"
+                  placeholder="Who is the person to you?"
+                  options={relationshipOptions}
+                  value={formData.relationship}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitted}
+                />
+              </div>
+              <div className={styles.inputs}></div>
             </div>
           </div>
         </section>

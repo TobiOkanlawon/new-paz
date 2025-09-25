@@ -56,10 +56,9 @@
 .right {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   width: 50vw;
-  /* height: 100vh;   */
-  /* flex: 1; */
+  padding: 0 1rem;
 }
 .right h3 {
   color: #243d7d;
@@ -69,12 +68,12 @@
   line-height: 60px;
   letter-spacing: 0px;
   vertical-align: middle;
-  margin-top: 5rem;
+  margin: auto;
 }
 .right form {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 90%;
   /* align-items: center; */
 }
 .returnToLogin {
@@ -94,7 +93,7 @@
   font-size: 12px;
   line-height: 19.5px;
   letter-spacing: 0px;
-  text-align: start;
+  text-align: center;
   color: #4e5a66;
 }
 
@@ -118,9 +117,33 @@
   display: none;
 }
 
+.flexed{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputFlex{
+  width: 16.5em;
+}
+
+.buttonContainer{
+  width: 100%;
+}
+
 @media screen and (max-width: 900px) {
+  .flexed{
+    flex-direction: column;
+  }
+  .formGroup{
+    margin-bottom: 0 !important;
+  }
   .logo {
     margin: 2rem auto;
+  }
+  .form input{
+    margin-bottom: 0;
   }
   .container {
     flex-direction: column;
@@ -194,7 +217,7 @@
     border-radius: 8px;
     font-size: 0.875rem;
     font-family: var(--font-montserrat);
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
   }
 
   .form input::placeholder {
