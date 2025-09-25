@@ -26,7 +26,7 @@ export const useSignup = () => {
     mutationFn: (data: SignUpRequestBody) => signUpRequest(data),
 
     onSuccess: () => {
-      toast("Sign up successful", {
+      toast("Sign up successful. Log in", {
         type: "success",
       });
     },
