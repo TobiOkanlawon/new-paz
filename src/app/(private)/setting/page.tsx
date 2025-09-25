@@ -34,7 +34,7 @@ const Setting = () => {
                 <>
                     <div className={styles.contactSupport}>
                         <h2>Customer Care Line</h2>
-                        <a href='tel:+234 703 333 4444'>+234 703 333 4444</a>
+                        <a href='tel:09044223377'>0904 422 3377</a>
                     </div>
                     <div className={styles.contactSupport}>
                         <h2>Send us a mail</h2>

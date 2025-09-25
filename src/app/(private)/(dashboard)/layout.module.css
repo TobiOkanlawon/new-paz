@@ -1,7 +1,7 @@
 .dashboardMain {
   display: flex;
   flex-direction: row;
-  height: 91.49vh;
+  height: 100vh;
 }
 .body {
   overflow: hidden;

@@ -9,6 +9,7 @@ import Button from "@/components/Button";
 import { handleErrorDisplay } from "@/libs/helpers";
 import { useSignup } from "@/data/mutations/useSignup";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
 const schema = yup.object({
   firstName: yup
@@ -145,7 +146,7 @@ const RegisterForm = () => {
         </div>
         
         <p>
-          By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a>{" "}
+          By clicking "Create Account”, I agree to PAZ’s <a href="#">privacy policy</a>{" "}
           and <a href="#">terms of service</a>.
         </p>
         <div className={styles.buttonContainer}>
@@ -153,9 +154,11 @@ const RegisterForm = () => {
             Create Account
           </Button>
         </div>
-        <Link href="/login" className={styles.returnToLogin}>
-          <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
-        </Link>
+        <div className={styles.linkWrapper}>
+          <Link href="/login" className={clsx("special-underline", styles.returnToLogin)}>
+            <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
+          </Link>
+        </div>
       </form>
     </>
   );

@@ -1,29 +1,30 @@
-.nav{
-    height: 8.51vh;
-    z-index: 100;
-    position: sticky;
+.nav {
+  height: 8.51vh;
+  z-index: 100;
+  position: fixed;
+  width: 100vw;
 }
-.navContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #243D7D; 
-    padding: 17px 40px;
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #243d7d;
+  padding: 17px 40px;
 }
-.logo{
-    height: 4.53vh;
-    object-fit: contain;
+.logo {
+  height: 4.53vh;
+  object-fit: contain;
 }
-.logoContainer{
-    display: flex;
-    align-items: center;
+.logoContainer {
+  display: flex;
+  align-items: center;
 }
-.opContainer{
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-around;
-    width: 13rem;
+.opContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  width: 13rem;
 }
 
 .notificationBell {
@@ -32,28 +33,28 @@
   cursor: pointer;
   margin: auto 0;
 }
-.hamburger{
-    display: none;
+.hamburger {
+  display: none;
 }
 @media screen and (max-width: 1200px) {
-    .navContainer{
-        padding: 17px 20px;
-    }
-    .opContainer{
-        width: 10rem;
-    }
-    .userContainer{
-        gap: 0.5rem;
-    }
-    .logoContainer{
-        gap: 1rem;
-    }
-    .logo{
-        width: 63px;
-        height: 21px;
-    }    
-    .hamburger{
-        display: block;
-        cursor: pointer;
-    }  
+  .navContainer {
+    padding: 17px 20px;
+  }
+  .opContainer {
+    width: 10rem;
+  }
+  .userContainer {
+    gap: 0.5rem;
+  }
+  .logoContainer {
+    gap: 1rem;
+  }
+  .logo {
+    width: 63px;
+    height: 21px;
+  }
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
 }
