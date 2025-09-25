@@ -152,6 +152,25 @@
 .back>span{
     margin-top: 5px;
 }
+
+.postalAddress{
+  width: 25rem;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  font-size: 12px;
+  background: none;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  outline: none;
+  flex: 1 1 0%;
+}
+
+.inputs{
+  width: 100%;
+}
 @media screen and (max-width: 748px){
     .headers{
         flex-direction: column;

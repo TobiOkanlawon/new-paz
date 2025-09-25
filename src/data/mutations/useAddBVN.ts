@@ -1,32 +1,37 @@
-import { axiosInstance as axios, storeToken } from "@/libs/axios";
+import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
+// Define your mutation input
 type AddBVNData = {
   email: string;
   bvn: string;
   dob: string;
 };
 
-export const useAddBVN = () => {
-  return useMutation<TAddBVNResponse, any, AddBVNData>({
-    mutationKey: ["add-bvn"],
-    mutationFn: async (data) => {
-      return await axios
-        .post(`/v1/users/user/verify-bvn?email=${data.email}`, {
-	  bvn: data.bvn,
-	  dob: data.dob
-        })
-        .then((res) => {
-          return res.data;
-        });
-    },
-    onSuccess: (data, variables, context) => {
+// Optional: define the expected API response
+type TAddBVNResponse = {
+  success: boolean;
+  message: string;
+  data?: any;
+};
 
-      toast("BVN added successfully");
+export const useAddBVN = () => {
+  return useMutation<TAddBVNResponse, Error, AddBVNData>({
+    mutationKey: ["add-bvn"],
+    mutationFn: async ({ email, bvn, dob }) => {
+      const res = await axios.post(
+        `/v1/users/user/verify-bvn?email=${email}`,
+        { bvn, dob }
+      );
+      return res.data;
     },
-    onError: () => {
-      toast("An error occurred");
+    onSuccess: (data) => {
+      toast.success("✅ BVN added successfully");
+    },
+    onError: (error) => {
+      console.error("BVN error:", error);
+      toast.error("❌ BVN verification failed. Try again.");
     },
   });
 };

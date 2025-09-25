@@ -11,7 +11,7 @@ import Image from "next/image";
 interface BvnmPropTypes {
   isOpen: boolean;
   onClose: () => void;
-  handleSubmit: () => void;
+  handleSubmit: (values: { bvn: string; dob: string }) => void;
 }
 
 // Validation schema
@@ -61,10 +61,7 @@ const BVN_Modal: React.FC<BvnmPropTypes> = ({
               initialValues={{ bvn: "", dob: "" }}
               validationSchema={validationSchema}
               onSubmit={(values, actions) => {
-                handleSubmit({
-                  values,
-                });
-                // Add actual submit logic here (API call, etc)
+                handleSubmit(values); // ✅ pass directly
                 actions.setSubmitting(false);
               }}
             >

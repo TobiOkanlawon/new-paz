@@ -78,6 +78,7 @@ const RegisterForm = () => {
         className={styles.form}
       >
         <div className={styles.flexed}>
+          <div className={styles.inputFlex}>
           <Input
             label="First Name"
             type="text"
@@ -86,6 +87,8 @@ const RegisterForm = () => {
             errors={handleErrorDisplay(formik, "firstName")}
             {...formik.getFieldProps("firstName")}
           />
+          </div>
+          <div className={styles.inputFlex}>
           <Input
             label="Last Name"
             type="text"
@@ -94,8 +97,10 @@ const RegisterForm = () => {
             errors={handleErrorDisplay(formik, "lastName")}
             {...formik.getFieldProps("lastName")}
           />
+          </div>
         </div>
         <div className={styles.flexed}>
+          <div className={styles.inputFlex}>
           <Input
           label="Email Address"
           type="email"
@@ -104,6 +109,8 @@ const RegisterForm = () => {
           errors={handleErrorDisplay(formik, "email")}
           {...formik.getFieldProps("email")}
         />
+          </div>
+        <div className={styles.inputFlex}>
         <Input
           label="Phone Number"
           type="tel"
@@ -113,7 +120,9 @@ const RegisterForm = () => {
           {...formik.getFieldProps("phoneNumber")}
         />
         </div>
+        </div>
         <div className={styles.flexed}>
+          <div className={styles.inputFlex}>
           <Input
             label="Password"
             type="password"
@@ -122,6 +131,8 @@ const RegisterForm = () => {
             errors={handleErrorDisplay(formik, "password")}
             {...formik.getFieldProps("password")}
           />
+          </div>
+          <div className={styles.inputFlex}>
           <Input
             label="Re - Password"
             type="password"
@@ -130,15 +141,18 @@ const RegisterForm = () => {
             errors={handleErrorDisplay(formik, "confirmPassword")}
             {...formik.getFieldProps("confirmPassword")}
           />
+          </div>
         </div>
         
         <p>
           By clicking “Sign up”, I agree to PAZ’s <a href="#">privacy policy</a>{" "}
           and <a href="#">terms of service</a>.
         </p>
-        <Button type="submit" className={styles.primary} label="Login">
-          Create Account
-        </Button>
+        <div className={styles.buttonContainer}>
+          <Button type="submit" className={styles.primary} label="Login">
+            Create Account
+          </Button>
+        </div>
         <Link href="/login" className={styles.returnToLogin}>
           <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
         </Link>

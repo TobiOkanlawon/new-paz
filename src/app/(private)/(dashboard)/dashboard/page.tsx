@@ -7,8 +7,9 @@ import CardScrollIndicator from "@/components/CardScrollIndicator";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import BVN_Modal from "@/components/BVNModal";
 import { useAddBVN } from "@/data/mutations/useAddBVN";
-import { useRecoilState } from "recoil";
-import { userState } from "@/data/atoms";
+import useUser from "@/store/userStore";
+import { toast } from "react-toastify";
+
 
 const Dashboard = () => {
   // Refs for scrollable containers
@@ -29,11 +30,18 @@ const Dashboard = () => {
   const router = useRouter();
 
   const mutation = useAddBVN();
-  const [user, _] = useRecoilState(userState);
 
-  const handleSubmit = (values) => {
-    return mutation.mutate({ ...values, email: user?.email });
-  };
+  const user = useUser((state) => state.user);
+
+  const handleSubmit = (values: { bvn: string; dob: string }) => {
+  if (!user?.email) {
+    toast.error("User email is missing.");
+    return;
+  }
+
+  mutation.mutate({ ...values, email: user.email });
+};
+
 
   return (
     <>
