@@ -3,10 +3,15 @@ type TUser = {
   first_name: string;
   is_active: boolean;
   last_name: string;
+  is_bvn_verified: boolean;
   role_id: "1" | "2"; // correspond to user or admin
   username: string;
 };
 
+type ErrorResponse = {
+  responseCode: string;
+  responseMessage: string;
+}
 
 type TLoginResponse = {
   message: string;

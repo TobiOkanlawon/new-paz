@@ -1,25 +1,21 @@
+import useToken from "@/store/tokenStore";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const SS_KEY_FOR_TOKEN = "jwt_token";
+const SS_KEY_FOR_TOKEN = "paz_auth_token";
 
-export const getToken = () => {
-  // token is stored in the SessionStorage
-  return sessionStorage.getItem(SS_KEY_FOR_TOKEN);
+export const getToken = (): string | null => {
+  return useToken.getState().token;
 };
 
-export const storeToken = (type: "persist" | "memory", token: string) => {
-  
-  if (type === "persist") {
-    return localStorage.setItem(SS_KEY_FOR_TOKEN, token);
-  } else {
-    return sessionStorage.setItem(SS_KEY_FOR_TOKEN, token);
-  }
+export const storeToken = (token: string) => {
+  return useToken.getState().setToken(token);
 };
 
 export const removeToken = () => {
   localStorage.removeItem(SS_KEY_FOR_TOKEN);
   sessionStorage.removeItem(SS_KEY_FOR_TOKEN);
-}
+};
 
 export const axiosInstance = axios.create({
   // baseURL: process.env.BASE_URL,
@@ -36,7 +32,7 @@ axiosInstance.interceptors.request.use(
     const isUrlExcluded = publicEndpoints.some((url) => url === config.url);
     if (!isUrlExcluded) {
       if (token && config.headers) {
-        config.headers.authorization = `${token}`;
+        config.headers.authorization = `Bearer ${token}`;
       }
     }
     return config;
@@ -48,16 +44,11 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response;
   },
   async (error) => {
-    if (error?.response?.status === 400) {
-      return Promise.reject({
-        message: error.response?.data?.message || "Something went wrong",
-      });
+    if (!error.response) {
+      toast.error("An error occured");
     }
-    return Promise.reject(error);
   },
 );
