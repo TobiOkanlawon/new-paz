@@ -13,8 +13,7 @@ export const storeToken = (token: string) => {
 };
 
 export const removeToken = () => {
-  localStorage.removeItem(SS_KEY_FOR_TOKEN);
-  sessionStorage.removeItem(SS_KEY_FOR_TOKEN);
+  return useToken.getState().removeToken();
 };
 
 export const axiosInstance = axios.create({

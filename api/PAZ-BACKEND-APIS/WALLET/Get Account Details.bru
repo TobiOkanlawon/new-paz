@@ -1,0 +1,19 @@
+meta {
+  name: Get Account Details
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/users/user/account-details?email=tobiinlondon34@gmail.com
+  body: none
+  auth: inherit
+}
+
+params:query {
+  email: tobiinlondon34@gmail.com
+}
+
+settings {
+  encodeUrl: true
+}
