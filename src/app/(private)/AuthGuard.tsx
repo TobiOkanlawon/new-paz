@@ -1,19 +1,20 @@
 "use client";
+
+import useToken from "@/store/tokenStore";
+import { useRouter } from "next/navigation";
+
 export default function PrivateGuard({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const token = useRecoilValue(authTokenState);
-  // const router = useRouter();
+  const { token } = useToken();
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     router.push("/login");
-  //   }
-  // }, [token, router]);
-
-  // if (!token) return null;
+  if (!token) {
+    router.replace("/login");
+    return null;
+  }
 
   return <>{children}</>;
 }
