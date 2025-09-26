@@ -1,0 +1,49 @@
+.container{
+    font-family: 'Montserrat', sans-serif;
+}
+.modalHeader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1rem;
+}
+.modalDescription{
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1rem;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+.addAccount, .addBVN{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    box-shadow: 0px 0px 15px 0px #0000001A;
+    border-radius: .6rem;
+    width: 80%;
+    padding: .6rem;
+    text-align: center;
+}
+.addAccount>button, .addBVN>button{
+    margin: 0;
+}
+.addAccount>p, .addBVN>p{
+    margin: 0;
+    width: 100%;
+    font-weight: 500;
+    font-size: .8rem;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+.addAccount>svg, .addBVN>svg{
+    font-size: 3rem;
+    color: #3475DF;
+}
+
+.success{
+    color: #2ece56;
+    font-size: 1.1rem !important;
+}

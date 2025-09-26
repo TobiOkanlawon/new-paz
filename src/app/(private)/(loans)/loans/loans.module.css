@@ -93,7 +93,11 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-.modalForm button{
+.modalButton{
+    width: 100%;
+    text-align: center;
+}
+.modalButton button{
     border: none;
     background-color: #3475DF;
     color: #fff;
@@ -105,6 +109,7 @@
     letter-spacing: 0%;
     border-radius: .4rem;
 }
+
 .eligibilityDetails{
     text-align: center;
     font-family: 'Montserrat', sans-serif;

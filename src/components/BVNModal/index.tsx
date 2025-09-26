@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
     .max(new Date(), "DOB can't be in the future"),
 });
 
-const BVN_Modal: React.FC<BvnmPropTypes> = ({
+const BVNModal: React.FC<BvnmPropTypes> = ({
   isOpen,
   onClose,
   handleSubmit,
@@ -127,4 +127,4 @@ const BVN_Modal: React.FC<BvnmPropTypes> = ({
   );
 };
 
-export default BVN_Modal;
+export default BVNModal;

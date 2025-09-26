@@ -5,7 +5,10 @@ import styles from "./dashboard.module.css";
 import Image from "next/image";
 import CardScrollIndicator from "@/components/CardScrollIndicator";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import BVN_Modal from "@/components/BVNModal";
+import BVNModal from "@/components/BVNModal";
+import AccountModal from "@/components/AddAccount";
+import SetupModal from "@/components/AccountSetupModal";
+import AccountSetupSuccessModal from "@/components/ASSModal";
 import { useAddBVN } from "@/data/mutations/useAddBVN";
 import useUser from "@/store/userStore";
 import { toast } from "react-toastify";
@@ -24,7 +27,11 @@ const Dashboard = () => {
   const [showLoans, setShowLoans] = useState(true);
   const [showInvestments, setShowInvestments] = useState(true);
 
-  const [isBVNModalOpen, setIsBVNModalOpen] = useState(true);
+  // All My Modal States
+  const [isSModalOpen, setIsSModalOpen] = useState(true)
+  const [isASSModalOpen, setIsASSModalOpen] = useState(false)
+  const [isACModalOpen, setIsACModalOpen] = useState(false)
+  const [isBVNModalOpen, setIsBVNModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -32,6 +39,7 @@ const Dashboard = () => {
 
   const user = useUser((state) => state.user);
 
+  // BVN Modal Form handle submit
   const handleSubmit = (values: { bvn: string; dob: string }) => {
     if (!user?.email) {
       // if this case actually gets hit then there's a problem.
@@ -42,6 +50,10 @@ const Dashboard = () => {
 
     mutation.mutate({ ...values, email: user.email });
   };
+
+  const handleBVNMOpen = () => setIsBVNModalOpen(true)
+
+  const handleACMOpen = () => setIsACModalOpen(true)
 
   return (
     <>
@@ -422,8 +434,38 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {
+        isSModalOpen && (
+          <SetupModal
+            isOpen={isSModalOpen}
+            onClose={() => {
+              setIsSModalOpen(false)
+            }}
+            handleBVNMopen={handleBVNMOpen}
+            handleACMopen={handleACMOpen}
+          />
+        )
+      }
+      {
+        isACModalOpen && (
+          <AccountModal
+            isOpen={isACModalOpen}
+            onClose={() => setIsACModalOpen(false)}
+          />
+        )
+      }
+
+      {
+        isASSModalOpen && (
+          <AccountSetupSuccessModal
+            isOpen={isASSModalOpen}
+            onClose={() => setIsASSModalOpen(false)}
+          />
+        )
+      }
+
       {isBVNModalOpen && (
-        <BVN_Modal
+        <BVNModal
           isOpen={isBVNModalOpen}
           onClose={() => {
             setIsBVNModalOpen(false);

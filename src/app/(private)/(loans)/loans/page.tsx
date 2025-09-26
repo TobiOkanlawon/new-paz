@@ -174,7 +174,9 @@ const Loans = () => {
               {...formik.getFieldProps("duration")}
             />
 
-            <button type="submit">Check Eligibility</button>
+            <div className={styles.modalButton}>
+              <button type="submit">Check Eligibility</button>
+            </div>
           </form>
         </Modal>
       )}
