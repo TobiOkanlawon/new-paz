@@ -83,77 +83,82 @@ const RegisterForm = () => {
       >
         <div className={styles.flexed}>
           <div className={styles.inputFlex}>
-          <Input
-            label="First Name"
-            type="text"
-            placeholder="Enter your first Name"
-            id="firstName"
-            errors={handleErrorDisplay(formik, "firstName")}
-            {...formik.getFieldProps("firstName")}
-          />
+            <Input
+              label="First Name"
+              type="text"
+              placeholder="Enter your first Name"
+              id="firstName"
+              errors={handleErrorDisplay(formik, "firstName")}
+              {...formik.getFieldProps("firstName")}
+            />
           </div>
           <div className={styles.inputFlex}>
-          <Input
-            label="Last Name"
-            type="text"
-            placeholder="Enter your last name"
-            id="lastName"
-            errors={handleErrorDisplay(formik, "lastName")}
-            {...formik.getFieldProps("lastName")}
-          />
+            <Input
+              label="Last Name"
+              type="text"
+              placeholder="Enter your last name"
+              id="lastName"
+              errors={handleErrorDisplay(formik, "lastName")}
+              {...formik.getFieldProps("lastName")}
+            />
           </div>
         </div>
         <div className={styles.flexed}>
           <div className={styles.inputFlex}>
-          <Input
-          label="Email Address"
-          type="email"
-          placeholder="Enter your email address"
-          id="email"
-          errors={handleErrorDisplay(formik, "email")}
-          {...formik.getFieldProps("email")}
-        />
+            <Input
+              label="Email Address"
+              type="email"
+              placeholder="Enter your email address"
+              id="email"
+              errors={handleErrorDisplay(formik, "email")}
+              {...formik.getFieldProps("email")}
+            />
           </div>
-        <div className={styles.inputFlex}>
-        <Input
-          label="Phone Number"
-          type="tel"
-          placeholder="Enter your phone number"
-          id="phoneNumber"
-          errors={handleErrorDisplay(formik, "phoneNumber")}
-          {...formik.getFieldProps("phoneNumber")}
-        />
-        </div>
+          <div className={styles.inputFlex}>
+            <Input
+              label="Phone Number"
+              type="tel"
+              placeholder="Enter your phone number"
+              id="phoneNumber"
+              errors={handleErrorDisplay(formik, "phoneNumber")}
+              {...formik.getFieldProps("phoneNumber")}
+            />
+          </div>
         </div>
         <div className={styles.flexed}>
           <div className={styles.inputFlex}>
-          <Input
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
-            id="password"
-            errors={handleErrorDisplay(formik, "password")}
-            {...formik.getFieldProps("password")}
-          />
+            <Input
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              id="password"
+              errors={handleErrorDisplay(formik, "password")}
+              {...formik.getFieldProps("password")}
+            />
           </div>
           <div className={styles.inputFlex}>
-          <Input
-            label="Re - Password"
-            type="password"
-            placeholder="Enter Password Again"
-            id="confirmPassword"
-            errors={handleErrorDisplay(formik, "confirmPassword")}
-            {...formik.getFieldProps("confirmPassword")}
-          />
+            <Input
+              label="Re - Password"
+              type="password"
+              placeholder="Enter Password Again"
+              id="confirmPassword"
+              errors={handleErrorDisplay(formik, "confirmPassword")}
+              {...formik.getFieldProps("confirmPassword")}
+            />
           </div>
         </div>
-        
+
         <p>
           By clicking "Create Account”, I agree to PAZ’s <a href="#">privacy policy</a>{" "}
           and <a href="#">terms of service</a>.
         </p>
         <div className={styles.buttonContainer}>
-          <Button type="submit" className={styles.primary} label="Login">
+          <Button
+            loading={formik.isSubmitting}
+            type="submit"
+            className={styles.primary}
+            label="Login"
+          >
             Create Account
           </Button>
         </div>

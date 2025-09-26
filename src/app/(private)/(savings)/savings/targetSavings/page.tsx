@@ -66,7 +66,7 @@ const TargetSavings = () => {
           <p className={styles.headingText}>I must buy Camaro</p>
         </div>
         <div className={styles.actionsContainer}>
-          <p style={{ color: "#7131DA", fontWeight: "500" }}>
+          <p style={{ color: "#7131DA", fontWeight: "500", display: "none" }}>
             <Image
               style={{ marginTop: ".1rem" }}
               src={"/share.svg"}
@@ -74,7 +74,7 @@ const TargetSavings = () => {
               width={13.5}
               height={14.94}
             />{" "}
-            Share payement link
+            Share payment link
           </p>
           <button onClick={handleOpenModal} className={styles.widFunds}>
             Withdraw Funds

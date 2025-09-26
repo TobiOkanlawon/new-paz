@@ -10,6 +10,10 @@ import Modal from "@/components/Modal";
 import ProfileAlert from "@/components/ProfileAlert";
 import Image from "next/image";
 import { useState } from "react";
+import { useGetProfile } from "@/data/queries/useGetProfile";
+import useUser from "@/store/userStore";
+import { Loading } from "@/components/Loading";
+import { ErrorComponent } from "@/components/Error";
 
 const genderOptions = [
   { label: "Male", value: "male" },
@@ -25,13 +29,14 @@ const relationshipOptions = [
 ];
 
 const Profile = () => {
-  const userData = {};
+  const { user } = useUser();
+  const { data, isLoading, error } = useGetProfile(user?.email as string);
 
   const [formData, setFormData] = useState({
     postalAddress: "",
     birthday: "",
     gender: "",
-    email: userData?.email,
+    email: user?.email,
     phoneNumber: "",
     nextOfKinFirstName: "",
     nextOfKinLastName: "",
@@ -57,6 +62,15 @@ const Profile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const [isActive, setIsActive] = useState(false);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error message="" retryFunction={() => {}} />;
+  }
+
   return (
     <>
       <ProfileAlert
@@ -152,10 +166,10 @@ const Profile = () => {
             <div className={styles.groupInputs}>
               <div className={styles.inputs}>
                 <SelectGroup
-                label="Gender"
-                name="gender"
-                options={genderOptions}
-                placeholder="Select Date"
+                  label="Gender"
+                  name="gender"
+                  options={genderOptions}
+                  placeholder="Select Date"
                 />
               </div>
               <div className={styles.inputs}>
