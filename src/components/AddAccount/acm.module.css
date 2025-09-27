@@ -1,6 +1,9 @@
 .container{
     width: 80%;
 }
+.modalWrapper{
+    width: 75%
+}
 .modalHeader{
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -35,7 +38,7 @@
     align-items: start;
     justify-content: center;
     width: 100%;
-    margin: .8rem 0;
+    margin: 0;
 }
 .labels{
     font-family: 'Montserrat', sans-serif;

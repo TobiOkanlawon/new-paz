@@ -29,7 +29,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
   return (
     <div className={styles.container}>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <div>
+        <div className={styles.modalWrapper}>
           <h1 className={styles.modalHeader}>Add your Account</h1>
           <p className={styles.modalDetails}>
             You can verify your identity on PAZ
