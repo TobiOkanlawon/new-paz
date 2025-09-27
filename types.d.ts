@@ -1,3 +1,5 @@
+type Gender = "male" | "female";
+
 type TUser = {
   email: string;
   first_name: string;
@@ -31,3 +33,22 @@ type AccountType = {
   accountNumber: number;
   bank: string;
 }
+
+type TProfile = {
+  address: string;
+  gender: Gender;
+  email: string;
+  birthday: string;
+  phoneNumber: string;
+  nextOfKinFirstName: string;
+  nextOfKinLastName: string;
+  nextOfKinEmail: string;
+  nextOfKinRelationship: string;
+  nextOfKinPhoneNumber: string;
+};
+
+type ProfileResponseData = {
+  message: string;
+  profile: TProfile;
+  responseCode: string;
+};

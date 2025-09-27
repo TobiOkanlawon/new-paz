@@ -6,3 +6,12 @@ export function handleErrorDisplay(formik, name) {
 
   return formik.errors[name];
 }
+
+export const formatBirthday = (birthdayInput: string) => {
+  /* This function takes the birthday string in the form yyyy-mm-dd and turns it to the form dd/mm/yyyy*/
+
+  if (birthdayInput === "") return ""
+  const splitString = birthdayInput.split("-")
+  if (splitString.length !== 3) return ""
+  return `${splitString[2]}/${splitString[1]}/${splitString[0]}`
+}

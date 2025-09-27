@@ -2,6 +2,7 @@
 
 import useToken from "@/store/tokenStore";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function PrivateGuard({
   children,
@@ -11,8 +12,13 @@ export default function PrivateGuard({
   const { token } = useToken();
   const router = useRouter();
 
+  useEffect(() => {
+    if (!token) {
+      router.replace("/login");
+    }
+  }, [token, router]);
+
   if (!token) {
-    router.replace("/login");
     return null;
   }
 

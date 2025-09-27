@@ -1,6 +1,7 @@
 "use client";
 import useToken from "@/store/tokenStore";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function RootLayout({
   children,
@@ -10,8 +11,13 @@ export default function RootLayout({
   const { token } = useToken();
   const router = useRouter();
 
+  useEffect(() => {
+    if (token) {
+      router.replace("/dashboard");
+    }
+  }, [token, router]);
+
   if (token) {
-    router.replace("/dashboard");
     return null;
   }
 

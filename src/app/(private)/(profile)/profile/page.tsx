@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./profile.module.css";
-import InputGroup from "@/components/InputGroup";
+import Input from "@/components/Input";
 import SelectGroup from "@/components/InputGroup/SelectGroup";
 import DateInput from "@/components/dateInput/page";
 import ProgressBar from "@/components/ProgressBar";
@@ -14,12 +14,17 @@ import { useGetProfile } from "@/data/queries/useGetProfile";
 import useUser from "@/store/userStore";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const schema = Yup.object();
 
 const genderOptions = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
   { label: "Other", value: "other" },
 ];
+
 const relationshipOptions = [
   { label: "Father", value: "father" },
   { label: "Mother", value: "mother" },
@@ -32,18 +37,24 @@ const Profile = () => {
   const { user } = useUser();
   const { data, isLoading, error } = useGetProfile(user?.email as string);
 
-  const [formData, setFormData] = useState({
-    postalAddress: "",
-    birthday: "",
-    gender: "",
-    email: user?.email,
-    phoneNumber: "",
-    nextOfKinFirstName: "",
-    nextOfKinLastName: "",
-    nextOfKinEmail: "",
-    nextOfKinPhoneNumber: "",
-    relationship: "",
+  const formik = useFormik({
+    initialValues: {
+      postalAddress: data?.address || "",
+      birthday: data?.birthday || "",
+      gender: data?.gender || "",
+      email: data?.email || user?.email || "",
+      phoneNumber: data?.phoneNumber || "",
+      nextOfKinFirstName: data?.nextOfKinFirstName || "",
+      nextOfKinLastName: data?.nextOfKinLastName || "",
+      nextOfKinEmail: data?.nextOfKinEmail || "",
+      nextOfKinPhoneNumber: data?.nextOfKinPhoneNumber || "",
+      relationship: data?.nextOfKinRelationship || "",
+    },
+    validationSchema: schema,
+    onSubmit: (values) => {},
+    enableReinitialize: true,
   });
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [progress, setProgress] = useState(70);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,12 +66,6 @@ const Profile = () => {
     const file = e.target.files?.[0];
     setFileName(file ? file.name : "myPhoto.png");
   };
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
   const [isActive, setIsActive] = useState(false);
 
   if (isLoading) {
@@ -68,7 +73,7 @@ const Profile = () => {
   }
 
   if (error) {
-    return <Error message="" retryFunction={() => {}} />;
+    return <ErrorComponent message="" retryFunction={() => {}} />;
   }
 
   return (
@@ -110,12 +115,12 @@ const Profile = () => {
                 Choose File
               </label>
               <span className={styles.fileName}>{fileName}</span>
-              <input
+              <Input
+                label=""
                 type="file"
-                name="profileInput"
                 id="profileInput"
                 className={styles.profileInput}
-                onChange={handleFileChange}
+                {...formik.getFieldProps("profileInput")}
               />
             </div>
             <div className={styles.buttonContainer}></div>
@@ -130,23 +135,22 @@ const Profile = () => {
           <div>
             <div className={styles.groupInputs}>
               <div className={styles.inputs}>
-                <InputGroup
+                <Input
+                  id="postalAddress"
                   label="Postal Address"
                   placeholder="Enter postal address here"
-                  name="postalAddress"
                   type="text"
-                  value={formData.postalAddress}
-                  onChange={handleChange}
                   required
                   disabled={isSubmitted}
                   className={styles.postalAddress}
+                  {...formik.getFieldProps("postalAddress")}
                 />
               </div>
               <div className={styles.inputs}>
                 <DateInput
                   label="Birthday"
                   placeholder="Select Date"
-                  name="birthday"
+                  id="birthday"
                   icon={
                     <Image
                       src={"/inputBirthday.png"}
@@ -156,10 +160,8 @@ const Profile = () => {
                     />
                   }
                   type="date"
-                  value={formData.birthday}
-                  onChange={handleChange}
+                  {...formik.getFieldProps("birthday")}
                   required
-                  disabled={isSubmitted}
                 />
               </div>
             </div>
@@ -173,29 +175,27 @@ const Profile = () => {
                 />
               </div>
               <div className={styles.inputs}>
-                <InputGroup
+                <Input
                   label="Email"
                   placeholder="Enter email address"
-                  name="email"
+                  id="email"
                   type="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   required
                   disabled={isSubmitted}
+                  {...formik.getFieldProps("email")}
                 />
               </div>
             </div>
             <div className={styles.groupInputs}>
               <div className={styles.inputs}>
-                <InputGroup
+                <Input
                   label="Phone Number"
                   placeholder="Enter your phone number"
-                  name="phoneNumber"
+                  id="phoneNumber"
                   type="tel"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
                   required
                   disabled={isSubmitted}
+                  {...formik.getFieldProps("phoneNumber")}
                 />
               </div>
               <div className={styles.inputs}></div>
@@ -206,47 +206,43 @@ const Profile = () => {
           <h3>Next of Kin Details</h3>
           <div>
             <div className={styles.groupInputs}>
-              <InputGroup
+              <Input
                 label="First Name"
                 placeholder="Enter First Name"
-                name="nextOfKinFirstName"
+                id="nextOfKinFirstName"
                 type="text"
-                value={formData.nextOfKinFirstName}
-                onChange={handleChange}
                 required
                 disabled={isSubmitted}
+                {...formik.getFieldProps("nextOfKinFirstName")}
               />
-              <InputGroup
+              <Input
                 label="Last Name"
                 placeholder="Enter Last Name"
-                name="nextOfKinLastName"
+                id="nextOfKinLastName"
                 type="text"
-                value={formData.nextOfKinLastName}
-                onChange={handleChange}
                 required
                 disabled={isSubmitted}
+                {...formik.getFieldProps("nextOfKinLastName")}
               />
             </div>
             <div className={styles.groupInputs}>
-              <InputGroup
+              <Input
+                id="nextOfKinEmail"
                 label="Email"
                 placeholder="Enter their email address"
-                name="nextOfKinEmail"
                 type="email"
-                value={formData.nextOfKinEmail}
-                onChange={handleChange}
                 required
                 disabled={isSubmitted}
+                {...formik.getFieldProps("nextOfKinEmail")}
               />
-              <InputGroup
+              <Input
                 label="Phone Number"
                 placeholder="Enter their phone number"
-                name="nextOfKinPhoneNumber"
+                id="nextOfKinPhoneNumber"
                 type="tel"
-                value={formData.nextOfKinPhoneNumber}
-                onChange={handleChange}
                 required
                 disabled={isSubmitted}
+                {...formik.getFieldProps("nextOfKinPhoneNumber")}
               />
             </div>
             <div className={styles.groupInputs}>
@@ -256,8 +252,6 @@ const Profile = () => {
                   name="Relationship"
                   placeholder="Who is the person to you?"
                   options={relationshipOptions}
-                  value={formData.relationship}
-                  onChange={handleChange}
                   required
                   disabled={isSubmitted}
                 />
