@@ -7,7 +7,6 @@ import DateInput from "@/components/dateInput/page";
 import ProgressBar from "@/components/ProgressBar";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
-import ProfileAlert from "@/components/ProfileAlert";
 import Image from "next/image";
 import { useState } from "react";
 import { useGetProfile } from "@/data/queries/useGetProfile";
@@ -16,6 +15,7 @@ import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { formatBirthdayToDateInputFormat } from "@/libs/helpers";
 
 const schema = Yup.object();
 
@@ -39,7 +39,7 @@ const Profile = () => {
   const formik = useFormik({
     initialValues: {
       postalAddress: data?.address || "",
-      birthday: data?.birthday || "",
+      birthday: formatBirthdayToDateInputFormat(data?.birthday) || "",
       gender: data?.gender || "",
       email: data?.email || user?.email || "",
       phoneNumber: data?.phoneNumber || "",
@@ -50,12 +50,13 @@ const Profile = () => {
       relationship: data?.nextOfKinRelationship || "",
     },
     validationSchema: schema,
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      console.log(values);
+    },
     enableReinitialize: true,
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [progress, setProgress] = useState(70);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileName, setFileName] = useState("myPhoto.png");
 
@@ -67,6 +68,22 @@ const Profile = () => {
   };
   const [isActive, setIsActive] = useState(false);
 
+  const calculateProgress = () => {
+    let completed = 0;
+
+    for (let value of Object.values(formik.values)) {
+      if (typeof value == "string" && value !== "") {
+        completed++;
+        continue;
+      }
+    }
+
+    console.log(completed, Object.keys(formik.values).length);
+
+    const ratio = completed / Object.keys(formik.values).length;
+    return ratio * 100;
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -77,12 +94,6 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileAlert
-        onClose={() => setIsActive(false)}
-        isActive={false}
-        isSuccessful={false}
-        alertType={"Profile Photo"}
-      />
       <form className={styles.container} id="CONTAINER">
         <section className={styles.headers}>
           <div className={styles.profileContainer}>
@@ -105,7 +116,7 @@ const Profile = () => {
             </div>
           </div>
           <div className={styles.progressWrapper}>
-            <ProgressBar progress={progress} />
+            <ProgressBar progress={calculateProgress()} />
           </div>
           <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
             <h2 className={styles.modalHeader}>Change profile photo</h2>
@@ -263,10 +274,7 @@ const Profile = () => {
           label="Submit"
           loading={false}
           className={styles.button}
-          onClick={(e) => {
-            e.preventDefault();
-            setIsSubmitted(true);
-          }}
+          type="submit"
         />
       </form>
     </>

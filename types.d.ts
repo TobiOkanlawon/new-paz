@@ -52,3 +52,17 @@ type ProfileResponseData = {
   profile: TProfile;
   responseCode: string;
 };
+
+type APIResponse = {
+  message: string;
+  responseCode: string; 
+}
+
+type AccountDetails = {
+  TotalLoan: number;
+  TotalSavings: number;
+  firstName: string;
+  investmentAmount: number;
+  lastName: string;
+  userName: string;
+};

@@ -7,11 +7,33 @@ export function handleErrorDisplay(formik, name) {
   return formik.errors[name];
 }
 
-export const formatBirthday = (birthdayInput: string) => {
-  /* This function takes the birthday string in the form yyyy-mm-dd and turns it to the form dd/mm/yyyy*/
+export const formatBirthdayToBackendFormat = (
+  birthdayInput: string | undefined,
+) => {
+  /*
 
-  if (birthdayInput === "") return ""
-  const splitString = birthdayInput.split("-")
-  if (splitString.length !== 3) return ""
-  return `${splitString[2]}/${splitString[1]}/${splitString[0]}`
-}
+This function takes the birthday string in the form yyyy-mm-dd and turns it to the form dd/mm/yyyy
+
+    if the birthdayInput is undefined, it returns undefined
+   */
+
+  if (!birthdayInput) return undefined;
+
+  if (birthdayInput === "") return "";
+  const splitString = birthdayInput.split("-");
+  if (splitString.length !== 3) return "";
+  return `${splitString[2]}/${splitString[1]}/${splitString[0]}`;
+};
+
+export const formatBirthdayToDateInputFormat = (
+  dateFromBackend: string | undefined,
+) => {
+  /* This function takes a birthday string in the form dd/mm/yyyy and transforms it to the form yyyy-mm-dd */
+
+  if (!dateFromBackend) return undefined;
+
+  if (dateFromBackend === "") return "";
+  const splitString = dateFromBackend.split("/");
+  if (splitString.length !== 3) return "";
+  return `${splitString[2]}-${splitString[1]}-${splitString[0]}`;
+};
