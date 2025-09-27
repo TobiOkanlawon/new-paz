@@ -154,7 +154,6 @@
 }
 
 .postalAddress {
-  width: 25rem;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 10px;
@@ -166,6 +165,19 @@
   border-image: initial;
   outline: none;
   flex: 1 1 0%;
+  width: 100%;
+  width: -moz-available; /* Firefox */
+  width: -webkit-fill-available; /* Safari/Chrome */
+  width: fill-available; /* Future unprefixed */
+}
+
+.postalAddress::placeholder {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #aaa;
 }
 
 .inputs {

@@ -1,21 +1,29 @@
 .inputGroup {
-  width: 431px;
+  width: 100%;
+  width: -moz-available; /* Firefox */
+  width: -webkit-fill-available; /* Safari/Chrome */
+  width: fill-available; /* Future unprefixed */
   height: 74px;
   display: flex;
   flex-direction: column;
 }
 
 .label {
-  font-size: 14px;
-  margin-bottom: 14px;
+  font-family: var(--font-montserrat);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #292727;
+  display: block;
+  padding: 0 4px 12px;
+  align-self: flex-start;
 }
 
 .inputWrapper {
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 .icon {
@@ -27,16 +35,41 @@
 }
 
 .input {
+  font-family: var(--font-montserrat);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  color: #292727;
+  padding: 1rem;
+  border-radius: 8px;
+  border: solid 1px #c4c4c4;
   width: 100%;
-  font-size: 12px;
-  padding: 15px 10px 15px 10px;
-  border: none;
-  outline: none;
-  background: transparent;
+  width: -moz-available; /* Firefox */
+  width: -webkit-fill-available; /* Safari/Chrome */
+  width: fill-available; /* Future unprefixed */
+}
 
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+.input::placeholder {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #aaa;
+}
+
+.errorsContainer {
+    margin-top: 4px;
+}
+
+.error {
+    color: var(--error-red);
+    font-size: 0.8rem;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+.errorInput {
+    border-color: var(--error-red);
 }
 
 .input::-webkit-calendar-picker-indicator {

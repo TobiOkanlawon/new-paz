@@ -22,7 +22,6 @@ const schema = Yup.object();
 const genderOptions = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
-  { label: "Other", value: "other" },
 ];
 
 const relationshipOptions = [

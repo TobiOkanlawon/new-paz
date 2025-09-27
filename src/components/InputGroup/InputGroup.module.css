@@ -1,9 +1,20 @@
 .inputGroup {
   width: 100%;
+  width: -moz-available; /* Firefox */
+  width: -webkit-fill-available; /* Safari/Chrome */
+  width: fill-available; /* Future unprefixed */
   height: 74px;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+}
+.selectinput::placeholder {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #aaa;
 }
 
 .inputError {
@@ -63,9 +74,10 @@
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 10px;
-  border: 1px solid #D9D9D9;
   outline: none;
   background: transparent;
+  border-radius: 8px;
+  border: solid 1px #c4c4c4;
 }
 @media screen and (max-width: 475px){
     .inputGroup{
