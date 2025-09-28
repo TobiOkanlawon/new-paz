@@ -53,12 +53,12 @@ type ProfileResponseData = {
   responseCode: string;
 };
 
-type APIResponse = {
+type APIResponse <T> = {
   message: string;
-  responseCode: string; 
-}
+  responseCode: string;
+} & T;
 
-type AccountDetails = {
+type TAccountDetails = {
   TotalLoan: number;
   TotalSavings: number;
   firstName: string;
@@ -66,3 +66,4 @@ type AccountDetails = {
   lastName: string;
   userName: string;
 };
+

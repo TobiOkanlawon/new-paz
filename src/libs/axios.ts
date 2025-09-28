@@ -2,8 +2,6 @@ import useToken from "@/store/tokenStore";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const SS_KEY_FOR_TOKEN = "paz_auth_token";
-
 export const getToken = (): string | null => {
   return useToken.getState().token;
 };
