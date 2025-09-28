@@ -88,6 +88,14 @@
   object-fit: contain;
   height: 5.32vh;
 }
+.familyVault>.loanAndInvestmentButton{
+  background: #fff;
+  color: #3475DF;
+}
+.familyVault>.loanAndInvestmentButton:hover{
+  background: #4F85E3 !important;
+  color: #fff !important;
+}
 .familyVaultText {
   font-family: var(--font-montserrat);
   padding: 0 1rem;
@@ -205,6 +213,10 @@
   margin: 0.4rem auto;
   font-size: 13px;
   height: 5.74vh;
+}
+.loanAndInvestmentButton:hover{
+  background-color: #8dccfe;
+  cursor: pointer;
 }
 .loanCard img {
   height: 10vh;

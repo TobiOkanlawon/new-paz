@@ -65,6 +65,7 @@ const Dashboard = () => {
         },
       },
     );
+    setIsBVNModalOpen(false)
   };
 
   const handleBVNMOpen = () => setIsBVNModalOpen(true);

@@ -27,9 +27,15 @@ const SetupModal: React.FC<ASMProps> = ({isOpen, onClose, handleBVNMopen, handle
             <div className={styles.addAccount}>
                 <LuUserRoundPlus/>
                 <p>Add Account</p>
-                <Button onClick={handleACMopen}>
-                    Add Account
-                </Button>
+                {
+                    !user?.is_bvn_verified ? (
+                        <p className={styles.warning}>Please verify BVN first</p>
+                    ) : (
+                        <Button onClick={handleACMopen}>
+                            Add Account
+                        </Button>
+                    )
+                }
             </div>
             <div className={styles.addBVN}>
                 <LuHash/>
