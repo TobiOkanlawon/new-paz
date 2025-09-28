@@ -1,5 +1,4 @@
 import { axiosInstance as axios } from "@/libs/axios";
-import useUser from "@/store/userStore";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetAccountDetails = (email: string) => {
@@ -10,6 +9,5 @@ export const useGetAccountDetails = (email: string) => {
 	return res.data.accountDetails;
       });
     },
-    enabled: useUser.getState().user?.is_bvn_verified === true
   });
 };
