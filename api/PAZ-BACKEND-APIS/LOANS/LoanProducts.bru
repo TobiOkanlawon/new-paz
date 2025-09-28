@@ -4,10 +4,21 @@ meta {
   seq: 7
 }
 
-get {
-  url: 
-  body: none
+post {
+  url: {{protocol}}://{{url}}/v1/loan/loan-product-creation
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+      "productCode":"001",
+      "narration":"pay day loan",
+      "interestRate":"0.5",
+      "managementFee":"0.01",
+      "adminFee":"0.002",
+      "productName":"PayDay"
+  }
 }
 
 settings {
