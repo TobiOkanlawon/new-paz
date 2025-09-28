@@ -1,10 +1,10 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import styles from "./styles.module.css";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import clsx from "clsx";
 type Props = {
   className: string;
-  cornerImage: string;
+  cornerImage: StaticImageData;
   title: string;
   amount: string;
   isAmountVisible: boolean;
