@@ -8,13 +8,13 @@
   flex-direction: column;
   margin-bottom: 1rem;
 }
-.selectinput::placeholder {
-  font-family: var(--font-inter);
+.selectinput {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 1rem;
   line-height: 100%;
   letter-spacing: 0%;
-  color: #aaa;
+  font-family: var(--font-montserrat);
+  color: #292727;
 }
 
 .inputError {
@@ -70,7 +70,6 @@
 
 .selectinput {
   flex: 1;
-  font-size: 12px;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 10px;
