@@ -12,6 +12,10 @@ import AccountSetupSuccessModal from "@/components/ASSModal";
 import { useAddBVN } from "@/data/mutations/useAddBVN";
 import useUser from "@/store/userStore";
 import { toast } from "react-toastify";
+import { AccountCard } from "@/components/Dashboard/AccountCard/index";
+import DashboardSavings from "@/assets/images/dashboardSavings.png";
+import DashboardLoans from "@/assets/images/dashboardLoan.png";
+import DashboardInvestments from "@/assets/images/dashboardInvestment.png";
 
 const Dashboard = () => {
   const user = useUser((state) => state.user) as TUser;
@@ -31,9 +35,9 @@ const Dashboard = () => {
   const [showInvestments, setShowInvestments] = useState(true);
 
   // All My Modal States
-  const [isSModalOpen, setIsSModalOpen] = useState(true)
-  const [isASSModalOpen, setIsASSModalOpen] = useState(false)
-  const [isACModalOpen, setIsACModalOpen] = useState(false)
+  const [isSModalOpen, setIsSModalOpen] = useState(true);
+  const [isASSModalOpen, setIsASSModalOpen] = useState(false);
+  const [isACModalOpen, setIsACModalOpen] = useState(false);
   const [isBVNModalOpen, setIsBVNModalOpen] = useState(false);
 
   const router = useRouter();
@@ -60,77 +64,49 @@ const Dashboard = () => {
     );
   };
 
-  const handleBVNMOpen = () => setIsBVNModalOpen(true)
+  const handleBVNMOpen = () => setIsBVNModalOpen(true);
 
-  const handleACMOpen = () => setIsACModalOpen(true)
+  const handleACMOpen = () => setIsACModalOpen(true);
+
+  const [isSavingsAmountVisible, setIsSavingsAmountVisible] = useState(true);
+  const [isLoansAmountVisible, setIsLoansAmountVisible] = useState(true);
+  const [isInvestmentsAmountVisible, setIsInvestmentsAmountVisible] =
+    useState(true);
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.totals}>
-          <div className={`${styles.totalCategories} ${styles.lightBlue}`}>
-            <div className={styles.textIcon}>
-              <p>Total Savings</p>
-              <Image
-                src="/dashboardSavings.png"
-                width={40}
-                height={40}
-                alt="Savings"
-              />
-            </div>
-            <h3>
-              ₦ {showSavings ? "0.00" : "****"}{" "}
-              <span
-                style={{ cursor: "pointer", fontSize: "1rem" }}
-                onClick={() => setShowSavings((s) => !s)}
-              >
-                {/* <Image src={showSavings ? '/eyeOff.png' : '/eyeOff2.png'} alt='eyes off' width={12} height={12}/> */}
-                {showSavings ? <LuEye /> : <LuEyeOff />}
-              </span>
-            </h3>
-          </div>
-          <div className={`${styles.totalCategories} ${styles.darkBlue}`}>
-            <div className={styles.textIcon}>
-              <p>Total Savings</p>
-              <Image
-                src="/dashboardLoan.png"
-                width={40}
-                height={40}
-                alt="Savings"
-              />
-            </div>
-            <h3>
-              ₦ {showLoans ? "0.00" : "****"}{" "}
-              <span
-                style={{ cursor: "pointer", fontSize: "1rem" }}
-                onClick={() => setShowLoans((s) => !s)}
-              >
-                {/* <Image src={showLoans ? '/eyeOff2.png' : '/eyeOff.png'} alt='eyes off' width={12} height={12}/> */}
-                {showLoans ? <LuEye /> : <LuEyeOff />}
-              </span>
-            </h3>
-          </div>
-          <div className={`${styles.totalCategories} ${styles.purple}`}>
-            <div className={styles.textIcon}>
-              <p>Total Savings</p>
-              <Image
-                src="/dashboardInvestment.png"
-                width={40}
-                height={40}
-                alt="Savings"
-              />
-            </div>
-            <h3>
-              ₦ {showInvestments ? "0.00" : "****"}{" "}
-              <span
-                style={{ cursor: "pointer", fontSize: "1rem" }}
-                onClick={() => setShowInvestments((s) => !s)}
-              >
-                {/* <Image src={showInvestments ? '/eyeOff2.png' : '/eyeOff.png'} alt='eyes off' width={12} height={12}/> */}
-                {showSavings ? <LuEye /> : <LuEyeOff />}
-              </span>
-            </h3>
-          </div>
+          <AccountCard
+            title="Total Savings"
+            amount="1000"
+            isAmountVisible={isSavingsAmountVisible}
+            cornerImage={DashboardSavings}
+            className={styles.lightBlue}
+            toggleAmountVisibility={() =>
+              setIsSavingsAmountVisible(!isSavingsAmountVisible)
+            }
+          />
+          <AccountCard
+            title="Total Loans Collected"
+            amount="1000"
+            isAmountVisible={isLoansAmountVisible}
+            cornerImage={DashboardLoans}
+            className={styles.darkBlue}
+            toggleAmountVisibility={() =>
+              setIsLoansAmountVisible(!isLoansAmountVisible)
+            }
+          />
+          <AccountCard
+            title="Total Investments"
+            amount="1000"
+            isAmountVisible={isInvestmentsAmountVisible}
+            cornerImage={DashboardInvestments}
+            className={styles.purple}
+            toggleAmountVisibility={() =>
+              setIsInvestmentsAmountVisible(!isInvestmentsAmountVisible)
+            }
+          />
         </div>
         <div className={styles.savingsActivities}>
           <div className={styles.savingsVault}>
@@ -443,35 +419,29 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {
-        isSModalOpen && (
-          <SetupModal
-            isOpen={isSModalOpen}
-            onClose={() => {
-              setIsSModalOpen(false)
-            }}
-            handleBVNMopen={handleBVNMOpen}
-            handleACMopen={handleACMOpen}
-          />
-        )
-      }
-      {
-        isACModalOpen && (
-          <AccountModal
-            isOpen={isACModalOpen}
-            onClose={() => setIsACModalOpen(false)}
-          />
-        )
-      }
+      {isSModalOpen && (
+        <SetupModal
+          isOpen={isSModalOpen}
+          onClose={() => {
+            setIsSModalOpen(false);
+          }}
+          handleBVNMopen={handleBVNMOpen}
+          handleACMopen={handleACMOpen}
+        />
+      )}
+      {isACModalOpen && (
+        <AccountModal
+          isOpen={isACModalOpen}
+          onClose={() => setIsACModalOpen(false)}
+        />
+      )}
 
-      {
-        isASSModalOpen && (
-          <AccountSetupSuccessModal
-            isOpen={isASSModalOpen}
-            onClose={() => setIsASSModalOpen(false)}
-          />
-        )
-      }
+      {isASSModalOpen && (
+        <AccountSetupSuccessModal
+          isOpen={isASSModalOpen}
+          onClose={() => setIsASSModalOpen(false)}
+        />
+      )}
 
       {isBVNModalOpen && (
         <BVNModal

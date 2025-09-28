@@ -1,0 +1,32 @@
+.totalCategories {
+  width: 25.1%;
+  height: 14.26vh;
+  border-radius: 1rem;
+  padding: 0rem 2rem;
+}
+
+.totalCategories h3 {
+  font-family: var(--font-montserrat);
+  font-weight: 700;
+  font-size: 3.83vh;
+  line-height: 16px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  margin-top: 0rem;
+}
+
+.textIcon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+}
+.textIcon p {
+  font-family: var(--font-poppins);
+  font-weight: 500;
+  font-size: 1.7vh;
+  line-height: 16px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  margin-bottom: 1.7vh;
+}
