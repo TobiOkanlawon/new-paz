@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import styles from "./dashboard.module.css";
 import Image from "next/image";
 import CardScrollIndicator from "@/components/CardScrollIndicator";
-import { LuEye, LuEyeOff } from "react-icons/lu";
 import BVNModal from "@/components/BVNModal";
 import AccountModal from "@/components/AddAccount";
 import SetupModal from "@/components/AccountSetupModal";
@@ -16,6 +15,10 @@ import { AccountCard } from "@/components/Dashboard/AccountCard/index";
 import DashboardSavings from "@/assets/images/dashboardSavings.png";
 import DashboardLoans from "@/assets/images/dashboardLoan.png";
 import DashboardInvestments from "@/assets/images/dashboardInvestment.png";
+import { useGetProfile } from "@/data/queries/useGetProfile";
+import { Loading } from "@/components/Loading";
+import { ErrorComponent } from "@/components/Error";
+import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 
 const Dashboard = () => {
   const user = useUser((state) => state.user) as TUser;
@@ -73,13 +76,25 @@ const Dashboard = () => {
   const [isInvestmentsAmountVisible, setIsInvestmentsAmountVisible] =
     useState(true);
 
+  const { data, error, isLoading } = useGetAccountDetails(user.email);
+
+  if (isLoading) return <Loading />;
+
+  if (error)
+    return (
+      <ErrorComponent
+        message="An error occured while trying to fetch your profile"
+        retryFunction={() => {}}
+      />
+    );
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.totals}>
           <AccountCard
             title="Total Savings"
-            amount="1000"
+            amount={data?.TotalSavings as number}
             isAmountVisible={isSavingsAmountVisible}
             cornerImage={DashboardSavings}
             className={styles.lightBlue}
@@ -89,7 +104,7 @@ const Dashboard = () => {
           />
           <AccountCard
             title="Total Loans Collected"
-            amount="1000"
+            amount={data?.TotalLoan as number}
             isAmountVisible={isLoansAmountVisible}
             cornerImage={DashboardLoans}
             className={styles.darkBlue}
@@ -99,7 +114,7 @@ const Dashboard = () => {
           />
           <AccountCard
             title="Total Investments"
-            amount="1000"
+            amount={data?.investmentAmount as number}
             isAmountVisible={isInvestmentsAmountVisible}
             cornerImage={DashboardInvestments}
             className={styles.purple}

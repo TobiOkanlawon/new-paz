@@ -6,7 +6,7 @@ type Props = {
   className: string;
   cornerImage: StaticImageData;
   title: string;
-  amount: string;
+  amount: number;
   isAmountVisible: boolean;
   toggleAmountVisibility: () => void;
 };

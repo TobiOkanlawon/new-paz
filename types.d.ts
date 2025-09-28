@@ -13,14 +13,14 @@ type TUser = {
 type ErrorResponse = {
   responseCode: string;
   responseMessage: string;
-}
+};
 
 type TLoginResponse = {
   message: string;
   responseCode: string; // 00 is success
   token: string;
   user: TUser;
-}
+};
 
 type TAddBVNResponse = {
   "BVN Validated": boolean;
@@ -32,7 +32,7 @@ type AccountType = {
   accountName: string;
   accountNumber: number;
   bank: string;
-}
+};
 
 type TProfile = {
   address: string;
@@ -53,17 +53,16 @@ type ProfileResponseData = {
   responseCode: string;
 };
 
-type APIResponse <T> = {
+type APIResponse<T> = {
   message: string;
   responseCode: string;
 } & T;
 
 type TAccountDetails = {
-  TotalLoan: number;
-  TotalSavings: number;
-  firstName: string;
-  investmentAmount: number;
-  lastName: string;
-  userName: string;
+    TotalLoan: number;
+    TotalSavings: number;
+    firstName: string;
+    investmentAmount: number;
+    lastName: string;
+    userName: string;
 };
-

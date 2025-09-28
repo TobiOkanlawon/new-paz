@@ -1,0 +1,34 @@
+meta {
+  name: Save Profile Data
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/set-profile?email=tobiinlondon34@gmail.com
+  body: json
+  auth: inherit
+}
+
+params:query {
+  email: tobiinlondon34@gmail.com
+}
+
+body:json {
+  {
+      "address": "Plot 83, Alagbole Akute Road, Akute, Ogun State  ",
+      "gender": "",
+      "email": "tobiinlondon34@gmail.com",
+      "birthday": "21/09/2000",
+      "phoneNumber": "08170206499",
+      "nextOfKinFirstName": "",
+      "nextOfKinLastName": "",
+      "nextOfKinEmail": "",
+      "nextOfKinRelationship": "",
+      "nextOfKinPhoneNumber": ""
+    }
+}
+
+settings {
+  encodeUrl: true
+}
