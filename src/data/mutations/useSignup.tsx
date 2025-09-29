@@ -11,18 +11,32 @@ type SignUpRequestBody = {
   password: string;
 };
 
-const signUpRequest = (args: SignUpRequestBody) => {
-  return axios.post("v1/users/signup", {
+const signUpRequest = async (args: SignUpRequestBody): Promise<SignUpResponse> => {
+  const response = await axios.post<SignUpResponse>("v1/users/signup", {
     mobileNumber: args.mobileNumber,
     firstName: args.firstName,
     lastName: args.lastName,
     email: args.email,
     password: args.password,
   });
+  return response.data;
+};
+
+type SignUpResponse = {
+  success: boolean;
+  message: string;
+  data?: {
+    user: {
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+    };
+  };
 };
 
 export const useSignup = () => {
-  return useMutation<any, AxiosError<ErrorResponse>, any>({
+  return useMutation<SignUpResponse, AxiosError<ErrorResponse>, SignUpRequestBody>({
     mutationKey: ["sign up"],
     mutationFn: (data: SignUpRequestBody) => signUpRequest(data),
 

@@ -71,7 +71,7 @@ const Profile = () => {
   const calculateProgress = () => {
     let completed = 0;
 
-    for (let value of Object.values(formik.values)) {
+    for (const value of Object.values(formik.values)) {
       if (typeof value == "string" && value !== "") {
         completed++;
         continue;

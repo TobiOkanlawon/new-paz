@@ -14,7 +14,13 @@ type AddBVNData = {
 type TAddBVNResponse = {
   success: boolean;
   message: string;
-  data?: any;
+  data?: {
+    bvn: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    phoneNumber: string;
+  };
 };
 
 export const useAddBVN = () => {

@@ -1,6 +1,7 @@
 import { axiosInstance as axios, storeToken } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 type AddAccountData = {
   accountNumber: string;
@@ -8,8 +9,14 @@ type AddAccountData = {
   accountName: string;
 };
 
+type AddBVNData = {
+  email: string;
+  bvn: string;
+  dob: string;
+};
+
 export const useAddBVN = () => {
-  return useMutation<TAddBVNResponse, any, AddBVNData>({
+  return useMutation<TAddBVNResponse, AxiosError, AddBVNData>({
     mutationKey: ["add-bvn"],
     mutationFn: async (data) => {
       return await axios

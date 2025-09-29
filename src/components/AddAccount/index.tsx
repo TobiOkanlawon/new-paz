@@ -4,7 +4,7 @@ import styles from "./acm.module.css";
 import Modal from "../Modal";
 import Button from "../Button";
 import { LuArrowLeft } from "react-icons/lu";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FieldProps } from "formik";
 import * as Yup from "yup";
 import Input from "../Input";
 
@@ -47,7 +47,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
               <Form className={styles.formContainer}>
                 <div className={styles.inputGroup}>
                   <Field name="accountName">
-                    {({ field, meta }: any) => (
+                    {({ field, meta }: FieldProps) => (
                       <Input
                         label="Account Name"
                         placeholder="Enter your account name"
@@ -60,7 +60,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
 
                 <div className={styles.inputGroup}>
                   <Field name="accountNumber">
-                    {({ field, meta }: any) => (
+                    {({ field, meta }: FieldProps) => (
                       <Input
                         label="Account Number"
                         placeholder="Account Number"
@@ -73,7 +73,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
 
                 <div className={styles.inputGroup}>
                   <Field name="bank">
-                    {({ field, meta }: any) => (
+                    {({ field, meta }: FieldProps) => (
                       <Input
                         label="Bank"
                         placeholder="Bank Name"

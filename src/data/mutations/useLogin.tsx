@@ -1,6 +1,7 @@
 import { axiosInstance as axios, storeToken } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 type SignInData = {
   email: string;
@@ -9,7 +10,7 @@ type SignInData = {
 };
 
 export const useLogin = () => {
-  return useMutation<TLoginResponse, any, SignInData>({
+  return useMutation<TLoginResponse, AxiosError, SignInData>({
     mutationKey: ["login"],
     mutationFn: async (data) => {
       return await axios
@@ -28,7 +29,11 @@ export const useLogin = () => {
       toast("Login successful");
     },
     onError: (error) => {
-      toast.error(error.response?.data.responseMessage);
+      if (error.response?.data && typeof error.response.data === 'object' && 'responseMessage' in error.response.data) {
+        toast.error((error.response.data as { responseMessage: string }).responseMessage);
+      } else {
+        toast.error('An error occurred');
+      }
     },
   });
 };
