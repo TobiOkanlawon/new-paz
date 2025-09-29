@@ -108,7 +108,7 @@
     margin-top: 2rem;
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 580px) {
   .left,
   .right {
     display: none;

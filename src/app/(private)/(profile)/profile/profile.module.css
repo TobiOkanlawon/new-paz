@@ -184,6 +184,10 @@
   width: 100%;
 }
 @media screen and (max-width: 748px) {
+  .container{
+    margin-left: 1rem;
+    width: 100vw;
+  }
   .headers {
     flex-direction: column;
     gap: 4rem;

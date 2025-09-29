@@ -87,10 +87,10 @@
 
 @media screen and (max-width: 1200px) {
   .sidebar {
-    width: 40%;
+    width: 20rem;
     padding: 1rem;
     position: absolute;
-    top: 4rem;
+    top: 0;
   }
   .collapsed {
     display: none;
@@ -99,7 +99,7 @@
 @media screen and (max-width: 950px) {
   .sidebar {
     left: 0;
-    top: 2.6rem;
+    top: 0;
     height: 80rem;
   }
 }
@@ -108,7 +108,7 @@
     width: 60%;
     padding: 1rem;
     position: absolute;
-    top: 2rem;
+    top: 0;
   }
   .collapsed {
     display: none;

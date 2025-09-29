@@ -168,6 +168,7 @@
   }
   .flexed{
     flex-direction: column;
+    gap: 0;
   }
   .formGroup{
     margin-bottom: 0 !important;
@@ -200,7 +201,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 580px) {
   .mobile {
     display: flex;
     flex-direction: column;

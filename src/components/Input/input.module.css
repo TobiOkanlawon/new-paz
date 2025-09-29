@@ -15,6 +15,11 @@
   align-self: flex-start;
 }
 
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
 .input {
   font-family: var(--font-montserrat);
   font-weight: 500;
@@ -28,6 +33,24 @@
   width: -moz-available; /* Firefox */
   width: -webkit-fill-available; /* Safari/Chrome */
   width: fill-available; /* Future unprefixed */
+}
+
+.passwordInput {
+  padding-right: 2.5rem;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .input::placeholder {

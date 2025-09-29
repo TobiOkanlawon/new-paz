@@ -225,9 +225,9 @@ const Dashboard = () => {
         </div>
       </div>
       <div className={styles.mobileContainer}>
-        <h1>
+        {/* <h1>
           Welcome <strong>Biodun</strong>
-        </h1>
+        </h1> */}
         <div className={styles.mobileScrollWrapper}>
           <div className={styles.mobileScroll} ref={mobileScrollRef}>
             <div className={styles.mobileTotals}>

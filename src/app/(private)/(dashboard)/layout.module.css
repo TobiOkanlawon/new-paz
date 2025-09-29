@@ -17,5 +17,6 @@
   .dashboardMain {
     justify-content: start;
     align-items: center;
+    height: auto;
   }
 }

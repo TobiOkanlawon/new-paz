@@ -108,10 +108,20 @@ font-family: 'Montserrat', sans-serif;
     align-items: center;
     flex-direction: column;
 }
-
+@media screen and (max-width: 600px){
+    .modalWrapper{
+        width: 85%;
+    }
+    .modalHeader{
+        font-size: 25px;
+    }
+    .modalDetails{
+        font-size: .9rem;
+    }
+}
 @media screen and (max-width: 425px){
     .modalDetails{
-        font-size: 1rem;
+        font-size: .8rem;
         font-weight: 400;
         margin-left: 1rem;
     }
