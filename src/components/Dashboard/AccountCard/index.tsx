@@ -4,7 +4,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import clsx from "clsx";
 type Props = {
   className: string;
-  cornerImage: StaticImageData;
+  cornerImage: StaticImageData | string;
   title: string;
   amount: number;
   isAmountVisible: boolean;

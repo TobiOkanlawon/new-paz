@@ -12,9 +12,9 @@ import { useAddBVN } from "@/data/mutations/useAddBVN";
 import useUser from "@/store/userStore";
 import { toast } from "react-toastify";
 import { AccountCard } from "@/components/Dashboard/AccountCard/index";
-import DashboardSavings from "@/assets/images/dashboardSavings.png";
-import DashboardLoans from "@/assets/images/dashboardLoan.png";
-import DashboardInvestments from "@/assets/images/dashboardInvestment.png";
+// import DashboardSavings from "@/assets/images/dashboardSavings.png";
+// import DashboardLoans from "@/assets/images/dashboardLoan.png";
+// import DashboardInvestments from "@/assets/images/dashboardInvestment.png";
 import { useGetProfile } from "@/data/queries/useGetProfile";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
@@ -97,7 +97,7 @@ const Dashboard = () => {
             title="Total Savings"
             amount={data?.TotalSavings as number}
             isAmountVisible={isSavingsAmountVisible}
-            cornerImage={DashboardSavings}
+            cornerImage={'/dashboardSavings.png'}
             className={styles.lightBlue}
             toggleAmountVisibility={() =>
               setIsSavingsAmountVisible(!isSavingsAmountVisible)
@@ -107,7 +107,7 @@ const Dashboard = () => {
             title="Total Loans Collected"
             amount={data?.TotalLoan as number}
             isAmountVisible={isLoansAmountVisible}
-            cornerImage={DashboardLoans}
+            cornerImage={'/dashboardLoan.png'}
             className={styles.darkBlue}
             toggleAmountVisibility={() =>
               setIsLoansAmountVisible(!isLoansAmountVisible)
@@ -117,7 +117,7 @@ const Dashboard = () => {
             title="Total Investments"
             amount={data?.investmentAmount as number}
             isAmountVisible={isInvestmentsAmountVisible}
-            cornerImage={DashboardInvestments}
+            cornerImage={'/dashboardInvestment.png'}
             className={styles.purple}
             toggleAmountVisibility={() =>
               setIsInvestmentsAmountVisible(!isInvestmentsAmountVisible)
