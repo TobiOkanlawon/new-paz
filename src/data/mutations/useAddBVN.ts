@@ -2,6 +2,7 @@ import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import useUser from "@/store/userStore";
 
 // Define your mutation input
 type AddBVNData = {
@@ -24,6 +25,7 @@ type TAddBVNResponse = {
 };
 
 export const useAddBVN = () => {
+  const {setUser} = useUser();
   return useMutation<TAddBVNResponse, AxiosError<ErrorResponse>, AddBVNData>({
     mutationKey: ["add-bvn"],
     mutationFn: async ({ email, bvn, dob }) => {
@@ -33,7 +35,8 @@ export const useAddBVN = () => {
       );
       return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setUser({wallet_account: data.data?.wallet_account})
       toast.success("BVN added successfully");
     },
     onError: (error) => {

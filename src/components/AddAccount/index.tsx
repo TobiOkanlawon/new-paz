@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./acm.module.css";
 import Modal from "../Modal";
 import Button from "../Button";
@@ -7,6 +7,10 @@ import { LuArrowLeft } from "react-icons/lu";
 import { Formik, Form, Field, FieldProps } from "formik";
 import * as Yup from "yup";
 import Input from "../Input";
+import { useAddAccount } from "@/data/mutations/useAddAccount";
+import useUser from "@/store/userStore";
+import { useWallet } from "@/store/walletStore";
+import { useGetWallet } from "@/data/queries/useGetWallet";
 
 interface acmPropTypes {
   isOpen: boolean;
@@ -26,6 +30,16 @@ const validationSchema = Yup.object().shape({
 const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
   const [isAccountConfirmed, setIsAccountConfirmed] = useState(true);
 
+  const mutation = useAddAccount();
+
+  const { user, setUser } = useUser();
+
+  const { walletInformation } = useWallet();
+
+  // leave this request here. It fetched the wallet and sets it in the store automatically
+  // also, it doesn't run if the walletInformation is already set
+  useGetWallet(user?.email as string);
+
   return (
     <div className={styles.container}>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,7 +53,22 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
             initialValues={{ accountNumber: "", accountName: "", bank: "" }}
             validationSchema={validationSchema}
             onSubmit={(values, actions) => {
-              console.log("Form Submitted:", values);
+              console.log("walletInformation", walletInformation);
+              mutation.mutate(
+                {
+                  accountNo: values.accountNumber,
+                  accountName: values.accountName,
+                  bankName: values.bank,
+                  walletId: walletInformation?.walletId as string,
+                },
+                {
+                  onSuccess: () => {
+                    setUser({ primary_account_linked: true });
+                    onClose();
+                  },
+                },
+              );
+
               actions.setSubmitting(false);
             }}
           >
@@ -86,6 +115,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
 
                 <div className={styles.buttonContainer}>
                   <Button
+                    type="submit"
                     label="Add Account"
                     loading={isSubmitting}
                     className={styles.submitButton}

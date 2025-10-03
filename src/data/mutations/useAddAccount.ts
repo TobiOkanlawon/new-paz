@@ -4,33 +4,24 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 
 type AddAccountData = {
-  accountNumber: string;
-  bank: string;
+  accountNo: string;
+  bankName: string;
   accountName: string;
+  walletId: string;
 };
 
-type AddBVNData = {
-  email: string;
-  bvn: string;
-  dob: string;
-};
-
-export const useAddBVN = () => {
-  return useMutation<TAddBVNResponse, AxiosError, AddBVNData>({
-    mutationKey: ["add-bvn"],
+export const useAddAccount = () => {
+  return useMutation<TAddAccountResponse, any, AddAccountData>({
+    mutationKey: ["add-account"],
     mutationFn: async (data) => {
       return await axios
-        .post(`/v1/users/user/verify-bvn?email=${data.email}`, {
-	  bvn: data.bvn,
-	  dob: data.dob
-        })
+        .post(`/v1/users/user/add-account`, data)
         .then((res) => {
           return res.data;
         });
     },
     onSuccess: (data, variables, context) => {
-
-      toast("BVN added successfully");
+      toast("Account added successfully");
     },
     onError: () => {
       toast("An error occurred");

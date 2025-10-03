@@ -6,6 +6,8 @@ type TUser = {
   is_active: boolean;
   last_name: string;
   is_bvn_verified: boolean;
+  primary_account_linked: boolean;
+  wallet_account: string;
   role_id: "1" | "2"; // correspond to user or admin
   username: string;
 };
@@ -59,10 +61,24 @@ type APIResponse<T> = {
 } & T;
 
 type TAccountDetails = {
-    TotalLoan: number;
-    TotalSavings: number;
-    firstName: string;
-    investmentAmount: number;
-    lastName: string;
-    userName: string;
+  TotalLoan: number;
+  TotalSavings: number;
+  firstName: string;
+  investmentAmount: number;
+  lastName: string;
+  userName: string;
+};
+
+type TAddAccountResponse = {
+  responseCode: string;
+  responseMessage: string;
+};
+
+type TWalletInfo = {
+  currency: string;
+  availableBalance: number;
+  totalBalance: number;
+  lienAmount: number;
+  walletId: string;
+  accountType: string; // I have seen INDIVIDUAL_ACCOUNT, I don't know if there's another type
 };

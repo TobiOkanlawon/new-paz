@@ -1,6 +1,6 @@
 import { axiosInstance as axios } from "@/libs/axios";
+import useAccountDetails from "@/store/accountStore";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 interface AccountDetailsResponse {
   success: boolean;
@@ -9,12 +9,21 @@ interface AccountDetailsResponse {
 }
 
 export const useGetAccountDetails = (email: string) => {
-  return useQuery<AccountDetailsResponse, AxiosError, TAccountDetails>({
+  const { setAccountDetails } = useAccountDetails();
+  return useQuery<any, any, TAccountDetails>({
     queryKey: ["account-details"],
     queryFn: async () => {
-      return await axios.get(`/v1/users/user/account-details?email=${email}`).then((res) => {
-	return res.data.accountDetails;
-      });
+      return await axios
+        .get(`/v1/users/user/account-details?email=${email}`)
+        .then((res) => {
+          setAccountDetails({
+            loanAmount: res.data.accountDetails.TotalLoan,
+            savingsAmount: res.data.accountDetails.TotalSavings,
+            investmentAmount: res.data.accountDetails.investmentAmount,
+          });
+
+          return res.data.accountDetails;
+        });
     },
   });
 };
