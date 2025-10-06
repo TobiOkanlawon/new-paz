@@ -1,13 +1,12 @@
 "use client";
 import styles from "./loans.module.css";
 import LoanHeader from "@/components/LoanHeader";
-import InstantLoanCard from "@/components/InstantLoanCard/index";
 import { useState, useEffect } from "react";
 import SavingsAlert from "@/components/SavingsAlert";
+import Notifications from "@/components/Notifications";
 import LoanApplicationModal from "@/components/LoanApplicationModal";
 import EligibilityModal from "@/components/EligibilityModal";
 import ModalSummary from "@/components/ModalSummary";
-import {toast} from 'react-toastify';
 
 const Loans = () => {
   interface Notification {
@@ -65,7 +64,7 @@ const Loans = () => {
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("Loan disbursed successful");
-  
+
   return (
     <div className={styles.container}>
       {/* CHANGE TOAST AND USE THE ONE THAT WAS USED IN THE AUTH SECTION */}
@@ -82,10 +81,9 @@ const Loans = () => {
         loanStatus={loanStatus}
         setLoanStatus={setLoanStatus}
       />
-      <InstantLoanCard
-        handleModalOpen={handleModalOpen}
-        handleIsFirstLoan={handleIsFirstLoan}
-      />
+      
+      <Notifications header="Recent activity" />
+
       {/* LOAN APPLICATION MODAL */}
       <LoanApplicationModal 
         isModalOpen={isModalOpen}

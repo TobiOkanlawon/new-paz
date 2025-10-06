@@ -1,0 +1,89 @@
+.loanSummary{
+    font-family: 'Montserrat', sans-serif;
+}
+.loanSummary h2{
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    color: #3475DF;
+}
+.loanSummary p{
+    text-align: center;
+
+}
+.formDetails{
+    margin: 1.5rem;
+}
+.formDetails p{
+    text-align: start;
+    margin-bottom: .4rem;
+    margin-left: 0 !important;
+}
+.formDetails h3{
+    line-height: 16px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    background-color: #FAFAFA;
+    padding: .5rem 1rem;
+}
+.loanSummary p:last-of-type{
+    text-align: start;
+    margin: 0 2rem 1rem;
+}
+.loanSummary button{
+    border: none;
+    padding: 1rem 1.5rem;
+    background-color: #3475DF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #fff;
+    border-radius: 1rem;
+    margin-left: 2rem;
+}
+@media screen and (max-width: 900px){
+    .modalTitle{
+        margin: 0.8rem 1rem .5rem;
+        text-align: center;
+        font-size: 20px;
+    }
+    .modalDescription{
+        font-size: 13px;
+    }
+    .modalForm{
+        margin: auto;
+    }
+    .modalForm2{
+        margin: 0;
+        width: 100%;
+    }
+    /* .modalForm input{
+        width: 15rem;
+    } */
+    /* .modalForm select{
+        width: 16rem;
+    } */
+    .modalForm label{
+        padding-left: 0;
+        font-size: 12px;
+    }
+}
+@media screen and (max-width: 744px){
+    .container{
+        width: 100vw;
+    }
+}
+@media screen and (max-width: 522px) {
+    .container{
+        padding-top: 0;
+    }
+    .modalForm{
+        width: 85vw;
+    }
+    .modalForm2{
+        width: 90%;
+        margin: auto;
+    }
+}
