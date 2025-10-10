@@ -96,8 +96,8 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({ header, money, butt
           <div style={{ color: 'red', fontSize: '0.8rem' }}>{topupFormik.errors.amount}</div>
         )}
         <SelectGroup
-          label='Select account to withdraw from*'
-          placeholder='Select bank to withdraw into'
+          label='Select account to withdraw from'
+          placeholder='Select bank to withdraw from'
           id='account'
           value={topupFormik.values.account}
           onChange={topupFormik.handleChange}
@@ -149,7 +149,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({ header, money, butt
         )}
         <SelectGroup
           label='Select account to domicile cash*'
-          placeholder='Select bank to withdraw into'
+          placeholder='Select bank to withdraw from'
           id='account'
           value={withdrawFormik.values.account}
           onChange={withdrawFormik.handleChange}

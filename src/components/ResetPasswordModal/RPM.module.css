@@ -1,0 +1,14 @@
+.header{
+    color: #3475DF;
+}
+.formContainer{
+    width: 70%;
+}
+.inputContainer{
+    width: 100%;
+}
+.errorMessage{
+    color: #df3434 !important;
+    font-family: 'montserrat', sans-serif;
+    font-size: .8rem;
+}

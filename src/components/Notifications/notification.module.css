@@ -1,9 +1,12 @@
+.container{
+}
 .header{
     font-family: 'Poppins', sans-serif;
     font-size: 3.4vh;
     margin: 2.2vh 0 !important;
     color: #204D88;
     font-weight: 700;
+
 }
 .headerText{
     font-size: 1.7vh;
@@ -19,5 +22,13 @@
 @media screen and (max-width: 1200px){
     .notificationWrapper{
         width: 90vw;
+    }
+}
+@media screen and (max-width: 1200px){
+    .emptyContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }

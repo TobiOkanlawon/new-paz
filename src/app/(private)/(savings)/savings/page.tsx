@@ -272,8 +272,8 @@ const Savings = () => {
       </div>
       {isActive && (
         <Modal isOpen={isActive} onClose={handleCloseModal}>
-          modalType === "family" ? FamilyForm : modalType === "target" ?
-          TargetForm : null
+          {modalType === "family" ? FamilyForm : modalType === "target" ?
+          TargetForm : null}
         </Modal>
       )}
     </div>

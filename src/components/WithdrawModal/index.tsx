@@ -53,8 +53,8 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
           <div style={{ color: 'red', fontSize: '0.8rem' }}>{formik.errors.amount}</div>
         )}
         <SelectGroup
-          label='Select account to withdraw from*'
-          placeholder='Select bank to withdraw into'
+          label='Select account to withdraw from'
+          placeholder='Select bank to withdraw from'
           id='account'
           value={formik.values.account}
           onChange={formik.handleChange}

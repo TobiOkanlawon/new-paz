@@ -119,18 +119,18 @@
   display: none;
 }
 
-.flexed{
+.flexed {
   width: 100%;
   display: flex;
   gap: 5vw;
   align-items: center;
 }
 
-.inputFlex{
+.inputFlex {
   width: 22vw;
 }
 
-.buttonContainer{
+.buttonContainer {
   width: 100%;
 }
 
@@ -142,41 +142,40 @@
 @media screen and (max-width: 1030px) {
   .right {
     width: 70vw;
-
-  } 
+  }
   .right h3 {
     margin-top: 2rem;
   }
-  .inputFlex{
+  .inputFlex {
     width: 29vw;
   }
-  .flexed{
+  .flexed {
     gap: 10vw;
   }
 }
 @media screen and (max-width: 850px) {
   .right {
     width: 90vw;
-  } 
-  .inputFlex{
+  }
+  .inputFlex {
     width: 36vw;
   }
 }
 @media screen and (max-width: 600px) {
-  .inputFlex{
+  .inputFlex {
     width: 70vw;
   }
-  .flexed{
+  .flexed {
     flex-direction: column;
     gap: 0;
   }
-  .formGroup{
+  .formGroup {
     margin-bottom: 0 !important;
   }
   .logo {
     margin: 2rem auto;
   }
-  .form input{
+  .form input {
     margin-bottom: 0;
   }
   .container {
@@ -208,7 +207,7 @@
     align-items: center;
     width: 100vw;
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
     background-color: #fff;
   }
   .mobileContainer {
@@ -281,9 +280,8 @@
   }
 
   .mobile a {
-    font-size: 0.875rem;
+    font-size: .8rem;
     color: #204d88;
-    margin-top: 1.5rem;
     text-decoration: none;
     display: flex;
     align-items: center;

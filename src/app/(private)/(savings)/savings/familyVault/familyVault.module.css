@@ -1,112 +1,115 @@
-.container{
-    padding: 11.4vh 0 0 19.2vw;
-    color: #243D7D;
-    width: 70vw;
+.container {
+  padding: 11.4vh 0 0 19.2vw;
+  color: #243d7d;
+  width: 70vw;
 }
-.headerContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
-.header{
-    font-size: 4vh;
-    margin-top: 0;
-    margin-bottom: 0rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-style: Bold;
-    line-height: 46px;
-    letter-spacing: 0px;
-    vertical-align: middle;
+.header {
+  font-size: 4vh;
+  margin-top: 0;
+  margin-bottom: 0rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  line-height: 46px;
+  letter-spacing: 0px;
+  vertical-align: middle;
 }
-.headingText{
-    font-size: 2.13vh;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-style: Medium;
-    line-height: 100%;
-    letter-spacing: 0%;
+.headingText {
+  font-size: 2.13vh;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
-.backContainer{
-    display:flex;
-    align-items: center;
-    gap: .5rem;
-    color: #204D88;
-    font-size: 2.1vh;
-    margin: 0;
+.backContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #204d88;
+  font-size: 2.1vh;
+  margin: 0;
 }
-.backContainer p{
-    margin: 0;
-    font-family: 'Monserrat', sans-serif;
+.backContainer p {
+  margin: 0;
+  font-family: "Monserrat", sans-serif;
 }
-.widFunds{
-    background-color: #243D7D;
-    padding: 10px 15px;
-    border-radius: 10px;
-    color: white;
-    border: 1px solid transparent;
+.widFunds {
+  background-color: #243d7d;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: white;
+  border: 1px solid transparent;
 }
-.activities h5{
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: 0px;
-    vertical-align: middle;
-    color: #292727;
+.activities h5 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #292727;
 }
-.activities .emptyContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-style: Medium;
-    font-size: 13px;
-    line-height: 16px;
-    letter-spacing: 0px;
-    vertical-align: middle;
-    color: #979CA0;
+.activities .emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: Medium;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #979ca0;
 }
-.activities div p{
-    margin: 0;
+.activities div p {
+  margin: 0;
 }
-.activities img{
-    object-fit: contain;
-    height: 20.3vh;
+.activities img {
+  object-fit: contain;
+  height: 20.3vh;
 }
-.cardContainers{
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
+.cardContainers {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
-.modalContainer{
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
+.modalContainer {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
 }
-.modalContainer p{
-    color: #292727;
-    font-size: 16px;
+.modalContainer p {
+  color: #292727;
+  font-size: 16px;
 }
-.modalContainer button{
-    padding: 13px 27px;
-    color: white;
-    background-color: #3475DF ;
-    border: none;
-    border-radius: 10px;
+.modalContainer button {
+  padding: 13px 27px;
+  color: white;
+  background-color: #3475df;
+  border: none;
+  border-radius: 10px;
 }
-@media screen and (max-width: 1200px){
-    .container{
-        width: 95vw;
-    }
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 95vw;
+  }
 }
 @media screen and (max-width: 800px) {
-.cardContainers{
+  .container {
+    padding: 11vh 0 0 2vw;
+  }
+  .cardContainers {
     flex-direction: column;
     gap: 2rem;
-}
-.cardContainers div{
+  }
+  .cardContainers div {
     margin: 0 !important;
-}
+  }
 }
