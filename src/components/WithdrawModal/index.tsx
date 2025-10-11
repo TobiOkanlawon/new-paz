@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './WithdrawModal.module.css'
 import InputGroup from '../InputGroup'
-import Link from 'next/link'
+import Image from 'next/image'
 import * as Yup from 'yup'
 import { useFormik } from 'formik';
 import SelectGroup from '../InputGroup/SelectGroup';
@@ -12,10 +12,13 @@ interface WithdrawModalProps {
 }
 
 const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
+  const [inputActive, setInputActive] = useState(false);
+    const handleClick = () => setInputActive(true);
   const formik = useFormik({
     initialValues: {
       amount: '',
       account: '',
+      cardNumber: '',
     },
     validationSchema: Yup.object({
       amount: Yup.number().required('Amount is required').positive('Amount must be positive'),
@@ -64,7 +67,27 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
         {formik.touched.account && formik.errors.account && (
           <div style={{ color: 'red', fontSize: '0.8rem' }}>{formik.errors.account}</div>
         )}
-        <Link href="#">Add new debit-card</Link>
+        <div
+          style={inputActive ? { display: "flex" } : { display: "none" }}
+          className={styles.addCard}
+        >
+          <Image src={"/visa.png"} alt={"Visa icon"} height={24} width={24} />
+          <input
+            type="text"
+            name="cardNumber"
+            id="cardNumber"
+            placeholder="Visa Card ******************657"
+            value={formik.values.cardNumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+        </div>
+        <span
+          style={inputActive ? { display: "none" } : { display: "block" }}
+          onClick={handleClick}
+        >
+          Add new debit-card
+        </span>
       </div>
       <button type="submit">Withdraw</button>
     </form>
