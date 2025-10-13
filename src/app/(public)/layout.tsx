@@ -1,7 +1,9 @@
 "use client";
 import useToken from "@/store/tokenStore";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+const publicRoutes = ["/", "/login", "register"];
 
 export default function RootLayout({
   children,
@@ -11,8 +13,10 @@ export default function RootLayout({
   const { token } = useToken();
   const router = useRouter();
 
+  const pathname = usePathname();
+
   useEffect(() => {
-    if (token) {
+    if (token && publicRoutes.includes(pathname)) {
       router.replace("/dashboard");
     }
   }, [token, router]);
