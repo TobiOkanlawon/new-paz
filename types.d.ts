@@ -60,9 +60,17 @@ type APIResponse<T> = {
   responseCode: string;
 } & T;
 
+type SoloSavings = {
+  AccountNo: string;
+  Amount: number;
+};
+
 type TAccountDetails = {
   TotalLoan: number;
-  TotalSavings: number;
+  FamilyVault: FamilyVault | null;
+  HasSoloAccount: boolean;
+  SoloSavings: SoloSavings | null;
+  TargetSavings: TargetSavings | null;
   firstName: string;
   investmentAmount: number;
   lastName: string;

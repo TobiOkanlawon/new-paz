@@ -39,3 +39,15 @@ export const formatBirthdayToDateInputFormat = (
   if (splitString.length !== 3) return "";
   return `${splitString[2]}-${splitString[1]}-${splitString[0]}`;
 };
+
+export const addSavings = (accountDetails: TAccountDetails) => {
+  let soloSavingsAmount = 0;
+  let targetSavingsAmount = 0;
+  let familyVaultAmount = 0;
+
+  soloSavingsAmount = accountDetails.SoloSavings?.Amount || 0;
+
+  // to be augmented when the shape of the others are known
+  
+  return soloSavingsAmount;
+}
