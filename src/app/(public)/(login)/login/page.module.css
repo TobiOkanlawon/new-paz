@@ -235,7 +235,7 @@
   }
 
   .mobileContainer form input {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
@@ -332,11 +332,6 @@
 
   .form input {
     padding: 15px 13px;
-  }
-
-  .form input[type="email"],
-  .form input[type="password"] {
-    width: 90%;
   }
 
   .createNewAccount {

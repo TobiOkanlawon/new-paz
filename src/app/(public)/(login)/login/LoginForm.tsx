@@ -73,15 +73,17 @@ const LoginForm = () => {
           {...formik.getFieldProps("email")}
           errors={handleErrorDisplay(formik, "email")}
         />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          id="password"
-          className={styles.password}
-          errors={handleErrorDisplay(formik, "password")}
-          {...formik.getFieldProps("password")}
-        />
+        <div className={styles.password}>
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            id="password"
+            // className={styles.password}
+            errors={handleErrorDisplay(formik, "password")}
+            {...formik.getFieldProps("password")}
+          />
+        </div>
         <div className={styles.formBottom}>
           <div className={styles.rememberMe}>
             <input

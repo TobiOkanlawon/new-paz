@@ -57,10 +57,11 @@
 .right {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   width: 55vw;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
   margin: auto;
+   justify-content: center; 
 }
 .right h3 {
   color: #243d7d;
@@ -76,7 +77,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* align-items: center; */
+  max-width: 700px; 
+  gap: 1rem; 
 }
 .returnToLogin {
   color: #204d88;
@@ -122,16 +124,23 @@
 .flexed {
   width: 100%;
   display: flex;
-  gap: 5vw;
+  justify-content: space-between; 
   align-items: center;
+  gap: 1.5rem;
 }
 
 .inputFlex {
-  width: 22vw;
+  flex-basis: 48%; 
+  width: 48%;
 }
 
 .buttonContainer {
   width: 100%;
+  margin-top: 1rem;
+}
+
+.buttonContainer > button {
+    width: 100%;
 }
 
 .linkWrapper {
@@ -195,9 +204,6 @@
   .right h3 {
     margin-top: 2rem;
   }
-  .right form input {
-    width: 90%;
-  }
 }
 
 @media screen and (max-width: 580px) {
@@ -244,7 +250,6 @@
   }
 
   .form input {
-    width: 90%;
     padding: 0.75rem 1rem;
     border: 1px solid #d9d9d9;
     border-radius: 8px;
