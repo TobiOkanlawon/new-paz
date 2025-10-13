@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import styles from './WithdrawModal.module.css'
-import InputGroup from '../InputGroup'
-import Link from 'next/link'
-import * as Yup from 'yup'
-import { useFormik } from 'formik';
-import SelectGroup from '../InputGroup/SelectGroup';
-
+import React, { useState } from "react";
+import styles from "./WithdrawModal.module.css";
+import InputGroup from "../InputGroup";
+import Link from "next/link";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import SelectGroup from "../InputGroup/SelectGroup";
 
 interface WithdrawModalProps {
   onSubmit?: () => void; // Make onSubmit optional
@@ -14,12 +13,14 @@ interface WithdrawModalProps {
 const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues: {
-      amount: '',
-      account: '',
+      amount: "",
+      account: "",
     },
     validationSchema: Yup.object({
-      amount: Yup.number().required('Amount is required').positive('Amount must be positive'),
-      account: Yup.string().required('Account is required'),
+      amount: Yup.number()
+        .required("Amount is required")
+        .positive("Amount must be positive"),
+      account: Yup.string().required("Account is required"),
     }),
     onSubmit: (values, actions) => {
       if (onSubmit) {
@@ -30,10 +31,10 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
   });
 
   const banks = [
-  { value: 'bank1', label: 'Bank 1' },
-  { value: 'bank2', label: 'Bank 2' },
-  { value: 'bank3', label: 'Bank 3' },
-];
+    { value: "bank1", label: "Bank 1" },
+    { value: "bank2", label: "Bank 2" },
+    { value: "bank3", label: "Bank 3" },
+  ];
 
   return (
     <form onSubmit={formik.handleSubmit} className={styles.modalContainer}>
@@ -50,25 +51,29 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
           onBlur={formik.handleBlur}
         />
         {formik.touched.amount && formik.errors.amount && (
-          <div style={{ color: 'red', fontSize: '0.8rem' }}>{formik.errors.amount}</div>
+          <div style={{ color: "red", fontSize: "0.8rem" }}>
+            {formik.errors.amount}
+          </div>
         )}
         <SelectGroup
-          label='Select account to withdraw from*'
-          placeholder='Select bank to withdraw into'
-          id='account'
+          label="Select account to withdraw from*"
+          placeholder="Select an account to withdraw from"
+          id="account"
           value={formik.values.account}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           options={banks}
         />
         {formik.touched.account && formik.errors.account && (
-          <div style={{ color: 'red', fontSize: '0.8rem' }}>{formik.errors.account}</div>
+          <div style={{ color: "red", fontSize: "0.8rem" }}>
+            {formik.errors.account}
+          </div>
         )}
         <Link href="#">Add new debit-card</Link>
       </div>
       <button type="submit">Withdraw</button>
     </form>
   );
-}
+};
 
-export default WithdrawModal
+export default WithdrawModal;

@@ -34,7 +34,7 @@ const LoginForm = () => {
   const mutation = useLogin();
   const router = useRouter();
 
-  const { setUser } = useUser();
+  const { replaceUser } = useUser();
   const { setToken } = useToken();
 
   const formik = useFormik<LoginSchema>({
@@ -48,7 +48,7 @@ const LoginForm = () => {
       mutation.mutate(values, {
         onSuccess: (data) => {
           setToken(data.token);
-          setUser(data.user);
+          replaceUser(data.user);
           router.replace("/dashboard");
         },
       });

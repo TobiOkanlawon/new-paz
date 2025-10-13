@@ -30,9 +30,9 @@
   border-radius: 8px;
   border: solid 1px #c4c4c4;
   width: 100%;
-  width: -moz-available; /* Firefox */
-  width: -webkit-fill-available; /* Safari/Chrome */
-  width: fill-available; /* Future unprefixed */
+  /* width: -moz-available; /\* Firefox *\/ */
+  /* width: -webkit-fill-available; /\* Safari/Chrome *\/ */
+  /* width: fill-available; /\* Future unprefixed *\/ */
 }
 
 .passwordInput {

@@ -22,7 +22,8 @@ import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 
 const Dashboard = () => {
   const user = useUser((state) => state.user) as TUser;
-  const { setUser } = useUser();
+
+  const { user: userInformation, setUser } = useUser();
 
   // Refs for scrollable containers
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -32,13 +33,11 @@ const Dashboard = () => {
   const mobileScrollCards = 3; // Adjust if you have more/less cards
   const mobileVaultCards = 2; // Adjust if you have more/less vault cards
 
-  // Eye toggle state for each card
-  const [showSavings, setShowSavings] = useState(true);
-  const [showLoans, setShowLoans] = useState(true);
-  const [showInvestments, setShowInvestments] = useState(true);
-
   // All My Modal States
-  const [isSModalOpen, setIsSModalOpen] = useState(true);
+  const [isSModalOpen, setIsSModalOpen] = useState(
+    !userInformation?.is_bvn_verified &&
+      !userInformation?.primary_account_linked,
+  );
   const [isASSModalOpen, setIsASSModalOpen] = useState(false);
   const [isACModalOpen, setIsACModalOpen] = useState(false);
   const [isBVNModalOpen, setIsBVNModalOpen] = useState(false);
@@ -46,6 +45,11 @@ const Dashboard = () => {
   const router = useRouter();
 
   const mutation = useAddBVN();
+
+  const navigateToHomeModal = () => {
+    setIsBVNModalOpen(false);
+    setIsSModalOpen(true);
+  };
 
   // BVN Modal Form handle submit
   const handleSubmit = (values: { bvn: string; dob: string }) => {
@@ -62,10 +66,11 @@ const Dashboard = () => {
         onSuccess: () => {
           // set user to all of user but the bvn is verified
           setUser({ is_bvn_verified: true });
+          navigateToHomeModal();
         },
       },
     );
-    setIsBVNModalOpen(false)
+    setIsBVNModalOpen(false);
   };
 
   const handleBVNMOpen = () => setIsBVNModalOpen(true);
@@ -77,7 +82,7 @@ const Dashboard = () => {
   const [isInvestmentsAmountVisible, setIsInvestmentsAmountVisible] =
     useState(true);
 
-  const { data, error, isLoading } = useGetAccountDetails(user.email);
+  const { data, error, isLoading } = useGetAccountDetails(user?.email);
 
   if (isLoading) return <Loading />;
 
@@ -89,6 +94,10 @@ const Dashboard = () => {
       />
     );
 
+  if (user == null) {
+    return <>Error with user</>;
+  }
+
   return (
     <>
       <div className={styles.container}>
@@ -97,7 +106,7 @@ const Dashboard = () => {
             title="Total Savings"
             amount={data?.TotalSavings as number}
             isAmountVisible={isSavingsAmountVisible}
-            cornerImage={'/dashboardSavings.png'}
+            cornerImage={"/dashboardSavings.png"}
             className={styles.lightBlue}
             toggleAmountVisibility={() =>
               setIsSavingsAmountVisible(!isSavingsAmountVisible)
@@ -107,7 +116,7 @@ const Dashboard = () => {
             title="Total Loans Collected"
             amount={data?.TotalLoan as number}
             isAmountVisible={isLoansAmountVisible}
-            cornerImage={'/dashboardLoan.png'}
+            cornerImage={"/dashboardLoan.png"}
             className={styles.darkBlue}
             toggleAmountVisibility={() =>
               setIsLoansAmountVisible(!isLoansAmountVisible)
@@ -117,7 +126,7 @@ const Dashboard = () => {
             title="Total Investments"
             amount={data?.investmentAmount as number}
             isAmountVisible={isInvestmentsAmountVisible}
-            cornerImage={'/dashboardInvestment.png'}
+            cornerImage={"/dashboardInvestment.png"}
             className={styles.purple}
             toggleAmountVisibility={() =>
               setIsInvestmentsAmountVisible(!isInvestmentsAmountVisible)

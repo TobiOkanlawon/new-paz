@@ -1,0 +1,19 @@
+meta {
+  name: Get Loan Status
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/user/loan/pending?walletId=0756586993
+  body: json
+  auth: inherit
+}
+
+params:query {
+  walletId: 0756586993
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Fetch Wallet Information
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/users/user/fetch-account?email=tobiinlondon34@gmail.com
+  body: none
+  auth: inherit
+}
+
+params:query {
+  email: tobiinlondon34@gmail.com
+}
+
+settings {
+  encodeUrl: true
+}
