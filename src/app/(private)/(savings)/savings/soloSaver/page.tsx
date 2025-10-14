@@ -9,6 +9,7 @@ import Modal from "@/components/Modal";
 import WithdrawModal from "@/components/WithdrawModal";
 import Back from "@/components/BackContainer";
 import Notifications from "@/components/Notifications";
+import useUser from "@/store/userStore";
 
 const SoloSaver = () => {
   interface Notification {

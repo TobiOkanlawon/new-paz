@@ -40,8 +40,22 @@
   align-items: end;
   justify-content: space-around;
   font-family: "Montserrat", sans-serif;
-  padding: 0 1vw;
+  padding: 0 24px;
+  background-color: #F9FAFF; 
+  cursor: pointer;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
 }
+
+.cardTypes:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(91, 134, 229, 0.2);
+  border-color: #4A77D4; 
+}
+
 .cardTypes img {
   object-fit: contain;
   height: 10.53vh;
@@ -55,7 +69,7 @@
   margin: 0;
 }
 .cardTypes div p {
-  font-size: 1.3vh;
+  font-size: 1.5vh;
 }
 .cardTypes div button {
   display: flex;
@@ -316,7 +330,7 @@
     flex-direction: column;
   }
   .cardTypes{
-    width: 90vw;
+    width: 80vw;
   }
   .addFam{
     flex-direction: column;

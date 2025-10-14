@@ -119,6 +119,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
                     label="Add Account"
                     loading={isSubmitting}
                     className={styles.submitButton}
+                    onClick={()=>{console.log('hey submit me')}}
                   />
                 </div>
 

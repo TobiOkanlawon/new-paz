@@ -23,6 +23,10 @@ const inter = Inter({
 export const metadata = {
   title: "PAZ",
   description: "Powering Dreams",
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+  },
 };
 
 export default function RootLayout({

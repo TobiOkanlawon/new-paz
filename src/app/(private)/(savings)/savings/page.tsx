@@ -29,20 +29,22 @@ type CardProps = {
 };
 
 const SavingsCard: React.FC<CardProps> = ({ card }) => {
+  const router = useRouter();
   return (
     <>
       <div
         className={styles.cardTypes}
         key={card.href}
-        style={{ backgroundColor: card.color }}
+        style={{ borderColor: card.color }}
+        onClick={()=>router.push(card.href)}
       >
         <Image src={card.img} alt={card.header} width={100} height={100} />
         <div>
           <h4>{card.header}</h4>
           <p>{card.text}</p>
-          <button className={styles.startNowButton} onClick={card.handleStart}>
+          {/* <button className={styles.startNowButton} onClick={card.handleStart}>
             Start now
-          </button>
+          </button> */}
         </div>
       </div>
     </>
@@ -56,7 +58,12 @@ const Savings = () => {
     user?.email as string,
   );
 
-  const mutation = useCreateSoloSaver(user?.email as string);
+  // const mutation = useCreateSoloSaver(user?.email as string);
+  const {
+    mutate: createSoloSaver,
+    isPending,
+    isError,
+  } = useCreateSoloSaver(user?.email as string);
 
   const [modalType, setModalType] = useState<"family" | "target" | null>(null);
 
@@ -82,24 +89,36 @@ const Savings = () => {
       img: SoloUserImage,
       header: "PAZ Solo Saver",
       text: "Save money regularly in a locked plan with interest of up to 12% per annum.",
-      href: "/soloSaver",
-      color: " #3475DF0D",
+      href: "/savings/soloSaver",
+      color: " #5B86E5",
       handleStart: () => {},
     },
     {
       img: FamilyVaultCardImage,
       header: "PAZ Family Vault",
       text: "Save money together with your loved ones and get interests of up to 16% per annum.",
-      href: "/familyVault",
-      color: "#243D7D1A",
+      href: "/savings/familyVaultDash",
+      color: "#5B86E5",
       handleStart: () => {},
     },
   ];
 
+  //useEffect(() => {
+  // this works (tested)
+  //   if (!data?.HasSoloAccount && !isLoading && !mutation.isPending) {
+  //     mutation.mutate({
+  //       title: "PERSONAL",
+  //       description: "Solo saver account",
+  //       currentAmount: 0,
+  //       walletId: user?.wallet_account as string,
+  //       type: "SOLO",
+  //     });
+  //   }
+  // }, [data?.HasSoloAccount, mutation, user?.wallet_account]);
   useEffect(() => {
-    // this works (tested)
-    if (!data?.HasSoloAccount && !isLoading && !mutation.isPending) {
-      mutation.mutate({
+    // Check if data has loaded and there is no solo account
+    if (data && !data.HasSoloAccount && !isLoading) {
+      createSoloSaver({
         title: "PERSONAL",
         description: "Solo saver account",
         currentAmount: 0,
@@ -107,7 +126,8 @@ const Savings = () => {
         type: "SOLO",
       });
     }
-  }, [data?.HasSoloAccount, mutation, user?.wallet_account]);
+    // Dependencies are now stable and won't cause a loop
+  }, [data, isLoading, createSoloSaver, user?.wallet_account]);
 
   if (isLoading) return <Loading />;
 
@@ -119,11 +139,24 @@ const Savings = () => {
       />
     );
 
-  if (mutation.isPending) {
+  // if (mutation.isPending) {
+  //   return <Loading />;
+  // }
+
+  // if (mutation.isError) {
+  //   return (
+  //     <ErrorComponent
+  //       message="An error occured while trying to create a solo saver account"
+  //       retryFunction={() => {}}
+  //     />
+  //   );
+  // }
+
+  if (isPending) {
     return <Loading />;
   }
 
-  if (mutation.isError) {
+  if (isError) {
     return (
       <ErrorComponent
         message="An error occured while trying to create a solo saver account"
@@ -144,19 +177,21 @@ const Savings = () => {
       <TotalBalanceCard money={addSavings(data)} header="Total savings" />
       <div className={styles.saversContainer}>
         <div className={styles.topCardSet}>
-          {topCards.map((card) => {
-            return <SavingsCard card={card} />;
+          {topCards.map((card, idx) => {
+            return <SavingsCard key={card.href || idx} card={card} />;
           })}
         </div>
         <div
           className={styles.cardTypes}
-          style={{ backgroundColor: "#3475DF0D" }}
+          style={{ borderColor: "#8338EC", justifyContent: 'center', alignItems: 'center' }}
+          onClick={()=>router.push('/savings/targetSavingsDash')}
         >
           <Image
             src={"/targetSavingsCard.png"}
             alt="Target Savings Image"
             width={100}
             height={100}
+            style={{display: 'flex', alignSelf: 'center'}}
           />
           <div>
             <h4>PAZ Target Saver</h4>
@@ -164,7 +199,7 @@ const Savings = () => {
               Save money regularly in a locked plan with interest of up to 12%
               per annum.
             </p>
-            <button
+            {/* <button
               className={styles.startNowButton}
               onClick={() => {
                 if (isNewSoloSaver) {
@@ -176,7 +211,7 @@ const Savings = () => {
               }}
             >
               Start now
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
