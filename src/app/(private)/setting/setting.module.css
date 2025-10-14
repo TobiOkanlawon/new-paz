@@ -3,7 +3,7 @@
 }
 .container {
   width: 100vw;
-  margin: 3.4vh 2.2vw 0;
+  margin: 11.8vh 0 0 20vw;
 }
 .backContainer {
   display: flex;
@@ -13,6 +13,8 @@
   font-size: 2.1vh;
   margin: 0;
   font-family: "Montserrat", sans-serif;
+  border: none;
+  background: transparent;
 }
 .backContainer p {
   margin: 0;
@@ -301,6 +303,9 @@
   }
 }
 @media screen and (max-width: 576px) {
+  .container{
+    margin: 3.4vh 2vw;
+  }
   .contactSupport {
     width: 85vw;
   }

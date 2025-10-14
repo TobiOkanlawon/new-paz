@@ -1,13 +1,8 @@
 "use client";
 import styles from "./loans.module.css";
-import LoanBalanceCard from "@/components/LoanBalance/index";
+import LoanHeader from "@/components/LoanHeader";
 import InstantLoanCard from "@/components/InstantLoanCard/index";
 import { useState, useEffect } from "react";
-import Modal from "@/components/Modal";
-import SelectGroup from "@/components/InputGroup/SelectGroup";
-import Input from "@/components/Input";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import SavingsAlert from "@/components/SavingsAlert";
 import FileUploader from "@/components/FIleInput";
 import Notifications from "@/components/Notifications";

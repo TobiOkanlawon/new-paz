@@ -1,6 +1,8 @@
+/* input.module.css */
+
 .formGroup {
-    width: 100%;
-    margin-bottom: 12px;
+  width: 100%;
+  margin-bottom: 12px;
 }
 
 .label {
@@ -30,13 +32,14 @@
   border-radius: 8px;
   border: solid 1px #c4c4c4;
   width: 100%;
-  /* width: -moz-available; /\* Firefox *\/ */
-  /* width: -webkit-fill-available; /\* Safari/Chrome *\/ */
-  /* width: fill-available; /\* Future unprefixed *\/ */
+  /* ADDED: Ensures padding and border are included in the total width, preventing overflow. */
+  box-sizing: border-box; 
+  /* REMOVED: Redundant vendor prefixes for width */
 }
 
 .passwordInput {
-  padding-right: 2.5rem;
+  /* This creates space on the right for the icon */
+  padding-right: 2.5rem; 
 }
 
 .eyeIcon {
@@ -51,6 +54,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #555; /* Optional: Give the icon a default color */
+  font-size: 1.2rem; /* Optional: Adjust icon size */
 }
 
 .input::placeholder {
@@ -76,31 +81,11 @@
     border-color: var(--error-red);
 }
 
-@media screen and (max-width: 768px) {
-  .right form label {
-    width: 70%;
-  }
-}
+/* REMOVED: All media queries that were causing inconsistent input widths. */
+/* The component is now fully responsive based on its parent container's width. */
+
 @media screen and (min-width: 1440px) {
   .input::placeholder {
     font-size: 16px;
-  }
-}
-@media screen and (max-width: 803px) {
-  .input {
-    width: 97%;
-  }
-}
-@media screen and (min-width: 522px) and (max-width: 801px) {
-  .formGroup {
-    width: 100%;
-  }
-  /* .input{
-    width: 92%;
-  } */
-}
-@media screen and (max-width: 522px) {
-  .input {
-    width: 96%;
   }
 }

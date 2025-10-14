@@ -17,11 +17,6 @@ const FamilyVault = () => {
     amount?: string;
   }
 
-  const notifications: Notification[] = [
-    // {id: '1', message: 'PAZ saver account created', time: '2 hours ago'},
-    // {id: '2', message: 'PAZ saver account created', time: '2 hours ago'},
-    // {id: '3', message: 'PAZ saver account created', time: '2 hours ago'},
-  ];
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isHelloWorldModalOpen, setIsHelloWorldModalOpen] = useState(false);

@@ -1,19 +1,27 @@
 'use client'
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './setting.module.css'
 import Image from 'next/image'
-import { useState } from 'react'
 import {useRouter} from 'next/navigation'
+import ResetPasswordModal from '@/components/ResetPasswordModal'
 
 const Setting = () => {
     const [enabled, setEnabled] = useState(false);
     const [toggled, setToggled] = useState(false)
     const router = useRouter()
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false)
+    const handleResetModalClose = () => setIsResetModalOpen(false);
+    const handleRestModalOpen = () => setIsResetModalOpen(true)
   return (
     <div className={styles.container}>
-        <div onClick={() =>{
-            router.back()
-        }} className={styles.backContainer}>
+        <button
+            type="button"
+            onClick={() => {
+                router.back()
+            }}
+            className={styles.backContainer}
+            aria-label="Go back"
+        >
             <Image
                 src={'/ArrowLeft.png'}
                 className={styles.arrowBack}
@@ -22,7 +30,7 @@ const Setting = () => {
                 alt='Arrow Back'
             />
             <p>Back</p>
-        </div>
+        </button>
         <h1 className={styles.header}>Settings</h1>
         <p className={styles.headerText}>Get your account concerns sorted in one place</p>
         <div className={styles.toggleButtons}>
@@ -47,7 +55,11 @@ const Setting = () => {
                     <h3>Set Password</h3>
                     <p>You can change your password here in case of a security issue.</p>
                 </div>
-                <button>Change Password</button>
+                <button
+                    onClick={handleRestModalOpen}
+                >
+                    Change Password
+                </button>
             </div>
             <div className={styles.setOtp}>
                 <div className={styles.otpTexts}>
@@ -68,6 +80,12 @@ const Setting = () => {
                 <button>Set Questions</button>
             </div>
         </div>)
+        }
+        {
+            <ResetPasswordModal
+                isOpen={isResetModalOpen}
+                onClose={handleResetModalClose}
+            />
         }
     </div>
   )

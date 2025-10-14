@@ -30,7 +30,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-style: Medium;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 100%;
     letter-spacing: 0%;
 }
@@ -59,4 +59,39 @@
 }
 .modalFormContainer{
     margin: 3rem 0;
+}
+
+.addCard{
+    color: #fff;
+    box-shadow: 0px 0px 15px 0px #0000001A;
+    display: none;
+    justify-content: start;
+    align-items: center;
+    gap: 2.2rem;
+    padding: 1vh 0 1vh 0;
+    position: relative;
+    height: 4vh;
+    width: 100%;
+}
+.addCard img{
+    position: absolute;
+    z-index: 10;
+    object-fit: contain;
+    width: 20%;
+}
+.addCard input{
+    height: 100%;
+    width: 80%;
+    right: 0;
+    position: absolute;
+    border: none;
+}
+.addCard input::placeholder{
+    color: #292727;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
 }

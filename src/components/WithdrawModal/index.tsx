@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./WithdrawModal.module.css";
 import InputGroup from "../InputGroup";
-import Link from "next/link";
+import Image from "next/image";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import SelectGroup from "../InputGroup/SelectGroup";
@@ -11,10 +11,13 @@ interface WithdrawModalProps {
 }
 
 const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
+  const [inputActive, setInputActive] = useState(false);
+  const handleClick = () => setInputActive(true);
   const formik = useFormik({
     initialValues: {
       amount: "",
       account: "",
+      cardNumber: "",
     },
     validationSchema: Yup.object({
       amount: Yup.number()
@@ -56,8 +59,8 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
           </div>
         )}
         <SelectGroup
-          label="Select account to withdraw from*"
-          placeholder="Select an account to withdraw from"
+          label="Select account to withdraw from"
+          placeholder="Select bank to withdraw from"
           id="account"
           value={formik.values.account}
           onChange={formik.handleChange}
@@ -69,7 +72,27 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onSubmit }) => {
             {formik.errors.account}
           </div>
         )}
-        <Link href="#">Add new debit-card</Link>
+        <div
+          style={inputActive ? { display: "flex" } : { display: "none" }}
+          className={styles.addCard}
+        >
+          <Image src={"/visa.png"} alt={"Visa icon"} height={24} width={24} />
+          <input
+            type="text"
+            name="cardNumber"
+            id="cardNumber"
+            placeholder="Visa Card ******************657"
+            value={formik.values.cardNumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+        </div>
+        <span
+          style={inputActive ? { display: "none" } : { display: "block" }}
+          onClick={handleClick}
+        >
+          Add new debit-card
+        </span>
       </div>
       <button type="submit">Withdraw</button>
     </form>

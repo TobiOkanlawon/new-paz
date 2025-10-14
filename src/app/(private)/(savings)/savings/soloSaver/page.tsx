@@ -55,27 +55,6 @@ const SoloSaver = () => {
       </div>
 
       <div className={styles.activities}>
-        {/* <h5>Recent activitiy</h5>
-        {notifications.length !== 0 ? (
-          notifications.map((notification) => (
-            <NotificationContainer
-              key={notification.id}
-              message={notification.message}
-              time={notification.time}
-              amount={notification.amount ? notification.amount : ""}
-            />
-          ))
-        ) : (
-          <div className={styles.emptyContainer}>
-            <Image
-              src={"/noNotification.png"}
-              alt="No notification image"
-              width={100}
-              height={100}
-            />
-            <p>You have no recent actiities yet!</p>
-          </div>
-        )} */}
         <Notifications
           header="Recent activities"
           notifications={notifications}

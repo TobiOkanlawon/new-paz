@@ -298,8 +298,14 @@
   .cardTypes {
     width: 15rem;
   }
+  .saversContainer{
+    margin: 2rem 0;
+  }
 }
 @media screen and (max-width: 560px) {
+  .container{
+    padding: 12.5vh 0 0 3.64vw;
+  }
   .modalContainer h1{
     font-size: 20px;
   }

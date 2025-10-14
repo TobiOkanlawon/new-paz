@@ -5,48 +5,33 @@ import Image from 'next/image'
 
 // ...other imports
 
-type NotificationProps = {
-  header: string;
-  notifications?: {
-    message: string | React.ReactNode;
-    id: number;
-    time: string;
-    amount?: string;
-  }[];
-  // other props if any
-};
+interface NotificationItem {
+  message: string | React.ReactNode;
+  id: number;
+  time: string;
+  amount?: string;
+}
 
-// ...rest of the component
-const Notifications: React.FC<NotificationProps>  = ({header, notifications}) => {
-    const Notifications = [
-        { message: 'PAZ saver account created', id: 1, time: '2:45pm' },
-        { message: 'Money saved into PAZ saver', id: 2, amount: 'N 50,000', time: '2 days ago' },
-        { message: (
-            <>
-            Money withdrawal lock period exceeded. You can{' '}
-            <a href="#" className={styles.link}>re-lock</a>
-            {' '}again if you wish
-            </>
-        ),
-        id: 3,
-        time: '2 days ago'
-        },
-        { message: 'Money withdrawn from savings', amount: 'N 50,000', id: 4, time: '2 days ago' }
-    ]
+interface NotificationProps {
+  header: string;
+  notifications?: NotificationItem[];
+}
+
+const Notifications: React.FC<NotificationProps> = ({ header, notifications = [] }) => {
     return (
-        <div>
+        <div className={styles.container}>
         <h1 className={styles.header}>{header}</h1>
         {
           header === 'Notification' ? (<p className={styles.headerText}>See all your notifications in one place</p>) : null
         }
         <div className={styles.notificationWrapper}>
-          { Notifications.length > 0 ? (
-            Notifications.map((notification) => (
+          { notifications.length > 0 ? (
+            notifications.map((notification) => (
               <NotificationContainer 
                 key={notification.id}
                 message={notification.message}
                 time={notification.time}
-                amount={notification.amount? notification.amount:""}
+                amount={notification.amount || ""}
               />
             ))
           ) : (

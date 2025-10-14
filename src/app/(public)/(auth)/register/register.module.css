@@ -57,10 +57,11 @@
 .right {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   width: 55vw;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
   margin: auto;
+   justify-content: center; 
 }
 .right h3 {
   color: #243d7d;
@@ -76,7 +77,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* align-items: center; */
+  max-width: 700px; 
+  gap: 1rem; 
 }
 .returnToLogin {
   color: #204d88;
@@ -119,19 +121,26 @@
   display: none;
 }
 
-.flexed{
+.flexed {
   width: 100%;
   display: flex;
-  gap: 5vw;
+  justify-content: space-between; 
   align-items: center;
+  gap: 1.5rem;
 }
 
-.inputFlex{
-  width: 22vw;
+.inputFlex {
+  flex-basis: 48%; 
+  width: 48%;
 }
 
-.buttonContainer{
+.buttonContainer {
   width: 100%;
+  margin-top: 1rem;
+}
+
+.buttonContainer > button {
+    width: 100%;
 }
 
 .linkWrapper {
@@ -142,41 +151,40 @@
 @media screen and (max-width: 1030px) {
   .right {
     width: 70vw;
-
-  } 
+  }
   .right h3 {
     margin-top: 2rem;
   }
-  .inputFlex{
+  .inputFlex {
     width: 29vw;
   }
-  .flexed{
+  .flexed {
     gap: 10vw;
   }
 }
 @media screen and (max-width: 850px) {
   .right {
     width: 90vw;
-  } 
-  .inputFlex{
+  }
+  .inputFlex {
     width: 36vw;
   }
 }
 @media screen and (max-width: 600px) {
-  .inputFlex{
+  .inputFlex {
     width: 70vw;
   }
-  .flexed{
+  .flexed {
     flex-direction: column;
     gap: 0;
   }
-  .formGroup{
+  .formGroup {
     margin-bottom: 0 !important;
   }
   .logo {
     margin: 2rem auto;
   }
-  .form input{
+  .form input {
     margin-bottom: 0;
   }
   .container {
@@ -196,9 +204,6 @@
   .right h3 {
     margin-top: 2rem;
   }
-  .right form input {
-    width: 90%;
-  }
 }
 
 @media screen and (max-width: 580px) {
@@ -208,7 +213,7 @@
     align-items: center;
     width: 100vw;
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
     background-color: #fff;
   }
   .mobileContainer {
@@ -245,7 +250,6 @@
   }
 
   .form input {
-    width: 90%;
     padding: 0.75rem 1rem;
     border: 1px solid #d9d9d9;
     border-radius: 8px;
@@ -281,9 +285,8 @@
   }
 
   .mobile a {
-    font-size: 0.875rem;
+    font-size: .8rem;
     color: #204d88;
-    margin-top: 1.5rem;
     text-decoration: none;
     display: flex;
     align-items: center;

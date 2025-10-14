@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./profile.module.css";
 import Input from "@/components/Input";
 import SelectGroup from "@/components/InputGroup/SelectGroup";
@@ -8,7 +8,6 @@ import ProgressBar from "@/components/ProgressBar";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import Image from "next/image";
-import { useState } from "react";
 import { useGetProfile } from "@/data/queries/useGetProfile";
 import useUser from "@/store/userStore";
 import { Loading } from "@/components/Loading";
@@ -93,7 +92,7 @@ const Profile = () => {
   }
 
   return (
-    <>
+    <div>
       <form className={styles.container} id="CONTAINER">
         <section className={styles.headers}>
           <div className={styles.profileContainer}>
@@ -277,7 +276,7 @@ const Profile = () => {
           type="submit"
         />
       </form>
-    </>
+    </div>
   );
 };
 

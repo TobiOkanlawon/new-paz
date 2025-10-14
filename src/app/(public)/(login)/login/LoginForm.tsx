@@ -22,7 +22,7 @@ const schema = yup.object({
     .string()
     .required("Please enter your password")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{8,})/,
       "Password must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
     ),
   remember: yup.boolean(),
@@ -73,15 +73,17 @@ const LoginForm = () => {
           {...formik.getFieldProps("email")}
           errors={handleErrorDisplay(formik, "email")}
         />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          id="password"
-          className={styles.password}
-          errors={handleErrorDisplay(formik, "password")}
-          {...formik.getFieldProps("password")}
-        />
+        <div className={styles.password}>
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            id="password"
+            // className={styles.password}
+            errors={handleErrorDisplay(formik, "password")}
+            {...formik.getFieldProps("password")}
+          />
+        </div>
         <div className={styles.formBottom}>
           <div className={styles.rememberMe}>
             <input

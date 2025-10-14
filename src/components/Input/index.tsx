@@ -12,7 +12,7 @@ type Props = {
   HTMLInputElement
 >;
 
-const Input = ({ label, id, className, errors, type, ...rest }: Props) => {
+const   Input = ({ label, id, className, errors, type, ...rest }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
 
