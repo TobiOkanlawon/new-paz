@@ -9,7 +9,7 @@ interface Family {
     money: string | number;
     owner?: boolean;
     members: number;
-    url: string; //I think this is meant to be the wallet ID, so that you'll use searchParams yh?
+    url?: string; //I think this is meant to be the wallet ID, so that you'll use searchParams yh?
 }
 
 interface FamilyCardProp {
@@ -19,7 +19,7 @@ interface FamilyCardProp {
 const FamilyCard: React.FC<FamilyCardProp> = ({Families}) => {
   const router = useRouter()
 
-  const handleCardClick = (url: string) => {
+  const handleCardClick = (url: string | '/') => { //I am not sure of what I did here
     router.push(url)
   }
 
@@ -32,7 +32,7 @@ const FamilyCard: React.FC<FamilyCardProp> = ({Families}) => {
                 <div 
                     className={styles.cardConainer} 
                     key={idx}
-                    onClick={() => handleCardClick(family.url)}
+                    onClick={() => handleCardClick(family.url || '/')}
                 >
                     <h2>{family.name}</h2>
                     <p>{family.desc}</p>
