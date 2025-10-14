@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./sidebar.module.css";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { removeToken } from "@/libs/axios";
+import { removeToken } from "@/libs/auth";
 import useUser from "@/store/userStore";
 
 export default function Sidebar({ isOpen }: { isOpen: boolean }) {
@@ -18,7 +18,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
     { href: "/dashboard", icon: "/sidebarHome.png", label: "Home" },
     { href: "/profile", icon: "/sidebarProfile.png", label: "Profile" },
     { href: "/savings", icon: "/sidebarSavings.png", label: "Savings" },
-    { href: "/loans", icon: "/sidebarLoan.png", label: "Loan" },
+    { href: "/loans", icon: "/sidebarLoan.png", label: "Loans" },
     {
       href: "/investments",
       icon: "/sidebarInvestment.png",

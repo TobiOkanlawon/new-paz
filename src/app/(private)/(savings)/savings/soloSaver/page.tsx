@@ -47,6 +47,7 @@ const SoloSaver = () => {
 
       <div>
         <TotalBalanceCard
+          money={0}
           header="PAZ saver balance"
           buttonText="Instant top-up "
           modalContent={<TopUpModal />}

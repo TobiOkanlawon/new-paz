@@ -1,18 +1,7 @@
-import useToken from "@/store/tokenStore";
+
 import axios from "axios";
 import { toast } from "react-toastify";
-
-export const getToken = (): string | null => {
-  return useToken.getState().token;
-};
-
-export const storeToken = (token: string) => {
-  return useToken.getState().setToken(token);
-};
-
-export const removeToken = () => {
-  return useToken.getState().removeToken();
-};
+import { getToken, removeToken } from "@/libs/auth";
 
 export const axiosInstance = axios.create({
   // baseURL: process.env.BASE_URL,
@@ -44,6 +33,20 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
+    const data = error?.response?.data;
+
+    // this handles the case where the token expires.
+    // The backend, currently, returns a JSON with the following fields
+    // responseCode, 400
+    // responseMessage, "invalid token provided"
+
+    if (
+      data.responseCode === 400 &&
+      data.responseMessage == "invalid token provided"
+    ) {
+      window.dispatchEvent(new Event("logout"))
+    }
+
     if (!error.response) {
       toast.error("An error occured");
     }

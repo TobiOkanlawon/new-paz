@@ -5,6 +5,7 @@ type Props = {
   label: string;
   placeholder: string;
   name?: string;
+  errors?: string;
   options: { label: string; value: string }[];
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
@@ -13,6 +14,7 @@ const SelectGroup = ({
   name,
   options,
   placeholder,
+  errors,
   ...selectProps
 }: Props) => {
   return (
@@ -35,6 +37,11 @@ const SelectGroup = ({
           </option>
         ))}
       </select>
+      {errors && (
+        <div className={styles.errorsContainer}>
+          <span className={styles.error}>{errors}</span>
+        </div>
+      )}
     </div>
   );
 };

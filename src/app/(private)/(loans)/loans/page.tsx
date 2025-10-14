@@ -50,12 +50,6 @@ const Loans = () => {
   const [loanAmount, setLoanAmount] = useState<number>(0);
   const [loanStatus, setLoanStatus] = useState<LoanStatus>("non");
 
-  useEffect(() => {
-    if (loanStatus === "repaid") {
-      setLoanAmount(0);
-    }
-  }, [loanStatus]);
-
   const [loanPurpose, setLoanPurpose] = useState<string>("");
   const [loanDuration, setLoanDuration] = useState<string>("");
 

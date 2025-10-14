@@ -21,6 +21,10 @@
   border: 1px solid red;
 }
 
+.errorsContainer {
+    margin-top: 4px;
+}
+
 .inputError {
   border: 1px solid red;
 }

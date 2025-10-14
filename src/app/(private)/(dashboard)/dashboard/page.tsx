@@ -15,7 +15,6 @@ import { AccountCard } from "@/components/Dashboard/AccountCard/index";
 // import DashboardSavings from "@/assets/images/dashboardSavings.png";
 // import DashboardLoans from "@/assets/images/dashboardLoan.png";
 // import DashboardInvestments from "@/assets/images/dashboardInvestment.png";
-import { useGetProfile } from "@/data/queries/useGetProfile";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
 import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
@@ -24,6 +23,9 @@ const Dashboard = () => {
   const user = useUser((state) => state.user) as TUser;
 
   const { user: userInformation, setUser } = useUser();
+
+  // Todo: Handle total savings as amalgamation of balance of all savings plans
+  const totalSavings = 0;
 
   // Refs for scrollable containers
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -104,7 +106,7 @@ const Dashboard = () => {
         <div className={styles.totals}>
           <AccountCard
             title="Total Savings"
-            amount={data?.TotalSavings as number}
+            amount={totalSavings as number}
             isAmountVisible={isSavingsAmountVisible}
             cornerImage={"/dashboardSavings.png"}
             className={styles.lightBlue}
