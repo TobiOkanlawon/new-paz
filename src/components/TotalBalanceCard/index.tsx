@@ -6,7 +6,7 @@ import styles from "./totalBalanceCard.module.css";
 import Image from "next/image";
 import { FaPlus } from "react-icons/fa";
 import Modal from "../Modal/index";
-import InputGroup from "../InputGroup";
+import Input from "@/components/Input";
 import SelectGroup from "../InputGroup/SelectGroup";
 import Link from "next/link";
 
@@ -97,7 +97,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({
       <h2>Top-up your savings</h2>
       <p>Save up that money you do want to regret spending</p>
       <div className={styles.modalFormContainer}>
-        <InputGroup
+        <Input
           label="Top-up amount*"
           placeholder="Enter how much you want to top-up"
           id="amount"
@@ -159,7 +159,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({
       <h2>Withdraw Funds</h2>
       <p>Get funds from your savings by filling the form below</p>
       <div className={styles.modalFormContainer}>
-        <InputGroup
+        <Input
           label="Withdrawal amount*"
           placeholder="Enter how much you want to withdraw"
           id="amount"
