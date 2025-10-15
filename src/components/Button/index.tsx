@@ -5,6 +5,7 @@ import { LuLoaderCircle } from "react-icons/lu";
 
 type Props = {
   label?: string;
+  variant?: "primary" | "secondary";
   loading?: boolean;
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -14,6 +15,7 @@ type Props = {
 const Button = ({
   className,
   type = "button",
+  variant = "primary",
   loading = false,
   disabled,
   ...rest

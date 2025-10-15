@@ -1,4 +1,4 @@
-.dashboardMain {
+.main {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
@@ -9,14 +9,14 @@
 }
 
 @media screen and (max-width: 950px) {
-  .dashboardMain {
+  .main {
     justify-content: center;
     align-items: center;
   }
 }
 
 @media screen and (max-width: 743px) {
-  .dashboardMain {
+  .main {
     justify-content: start;
     align-items: center;
     height: auto;

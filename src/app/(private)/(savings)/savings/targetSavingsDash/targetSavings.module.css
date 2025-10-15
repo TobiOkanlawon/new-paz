@@ -2,92 +2,104 @@
     padding: 13.5vh 0 0 20.64vw;
     color: #243D7D;
 }
-.header{
-    font-size: 4vh;
-    margin-top: 0;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-style: Bold;
-    line-height: 46px;
-    letter-spacing: 0px;
-    vertical-align: middle;
+
+.header {
+  font-size: 4vh;
+  margin-top: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  line-height: 46px;
+  letter-spacing: 0px;
+  vertical-align: middle;
 }
-.headingText{
-    font-size: 2.13vh;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-style: Medium;
-    line-height: 100%;
-    letter-spacing: 0%;
+
+.headingText {
+  font-size: 2.13vh;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
-.cardContainer{
-    display: flex;
-    gap: 5.69vw;
+
+.cardContainer {
+  display: flex;
+  gap: 5.69vw;
 }
-.cardConainer{
-    width: 26.59vw;
-    height: 18.81vh;
-    border-radius: 15px;
-    box-shadow: 0px 0px 30px 0px #00000026;
-    padding: 23px 21px;
+
+.cardConainer {
+  width: 26.59vw;
+  height: 18.81vh;
+  border-radius: 15px;
+  box-shadow: 0px 0px 30px 0px #00000026;
+  padding: 23px 21px;
 }
-.cardConainer h2{
-    color: #535353;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 2.13vh;
-    line-height: 100%;
-    letter-spacing: 0%;
-    margin: 0;
-    margin-bottom: 10px;
+
+.cardConainer h2 {
+  color: #535353;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 2.13vh;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin: 0;
+  margin-bottom: 10px;
 }
-.cardConainer p{
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 1.9vh;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #4E5A66;
-    margin: 0;
+
+.cardConainer p {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 1.9vh;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #4e5a66;
+  margin: 0;
 }
-.cardConainer h3{
-    font-family: 'Montserrat', sans-serif;
-    margin: .6rem 0;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 4.13vh;
-    line-height: 46px;
-    letter-spacing: 0px;
-    vertical-align: middle;
+
+.cardConainer h3 {
+  font-family: "Montserrat", sans-serif;
+  margin: 0.6rem 0;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 4.13vh;
+  line-height: 46px;
+  letter-spacing: 0px;
+  vertical-align: middle;
 }
-.cardBottom{
-    display: flex;
-    justify-content: space-between;
+
+.cardBottom {
+  display: flex;
+  justify-content: space-between;
 }
-.cardBottom p{
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 1.8vh;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #243D7D;
+
+.cardBottom p {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 1.8vh;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #243d7d;
 }
-.cardBottom p span{
-    color: #535353;
+
+.cardBottom p span {
+  color: #535353;
 }
-.savingsOwner{
-    width: 9.4vw;
-    height: 2.4vh;
-    background-color: #bfe9c3a1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: .3rem .4rem;
-    border-radius: 1rem;
+
+.savingsOwner {
+  width: 9.4vw;
+  height: 2.4vh;
+  background-color: #bfe9c3a1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem 0.4rem;
+  border-radius: 1rem;
 }
-.savingsOwner p{
-    color: #44BF50;
+
+.savingsOwner p {
+  color: #44bf50;
 }

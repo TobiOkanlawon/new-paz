@@ -21,6 +21,13 @@ interface Notification {
   amount?: string;
 }
 
+interface Notification {
+  id: string;
+  message: string;
+  time: string;
+  amount?: string;
+}
+
 const schema = yup.object({
   purpose: yup.string().required("Please select a purpose for the loan"),
   amount: yup
