@@ -19,6 +19,10 @@ interface TotalBalanceCardProps {
   onCancelPending?: () => void;
 }
 
+const formatMoney = (amount: number) => {
+  return new Intl.NumberFormat("en-US").format(amount);
+};
+
 const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({
   header,
   money,
@@ -197,7 +201,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({
       <p>{header}</p>
       <div className={styles.contentContainer}>
         <h3>
-          ₦ {showMoney ? money : "****"}{" "}
+          ₦ {showMoney ? formatMoney(money) : "****"}{" "}
           <span>
             <Image
               src={showMoney ? "/eyeOff.png" : "/eyeOff.png"}
