@@ -1,7 +1,8 @@
 .cardContainer{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 5.69vw;
+    column-gap: 5.69vw;
+    row-gap: 2vw;
 }
 
 /* Medium screens - 3 columns */

@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import styles from './targetSavings.module.css'
 import TotalBalanceCard from '@/components/TotalBalanceCard'
 import TargetCard from '@/components/TargetCard'
+import Back from '@/components/BackContainer'
 
 const FamilyVault = () => {
     const targetCards = [
@@ -17,6 +18,7 @@ const [showMoney, setShowMoney] = useState(true);
 const handleToggle = () => setShowMoney((prev) => !prev);
   return (
     <div className={styles.container}>
+        <Back />
         <h2 className={styles.header}>PAZ Family Vault</h2>
         <p className={styles.headingText}>Explore all our savings plans here.</p>
 
