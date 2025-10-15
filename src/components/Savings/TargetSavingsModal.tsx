@@ -1,51 +1,156 @@
 import Modal from "@/components/Modal";
 import styles from "./styles.module.css";
+import Input from "@/components/Input";
+import Pill from "../Pill";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { handleErrorDisplay } from "@/libs/helpers";
+import Button from "@/components/Button";
 
 type Props = {
   isActive: boolean;
   handleCloseModal: () => void;
 };
 
+const schema = Yup.object({
+  title: Yup.string()
+    .required("You have to specify a title for you plan")
+    .max(64, "The title is too long"),
+  description: Yup.string()
+    .required("You have to specify a description for your plan")
+    .min(3, "Describe it a bit more"),
+  regularSavingsAmount: Yup.number()
+    .positive("You can't have a negative regular savings amount")
+    .min(1000, "Your savings amount must be 1000 or higher"),
+  savingsFrequency: Yup.string(),
+  savingsDuration: Yup.number(),
+});
+
 const TargetSavingsModal: React.FC<Props> = ({
   isActive,
   handleCloseModal,
 }) => {
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      regularSavingsAmount: 0,
+      savingsFrequency: "Monthly",
+      savingsDuration: 0,
+    },
+    validationSchema: schema,
+    onSubmit: async () => {},
+  });
+
+  const regularSavingsAmounts = [
+    {
+      id: 1,
+      amount: 5000,
+      handleClick: () => {
+        formik.setFieldValue("regularSavingsAmount", 5000);
+      },
+    },
+    {
+      id: 2,
+      amount: 10000,
+      handleClick: () => {
+        formik.setFieldValue("regularSavingsAmount", 10000);
+      },
+    },
+    {
+      id: 3,
+      amount: 50000,
+      handleClick: () => {
+        formik.setFieldValue("regularSavingsAmount", 50000);
+      },
+    },
+    {
+      id: 4,
+      amount: 100000,
+      handleClick: () => {
+        formik.setFieldValue("regularSavingsAmount", 100000);
+      },
+    },
+  ];
+
+  const savingsDurations = [
+    {
+      id: 2,
+      duration: "3 months",
+      handleClick: () => formik.setFieldValue("savingDuration", "3 months"),
+    },
+    {
+      id: 1,
+      duration: "6 months",
+      handleClick: () => formik.setFieldValue("savingDuration", "6 months"),
+    },
+
+    {
+      id: 3,
+      duration: "9 months",
+      handleClick: () => formik.setFieldValue("savingDuration", "9 months"),
+    },
+
+    {
+      id: 4,
+      duration: "1 year",
+      handleClick: () => formik.setFieldValue("savingDuration", "1 year"),
+    },
+
+    {
+      id: 5,
+      duration: "2 years",
+      handleClick: () => formik.setFieldValue("savingDuration", "2 years"),
+    },
+  ];
+
   return (
     <Modal isOpen={isActive} onClose={handleCloseModal}>
-      <form className={styles.modalContainer}>
+      <form
+        action="POST"
+        onSubmit={formik.handleSubmit}
+        className={styles.modalContainer}
+      >
         <h1>Set-up Your PAZ Target Saver Account</h1>
         <p>Begin your journey to financial freedom</p>
-        <label htmlFor="famName">Savings Title*</label>
-        <div className={styles.famNameContainer}>
-          <input
-            type="text"
-            id="famName"
-            placeholder="What are you saving towards"
-          />
-        </div>
-        <label htmlFor="addFam">Savings Description*</label>
-        <div className={styles.addFam}>
-          <input
-            type="text"
-            id="addFam"
-            style={{ width: "100%" }}
-            placeholder="Tell us about your purpose of this savings"
-          />
-        </div>
-        <label className={styles.preferredAmountLabel}>
-          Select preferred amount
-        </label>
-        <div className={styles.preferredAmount}>
-          <button value={"5000"}>5,000</button>
-          <button value={"10000"}>10,000</button>
-          <button value={"50000"}>50,000</button>
-          <button value={"100000"}>100,000</button>
-          <input
+        <Input
+          label="Savings Title"
+          type="text"
+          id="title"
+          placeholder="What are you saving towards"
+          {...formik.getFieldProps("title")}
+          errors={handleErrorDisplay(formik, "title")}
+        />
+        <Input
+          label="Savings Description*"
+          type="text"
+          id="description"
+          style={{ width: "100%" }}
+          placeholder="Tell us about your purpose of this savings"
+          {...formik.getFieldProps("description")}
+          errors={handleErrorDisplay(formik, "description")}
+        />
+
+        <div className={styles.regularSavingsAmount}>
+          <Input
+            label="Specify an amount to save regularly"
             type="number"
-            name="preferredAmount"
-            id="preferredAmount"
-            placeholder="specify amount"
+            id="regularSavingsAmount"
+            placeholder="Specify amount to save regularly"
+            {...formik.getFieldProps("regularSavingsAmount")}
+            errors={handleErrorDisplay(formik, "regularSavingsAmount")}
           />
+          <div className={styles.pillContainer}>
+            {regularSavingsAmounts.map((p) => {
+              return (
+                <Pill
+                  key={p.id}
+                  handleClick={p.handleClick}
+                  content={new Intl.NumberFormat("en-US").format(p.amount)}
+                />
+              );
+            })}
+          </div>
         </div>
         <label htmlFor="savingFrequency">Select Saving Frequency</label>
         <div className={styles.frequentSavings}>
@@ -57,30 +162,28 @@ const TargetSavingsModal: React.FC<Props> = ({
             <option value="6 months">6 months</option>
           </select>
         </div>
-        <label className={styles.savingsDurationLabel}>
-          Select savings duration
-        </label>
-        <div className={styles.savingsDuration}>
-          <button>6 months</button>
-          <button>1 year</button>
-          <button>2 years</button>
-          <button>5 years</button>
-          <input
-            type="number"
-            name="preferredAmount"
-            id="preferredAmount"
-            placeholder="Specify Duration"
-          />
+        <Input
+          label="Select savings duration"
+          type="number"
+          name="preferredAmount"
+          id="preferredAmount"
+          placeholder="Specify Duration"
+        />
+        <div className={styles.pillContainer}>
+          {savingsDurations.map((s) => {
+            return (
+              <Pill
+                key={s.id}
+                handleClick={s.handleClick}
+                content={s.duration}
+              />
+            );
+          })}
         </div>
-        <button
-          type="submit"
-          className={styles.submitButton}
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
+
+        <Button type="submit" className={styles.submitButton}>
           Create Savings
-        </button>
+        </Button>
       </form>
     </Modal>
   );

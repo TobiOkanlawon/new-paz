@@ -1,0 +1,12 @@
+import styles from "./pill.module.css";
+
+type Props = {
+  content: string;
+  handleClick?: () => void;
+};
+
+const Pill: React.FC<Props> = ({ content, handleClick }) => {
+  return <div onClick={handleClick} className={styles.container}></div>;
+};
+
+export default Pill;

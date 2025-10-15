@@ -103,3 +103,12 @@
 .savingsOwner p {
   color: #44bf50;
 }
+
+
+@media screen and (min-width: 916px) {
+  .topContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}

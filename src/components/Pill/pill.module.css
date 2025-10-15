@@ -1,0 +1,22 @@
+.container {
+    text-align: center;
+    padding: 4px 12px;
+    min-width: 56px;
+    width: fit-content;
+    min-height: 24px;
+    background-color: #DCDCDC;
+    color: black;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.container:hover {
+    
+}
+
+.content {
+    display: inline-block;
+    font-size: 12px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+}
