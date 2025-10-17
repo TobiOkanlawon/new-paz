@@ -15,12 +15,12 @@ export default function DashboardLayout({
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
-    <div className={styles.body}>
+    <>
       <Navbar onToggleSidebar={toggleSidebar} />
       <main className={styles.dashboardMain}>
         <Sidebar isOpen={isSidebarOpen} />
-        {children}
+        <div className={styles.content}>{children}</div>
       </main>
-    </div>
+    </>
   );
 }

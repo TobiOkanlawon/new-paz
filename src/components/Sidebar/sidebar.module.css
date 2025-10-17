@@ -1,11 +1,9 @@
 .sidebar {
   width: 17.29vw;
   background-color: #fafafa;
-  z-index: 99;
-  height: auto;
-  min-height: 100vh;
-  position: fixed;
-  margin-top: 4rem;
+  height: 100%;
+  position: sticky;
+  top: 0;
 }
 
 .sidebarContainer {
@@ -13,6 +11,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
 }
 
 .sidebarContainer h3 {

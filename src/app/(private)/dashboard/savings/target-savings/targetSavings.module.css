@@ -1,6 +1,4 @@
 .container {
-  padding: 13.5vh 2vw 0px 20.64vw;
-  width: 80vw;
   color: #243d7d;
 }
 
@@ -110,6 +108,7 @@
 @media screen and (min-width: 916px) {
   .topContainer {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: flex-start;
   }

@@ -17,61 +17,10 @@ const FamilyVault = () => {
     user?.email as string,
   );
 
-  const targetCards: TTargetSavingsPlan[] = data?.targetSavings;
-
-  // const targetCards: TTargetSavingsPlan[] = [
-  //   {
-  //     id: "1",
-  //     name: "Project New Car",
-  //     description: "I must buy Camaro",
-  //     amount: 500000,
-  //     target: 500000,
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "House Rent Runs",
-  //     description: "Rent saving quota",
-  //     amount: 1500000,
-  //     target: 1500000,
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "Project New Car",
-  //     description: "I must buy Camaro",
-  //     amount: 500000,
-  //     target: 500000,
-  //   },
-  //   {
-  //     id: "4",
-  //     name: "House Rent Runs",
-  //     description: "Rent saving quota",
-  //     amount: 1500000,
-  //     target: 1500000,
-  //   },
-  //   {
-  //     id: "5",
-  //     name: "Project New Car",
-  //     description: "I must buy Camaro",
-  //     amount: 500000,
-  //     target: 500000,
-  //   },
-  //   {
-  //     id: "6",
-  //     name: "House Rent Runs",
-  //     description: "Rent saving quota",
-  //     amount: 1500000,
-  //     target: 1500000,
-  //   },
-  // ];
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
-
-  const calculateTotal = (allPlans: TTargetSavingsPlan[]) => {
-    return allPlans.reduce((p, c) => p + c.amount, 0);
-  };
 
   if (isLoading) {
     return <Loading />;
@@ -82,6 +31,14 @@ const FamilyVault = () => {
       <ErrorComponent message="An error occurred" retryFunction={() => {}} />
     );
   }
+
+  // this function is after the isLoading block because allPlans is null if the data hasn't loaded
+  const calculateTotal = (allPlans: TTargetSavingsPlan[]) => {
+    return allPlans.reduce((p, c) => p + c.amount, 0);
+  };
+
+  const targetCards: TTargetSavingsPlan[] = data!
+    .targetSavings as TTargetSavingsPlan[];
 
   return (
     <div className={styles.container}>
@@ -106,18 +63,20 @@ const FamilyVault = () => {
       />
 
       <div className={styles.cardContainer}>
-        {targetCards.map(({ id, Title, description, targetAmount, amount }) => {
-          return (
-            <TargetCard
-              key={id}
-              id={id}
-              Title={Title}
-              description={description}
-              targetAmount={targetAmount}
-              amount={amount}
-            />
-          );
-        })}
+        {targetCards.map(
+          ({ Title, description, targetAmount, amount, accountNo }) => {
+            return (
+              <TargetCard
+                key={accountNo}
+                id={accountNo}
+                title={Title}
+                description={description}
+                targetAmount={targetAmount}
+                amount={amount}
+              />
+            );
+          },
+        )}
       </div>
 
       <TargetSavingsModal

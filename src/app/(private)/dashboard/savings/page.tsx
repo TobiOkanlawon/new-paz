@@ -105,7 +105,7 @@ const Savings = () => {
 
   useEffect(() => {
     // Check if data has loaded and there is no solo account
-    if (data && !data.hasSoloAccount && !isLoading) {
+    if (data && !data.hasSoloAccount) {
       createSoloSaver({
         title: "PERSONAL",
         description: "Solo saver account",
@@ -176,7 +176,7 @@ const Savings = () => {
             justifyContent: "center",
             alignItems: "center",
           }}
-          onClick={() => router.push("/savings/targetSavingsDash")}
+          onClick={() => router.push("/dashboard/savings/target-savings")}
         >
           <Image
             src={"/targetSavingsCard.png"}

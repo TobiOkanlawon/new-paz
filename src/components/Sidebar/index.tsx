@@ -16,8 +16,16 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
   const pathname = usePathname();
   const links = [
     { href: "/dashboard", icon: "/sidebarHome.png", label: "Home" },
-    { href: "/profile", icon: "/sidebarProfile.png", label: "Profile" },
-    { href: "/savings", icon: "/sidebarSavings.png", label: "Savings" },
+    {
+      href: "/dashboard/profile",
+      icon: "/sidebarProfile.png",
+      label: "Profile",
+    },
+    {
+      href: "/dashboard/savings",
+      icon: "/sidebarSavings.png",
+      label: "Savings",
+    },
     { href: "/loans", icon: "/sidebarLoan.png", label: "Loans" },
     {
       href: "/investments",

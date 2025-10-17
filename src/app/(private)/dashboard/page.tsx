@@ -153,7 +153,7 @@ const Dashboard = () => {
               </div>
               <button
                 className={styles.loanAndInvestmentButton}
-                onClick={() => router.push("/savings")}
+                onClick={() => router.push("/dashboard/savings")}
               >
                 Get Started!
               </button>
@@ -174,7 +174,7 @@ const Dashboard = () => {
               </div>
               <button
                 className={styles.loanAndInvestmentButton}
-                onClick={() => router.push("/savings/familyVault")}
+                onClick={() => router.push("/dashboard/savings/family-vault")}
               >
                 Get Started!
               </button>
@@ -368,7 +368,7 @@ const Dashboard = () => {
               </p>
               <button
                 className={`${styles.mobileButton}`}
-                onClick={() => router.push("/savings")}
+                onClick={() => router.push("/dashboard/savings")}
               >
                 Get started!
               </button>
