@@ -1,6 +1,7 @@
-.container{
-    padding: 13.5vh 0 0 20.64vw;
-    color: #243D7D;
+.container {
+  padding: 13.5vh 2vw 0px 20.64vw;
+  width: 80vw;
+  color: #243d7d;
 }
 
 .header {
@@ -23,11 +24,11 @@
   letter-spacing: 0%;
 }
 
-.cardContainer{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 5.69vw;
-    row-gap: 2vw;
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 5.69vw;
+  row-gap: 2vw;
 }
 
 .cardConainer {
@@ -106,7 +107,6 @@
   color: #44bf50;
 }
 
-
 @media screen and (min-width: 916px) {
   .topContainer {
     display: flex;
@@ -117,14 +117,14 @@
 
 /* Medium screens - 3 columns */
 @media (max-width: 1024px) {
-    .cardContainer {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .cardContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Small screens - 1 column */
 @media (max-width: 768px) {
-    .cardContainer {
-        grid-template-columns: 1fr;
-    }
+  .cardContainer {
+    grid-template-columns: 1fr;
+  }
 }

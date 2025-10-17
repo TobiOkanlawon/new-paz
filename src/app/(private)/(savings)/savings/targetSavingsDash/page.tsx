@@ -88,7 +88,7 @@ const FamilyVault = () => {
       <Back />
       <div className={styles.topContainer}>
         <div className={styles.topContainerLeft}>
-          <h2 className={styles.header}>PAZ Family Vault</h2>
+          <h2 className={styles.header}>PAZ Target Savings</h2>
           <p className={styles.headingText}>
             Explore all our savings plans here.
           </p>
@@ -111,9 +111,9 @@ const FamilyVault = () => {
             <TargetCard
               key={id}
               id={id}
-              name={Title}
+              Title={Title}
               description={description}
-              target={targetAmount}
+              targetAmount={targetAmount}
               amount={amount}
             />
           );

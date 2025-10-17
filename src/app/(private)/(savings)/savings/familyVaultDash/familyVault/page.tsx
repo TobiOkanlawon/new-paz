@@ -53,6 +53,7 @@ const FamilyVault = () => {
           header="PAZ saver balance"
           buttonText="Instant top-up "
           modalContent={<TopUpModal />}
+          money={10}
         />
         <TotalFamilyCard header="Family Members" buttonText="Add new members" />
       </div>

@@ -1,7 +1,7 @@
 .button {
   font-family: var(--font-montserrat);
-  font-weight: 700;
-  font-size: 16px;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 100%;
   letter-spacing: 0%;
   height: 45px;
@@ -14,7 +14,6 @@
 }
 
 .primaryVariant {
-    
 }
 
 .button:hover {
