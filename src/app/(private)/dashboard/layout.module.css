@@ -1,17 +1,28 @@
+/* side bar width is width: 17.29vw; */
+
 .dashboardMain {
-  display: flex;
-  flex-direction: row;
-  overflow-y: hidden;
+    display: grid;
+    /* sidebar and content */
+  grid-template-columns: 17.29vw 1fr;
 }
+
+.content {
+    padding: 48px;
+}
+
 @media screen and (max-width: 950px) {
   .dashboardMain {
+    display: flex;
     justify-content: center;
     align-items: center;
   }
 }
+
 @media screen and (max-width: 743px) {
   .dashboardMain {
+    display: flex;
     justify-content: start;
     align-items: center;
+    height: auto;
   }
 }
