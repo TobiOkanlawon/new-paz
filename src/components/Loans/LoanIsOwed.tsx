@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
-import useAccountDetails from "@/store/accountStore";
 import LoanBalanceCard from "@/components/LoanBalance/index";
 import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 import useUser from "@/store/userStore";
@@ -41,7 +40,7 @@ const LoanIsOwed = () => {
       <div>
         <div className={styles.totalAmountCardContainer}>
           <LoanBalanceCard
-            loanAmount={data?.TotalLoan as number}
+            loanAmount={data?.totalLoan as number}
             loanStatus={loanStatus}
             onUpdateStatus={setLoanStatus}
           />

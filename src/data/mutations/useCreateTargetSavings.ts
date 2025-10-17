@@ -10,7 +10,7 @@ type TargetSavingsData = {
   duration: string;
   targetAmount: number;
   frequency: "Yearly" | "Monthly";
-  type: "TARGET";
+  type: "TARGETSAVINGS";
 };
 
 /*{{

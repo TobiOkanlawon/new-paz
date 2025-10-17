@@ -1,6 +1,7 @@
 import { LuCopy } from "react-icons/lu";
 import styles from "./styles.module.css";
 import Modal from "@/components/Modal";
+import Input from "@/components/Input";
 
 type Props = {
   isActive: boolean;
@@ -13,21 +14,14 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
       <form className={styles.modalContainer}>
         <h1>PAZ Family Vault</h1>
         <p>Begin your journey to financial freedom</p>
-        <label htmlFor="famName">Family name</label>
-        <div className={styles.famNameContainer}>
-          <input
-            type="text"
-            id="famName"
-            placeholder="Enter your family name"
-          />
-        </div>
-        <label htmlFor="addFam">Add Family Member</label>
-        <div className={styles.addFam}>
-          <input
-            type="text"
-            id="addFam"
-            placeholder="Enter family member account name"
-          />
+        <Input
+          id="familyName"
+          type="text"
+          label="Enter your family name"
+          placeholder="Enter your family name"
+        />
+
+        <div className={styles.addFamilyMemberInstruction}>
           <button>
             <LuCopy /> Copy link
           </button>

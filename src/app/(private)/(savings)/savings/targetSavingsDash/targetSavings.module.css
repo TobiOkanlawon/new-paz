@@ -23,9 +23,11 @@
   letter-spacing: 0%;
 }
 
-.cardContainer {
-  display: flex;
-  gap: 5.69vw;
+.cardContainer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 5.69vw;
+    row-gap: 2vw;
 }
 
 .cardConainer {
@@ -111,4 +113,18 @@
     justify-content: space-between;
     align-items: flex-start;
   }
+}
+
+/* Medium screens - 3 columns */
+@media (max-width: 1024px) {
+    .cardContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Small screens - 1 column */
+@media (max-width: 768px) {
+    .cardContainer {
+        grid-template-columns: 1fr;
+    }
 }

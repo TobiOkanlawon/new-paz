@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { handleErrorDisplay } from "@/libs/helpers";
 import Button from "@/components/Button";
+import { useCreateTargetSavings } from "@/data/mutations/useCreateTargetSavings";
+import { useWallet } from "@/store/walletStore";
 
 type Props = {
   isActive: boolean;
@@ -24,12 +26,18 @@ const schema = Yup.object({
     .min(1000, "Your savings amount must be 1000 or higher"),
   savingsFrequency: Yup.string(),
   savingsDuration: Yup.number(),
+  targetAmount: Yup.number()
+    .required("You have to set a target")
+    .positive("You can't have a negative target"),
 });
 
 const TargetSavingsModal: React.FC<Props> = ({
   isActive,
   handleCloseModal,
 }) => {
+  const mutation = useCreateTargetSavings();
+  const { walletInformation } = useWallet();
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -37,9 +45,23 @@ const TargetSavingsModal: React.FC<Props> = ({
       regularSavingsAmount: 0,
       savingsFrequency: "Monthly",
       savingsDuration: 0,
+      targetAmount: 0,
     },
     validationSchema: schema,
-    onSubmit: async () => {},
+    onSubmit: async (values) => {
+      return mutation.mutate({
+        title: values.title,
+        description: values.description,
+        // duration: values.savingsDuration,
+        // frequency: values.savingsFrequency,
+        duration: "6 months",
+        walletId: walletInformation?.walletId as string,
+        targetAmount: values.targetAmount,
+        frequency: "Monthly",
+        type: "TARGETSAVINGS",
+        currentAmount: 0.0,
+      });
+    },
   });
 
   const regularSavingsAmounts = [
@@ -69,6 +91,37 @@ const TargetSavingsModal: React.FC<Props> = ({
       amount: 100000,
       handleClick: () => {
         formik.setFieldValue("regularSavingsAmount", 100000);
+      },
+    },
+  ];
+
+  const targetAmounts = [
+    {
+      id: 1,
+      amount: 5000,
+      handleClick: () => {
+        formik.setFieldValue("targetAmount", 5000);
+      },
+    },
+    {
+      id: 2,
+      amount: 10000,
+      handleClick: () => {
+        formik.setFieldValue("targetAmount", 10000);
+      },
+    },
+    {
+      id: 3,
+      amount: 50000,
+      handleClick: () => {
+        formik.setFieldValue("targetAmount", 50000);
+      },
+    },
+    {
+      id: 4,
+      amount: 100000,
+      handleClick: () => {
+        formik.setFieldValue("targetAmount", 100000);
       },
     },
   ];
@@ -111,8 +164,8 @@ const TargetSavingsModal: React.FC<Props> = ({
         onSubmit={formik.handleSubmit}
         className={styles.modalContainer}
       >
-        <h1>Set-up Your PAZ Target Saver Account</h1>
-        <p>Begin your journey to financial freedom</p>
+        <h1>Create a Target Saver Plan</h1>
+        <p>Begin your journey to financial freedom, step-by-step</p>
         <Input
           label="Savings Title"
           type="text"
@@ -142,6 +195,28 @@ const TargetSavingsModal: React.FC<Props> = ({
           />
           <div className={styles.pillContainer}>
             {regularSavingsAmounts.map((p) => {
+              return (
+                <Pill
+                  key={p.id}
+                  handleClick={p.handleClick}
+                  content={new Intl.NumberFormat("en-US").format(p.amount)}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        <div className={styles.regularSavingsAmount}>
+          <Input
+            label="Specify a target amount"
+            type="number"
+            id="targetAmount"
+            placeholder="Specify amount to save regularly"
+            {...formik.getFieldProps("targetAmount")}
+            errors={handleErrorDisplay(formik, "targetAmount")}
+          />
+          <div className={styles.pillContainer}>
+            {targetAmounts.map((p) => {
               return (
                 <Pill
                   key={p.id}
@@ -182,7 +257,7 @@ const TargetSavingsModal: React.FC<Props> = ({
         </div>
 
         <Button type="submit" className={styles.submitButton}>
-          Create Savings
+          Create Target Saver Plan
         </Button>
       </form>
     </Modal>

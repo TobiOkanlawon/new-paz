@@ -36,7 +36,7 @@ const SavingsCard: React.FC<CardProps> = ({ card }) => {
         className={styles.cardTypes}
         key={card.href}
         style={{ borderColor: card.color }}
-        onClick={()=>router.push(card.href)}
+        onClick={() => router.push(card.href)}
       >
         <Image src={card.img} alt={card.header} width={100} height={100} />
         <div>
@@ -103,21 +103,9 @@ const Savings = () => {
     },
   ];
 
-  //useEffect(() => {
-  // this works (tested)
-  //   if (!data?.HasSoloAccount && !isLoading && !mutation.isPending) {
-  //     mutation.mutate({
-  //       title: "PERSONAL",
-  //       description: "Solo saver account",
-  //       currentAmount: 0,
-  //       walletId: user?.wallet_account as string,
-  //       type: "SOLO",
-  //     });
-  //   }
-  // }, [data?.HasSoloAccount, mutation, user?.wallet_account]);
   useEffect(() => {
     // Check if data has loaded and there is no solo account
-    if (data && !data.HasSoloAccount && !isLoading) {
+    if (data && !data.hasSoloAccount && !isLoading) {
       createSoloSaver({
         title: "PERSONAL",
         description: "Solo saver account",
@@ -166,7 +154,7 @@ const Savings = () => {
   }
 
   // the loading state shows in the case that the solo saver account is being created
-  if (!data?.HasSoloAccount) {
+  if (!data?.hasSoloAccount) {
     return <Loading />;
   }
 
@@ -183,15 +171,19 @@ const Savings = () => {
         </div>
         <div
           className={styles.cardTypes}
-          style={{ borderColor: "#8338EC", justifyContent: 'center', alignItems: 'center' }}
-          onClick={()=>router.push('/savings/targetSavingsDash')}
+          style={{
+            borderColor: "#8338EC",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() => router.push("/savings/targetSavingsDash")}
         >
           <Image
             src={"/targetSavingsCard.png"}
             alt="Target Savings Image"
             width={100}
             height={100}
-            style={{display: 'flex', alignSelf: 'center'}}
+            style={{ display: "flex", alignSelf: "center" }}
           />
           <div>
             <h4>PAZ Target Saver</h4>

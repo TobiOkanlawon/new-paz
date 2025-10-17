@@ -13,7 +13,7 @@ const CanAccessLoan = () => {
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
   const { user } = useUser();
-  const { TotalLoan } = useGetAccountDetails(user?.email as string);
+  const { totalLoan } = useGetAccountDetails(user?.email as string);
   const [loanStatus, setLoanStatus] = useState<LoanStatus>("non");
 
   return (
@@ -27,7 +27,7 @@ const CanAccessLoan = () => {
       <div>
         <div className={styles.totalAmountCardContainer}>
           <LoanBalanceCard
-            loanAmount={TotalLoan}
+            loanAmount={totalLoan}
             loanStatus={loanStatus}
             onUpdateStatus={setLoanStatus}
           />

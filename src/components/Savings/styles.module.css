@@ -18,7 +18,7 @@
 .pillContainer {
     display: flex;
     gap: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 }
 
 .headingText {

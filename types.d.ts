@@ -66,11 +66,11 @@ type SoloSavings = {
 };
 
 type TAccountDetails = {
-  TotalLoan: number;
-  FamilyVault: FamilyVault | null;
-  HasSoloAccount: boolean;
-  SoloSavings: SoloSavings | null;
-  TargetSavings: TargetSavings | null;
+  totalLoan: number;
+  familyVault: FamilyVault | null;
+  hasSoloAccount: boolean;
+  soloSavings: SoloSavings | null;
+  targetSavings: TargetSavings | null;
   firstName: string;
   investmentAmount: number;
   lastName: string;
@@ -89,4 +89,12 @@ type TWalletInfo = {
   lienAmount: number;
   walletId: string;
   accountType: string; // I have seen INDIVIDUAL_ACCOUNT, I don't know if there's another type
+};
+
+type TTargetSavingsPlan = {
+  id: string;
+  name: string;
+  description: string;
+  amount: number;
+  target: number;
 };

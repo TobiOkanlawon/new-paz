@@ -116,7 +116,7 @@ const Dashboard = () => {
           />
           <AccountCard
             title="Total Loans Collected"
-            amount={data?.TotalLoan as number}
+            amount={data?.totalLoan as number}
             isAmountVisible={isLoansAmountVisible}
             cornerImage={"/dashboardLoan.png"}
             className={styles.darkBlue}
