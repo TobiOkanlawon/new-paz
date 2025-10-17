@@ -93,8 +93,8 @@ type TWalletInfo = {
 
 type TTargetSavingsPlan = {
   id: string;
-  name: string;
+  Title: string;
   description: string;
   amount: number;
-  target: number;
+  targetAmount: number;
 };

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance as axios } from "@/libs/axios";
 import { toast } from "react-toastify";
 
@@ -26,6 +26,8 @@ type TargetSavingsData = {
 */
 
 export const useCreateTargetSavings = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ["create-target-savings"],
     mutationFn: async (data: TargetSavingsData) => {
@@ -33,6 +35,7 @@ export const useCreateTargetSavings = () => {
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["account-details"] });
       toast.success("Target savings plan created successfully");
     },
 

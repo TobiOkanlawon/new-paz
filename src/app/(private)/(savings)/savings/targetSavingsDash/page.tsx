@@ -17,50 +17,52 @@ const FamilyVault = () => {
     user?.email as string,
   );
 
-  const targetCards: TTargetSavingsPlan[] = [
-    {
-      id: "1",
-      name: "Project New Car",
-      description: "I must buy Camaro",
-      amount: 500000,
-      target: 500000,
-    },
-    {
-      id: "2",
-      name: "House Rent Runs",
-      description: "Rent saving quota",
-      amount: 1500000,
-      target: 1500000,
-    },
-    {
-      id: "3",
-      name: "Project New Car",
-      description: "I must buy Camaro",
-      amount: 500000,
-      target: 500000,
-    },
-    {
-      id: "4",
-      name: "House Rent Runs",
-      description: "Rent saving quota",
-      amount: 1500000,
-      target: 1500000,
-    },
-    {
-      id: "5",
-      name: "Project New Car",
-      description: "I must buy Camaro",
-      amount: 500000,
-      target: 500000,
-    },
-    {
-      id: "6",
-      name: "House Rent Runs",
-      description: "Rent saving quota",
-      amount: 1500000,
-      target: 1500000,
-    },
-  ];
+  const targetCards: TTargetSavingsPlan[] = data?.targetSavings;
+
+  // const targetCards: TTargetSavingsPlan[] = [
+  //   {
+  //     id: "1",
+  //     name: "Project New Car",
+  //     description: "I must buy Camaro",
+  //     amount: 500000,
+  //     target: 500000,
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "House Rent Runs",
+  //     description: "Rent saving quota",
+  //     amount: 1500000,
+  //     target: 1500000,
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Project New Car",
+  //     description: "I must buy Camaro",
+  //     amount: 500000,
+  //     target: 500000,
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "House Rent Runs",
+  //     description: "Rent saving quota",
+  //     amount: 1500000,
+  //     target: 1500000,
+  //   },
+  //   {
+  //     id: "5",
+  //     name: "Project New Car",
+  //     description: "I must buy Camaro",
+  //     amount: 500000,
+  //     target: 500000,
+  //   },
+  //   {
+  //     id: "6",
+  //     name: "House Rent Runs",
+  //     description: "Rent saving quota",
+  //     amount: 1500000,
+  //     target: 1500000,
+  //   },
+  // ];
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -104,14 +106,14 @@ const FamilyVault = () => {
       />
 
       <div className={styles.cardContainer}>
-        {targetCards.map(({ id, name, description, target, amount }) => {
+        {targetCards.map(({ id, Title, description, targetAmount, amount }) => {
           return (
             <TargetCard
               key={id}
               id={id}
-              name={name}
+              name={Title}
               description={description}
-              target={target}
+              target={targetAmount}
               amount={amount}
             />
           );

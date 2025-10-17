@@ -1,5 +1,5 @@
 import { axiosInstance as axios } from "@/libs/axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type SoloSaverData = {
   title: string;
@@ -10,10 +10,15 @@ type SoloSaverData = {
 };
 
 export const useCreateSoloSaver = (email: string) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ["create-solo-saver"],
     mutationFn: async (data: SoloSaverData) => {
       return await axios.post(`/v1/users/user/savings/create-savings`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["account-details"] });
     },
   });
 };

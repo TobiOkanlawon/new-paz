@@ -49,6 +49,7 @@ const TargetSavingsModal: React.FC<Props> = ({
     },
     validationSchema: schema,
     onSubmit: async (values) => {
+      handleCloseModal();
       return mutation.mutate({
         title: values.title,
         description: values.description,
