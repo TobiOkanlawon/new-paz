@@ -67,10 +67,10 @@ type SoloSavings = {
 
 type TAccountDetails = {
   totalLoan: number;
-  familyVault: FamilyVault | null;
+  familyVault: FamilyVault[];
   hasSoloAccount: boolean;
-  soloSavings: SoloSavings | null;
-  targetSavings: TargetSavings | null;
+  soloSavings: SoloSavings;
+  targetSavings: TTargetSavingsPlan[]
   firstName: string;
   investmentAmount: number;
   lastName: string;
@@ -92,9 +92,10 @@ type TWalletInfo = {
 };
 
 type TTargetSavingsPlan = {
-  id: string;
   Title: string;
   description: string;
   amount: number;
   targetAmount: number;
+  // the accountNo acts as the ID as well
+  accountNo: string;
 };
