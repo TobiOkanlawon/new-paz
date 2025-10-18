@@ -7,7 +7,10 @@ import * as Yup from "yup";
 import { handleErrorDisplay } from "@/libs/helpers";
 import Button from "@/components/Button";
 import { useCreateTargetSavings } from "@/data/mutations/useCreateTargetSavings";
-import { useWallet } from "@/store/walletStore";
+import { useGetWallet } from "@/data/queries/useGetWallet";
+import useUser from "@/store/userStore";
+import { Loading } from "../Loading";
+import { ErrorComponent } from "../Error";
 
 type Props = {
   isActive: boolean;
@@ -37,7 +40,9 @@ const TargetSavingsModal: React.FC<Props> = ({
   handleCloseModal,
 }) => {
   const mutation = useCreateTargetSavings();
-  const { walletInformation } = useWallet();
+  const { user } = useUser();
+
+  const { isLoading, data, error } = useGetWallet(user?.email as string);
 
   const formik = useFormik({
     initialValues: {
@@ -55,7 +60,7 @@ const TargetSavingsModal: React.FC<Props> = ({
         description: values.description,
         duration: values.savingsDuration,
         frequency: values.savingsFrequency,
-        walletId: walletInformation?.walletId as string,
+        walletId: data?.walletId as string,
         targetAmount: values.targetAmount,
         type: "TARGETSAVINGS",
         currentAmount: 0.0,
@@ -66,7 +71,16 @@ const TargetSavingsModal: React.FC<Props> = ({
 
   const regularSavingsAmounts = [5000, 10000, 50000, 100000];
   const targetAmounts = [5000, 10000, 50000, 100000];
-  const savingsDurations = ["3 months", "6 months", "9 months", "1 year", "2 years"];
+  const savingsDurations = [
+    "3 months",
+    "6 months",
+    "9 months",
+    "1 year",
+    "2 years",
+  ];
+
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorComponent message="" retryFunction={() => {}} />;
 
   return (
     <Modal isOpen={isActive} onClose={handleCloseModal}>
@@ -115,8 +129,14 @@ const TargetSavingsModal: React.FC<Props> = ({
               {regularSavingsAmounts.map((amount) => (
                 <Pill
                   key={`reg-${amount}`}
-                  handleClick={() => formik.setFieldValue("regularSavingsAmount", amount)}
-                  content={new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", minimumFractionDigits: 0 }).format(amount)}
+                  handleClick={() =>
+                    formik.setFieldValue("regularSavingsAmount", amount)
+                  }
+                  content={new Intl.NumberFormat("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                    minimumFractionDigits: 0,
+                  }).format(amount)}
                   isActive={formik.values.regularSavingsAmount === amount}
                 />
               ))}
@@ -135,8 +155,14 @@ const TargetSavingsModal: React.FC<Props> = ({
               {targetAmounts.map((amount) => (
                 <Pill
                   key={`target-${amount}`}
-                  handleClick={() => formik.setFieldValue("targetAmount", amount)}
-                  content={new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", minimumFractionDigits: 0 }).format(amount)}
+                  handleClick={() =>
+                    formik.setFieldValue("targetAmount", amount)
+                  }
+                  content={new Intl.NumberFormat("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                    minimumFractionDigits: 0,
+                  }).format(amount)}
                   isActive={formik.values.targetAmount === amount}
                 />
               ))}
@@ -158,11 +184,17 @@ const TargetSavingsModal: React.FC<Props> = ({
 
           <div className={styles.formGroup}>
             <label id="savingsDurationLabel">For how long?</label>
-            <div className={styles.pillContainer} role="group" aria-labelledby="savingsDurationLabel">
+            <div
+              className={styles.pillContainer}
+              role="group"
+              aria-labelledby="savingsDurationLabel"
+            >
               {savingsDurations.map((duration) => (
                 <Pill
                   key={duration}
-                  handleClick={() => formik.setFieldValue("savingsDuration", duration)}
+                  handleClick={() =>
+                    formik.setFieldValue("savingsDuration", duration)
+                  }
                   content={duration}
                   isActive={formik.values.savingsDuration === duration}
                 />
@@ -170,11 +202,17 @@ const TargetSavingsModal: React.FC<Props> = ({
             </div>
           </div>
         </div>
-        
+
         <div className={styles.modalFooter}>
-            <Button type="submit" className={styles.submitButton} disabled={mutation.isLoading}>
-                {mutation.isLoading ? "Creating Plan..." : "Create Target Saver Plan"}
-            </Button>
+          <Button
+            type="submit"
+            className={styles.submitButton}
+            disabled={mutation.isLoading}
+          >
+            {mutation.isLoading
+              ? "Creating Plan..."
+              : "Create Target Saver Plan"}
+          </Button>
         </div>
       </form>
     </Modal>

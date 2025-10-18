@@ -3,7 +3,6 @@ import { storeToken } from "@/libs/auth";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import { useWallet } from "@/store/walletStore";
 
 type SignInData = {
   email: string;
@@ -12,7 +11,6 @@ type SignInData = {
 };
 
 export const useLogin = () => {
-  const { setWalletInformation } = useWallet();
   return useMutation<TLoginResponse, AxiosError, SignInData>({
     mutationKey: ["login"],
     mutationFn: async (data) => {

@@ -1,0 +1,25 @@
+meta {
+  name: Top Up From Wallet
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/savings/saving-topup-wallet
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "toAccount": "3810414981",
+    // 3810414981, accountNo for a targetSavings plan
+    "fromAccount": "9706919597",
+    "amount": 500
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

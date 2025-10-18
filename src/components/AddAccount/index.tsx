@@ -9,8 +9,9 @@ import * as Yup from "yup";
 import Input from "../Input";
 import { useAddAccount } from "@/data/mutations/useAddAccount";
 import useUser from "@/store/userStore";
-import { useWallet } from "@/store/walletStore";
 import { useGetWallet } from "@/data/queries/useGetWallet";
+import { Loading } from "../Loading";
+import { ErrorComponent } from "../Error";
 
 interface acmPropTypes {
   isOpen: boolean;
@@ -34,11 +35,15 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
 
   const { user, setUser } = useUser();
 
-  const { walletInformation } = useWallet();
+  const { data, isLoading, error } = useGetWallet(user?.email as string);
 
-  // leave this request here. It fetched the wallet and sets it in the store automatically
-  // also, it doesn't run if the walletInformation is already set
-  useGetWallet(user?.email as string);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorComponent message="" retryFunction={() => {}} />;
+  }
 
   return (
     <div className={styles.container}>
@@ -53,13 +58,12 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
             initialValues={{ accountNumber: "", accountName: "", bank: "" }}
             validationSchema={validationSchema}
             onSubmit={(values, actions) => {
-              console.log("walletInformation", walletInformation);
               mutation.mutate(
                 {
                   accountNo: values.accountNumber,
                   accountName: values.accountName,
                   bankName: values.bank,
-                  walletId: walletInformation?.walletId as string,
+                  walletId: data?.walletId as string,
                 },
                 {
                   onSuccess: () => {
@@ -119,7 +123,9 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
                     label="Add Account"
                     loading={isSubmitting}
                     className={styles.submitButton}
-                    onClick={()=>{console.log('hey submit me')}}
+                    onClick={() => {
+                      console.log("hey submit me");
+                    }}
                   />
                 </div>
 

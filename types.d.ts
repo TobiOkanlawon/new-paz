@@ -88,7 +88,7 @@ type TWalletInfo = {
   totalBalance: number;
   lienAmount: number;
   walletId: string;
-  accountType: string; // I have seen INDIVIDUAL_ACCOUNT, I don't know if there's another type
+  accountType: string; // I have seen INDIVIDUAL_ACCOUNT, and another called PERSONALPLUS
 };
 
 type TTargetSavingsPlan = {
