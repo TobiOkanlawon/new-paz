@@ -1,9 +1,9 @@
 .nav {
-  height: 72px;
+  height: 100%;
   position: sticky;
   z-index: 2;
   top: 0;
-  width: 100vw;
+  width: 100%;
 }
 
 .navContainer {

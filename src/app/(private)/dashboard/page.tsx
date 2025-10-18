@@ -389,7 +389,7 @@ const Dashboard = () => {
               </p>
               <button
                 className={styles.mobileButton}
-                onClick={() => router.push("/family-vault")}
+                onClick={() => router.push("/dashboard/savings/family-vault")}
               >
                 Get started!
               </button>

@@ -53,7 +53,7 @@ export default function NotificationDropdown() {
         id="notification-dropdown"
         className={`${styles.navDropdown} ${open ? styles.open : ''}`}
       >
-        <Link href='/profile'>
+        <Link href='/dashboard/profile'>
           <Image src={'/profileDropdown.png'} alt='Profile Icon' width={20} height={20}/>
           <p>Profile</p>
         </Link>
