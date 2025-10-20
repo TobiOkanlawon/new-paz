@@ -85,7 +85,7 @@ const Dashboard = () => {
 
   const { data, error, isLoading } = useGetAccountDetails(
   user?.email, 
-  userInformation?.primary_account_linked ?? false
+  // userInformation?.primary_account_linked ?? false
 );
 
   if (isLoading) return <Loading />;
