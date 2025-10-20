@@ -89,7 +89,7 @@ const Savings = () => {
       img: SoloUserImage,
       header: "PAZ Solo Saver",
       text: "Save money regularly in a locked plan with interest of up to 12% per annum.",
-      href: "/savings/soloSaver",
+      href: "/dashboard/savings/solo-saver",
       color: " #5B86E5",
       handleStart: () => {},
     },
@@ -97,7 +97,7 @@ const Savings = () => {
       img: FamilyVaultCardImage,
       header: "PAZ Family Vault",
       text: "Save money together with your loved ones and get interests of up to 16% per annum.",
-      href: "/savings/familyVaultDash",
+      href: "/dashboard/savings/family-vault",
       color: "#5B86E5",
       handleStart: () => {},
     },
@@ -198,7 +198,7 @@ const Savings = () => {
                   handleOpenModal("target");
                   setIsnewSoloSaver(false);
                 } else {
-                  handleStartClick("/savings/targetSavings");
+                  handleStartClick("/dashboard/savings/targetSavings");
                 }
               }}
             >

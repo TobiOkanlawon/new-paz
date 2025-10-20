@@ -10,9 +10,10 @@ import LoanIsOwed from "@/components/Loans/LoanIsOwed";
 import CanAccessLoan from "@/components/Loans/CanAccessLoan";
 import { useGetLoanStatus } from "@/data/queries/useGetLoanStatus";
 import { useGetWallet } from "@/data/queries/useGetWallet";
-import { useWallet } from "@/store/walletStore";
+// import { useWallet } from "@/store/walletStore";
 import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 import useUser from "@/store/userStore";
+import * as yup from 'yup'
 
 interface Notification {
   id: string;
@@ -42,12 +43,12 @@ type LoanSchema = yup.InferType<typeof schema>;
 
 const Loans = () => {
   const [isAboveThreshold, setIsAboveThreshold] = useState(false);
-  const { walletInformation } = useWallet();
+  // const { walletInformation } = useWallet();
   type LoanStatus = "non" | "pending" | "approved" | "withdrawn" | "repaid";
 
-  const loanStatusFromAPI = useGetLoanStatus(
-    walletInformation?.walletId as string,
-  );
+  // const loanStatusFromAPI = useGetLoanStatus(
+    // walletInformation?.walletId as string,
+  // );
 
   const [loanAmount, setLoanAmount] = useState<number>(0);
   const [loanStatus, setLoanStatus] = useState<LoanStatus>("non");
@@ -81,16 +82,16 @@ const Loans = () => {
   // if (!loanStatusFromAPI?.data?.Approved && )
 
   // covers the cose where the user has applied for a loan but it hasn't been approved
-  if (loanStatusFromAPI.data?.Consent && loanStatusFromAPI.data?.Consent) {
+  // if (loanStatusFromAPI.data?.Consent && loanStatusFromAPI.data?.Consent) {
   }
 
-  if (loanStatusFromAPI.data?.Approved && loanStatusFromAPI.data?.Consent) {
+  // if (loanStatusFromAPI.data?.Approved && loanStatusFromAPI.data?.Consent) {
     // covers the case where the user has gotten a loan and consented to it.
-    return <LoanIsOwed />;
-  }
+    // return <LoanIsOwed />;
+  // }
 
   // covers the case where the user has not applied for a loan, or they don't have any outstanding
-  if (loanStatusFromAPI?.data?.Approved) return <CanAccessLoan />;
+  // if (loanStatusFromAPI?.data?.Approved) return <CanAccessLoan />;
 
   // return (
   //   <div className={styles.container}>
@@ -250,5 +251,5 @@ const Loans = () => {
   //     )}
   //   </div>
   // );
-};
+// };
 export default Loans;

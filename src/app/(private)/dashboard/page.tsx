@@ -37,8 +37,7 @@ const Dashboard = () => {
 
   // All My Modal States
   const [isSModalOpen, setIsSModalOpen] = useState(
-    !userInformation?.is_bvn_verified &&
-      !userInformation?.primary_account_linked,
+    !(userInformation?.is_bvn_verified && userInformation?.primary_account_linked)
   );
   const [isASSModalOpen, setIsASSModalOpen] = useState(false);
   const [isACModalOpen, setIsACModalOpen] = useState(false);
@@ -77,14 +76,17 @@ const Dashboard = () => {
 
   const handleBVNMOpen = () => setIsBVNModalOpen(true);
 
-  const handleACMOpen = () => setIsACModalOpen(true);
+  const handleACMOpen = () => {setIsACModalOpen(true); console.log(isACModalOpen)};
 
   const [isSavingsAmountVisible, setIsSavingsAmountVisible] = useState(true);
   const [isLoansAmountVisible, setIsLoansAmountVisible] = useState(true);
   const [isInvestmentsAmountVisible, setIsInvestmentsAmountVisible] =
     useState(true);
 
-  const { data, error, isLoading } = useGetAccountDetails(user?.email);
+  const { data, error, isLoading } = useGetAccountDetails(
+  user?.email, 
+  userInformation?.primary_account_linked ?? false
+);
 
   if (isLoading) return <Loading />;
 
