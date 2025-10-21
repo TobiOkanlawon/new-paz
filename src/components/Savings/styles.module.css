@@ -1,4 +1,4 @@
-
+/* Modal Container */
 .modalContainer {
   display: flex;
   flex-direction: column;
@@ -8,9 +8,9 @@
   max-height: 90vh; 
   overflow: hidden; 
   border-radius: 16px;
-  
 }
 
+/* Modal Header */
 .modalHeader {
   padding: 24px 24px 16px;
   border-bottom: 1px solid #e0e0e0;
@@ -34,14 +34,14 @@
   line-height: 1.5;
 }
 
-
+/* Form Content */
 .formContent {
   padding: 24px;
   overflow-y: auto; 
   flex-grow: 1;
 }
 
-
+/* Form Groups */
 .formGroup {
   margin-bottom: 24px;
 }
@@ -59,15 +59,16 @@
   margin-bottom: 8px;
 }
 
-
+/* Pill Container */
 .pillContainer {
   display: flex;
   flex-wrap: wrap; 
   gap: 12px;
   margin-top: 12px;
+  margin-bottom: 12px;
 }
 
-
+/* Select Input */
 .selectInput {
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
@@ -91,7 +92,39 @@
   box-shadow: 0 0 0 2px rgba(52, 117, 223, 0.2);
 }
 
+/* Copy Link Button - Family Vault specific */
+.addFamilyMemberInstruction {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
 
+.copyLinkButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: #f0f4ff;
+  color: #3475df;
+  border: 1px solid #3475df;
+  border-radius: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copyLinkButton:hover {
+  background-color: #3475df;
+  color: #ffffff;
+}
+
+.copyLinkButton:active {
+  transform: scale(0.98);
+}
+
+/* Modal Footer */
 .modalFooter {
   padding: 0px 24px;
   border-top: 1px solid #e0e0e0;
@@ -101,14 +134,13 @@
 }
 
 .submitButton {
-  
   width: 100%; 
   padding: 14px 24px;
   font-size: 16px;
   font-weight: 600;
 }
 
-
+/* Responsive Design */
 @media screen and (min-width: 560px) {
   .submitButton {
     width: fit-content; 
@@ -119,10 +151,21 @@
   .modalHeader, .formContent, .modalFooter {
     padding: 16px;
   }
+  
   .modalHeader h1 {
     font-size: 20px;
   }
+  
   .modalHeader p {
     font-size: 14px;
+  }
+  
+  .pillContainer {
+    gap: 8px;
+  }
+  
+  .copyLinkButton {
+    font-size: 13px;
+    padding: 10px 16px;
   }
 }
