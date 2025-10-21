@@ -1,22 +1,83 @@
 import { LuCopy } from "react-icons/lu";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import styles from "./styles.module.css";
 import Modal from "@/components/Modal";
 import Input from "@/components/Input";
 import Pill from "../Pill";
 import Button from "@/components/Button";
+import { useCreateFamilySavings } from "@/data/mutations/useCreateFamilySavings";
+import { useGetWallet } from "@/data/queries/useGetWallet";
+import useUser from "@/store/userStore";
+import { Loading } from "../Loading";
+import { ErrorComponent } from "../Error";
 
 type Props = {
   isActive: boolean;
   handleCloseModal: () => void;
 };
 
-const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
+// Validation Schema
+const validationSchema = Yup.object({
+  familyName: Yup.string()
+    .min(2, "Family name must be at least 2 characters")
+    .required("Family name is required"),
+  preferredAmount: Yup.number()
+    .min(1000, "Amount must be at least ₦1,000")
+    .required("Please select or enter an amount"),
+  savingFrequency: Yup.string().required("Please select saving frequency"),
+  savingsDuration: Yup.string().required("Please select savings duration"),
+  customDuration: Yup.number()
+    .nullable()
+    .when("savingsDuration", {
+      is: (val: string) => !val || val === "custom",
+      then: (schema) => schema.min(1, "Duration must be at least 1 month"),
+    }),
+});
+
+const FamilyVaultModal: React.FC<Props> = ({ 
+  isActive, 
+  handleCloseModal 
+}) => {
+  const mutation = useCreateFamilySavings();
+  const {user} = useUser();
+
+  const {isLoading, data, error} = useGetWallet(user?.email as string);
+
+
   const preferredAmounts = [5000, 10000, 50000, 100000];
   const savingsDurations = ["6 months", "1 year", "2 years", "5 years"];
 
+  const formik = useFormik({
+    initialValues: {
+      familyName: "",
+      preferredAmount: 0,
+      savingFrequency: "",
+      savingsDuration: "",
+      customDuration: "",
+    },
+    validationSchema,
+    onSubmit: async(values) => {
+      mutation.mutate({
+        title: values.familyName,
+        preferredAmount: values.preferredAmount,
+        frequency: values.savingFrequency,
+        duration: values.customDuration || values.savingsDuration,
+        walletId: data?.walletId as string,
+        type: "FAMILYSAVINGS",
+      })
+      handleCloseModal();
+    },
+  });
+
+  const handleCopyLink = () => {
+    // Implement copy link functionality
+    console.log("Copy link clicked");
+  };
+
   return (
     <Modal isOpen={isActive} onClose={handleCloseModal}>
-      <form className={styles.modalContainer}>
+      <form className={styles.modalContainer} onSubmit={formik.handleSubmit}>
         <div className={styles.modalHeader}>
           <h1>PAZ Family Vault</h1>
           <p>Begin your journey to financial freedom</p>
@@ -29,12 +90,22 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               type="text"
               label="Enter your family name"
               placeholder="Enter your family name"
+              value={formik.values.familyName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.familyName && formik.errors.familyName && (
+              <div className={styles.errorText}>{formik.errors.familyName}</div>
+            )}
           </div>
 
           <div className={styles.formGroup}>
             <div className={styles.addFamilyMemberInstruction}>
-              <button type="button" className={styles.copyLinkButton}>
+              <button
+                type="button"
+                className={styles.copyLinkButton}
+                onClick={handleCopyLink}
+              >
                 <LuCopy /> Copy link
               </button>
             </div>
@@ -46,13 +117,15 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               {preferredAmounts.map((amount) => (
                 <Pill
                   key={`amount-${amount}`}
-                  handleClick={() => {}}
+                  handleClick={() => {
+                    formik.setFieldValue("preferredAmount", amount);
+                  }}
                   content={new Intl.NumberFormat("en-NG", {
                     style: "currency",
                     currency: "NGN",
                     minimumFractionDigits: 0,
                   }).format(amount)}
-                  isActive={false}
+                  isActive={formik.values.preferredAmount === amount}
                 />
               ))}
             </div>
@@ -60,7 +133,16 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               type="number"
               id="preferredAmount"
               placeholder="Or specify amount"
+              label="preferredAmount"
+              value={formik.values.preferredAmount}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.preferredAmount && formik.errors.preferredAmount && (
+              <div className={styles.errorText}>
+                {formik.errors.preferredAmount}
+              </div>
+            )}
           </div>
 
           <div className={styles.formGroup}>
@@ -69,13 +151,22 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               name="savingFrequency"
               id="savingFrequency"
               className={styles.selectInput}
+              value={formik.values.savingFrequency}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             >
+              <option value="">Select frequency</option>
               <option value="2 months">2 months</option>
               <option value="3 months">3 months</option>
               <option value="4 months">4 months</option>
               <option value="5 months">5 months</option>
               <option value="6 months">6 months</option>
             </select>
+            {formik.touched.savingFrequency && formik.errors.savingFrequency && (
+              <div className={styles.errorText}>
+                {formik.errors.savingFrequency}
+              </div>
+            )}
           </div>
 
           <div className={styles.formGroup}>
@@ -84,9 +175,11 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               {savingsDurations.map((duration) => (
                 <Pill
                   key={duration}
-                  handleClick={() => {}}
+                  handleClick={() => {
+                    formik.setFieldValue("savingsDuration", duration);
+                  }}
                   content={duration}
-                  isActive={false}
+                  isActive={formik.values.savingsDuration === duration}
                 />
               ))}
             </div>
@@ -94,7 +187,16 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               type="number"
               id="customDuration"
               placeholder="Or specify duration"
+              label="customDuration"
+              value={formik.values.customDuration}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.savingsDuration && formik.errors.savingsDuration && (
+              <div className={styles.errorText}>
+                {formik.errors.savingsDuration}
+              </div>
+            )}
           </div>
         </div>
 
@@ -102,9 +204,7 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
           <Button
             type="submit"
             className={styles.submitButton}
-            onClick={(e) => {
-              e.preventDefault();
-            }}
+            disabled={formik.isSubmitting}
           >
             Create Savings
           </Button>

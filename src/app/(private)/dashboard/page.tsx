@@ -229,9 +229,11 @@ const Dashboard = () => {
               </p>
               <button
                 className={styles.loanAndInvestmentButton}
-                onClick={() => router.push("/investments")}
+                // onClick={() => router.push("/investments")}
+                disabled={true}
               >
-                Get Started
+                {/* Get Started */}
+                Coming Soon 
               </button>
             </div>
           </div>

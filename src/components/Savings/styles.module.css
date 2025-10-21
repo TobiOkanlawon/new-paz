@@ -140,6 +140,12 @@
   font-weight: 600;
 }
 
+.errorText {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
 /* Responsive Design */
 @media screen and (min-width: 560px) {
   .submitButton {
