@@ -37,8 +37,12 @@ const FamilyVault = () => {
     return allPlans.reduce((p, c) => p + c.amount, 0);
   };
 
-  const targetCards: TTargetSavingsPlan[] = data!
-    .targetSavings as TTargetSavingsPlan[];
+  const targetCards: TTargetSavingsPlan[] = (data!.targetSavings as any[]).map(
+    (card) => ({
+      ...card,
+      Title: card.Title || card.title,
+    }),
+  );
 
   return (
     <div className={styles.container}>
@@ -64,12 +68,13 @@ const FamilyVault = () => {
 
       <div className={styles.cardContainer}>
         {targetCards.map(
-          ({ Title, description, targetAmount, amount, accountNo }) => {
+          ({ Title: title, description, targetAmount, amount, accountNo }) => {
+            console.log(targetCards);
             return (
               <TargetCard
                 key={accountNo}
                 id={accountNo}
-                title={Title}
+                title={title}
                 description={description}
                 targetAmount={targetAmount}
                 amount={amount}

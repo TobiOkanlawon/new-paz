@@ -24,6 +24,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+
   const handleRouteToPlan = () => {
     router.push(`/savings/target-savings/${id}`);
   };

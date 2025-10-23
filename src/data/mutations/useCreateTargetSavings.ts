@@ -9,7 +9,7 @@ type TargetSavingsData = {
   walletId: string;
   duration: string;
   targetAmount: number;
-  frequency: "Yearly" | "Monthly";
+  frequency: "Yearly" | "Monthly" | string; // I added this because there are other options like weekly and daily
   type: "TARGETSAVINGS";
 };
 

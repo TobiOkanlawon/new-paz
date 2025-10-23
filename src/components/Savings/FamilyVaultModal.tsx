@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
   familyName: Yup.string()
     .min(2, "Family name must be at least 2 characters")
     .required("Family name is required"),
-  preferredAmount: Yup.number()
+  targetAmount: Yup.number()
     .min(1000, "Amount must be at least ₦1,000")
     .required("Please select or enter an amount"),
   savingFrequency: Yup.string().required("Please select saving frequency"),
@@ -45,13 +45,13 @@ const FamilyVaultModal: React.FC<Props> = ({
   const {isLoading, data, error} = useGetWallet(user?.email as string);
 
 
-  const preferredAmounts = [5000, 10000, 50000, 100000];
+  const targetAmounts = [5000, 10000, 50000, 100000];
   const savingsDurations = ["6 months", "1 year", "2 years", "5 years"];
 
   const formik = useFormik({
     initialValues: {
       familyName: "",
-      preferredAmount: 0,
+      targetAmount: 0,
       savingFrequency: "",
       savingsDuration: "",
       customDuration: "",
@@ -60,11 +60,11 @@ const FamilyVaultModal: React.FC<Props> = ({
     onSubmit: async(values) => {
       mutation.mutate({
         title: values.familyName,
-        preferredAmount: values.preferredAmount,
+        targetAmount: values.targetAmount,
         frequency: values.savingFrequency,
         duration: values.customDuration || values.savingsDuration,
         walletId: data?.walletId as string,
-        type: "FAMILYSAVINGS",
+        type: "FAMILYVAULT",
       })
       handleCloseModal();
     },
@@ -114,33 +114,33 @@ const FamilyVaultModal: React.FC<Props> = ({
           <div className={styles.formGroup}>
             <label>Select preferred amount</label>
             <div className={styles.pillContainer}>
-              {preferredAmounts.map((amount) => (
+              {targetAmounts.map((amount) => (
                 <Pill
                   key={`amount-${amount}`}
                   handleClick={() => {
-                    formik.setFieldValue("preferredAmount", amount);
+                    formik.setFieldValue("targetAmount", amount);
                   }}
                   content={new Intl.NumberFormat("en-NG", {
                     style: "currency",
                     currency: "NGN",
                     minimumFractionDigits: 0,
                   }).format(amount)}
-                  isActive={formik.values.preferredAmount === amount}
+                  isActive={formik.values.targetAmount === amount}
                 />
               ))}
             </div>
             <Input
               type="number"
-              id="preferredAmount"
+              id="targetAmount"
               placeholder="Or specify amount"
-              label="preferredAmount"
-              value={formik.values.preferredAmount}
+              label="targetAmount"
+              value={formik.values.targetAmount}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.preferredAmount && formik.errors.preferredAmount && (
+            {formik.touched.targetAmount && formik.errors.targetAmount && (
               <div className={styles.errorText}>
-                {formik.errors.preferredAmount}
+                {formik.errors.targetAmount}
               </div>
             )}
           </div>

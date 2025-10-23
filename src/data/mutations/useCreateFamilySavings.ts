@@ -4,11 +4,11 @@ import { toast } from 'react-toastify'
 
 type FamilySavingsData = {
   title: string;
-  preferredAmount: number;
+  targetAmount: number;
   walletId: string;
   duration: string;
   frequency: string;
-  type: "FAMILYSAVINGS";
+  type: "FAMILYVAULT";
 };
 
 export const useCreateFamilySavings = () => {

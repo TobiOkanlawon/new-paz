@@ -15,6 +15,8 @@ import { ErrorComponent } from "@/components/Error";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { formatBirthdayToDateInputFormat } from "@/libs/helpers";
+import { useUpdateProfile } from "@/data/mutations/useUpdateProfile";
+import { toast } from "react-toastify";
 
 const schema = Yup.object();
 
@@ -31,16 +33,31 @@ const relationshipOptions = [
   { label: "Other", value: "other" },
 ];
 
+type TProfileFormValues = {
+  postalAddress: string;
+  gender: Gender;
+  birthday: string;
+  emailAddress: string;
+  phoneNumber: string;
+  nextOfKinFirstName: string;
+  nextOfKinLastName: string;
+  nextOfKinEmail: string;
+  nextOfKinPhoneNumber: string;
+  relationship: string;
+};
+
 const Profile = () => {
   const { user } = useUser();
   const { data, isLoading, error } = useGetProfile(user?.email as string);
+  const { mutateAsync } = useUpdateProfile();
+  const { isPending: isUpdating } = useUpdateProfile();
 
-  const formik = useFormik({
+  const formik = useFormik<TProfileFormValues>({
     initialValues: {
       postalAddress: data?.address || "",
       birthday: formatBirthdayToDateInputFormat(data?.birthday) || "",
-      gender: data?.gender || "",
-      email: data?.email || user?.email || "",
+      gender: data?.gender || "male" || "female",
+      emailAddress: data?.email || user?.email || "",
       phoneNumber: data?.phoneNumber || "",
       nextOfKinFirstName: data?.nextOfKinFirstName || "",
       nextOfKinLastName: data?.nextOfKinLastName || "",
@@ -49,9 +66,37 @@ const Profile = () => {
       relationship: data?.nextOfKinRelationship || "",
     },
     validationSchema: schema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const formattedValues = {
+          address: values.postalAddress,
+          gender: values.gender,
+          email: values.emailAddress,
+          birthday: values.birthday,
+          phoneNumber: values.phoneNumber,
+          nextOfKinFirstName: values.nextOfKinFirstName,
+          nextOfKinLastName: values.nextOfKinLastName,
+          nextOfKinEmail: values.nextOfKinEmail,
+          nextOfKinPhoneNumber: values.nextOfKinPhoneNumber,
+          nextOfKinRelationship: values.relationship,
+        };
+
+        await toast.promise(
+          mutateAsync(formattedValues),
+          {
+            pending: "Updating profile...",
+            // success: "Profile updated successfully 🎉",
+            error: "Failed to update profile 😢",
+          },
+          { theme: "colored" },
+        );
+
+        setIsSubmitted(true);
+      } catch (error) {
+        console.error("❌ Profile update failed:", error);
+      }
     },
+
     enableReinitialize: true,
   });
 
@@ -93,7 +138,11 @@ const Profile = () => {
 
   return (
     <div>
-      <form className={styles.container} id="CONTAINER">
+      <form
+        className={styles.container}
+        onSubmit={formik.handleSubmit}
+        id="CONTAINER"
+      >
         <section className={styles.headers}>
           <div className={styles.profileContainer}>
             <div className={styles.profileWrapper}>
@@ -178,9 +227,10 @@ const Profile = () => {
               <div className={styles.inputs}>
                 <SelectGroup
                   label="Gender"
-                  name="gender"
+                  // name="gender"
                   options={genderOptions}
                   placeholder="Select Date"
+                  {...formik.getFieldProps("gender")} 
                 />
               </div>
               <div className={styles.inputs}>
@@ -191,7 +241,7 @@ const Profile = () => {
                   type="email"
                   required
                   disabled={isSubmitted}
-                  {...formik.getFieldProps("email")}
+                  {...formik.getFieldProps("emailAddress")}
                 />
               </div>
             </div>
@@ -258,11 +308,12 @@ const Profile = () => {
               <div className={styles.inputs}>
                 <SelectGroup
                   label="Relationship"
-                  name="Relationship"
+                  // name="relationship"
                   placeholder="Who is the person to you?"
                   options={relationshipOptions}
                   required
                   disabled={isSubmitted}
+                  {...formik.getFieldProps("relationship")}
                 />
               </div>
               <div className={styles.inputs}></div>
@@ -270,8 +321,8 @@ const Profile = () => {
           </div>
         </section>
         <Button
-          label="Submit"
-          loading={false}
+          label={isUpdating ? "Updating..." : "Submit"}
+          loading={isUpdating}
           className={styles.button}
           type="submit"
         />
