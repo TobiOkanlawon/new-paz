@@ -14,6 +14,7 @@ import TargetSavingsModal from "@/components/Savings/TargetSavingsModal";
 import SoloUserImage from "@/assets/soloUser.png";
 import FamilyVaultCardImage from "@/assets/familyVaultCard.png";
 import { addSavings } from "@/libs/helpers";
+import { useGetWallet } from "@/data/queries/useGetWallet";
 
 type Card = {
   color: string;
@@ -57,6 +58,8 @@ const Savings = () => {
   const { data, isLoading, error } = useGetAccountDetails(
     user?.email as string,
   );
+
+  const { data: walletAccountData, isLoading: i, error: e } = useGetWallet();
 
   // const mutation = useCreateSoloSaver(user?.email as string);
   const {
@@ -110,16 +113,16 @@ const Savings = () => {
         title: "PERSONAL",
         description: "Solo saver account",
         currentAmount: 0,
-        walletId: user?.wallet_account as string,
+        walletId: walletAccountData!.walletId,
         type: "SOLO",
       });
     }
     // Dependencies are now stable and won't cause a loop
-  }, [data, isLoading, createSoloSaver, user?.wallet_account]);
+  }, [data, isLoading, createSoloSaver, walletAccountData]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || i) return <Loading />;
 
-  if (error)
+  if (error || e)
     return (
       <ErrorComponent
         message="An error occured while trying to create a solo saver account"

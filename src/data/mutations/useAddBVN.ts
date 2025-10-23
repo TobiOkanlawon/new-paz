@@ -1,5 +1,5 @@
 import { axiosInstance as axios } from "@/libs/axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import useUser from "@/store/userStore";
@@ -25,7 +25,8 @@ type TAddBVNResponse = {
 };
 
 export const useAddBVN = () => {
-  const {setUser} = useUser();
+  const queryClient = useQueryClient();
+  
   return useMutation<TAddBVNResponse, AxiosError<ErrorResponse>, AddBVNData>({
     mutationKey: ["add-bvn"],
     mutationFn: async ({ email, bvn, dob }) => {
@@ -36,8 +37,8 @@ export const useAddBVN = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      setUser({wallet_account: data.data?.wallet_account})
       toast.success("BVN added successfully");
+      queryClient.invalidateQueries({queryKey: ["get-user-wallet"]})
     },
     onError: (error) => {
       toast.error(error.response?.data.responseMessage);
