@@ -1,0 +1,170 @@
+.totalBalanceCard {
+  margin-top: 3.62vh;
+  margin-bottom: 6.38vh;
+  border: 1px solid #acb5bd;
+  border-radius: 15px;
+  width: auto;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 24.43vw;
+  height: 9vh;
+  padding: 1.27vh 0 3vh 1.9vw;
+}
+
+.totalBalanceCard p {
+  font-size: 1.7vh;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin-bottom: 0.1rem;
+}
+
+.totalBalanceCard h3 {
+  font-size: 4.89vh;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-style: Bold;
+  line-height: 46px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  width: 170%;
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contentContainer button {
+  font-family: "Montserrat", sans-serif;
+  height: 5.59vh;
+  padding: 1px 15px;
+  background-color: #4f85e3;
+  border: 1px solid transparent;
+  color: white;
+  border-radius: 15px;
+  font-weight: 700;
+  font-style: Bold;
+  line-height: 30px;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.38vh;
+}
+
+.cardButton {
+  margin-right: 1rem;
+  width: 100%;
+}
+
+.pendingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-right: 1rem;
+}
+
+.pendingContainer button {
+  text-decoration: underline;
+  background-color: transparent;
+  font-size: 1.4vh;
+  color: #204d88;
+}
+
+.pendingContainer p {
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 1.4vh;
+  margin: 0;
+  text-align: center;
+  width: 7rem;
+  vertical-align: middle;
+  background-color: #fafafa;
+  border-radius: 0.3rem;
+  padding: 0.3rem 0.4rem;
+}
+
+.modalContainer {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+
+.modalContainer h2 {
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 4vh;
+  line-height: 16px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #3475df;
+  margin-bottom: 0;
+}
+
+.modalContainer p {
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 2vh;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+  color: #292727;
+  margin: 2rem 0;
+}
+
+.modalContainer button {
+  border: none;
+  background-color: #3475df;
+  padding: 13px 27px;
+  border-radius: 1rem;
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+@media screen and (max-width: 951px) {
+  .totalBalanceCard {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 345px) {
+  .totalBalanceCard {
+    width: 90vw;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .totalBalanceCard {
+    height: 7rem;
+    margin-bottom: 0;
+  }
+
+  .totalBalanceCard p {
+    font-size: 0.8rem;
+  }
+
+  .totalBalanceCard h3 {
+    font-size: 2rem;
+  }
+
+  .contentContainer {
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+  }
+
+  .cardButton {
+    width: 10rem !important;
+  }
+}

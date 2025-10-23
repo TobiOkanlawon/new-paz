@@ -16,5 +16,6 @@ export const useGetProfile = (email: string) => {
       return data;
     },
     select: (data) => data.profile,
+    enabled: !!email,
   });
 };

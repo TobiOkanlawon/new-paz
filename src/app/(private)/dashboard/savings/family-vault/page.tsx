@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./familyVault.module.css";
 import TotalBalanceCard from "@/components/TotalBalanceCard";
 import Back from "@/components/BackContainer";
-import FamilyCard from "@/components/FamilyCard";
+import FamilyVaultCards from "@/components/FamilyCard";
 import Button from "@/components/Button";
 import FamilyVaultModal from "@/components/Savings/FamilyVaultModal";
 import useUser from "@/store/userStore";
@@ -89,7 +89,14 @@ const FamilyVault = () => {
 
   const showModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
-  console.log(families);
+
+  if (isLoading) return <Loading />;
+
+  if (error)
+    return (
+      <ErrorComponent message="An error occurred" retryFunction={() => {}} />
+    );
+
   return (
     <div className={styles.container}>
       <Back />
@@ -112,7 +119,6 @@ const FamilyVault = () => {
         money={calculateTotal(families)}
       />
 
-      <FamilyCard Families={families} />
       <FamilyVaultModal
         isActive={isModalVisible}
         handleCloseModal={closeModal}

@@ -99,3 +99,16 @@ type TTargetSavingsPlan = {
   // the accountNo acts as the ID as well
   accountNo: string;
 };
+
+type Person = {
+  
+};
+
+type TFamilyVaultPlan = {
+  title: string;
+  description: string;
+  amount: number;
+  accountNo: string;
+  ownerID: string;
+  members: Person[];
+};

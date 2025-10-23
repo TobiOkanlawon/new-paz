@@ -20,5 +20,6 @@ return useQuery<any, any, GetWalletData>({
 	return res.data.wallet;
       })
     },
+  enabled: !!email,
   })
 }

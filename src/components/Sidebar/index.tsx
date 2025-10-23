@@ -26,7 +26,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
       icon: "/sidebarSavings.png",
       label: "Savings",
     },
-    { href: "/loans", icon: "/sidebarLoan.png", label: "Loans" },
+    { href: "/dashboard/loans", icon: "/sidebarLoan.png", label: "Loans" },
     {
       href: "/investments",
       icon: "/sidebarInvestment.png",

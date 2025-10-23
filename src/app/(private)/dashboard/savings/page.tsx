@@ -162,7 +162,10 @@ const Savings = () => {
     <div className={styles.container}>
       <h2 className={styles.header}>Savings</h2>
       <p className={styles.headingText}>Explore all our savings plans here.</p>
-      <TotalBalanceCard money={addSavings(data)} header="Total savings" />
+      <TotalBalanceCard
+        money={addSavings(data).soloSavings}
+        header="Total savings"
+      />
       <div className={styles.saversContainer}>
         <div className={styles.topCardSet}>
           {topCards.map((card, idx) => {

@@ -1,5 +1,4 @@
 .container {
-  padding: 1vh 0 2vw 0vw;
   color: #243d7d;
 }
 
@@ -28,12 +27,12 @@
 
 .cardContainer {
   display: flex;
-  gap: 5.69vw;
+  gap: 12px;
 }
 
 .cardConainer {
-  width: 26.59vw;
-  height: 18.81vh;
+  width: 120px;
+  min-height: 140px;
   border-radius: 15px;
   box-shadow: 0px 0px 30px 0px #00000026;
   padding: 23px 21px;

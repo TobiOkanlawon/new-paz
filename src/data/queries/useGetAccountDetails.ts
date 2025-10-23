@@ -18,5 +18,6 @@ export const useGetAccountDetails = (email: string) => {
           return res.data.accountDetails;
         });
     },
+    enabled: !!email,
   });
 };

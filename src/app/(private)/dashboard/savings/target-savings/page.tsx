@@ -10,6 +10,7 @@ import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 import useUser from "@/store/userStore";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
+import { addSavings } from "@/libs/helpers";
 
 const FamilyVault = () => {
   const { user } = useUser();
@@ -63,7 +64,7 @@ const FamilyVault = () => {
 
       <TotalBalanceCard
         header="Total savings balance"
-        money={calculateTotal(targetCards)}
+        money={addSavings(data!).targetSavings}
       />
 
       <div className={styles.cardContainer}>
