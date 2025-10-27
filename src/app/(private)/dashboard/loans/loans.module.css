@@ -1,12 +1,11 @@
 .container {
-  padding: 11.38vh 3vw 0 20.63vw;
-  width: 78vw;
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .header h1 {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
@@ -16,6 +15,7 @@
   vertical-align: middle;
   color: #243d7d;
 }
+
 .header p {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -24,6 +24,7 @@
   letter-spacing: 0%;
   color: #204d88;
 }
+
 .header button {
   background-color: #243d7d;
   color: #fff;
@@ -36,19 +37,24 @@
   padding-left: 15px;
   border: none;
 }
+
 .totalAmountCardContainer {
   color: #204d88;
 }
+
 .totalAmountCardContainer h3 {
   color: #243d7d !important;
 }
+
 .recentActivityHeader {
   font-family: "Poppins";
 }
+
 .modalTitle {
   color: #3475df;
   margin: 2rem 0 0.8rem 0;
 }
+
 .modalDescription {
   font-family: "Montserrat", sans-serif;
   margin: 0 0 1rem 0;
@@ -66,6 +72,7 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
+
 .modalForm input::placeholder {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -74,6 +81,7 @@
   letter-spacing: 0%;
   color: #292727;
 }
+
 .modalForm select {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -93,10 +101,12 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
 .modalButton {
   width: 100%;
   text-align: center;
 }
+
 .modalButton button {
   border: none;
   background-color: #3475df;
@@ -115,6 +125,7 @@
   font-family: "Montserrat", sans-serif;
   width: 100%;
 }
+
 .eligibilityDetails h3 {
   font-weight: 700;
   font-size: 32px;
@@ -125,6 +136,7 @@
   margin-bottom: 2.5rem;
   margin-top: 1rem;
 }
+
 .eligibilityDetails p {
   color: #292727;
   font-weight: 500;
@@ -132,6 +144,7 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
+
 .eligibilityDetails h1 {
   color: #3475df;
   font-weight: 800;
@@ -140,6 +153,7 @@
   letter-spacing: 0%;
   margin: 0.1rem 0 2.5rem 0;
 }
+
 .eligibilityDetails h6 {
   color: #292727;
   font-weight: 500;
@@ -148,10 +162,12 @@
   letter-spacing: 0%;
   margin-bottom: 2rem;
 }
+
 .eligibilityDetails h6 span {
   font-weight: 700;
   font-size: 17px;
 }
+
 .eligibilityDetails button {
   border: none;
   background-color: #3475df;
@@ -164,16 +180,19 @@
   letter-spacing: 0%;
   border-radius: 0.4rem;
 }
+
 .modalForm {
   text-align: start;
   width: 80%;
 }
+
 .modalForm > input {
   height: 54px;
   border-radius: 8px;
   border-width: 1px;
   border: 1px solid #d9d9d9;
 }
+
 .modalForm label {
   display: block;
 }
@@ -181,23 +200,28 @@
 .loanSummary {
   font-family: "Montserrat", sans-serif;
 }
+
 .loanSummary h2 {
   font-weight: 700;
   font-size: 32px;
   text-align: center;
   color: #3475df;
 }
+
 .loanSummary p {
   text-align: center;
 }
+
 .formDetails {
   margin: 1.5rem;
 }
+
 .formDetails p {
   text-align: start;
   margin-bottom: 0.4rem;
   margin-left: 0 !important;
 }
+
 .formDetails h3 {
   line-height: 16px;
   letter-spacing: 0px;
@@ -205,10 +229,12 @@
   background-color: #fafafa;
   padding: 0.5rem 1rem;
 }
+
 .loanSummary p:last-of-type {
   text-align: start;
   margin: 0 2rem 1rem;
 }
+
 .loanSummary button {
   border: none;
   padding: 1rem 1.5rem;
@@ -222,55 +248,68 @@
   border-radius: 1rem;
   margin-left: 2rem;
 }
+
 @media screen and (max-width: 900px) {
   .modalTitle {
     margin: 0.8rem 1rem 0.5rem;
     text-align: center;
     font-size: 20px;
   }
+
   .modalDescription {
     font-size: 13px;
   }
+
   .modalForm {
     margin: auto;
   }
+
   .modalForm2 {
     margin: 0;
     width: 100%;
   }
+
   /* .modalForm input{
         width: 15rem;
-    } */
+    }
+ */
   /* .modalForm select{
         width: 16rem;
-    } */
+    }
+ */
   .modalForm label {
     padding-left: 0;
     font-size: 12px;
   }
 }
+
 @media screen and (max-width: 744px) {
   .container {
     width: 100vw;
   }
 }
+
 @media screen and (max-width: 522px) {
   .container {
     padding: 10.38vh 5vw 0 3.63vw;
   }
+
   .modalForm {
     width: 85vw;
   }
+
   .modalForm2 {
     width: 90%;
     margin: auto;
   }
 }
+
 @media screen and (max-width: 978px) {
   .eligibilityDetails h3 {
     font-size: 20px;
     margin-bottom: 1rem;
   }
+
   .eligibilityDetails p {
     font-size: 13px;
     margin-bottom: 2rem;

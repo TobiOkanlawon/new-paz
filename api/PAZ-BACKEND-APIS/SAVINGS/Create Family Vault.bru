@@ -1,0 +1,29 @@
+meta {
+  name: Create Family Vault
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/savings/create-savings
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "title":"PERSONAL",
+    "description":"saving for rent",
+      "currentAmount":0.0,
+      "walletId":"0756586993",
+      "duration":"6 months",
+      "targetAmount":1000000,
+      "frequency":"Yearly",
+      "type":"FAMILYVAULT"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

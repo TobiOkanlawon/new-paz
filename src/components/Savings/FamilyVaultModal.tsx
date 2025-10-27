@@ -35,15 +35,11 @@ const validationSchema = Yup.object({
     }),
 });
 
-const FamilyVaultModal: React.FC<Props> = ({ 
-  isActive, 
-  handleCloseModal 
-}) => {
+const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
   const mutation = useCreateFamilySavings();
-  const {user} = useUser();
+  const { user } = useUser();
 
-  const {isLoading, data, error} = useGetWallet(user?.email as string);
-
+  const { isLoading, data, error } = useGetWallet(user?.email as string);
 
   const targetAmounts = [5000, 10000, 50000, 100000];
   const savingsDurations = ["6 months", "1 year", "2 years", "5 years"];
@@ -57,7 +53,7 @@ const FamilyVaultModal: React.FC<Props> = ({
       customDuration: "",
     },
     validationSchema,
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       mutation.mutate({
         title: values.familyName,
         targetAmount: values.targetAmount,
@@ -65,7 +61,7 @@ const FamilyVaultModal: React.FC<Props> = ({
         duration: values.customDuration || values.savingsDuration,
         walletId: data?.walletId as string,
         type: "FAMILYVAULT",
-      })
+      });
       handleCloseModal();
     },
   });
@@ -112,7 +108,13 @@ const FamilyVaultModal: React.FC<Props> = ({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Select preferred amount</label>
+            <Input
+              label="Select preferred amount"
+              type="number"
+              id="preferredAmount"
+              placeholder="Or specify amount"
+              {...formik.getFieldProps("amount")}
+            />
             <div className={styles.pillContainer}>
               {targetAmounts.map((amount) => (
                 <Pill
@@ -162,11 +164,12 @@ const FamilyVaultModal: React.FC<Props> = ({
               <option value="5 months">5 months</option>
               <option value="6 months">6 months</option>
             </select>
-            {formik.touched.savingFrequency && formik.errors.savingFrequency && (
-              <div className={styles.errorText}>
-                {formik.errors.savingFrequency}
-              </div>
-            )}
+            {formik.touched.savingFrequency &&
+              formik.errors.savingFrequency && (
+                <div className={styles.errorText}>
+                  {formik.errors.savingFrequency}
+                </div>
+              )}
           </div>
 
           <div className={styles.formGroup}>
@@ -192,11 +195,12 @@ const FamilyVaultModal: React.FC<Props> = ({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.savingsDuration && formik.errors.savingsDuration && (
-              <div className={styles.errorText}>
-                {formik.errors.savingsDuration}
-              </div>
-            )}
+            {formik.touched.savingsDuration &&
+              formik.errors.savingsDuration && (
+                <div className={styles.errorText}>
+                  {formik.errors.savingsDuration}
+                </div>
+              )}
           </div>
         </div>
 

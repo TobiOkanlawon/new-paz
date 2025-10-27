@@ -14,9 +14,12 @@ export const useGetLoanStatus = (walletId: string) => {
   return useQuery<any, any, GetLoanStatusResponse>({
     queryKey: ["get-loan-status"],
     queryFn: async () => {
-      return await axios.get(`/v1/user/loan/pending?walletId=${walletId}`).then((res) => {
-	return res.data.data;
-      })
+      return await axios
+        .get(`/v1/user/loan/pending?walletId=${walletId}`)
+        .then((res) => {
+          return res.data.data;
+        });
     },
+    enabled: !!walletId,
   });
 };

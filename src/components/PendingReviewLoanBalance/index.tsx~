@@ -1,0 +1,34 @@
+const LoanBalanceCard: React.FC<BalanceProps> = ({ amount }) => {
+  const displayAmount = Intl.NumberFormat("en-US").format(amount);
+
+  const [showMoney, setShowMoney] = useState(true);
+
+  const handleToggle = () => setShowMoney((prev) => !prev);
+
+  return (
+    <div
+      className={clsx(styles.totalBalanceCard, styles.totalBalanceCardStacked)}
+    >
+      <p>Loan balance</p>
+      <div className={clsx(styles.contentContainer, styles.stack)}>
+        <h3 className={styles.amountHeader}>
+          ₦ {showMoney ? displayAmount : "****"}{" "}
+          <span>
+            <Image
+              src={showMoney ? "/eyeOff.png" : "/eyeOff.png"}
+              alt="Money Toggle"
+              width={12}
+              height={12}
+              style={{ cursor: "pointer" }}
+              onClick={handleToggle}
+            />
+          </span>
+        </h3>
+
+        <div className={styles.pendingContainer}>
+          <p style={{ background: "#E3B44F" }}>Pending approval</p>
+        </div>
+      </div>
+    </div>
+  );
+};

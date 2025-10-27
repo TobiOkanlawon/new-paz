@@ -13,18 +13,13 @@ interface ASMProps {
   handleACMopen: () => void;
 }
 
-// Define expected user properties
-interface AccountSetupUser extends TUser {
-  primary_account_linked: boolean;
-  is_bvn_verified: boolean;
-}
 const SetupModal: React.FC<ASMProps> = ({
   isOpen,
   onClose,
   handleBVNMopen,
   handleACMopen,
 }) => {
-  const user = useUser((state) => state.user) as TUser | null;
+  const { user } = useUser();
 
   // Early return if no user
   if (!user) {
@@ -47,11 +42,8 @@ const SetupModal: React.FC<ASMProps> = ({
           {user.primary_account_linked ? (
             <p className={styles.success}>Linked</p>
           ) : (
-            <Button 
-              onClick={handleACMopen}
-              disabled={!user.is_bvn_verified}
-            >
-              {user.is_bvn_verified ? 'Add Account' : 'Please add BVN first'}
+            <Button onClick={handleACMopen} disabled={!user.is_bvn_verified}>
+              {user.is_bvn_verified ? "Add Account" : "Please add BVN first"}
             </Button>
           )}
         </div>

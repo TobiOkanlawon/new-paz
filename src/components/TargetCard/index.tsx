@@ -20,13 +20,14 @@ const TargetCard: React.FC<TargetCardProps> = ({
 
   const percentage = (amount / targetAmount) * 100;
 
-  const capitalise = (string: string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  const capitalise = (inputString: string) => {
+    if (!inputString) return inputString;
+    return inputString.charAt(0).toUpperCase() + inputString.slice(1);
   };
 
 
   const handleRouteToPlan = () => {
-    router.push(`/savings/target-savings/${id}`);
+    router.push(`/dashboard/savings/target-savings/${id}`);
   };
 
   return (

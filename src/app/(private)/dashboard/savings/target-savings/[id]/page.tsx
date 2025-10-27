@@ -39,7 +39,6 @@ const TargetSavings = () => {
     user?.email as string,
   );
 
-  console.log("data: ", data);
   const planData: TTargetSavingsPlan | undefined = data?.targetSavings.find(
     (t: TTargetSavingsPlan) => {
       return t.accountNo == id;

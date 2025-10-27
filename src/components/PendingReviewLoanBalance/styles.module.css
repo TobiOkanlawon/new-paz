@@ -1,0 +1,52 @@
+.card {
+  display: grid;
+  font-family: "Montserrat", sans-serif;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 10px;
+  border: 1px solid #acb5bd;
+  padding: 8px 14px;
+  width: fit-content;
+  margin-top: 12px;
+}
+
+.cardLeft > p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.amountHeader {
+  color: #243d7d;
+  font-family: "Montserrat", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.amountHeader {
+  margin: 4px;
+}
+
+.pendingContainer {
+  align-self: center;
+}
+
+.moneyStyles {
+  font-size: 32px;
+}
+
+.pendingContainer > p {
+  width: fit-content;
+  background-color: #e3b44f;
+  padding: 12px 15px;
+  color: white;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 951px) {
+}
+
+@media screen and (max-width: 345px) {
+}
+
+@media screen and (max-width: 700px) {
+}

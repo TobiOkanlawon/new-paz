@@ -5,6 +5,8 @@ import InstantLoanCard from "../InstantLoanCard";
 import LoanForm from "./LoanApplicationModal";
 import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 import useUser from "@/store/userStore";
+import { ErrorComponent } from "../Error";
+import { Loading } from "../Loading";
 
 type LoanStatus = "non" | "pending" | "approved" | "withdrawn" | "repaid";
 
@@ -13,8 +15,16 @@ const CanAccessLoan = () => {
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
   const { user } = useUser();
-  const { totalLoan } = useGetAccountDetails(user?.email as string);
+  const { data, isLoading, error } = useGetAccountDetails(
+    user?.email as string,
+  );
   const [loanStatus, setLoanStatus] = useState<LoanStatus>("non");
+
+  if (isLoading) return <Loading />;
+
+  if (error) return <ErrorComponent />;
+
+  console.log("data from can access loan", data);
 
   return (
     <div className={styles.container}>
@@ -27,7 +37,7 @@ const CanAccessLoan = () => {
       <div>
         <div className={styles.totalAmountCardContainer}>
           <LoanBalanceCard
-            loanAmount={totalLoan}
+            loanAmount={data!.totalLoan}
             loanStatus={loanStatus}
             onUpdateStatus={setLoanStatus}
           />

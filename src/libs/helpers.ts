@@ -1,6 +1,9 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from "formik";
 
-export function handleErrorDisplay<T>(formik: FormikProps<T>, name: keyof T): string | undefined {
+export function handleErrorDisplay<T>(
+  formik: FormikProps<T>,
+  name: keyof T,
+): string | undefined {
   /* This function takes in the formik object, figures out if the input named with the parameter `name` has been touched and then it decides to show its error or not, depending on if it has been touched and if it has an error*/
 
   if (!formik.touched[name]) return undefined;
@@ -41,13 +44,12 @@ export const formatBirthdayToDateInputFormat = (
 };
 
 export const addSavings = (accountDetails: TAccountDetails) => {
-  let soloSavingsAmount = 0;
-  let targetSavingsAmount = 0;
-  let familyVaultAmount = 0;
-
-  soloSavingsAmount = accountDetails.SoloSavings?.Amount || 0;
-
-  // to be augmented when the shape of the others are known
-  
-  return soloSavingsAmount;
-}
+  return {
+    soloSavings: accountDetails.soloSavings?.Amount || 0,
+    familyVault: accountDetails.familyVault.reduce((p, c) => p + c.amount, 0),
+    targetSavings: accountDetails.targetSavings.reduce(
+      (p, c) => p + c.amount,
+      0,
+    ),
+  };
+};

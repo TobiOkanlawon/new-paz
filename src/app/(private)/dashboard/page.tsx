@@ -215,7 +215,7 @@ const Dashboard = () => {
               <h3>Avoid Embarrassing Emergencies. Get a Quick Loan today!</h3>
               <button
                 className={styles.loanAndInvestmentButton}
-                onClick={() => router.push("/loans")}
+                onClick={() => router.push("/dashboard/loans")}
               >
                 Get Loan
               </button>
@@ -414,7 +414,7 @@ const Dashboard = () => {
           </div>
           <button
             className={styles.loanButton}
-            onClick={() => router.push("/loans")}
+            onClick={() => router.push("/dashboard/loans")}
           >
             Repay Loan
           </button>

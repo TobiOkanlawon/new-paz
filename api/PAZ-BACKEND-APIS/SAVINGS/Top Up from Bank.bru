@@ -1,0 +1,22 @@
+meta {
+  name: Top Up from Bank
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/savings/saving-topup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "accountName": "Tobi Okanlawon"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

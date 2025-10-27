@@ -7,9 +7,10 @@ import SelectGroup from "@/components//InputGroup/SelectGroup";
 import { handleErrorDisplay } from "@/libs/helpers";
 import Button from "@/components/Button";
 import { useApplyForLoan } from "@/data/mutations/useApplyForLoan";
-import { useWallet } from "@/store/walletStore";
 import { useGetWallet } from "@/data/queries/useGetWallet";
 import useUser from "@/store/userStore";
+import { Loading } from "../Loading";
+import { ErrorComponent } from "../Error";
 
 type Props = {
   isModalOpen: boolean;
@@ -35,8 +36,7 @@ type LoanFormType = Yup.InferType<typeof schema>;
 const LoanForm: React.FC<Props> = ({ isModalOpen, handleModalClose }) => {
   const mutation = useApplyForLoan();
   const { user } = useUser();
-  const walletIdFromAPI = useGetWallet(user?.email as string).data;
-  const { walletInformation } = useWallet();
+  const { data, isLoading, error } = useGetWallet(user?.email as string);
   const formik = useFormik<LoanFormType>({
     initialValues: {
       purpose: "",
@@ -47,7 +47,7 @@ const LoanForm: React.FC<Props> = ({ isModalOpen, handleModalClose }) => {
     onSubmit: (values) => {
       mutation.mutate(
         {
-          walletId: walletInformation?.walletId as string,
+          walletId: data!.walletId as string,
           productName: "PayDay", // this is what the backend requests (hardcoded)
           amount: Number(values.amount),
           duration: values.duration as string,
@@ -61,6 +61,10 @@ const LoanForm: React.FC<Props> = ({ isModalOpen, handleModalClose }) => {
       );
     },
   });
+
+  if (isLoading) return <Loading />;
+
+  if (error) return <ErrorComponent />;
 
   return (
     <Modal onClose={handleModalClose} isOpen={isModalOpen}>
