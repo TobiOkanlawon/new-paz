@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./familyVault.module.css";
 import TotalBalanceCard from "@/components/TotalBalanceCard";
 import Back from "@/components/BackContainer";
-import FamilyVaultCards from "@/components/FamilyCard";
+import FamilyCard from "@/components/FamilyCard";
 import Button from "@/components/Button";
 import FamilyVaultModal from "@/components/Savings/FamilyVaultModal";
 import useUser from "@/store/userStore";
@@ -76,6 +76,7 @@ const FamilyVault = () => {
         money={calculateTotal(families)}
       />
 
+      <FamilyCard Families={families} />
       <FamilyVaultModal
         isActive={isModalVisible}
         handleCloseModal={closeModal}

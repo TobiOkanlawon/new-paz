@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
-import styles from "./familycard.module.css";
+'use client'
+import React from 'react'
+import { useRouter } from 'next/navigation'
+import styles from './familycard.module.css'
 
 // interface Family {
 //     name: string;
@@ -58,27 +58,20 @@ const FamilyCard: React.FC<FamilyCardProp> = ({Families}) => {
                         ₦ {moneyValue.toLocaleString()}{' '}
                     </h3>
                     <div className={styles.cardBottom}>
-                        {!family.owner ? (
+                        {family.owner ? null : (
                             <div className={styles.savingsOwner}>
                                 <p>Savings plan owner</p>
                             </div>
-                        ): ''}
+                        )}
                         <p>1 <span>member</span></p>
                         {/* <p>{family.members} <span>members</span></p> */}
                     </div>
                 </div>
-              ) : (
-                ""
-              )}
-              <p>
-                {family?.members?.length} <span>members</span>
-              </p>
-            </div>
-          </div>
-        );
-      })}
+            )
+            })
+        }
     </div>
-  );
-};
+  )
+}
 
-export default FamilyCard;
+export default FamilyCard

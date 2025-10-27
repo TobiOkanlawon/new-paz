@@ -135,7 +135,7 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               type="number"
               id="targetAmount"
               placeholder="Or specify amount"
-              label="targetAmount"
+              label="Target Amount"
               value={formik.values.targetAmount}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -190,7 +190,7 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               type="number"
               id="customDuration"
               placeholder="Or specify duration"
-              label="customDuration"
+              label="Custom Duration"
               value={formik.values.customDuration}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
