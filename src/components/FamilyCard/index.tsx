@@ -58,12 +58,13 @@ const FamilyCard: React.FC<FamilyCardProp> = ({Families}) => {
                         ₦ {moneyValue.toLocaleString()}{' '}
                     </h3>
                     <div className={styles.cardBottom}>
-                        {family.owner ? (
+                        {!family.owner ? (
                             <div className={styles.savingsOwner}>
                                 <p>Savings plan owner</p>
                             </div>
                         ): ''}
-                        <p>{family.members} <span>members</span></p>
+                        <p>1 <span>member</span></p>
+                        {/* <p>{family.members} <span>members</span></p> */}
                     </div>
                 </div>
             )

@@ -7,8 +7,8 @@ export const useUpdateProfile = () => {
 
   return useMutation({
     mutationKey: ['update-profile'],
-    mutationFn: async (profileData: TProfile) => {
-      return await axios.post(`/v1/users/user/set-profile`, profileData);
+    mutationFn: async ({ email, profileData }: { email: string; profileData: TProfile }) => {
+      return await axios.post(`/v1/users/user/set-profile?email=${email}`, profileData);
     },
 
     onSuccess: () => {

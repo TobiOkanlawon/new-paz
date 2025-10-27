@@ -82,10 +82,12 @@ const Profile = () => {
         };
 
         await toast.promise(
-          mutateAsync(formattedValues),
+          mutateAsync({
+            email: data?.email as string,
+            profileData: formattedValues,
+          }),
           {
             pending: "Updating profile...",
-            // success: "Profile updated successfully 🎉",
             error: "Failed to update profile 😢",
           },
           { theme: "colored" },
@@ -230,7 +232,7 @@ const Profile = () => {
                   // name="gender"
                   options={genderOptions}
                   placeholder="Select Date"
-                  {...formik.getFieldProps("gender")} 
+                  {...formik.getFieldProps("gender")}
                 />
               </div>
               <div className={styles.inputs}>

@@ -16,57 +16,8 @@ const FamilyVault = () => {
   const { data, isLoading, error } = useGetAccountDetails(
     user?.email as string,
   );
-  // const families = [
-  //   {
-  //     name: "Olowo Family",
-  //     desc: "Monthly food saving quota",
-  //     money: "500000",
-  //     members: 3,
-  //     owner: true,
-  //   },
-  //   {
-  //     name: "Lekki House Family",
-  //     desc: "Rent saving quota",
-  //     money: "1500000",
-  //     members: 3,
-  //   },
-  //   {
-  //     name: "Olowo Family",
-  //     desc: "Monthly food saving quota",
-  //     money: "500000",
-  //     members: 3,
-  //     owner: true,
-  //   },
-  //   {
-  //     name: "Lekki House Family",
-  //     desc: "Rent saving quota",
-  //     money: "1500000",
-  //     members: 3,
-  //   },
-  //   {
-  //     name: "Olowo Family",
-  //     desc: "Monthly food saving quota",
-  //     money: "500000",
-  //     members: 3,
-  //     owner: true,
-  //   },
-  //   {
-  //     name: "Lekki House Family",
-  //     desc: "Rent saving quota",
-  //     money: "1500000",
-  //     members: 3,
-  //   },
-  // ];
 
-  if (isLoading) {
-    return <Loading />;
-  }
 
-  if (error) {
-    return (
-      <ErrorComponent message="An error occurred" retryFunction={() => {}} />
-    );
-  }
 
   // Title: "test";
   // accountNo: "9728906907";
@@ -79,17 +30,30 @@ const FamilyVault = () => {
     return allPlans.reduce((p, c) => p + c.amount, 0);
   };
 
-  const families: any[] = (data!.targetSavings as any[]).map((card) => ({
-    ...card,
-    Title: card.Title || card.title,
-  }));
+
   const [showMoney, setShowMoney] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleToggle = () => setShowMoney((prev) => !prev);
 
   const showModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
-  console.log(families);
+
+    if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <ErrorComponent message="An error occurred" retryFunction={() => {}} />
+    );
+  }
+
+    const families: any[] = (data!.familyVault as any[]).map((card) => ({
+    ...card,
+    Title: card.Title || card.title,
+  }));
+
+  console.log(data);
   return (
     <div className={styles.container}>
       <Back />

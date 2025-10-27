@@ -207,9 +207,9 @@ const TargetSavingsModal: React.FC<Props> = ({
           <Button
             type="submit"
             className={styles.submitButton}
-            disabled={mutation.isLoading}
+            disabled={mutation.isPending}
           >
-            {mutation.isLoading
+            {mutation.isPending
               ? "Creating Plan..."
               : "Create Target Saver Plan"}
           </Button>
