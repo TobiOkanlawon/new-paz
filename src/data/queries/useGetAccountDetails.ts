@@ -1,6 +1,6 @@
 import { axiosInstance as axios } from "@/libs/axios";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 
 interface AccountDetailsResponse {
   success: boolean;
@@ -9,7 +9,7 @@ interface AccountDetailsResponse {
 }
 
 export const useGetAccountDetails = (email: string) => {
-  return useQuery<AxiosResponse<AccountDetailsResponse>, any, TAccountDetails>({
+  return useQuery<TAccountDetails, AxiosError, TAccountDetails>({
     queryKey: ["account-details", email],
     queryFn: async () => {
       return await axios

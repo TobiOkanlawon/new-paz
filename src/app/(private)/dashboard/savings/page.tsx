@@ -11,8 +11,6 @@ import { useCreateSoloSaver } from "@/data/mutations/useCreateSoloSaver";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
 import TargetSavingsModal from "@/components/Savings/TargetSavingsModal";
-import SoloUserImage from "@/assets/soloUser.png";
-import FamilyVaultCardImage from "@/assets/familyVaultCard.png";
 import { addSavings } from "@/libs/helpers";
 import { useGetWallet } from "@/data/queries/useGetWallet";
 
@@ -20,7 +18,7 @@ type Card = {
   color: string;
   href: string;
   header: string;
-  img: StaticImageData;
+  img: string;
   text: string;
   handleStart: () => void;
 };
@@ -59,7 +57,7 @@ const Savings = () => {
     user?.email as string,
   );
 
-  const { data: walletAccountData, isLoading: i, error: e } = useGetWallet();
+  const { data: walletAccountData, isLoading: i, error: e } = useGetWallet(user?.email as string);
 
   // const mutation = useCreateSoloSaver(user?.email as string);
   const {
@@ -89,7 +87,7 @@ const Savings = () => {
 
   const topCards: Card[] = [
     {
-      img: SoloUserImage,
+      img: '/soloUser.png',
       header: "PAZ Solo Saver",
       text: "Save money regularly in a locked plan with interest of up to 12% per annum.",
       href: "/dashboard/savings/solo-saver",
@@ -97,7 +95,7 @@ const Savings = () => {
       handleStart: () => {},
     },
     {
-      img: FamilyVaultCardImage,
+      img: '/familyVaultCard.png',
       header: "PAZ Family Vault",
       text: "Save money together with your loved ones and get interests of up to 16% per annum.",
       href: "/dashboard/savings/family-vault",

@@ -1,4 +1,4 @@
-import { axiosInstance as axios, storeToken } from "@/libs/axios";
+import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
@@ -11,7 +11,7 @@ type AddAccountData = {
 };
 
 export const useAddAccount = () => {
-  return useMutation<TAddAccountResponse, any, AddAccountData>({
+  return useMutation<TAddAccountResponse, AxiosError, AddAccountData>({
     mutationKey: ["add-account"],
     mutationFn: async (data) => {
       return await axios

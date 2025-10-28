@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./emptyContainer.module.css";
-import NoNotification from "@/assets/images/noNotification.png";
+import NoNotification from "@/images/noNotification.png";
 
 type Props = {
   text?: string;

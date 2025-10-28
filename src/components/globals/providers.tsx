@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,10 @@ import { removeToken } from "@/libs/auth";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const queryClient = new QueryClient();
+  // Keep QueryClient stable between renders
+  const queryClientRef = useRef<QueryClient | undefined>(undefined);
+  if (!queryClientRef.current) queryClientRef.current = new QueryClient();
+  const queryClient = queryClientRef.current!;
 
   useEffect(() => {
     const handleLogout = () => {
@@ -18,7 +21,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
     window.addEventListener("logout", handleLogout);
     return () => window.removeEventListener("logout", handleLogout);
-  }, [router]);
+  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>

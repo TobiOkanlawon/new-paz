@@ -38,10 +38,16 @@ const FamilyVault = () => {
     return allPlans.reduce((p, c) => p + c.amount, 0);
   };
 
-  const targetCards: TTargetSavingsPlan[] = (data!.targetSavings as any[]).map(
+  // Backend sometimes returns `title` instead of `Title`. Normalize to the expected shape.
+  type RawTargetPlan = Partial<TTargetSavingsPlan> & { title?: string; Title?: string };
+
+  const targetCards: TTargetSavingsPlan[] = (data!.targetSavings as RawTargetPlan[]).map(
     (card) => ({
-      ...card,
-      Title: card.Title || card.title,
+      Title: card.Title ?? card.title ?? "",
+      description: card.description ?? "",
+      amount: card.amount ?? 0,
+      targetAmount: card.targetAmount ?? 0,
+      accountNo: card.accountNo ?? "",
     }),
   );
 

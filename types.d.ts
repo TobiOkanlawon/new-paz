@@ -108,7 +108,7 @@ type TFamilyVaultPlan = {
   title: string;
   description: string;
   amount: number;
-  accountNo: string;
+  accountNo?: string;
   ownerID: string;
   members: Person[];
 };

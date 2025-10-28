@@ -19,7 +19,7 @@ export default function RootLayout({
     if (token && publicRoutes.includes(pathname)) {
       router.replace("/dashboard");
     }
-  }, [token, router]);
+  }, [token, router, pathname]);
 
   if (token) {
     return null;

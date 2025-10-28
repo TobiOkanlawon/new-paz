@@ -1,6 +1,6 @@
 import { axiosInstance as axios } from "@/libs/axios";
 import { useQuery } from "@tanstack/react-query";
-
+import { AxiosError } from "axios";
 
 type GetWalletData = {
   currency: string;
@@ -12,14 +12,13 @@ type GetWalletData = {
 };
 
 export const useGetWallet = (email: string) => {
-  
-return useQuery<any, any, GetWalletData>({
-    queryKey: ["get-user-wallet"],
+  return useQuery<GetWalletData, AxiosError, GetWalletData>({
+    queryKey: ["get-user-wallet", email],
     queryFn: async () => {
       return await axios.get(`/v1/users/user/fetch-account?email=${email}`).then((res) => {
-	return res.data.wallet;
-      })
+        return res.data.wallet;
+      });
     },
-  enabled: !!email,
-  })
+    enabled: !!email,
+  });
 }

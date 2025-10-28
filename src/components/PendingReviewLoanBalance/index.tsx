@@ -1,5 +1,4 @@
 import Image from "next/image";
-import eyeOff from "@/assets/images/eyeOff.png";
 import { useState } from "react";
 import styles from "./styles.module.css";
 
@@ -23,7 +22,7 @@ const LoanBalanceCard: React.FC<BalanceProps> = ({ amount }) => {
             ₦ {showMoney ? displayAmount : "****"}{" "}
             <span>
               <Image
-                src={eyeOff}
+                src={"/eyeOff.png"}
                 alt="Money Toggle"
                 width={12}
                 height={12}

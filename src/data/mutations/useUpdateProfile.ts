@@ -1,14 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance as axios } from "@/libs/axios";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<ProfileResponseData, AxiosError, { email: string; profileData: TProfile }>({
     mutationKey: ['update-profile'],
      mutationFn: async ({ email, profileData }: { email: string; profileData: TProfile }) => {
-      return await axios.post(`/v1/users/user/set-profile?email=${email}`, profileData);
+      const res = await axios.post<ProfileResponseData>(`/v1/users/user/set-profile?email=${email}`, profileData);
+      return res.data;
     },
 
     onSuccess: () => {
@@ -17,12 +19,13 @@ export const useUpdateProfile = () => {
       toast.success("Profile updated successfully");
     },
 
-    onError: (error: any) => {
+    onError: (error: AxiosError<unknown, any>) => {
       console.error("Failed to update profile:", error);
 
-      toast.error(
-        error?.response?.data?.message || "Failed to update profile 😢"
-      );
+      const message =
+        (error.response?.data as ErrorResponse | undefined)?.responseMessage ||
+        "Failed to update profile 😢";
+      toast.error(message);
     },
   });
 };

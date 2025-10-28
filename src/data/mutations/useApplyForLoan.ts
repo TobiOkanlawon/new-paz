@@ -1,4 +1,4 @@
-import { axiosInstance as axios, storeToken } from "@/libs/axios";
+import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
@@ -13,7 +13,9 @@ type TLoanApplication = {
 
 export const useApplyForLoan = () => {
   const queryClient = useQueryClient();
-  return useMutation<any, any, TLoanApplication>({
+  type LoanApplicationResponse = { success: boolean; message: string; data?: unknown };
+
+  return useMutation<LoanApplicationResponse, AxiosError, TLoanApplication>({
     mutationKey: ["loan-application"],
     mutationFn: async (data) => {
       return await axios

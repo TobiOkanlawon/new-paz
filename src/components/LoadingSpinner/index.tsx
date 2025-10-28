@@ -18,10 +18,10 @@ export default function Spinner({
   className = "",
   "aria-label": ariaLabel = "Loading...",
 }) {
-  const wrapperRef = useRef(null);
-  const parentRef = useRef(null);
+  const wrapperRef = useRef<HTMLOutputElement>(null);
+  const parentRef = useRef<HTMLElement | null>(null);
   const [size, setSize] = useState(minSize);
-  const prevParentPosition = useRef(null);
+  const prevParentPosition = useRef<string | null>(null);
 
   // when mounted, find parent element (the immediate parent node in the DOM)
   useLayoutEffect(() => {
@@ -63,11 +63,15 @@ export default function Spinner({
       return;
     }
 
-    const update = (entry) => {
+    interface ResizeEntry {
+      contentRect?: DOMRectReadOnly;
+    }
+
+    const update = (entry: ResizeEntry) => {
       const rect = entry.contentRect ?? parent.getBoundingClientRect();
       const s = Math.max(
-        minSize,
-        Math.min(maxSize, Math.min(rect.width, rect.height) * scale),
+      minSize,
+      Math.min(maxSize, Math.min(rect.width, rect.height) * scale),
       );
       setSize(Math.round(s));
     };
@@ -105,7 +109,7 @@ export default function Spinner({
   }, [scale, minSize, maxSize]);
 
   // styles
-  const outerStyle = {
+  const outerStyle: React.CSSProperties = {
     position: "absolute", // will center relative to first positioned ancestor (we ensure parent is positioned)
     top: "50%",
     left: "50%",
@@ -143,11 +147,10 @@ export default function Spinner({
   }, []);
 
   return (
-    <span
+    <output
       ref={wrapperRef}
       className={`react-center-spinner ${className}`}
       style={outerStyle}
-      role="status"
       aria-label={ariaLabel}
       aria-live="polite"
     >
@@ -175,6 +178,6 @@ export default function Spinner({
         }}
         aria-hidden="true"
       />
-    </span>
+    </output>
   );
 }
