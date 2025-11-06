@@ -24,8 +24,6 @@ const CanAccessLoan = () => {
 
   if (error) return <ErrorComponent />;
 
-  console.log("data from can access loan", data);
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>

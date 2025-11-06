@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./TopupModal.module.css";
-import InputGroup from "../InputGroup";
 import SelectGroup from "../InputGroup/SelectGroup";
 import Image from "next/image";
+import Input from "@/components/Input";
+import { handleErrorDisplay } from "@/libs/helpers";
 
 const banks = [
   { value: "bank1", label: "Bank 1" },
@@ -41,20 +42,14 @@ const TopUpModal = () => {
       <h2>Top-up your savings</h2>
       <p>Save up that money you do want to regret spending</p>
       <div className={styles.modalFormContainer}>
-        <InputGroup
+        <Input
           label="Top-up amount*"
           placeholder="Enter how much you want to top-up"
           id="amount"
           type="number"
-          value={formik.values.amount}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          errors={handleErrorDisplay(formik, "amount")}
+          {...formik.getFieldProps("amount")}
         />
-        {formik.touched.amount && formik.errors.amount && (
-          <div style={{ color: "red", fontSize: "0.8rem" }}>
-            {formik.errors.amount}
-          </div>
-        )}
         <SelectGroup
           label="Select account to withdraw from"
           placeholder="Select bank to withdraw from"
@@ -86,6 +81,7 @@ const TopUpModal = () => {
         </div>
         <span
           style={inputActive ? { display: "none" } : { display: "block" }}
+          className={styles.addNewDebitCard}
           onClick={handleClick}
         >
           Add new debit-card

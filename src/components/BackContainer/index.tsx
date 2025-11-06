@@ -1,19 +1,19 @@
-'use client'
-import React from 'react'
-import Image from 'next/image'
-import styles from './backContainer.module.css'
-import { useRouter } from 'next/navigation'
+"use client";
+import React from "react";
+import Image from "next/image";
+import styles from "./backContainer.module.css";
+import { useRouter } from "next/navigation";
 
 const Back = () => {
   const router = useRouter();
   return (
-    <div>
-        <button
+    <div className={styles.backContainer}>
+      <button
         type="button"
         onClick={() => {
           router.back();
         }}
-        className={styles.backContainer}
+        className={styles.backButton}
         aria-label="Go back"
       >
         <Image
@@ -26,7 +26,7 @@ const Back = () => {
         <span>Back</span>
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Back
+export default Back;

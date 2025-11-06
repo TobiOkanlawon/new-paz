@@ -8,5 +8,5 @@ export const ErrorComponent: React.FC<Props> = ({
   message = "An error occurred",
   retryFunction = () => {},
 }) => {
-  return <> </>;
+  return <>{message}</>;
 };

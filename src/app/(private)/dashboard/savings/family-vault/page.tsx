@@ -16,20 +16,13 @@ const FamilyVault = () => {
   const { data, isLoading, error } = useGetAccountDetails(
     user?.email as string,
   );
-
-
-
-  // Title: "test";
-  // accountNo: "9728906907";
-  // amount: 0;
-  // description: "The author addresses such theological questions as What is God like? Why pray? Male and female-how are we related? How do people see Jesus? What is the shape of the godly life? If the Lord is with us, why do we suffer? How do we face death? through short meditations, each staring with a Bible verse and ending with a brief prayer.";
-  // targetAmount: 100000;
-  // title: "test";
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const calculateTotal = (allPlans: TTargetSavingsPlan[]) => {
     return allPlans.reduce((p, c) => p + c.amount, 0);
   };
-
 
   const [showMoney, setShowMoney] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,7 +31,7 @@ const FamilyVault = () => {
   const showModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
-    if (isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -48,7 +41,7 @@ const FamilyVault = () => {
     );
   }
 
-    const families: any[] = (data!.familyVault as any[]).map((card) => ({
+  const families: any[] = (data!.familyVault as any[]).map((card) => ({
     ...card,
     Title: card.Title || card.title,
   }));

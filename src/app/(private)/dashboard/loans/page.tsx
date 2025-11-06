@@ -20,8 +20,6 @@ const schema = Yup.object({
   duration: Yup.string().required("Please select a loan duration"),
 });
 
-type LoanSchema = Yup.InferType<typeof schema>;
-
 const Loans = () => {
   const { user } = useUser();
 
@@ -36,7 +34,6 @@ const Loans = () => {
     isLoading,
     error,
   } = useGetWallet(user?.email as string);
-  type LoanStatus = "non" | "pending" | "approved" | "withdrawn" | "repaid";
 
   const {
     data: loanData,
@@ -47,7 +44,11 @@ const Loans = () => {
   if (isLoading || loanRequestIsLoading || accountDetailsIsLoading)
     return <Loading />;
 
-  if (error || loanRequestError || accDetailsError) return <ErrorComponent />;
+  if (error || accDetailsError) return <ErrorComponent />;
+
+  if (accountDetails!.totalLoan == 0) {
+    if (!loanData) return <CanAccessLoan />;
+  }
 
   /*
   amount in this case refers to the loan amount requested for, after the amount has been approved and disbursed, it's tracked by the totalLoan flag in accountDetails
@@ -74,10 +75,6 @@ In this case, we put a pending approval screen up
 
   if (accountDetails!.totalLoan > 0) {
     return <LoanIsOwed />;
-  }
-
-  if (accountDetails!.totalLoan == 0 && loanData?.Amount == 0) {
-    return <CanAccessLoan />;
   }
 };
 

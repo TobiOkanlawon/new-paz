@@ -28,7 +28,7 @@ const SelectGroup = ({
         id={name}
         {...selectProps}
       >
-        <option value="" disabled hidden>
+        <option className={styles.placeholder} value="" disabled hidden>
           {placeholder}
         </option>
         {options.map((opt) => (

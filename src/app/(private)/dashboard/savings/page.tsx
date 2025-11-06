@@ -57,7 +57,11 @@ const Savings = () => {
     user?.email as string,
   );
 
-  const { data: walletAccountData, isLoading: i, error: e } = useGetWallet(user?.email as string);
+  const {
+    data: walletAccountData,
+    isLoading: i,
+    error: e,
+  } = useGetWallet(user?.email as string);
 
   // const mutation = useCreateSoloSaver(user?.email as string);
   const {
@@ -87,7 +91,7 @@ const Savings = () => {
 
   const topCards: Card[] = [
     {
-      img: '/soloUser.png',
+      img: "/soloUser.png",
       header: "PAZ Solo Saver",
       text: "Save money regularly in a locked plan with interest of up to 12% per annum.",
       href: "/dashboard/savings/solo-saver",
@@ -95,7 +99,7 @@ const Savings = () => {
       handleStart: () => {},
     },
     {
-      img: '/familyVaultCard.png',
+      img: "/familyVaultCard.png",
       header: "PAZ Family Vault",
       text: "Save money together with your loved ones and get interests of up to 16% per annum.",
       href: "/dashboard/savings/family-vault",

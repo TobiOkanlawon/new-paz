@@ -1,11 +1,10 @@
-
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getToken, removeToken } from "@/libs/auth";
 
 export const axiosInstance = axios.create({
   // baseURL: process.env.BASE_URL,
-  baseURL: "http://54.38.215.158:8080",
+  baseURL: "https://backend.mypazfinance.com",
 });
 
 const publicEndpoints: string[] = ["/v1/users/signup", "/v1/users/signin"];

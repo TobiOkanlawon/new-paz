@@ -17,7 +17,6 @@ const FamilyVault = () => {
     amount?: string;
   }
 
-
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isHelloWorldModalOpen, setIsHelloWorldModalOpen] = useState(false);
 
@@ -59,13 +58,10 @@ const FamilyVault = () => {
       </div>
 
       <div className={styles.notificationContainer}>
-      <Notifications header="Recent activity" />
+        <Notifications header="Recent activity" />
       </div>
       {isWithdrawModalOpen && (
-        <Modal
-          isOpen={isWithdrawModalOpen}
-          onClose={handleCloseWithdrawModal}
-        >
+        <Modal isOpen={isWithdrawModalOpen} onClose={handleCloseWithdrawModal}>
           <WithdrawModal onSubmit={handleWithdrawSubmit} />
         </Modal>
       )}
@@ -77,8 +73,12 @@ const FamilyVault = () => {
         >
           <div className={styles.modalContainer}>
             <h2>Withdrawal Consent</h2>
-            <p>We will send a withdrawal request consent to other members of the Olowo family before sending the fund to you. You can inform the other family members to fast-track the process.</p>
-            <button>{'Continue'}</button>
+            <p>
+              We will send a withdrawal request consent to other members of the
+              Olowo family before sending the fund to you. You can inform the
+              other family members to fast-track the process.
+            </p>
+            <button>{"Continue"}</button>
           </div>
         </Modal>
       )}

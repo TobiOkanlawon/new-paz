@@ -1,7 +1,6 @@
 import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { AxiosError } from "axios";
 
 type TLoanApplication = {
   productName: string;
@@ -26,7 +25,7 @@ export const useApplyForLoan = () => {
     },
     onSuccess: (data, variables, context) => {
       toast("Loan application submitted")
-      queryClient.invalidateQueries({queryKey: ["account-details", "get-user-wallet"]})
+      queryClient.invalidateQueries({queryKey: ["account-details", "get-user-wallet", "get-loan-status"]})
     },
     onError: () => {
       toast("An error occurred");

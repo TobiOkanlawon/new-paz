@@ -39,17 +39,20 @@ const FamilyVault = () => {
   };
 
   // Backend sometimes returns `title` instead of `Title`. Normalize to the expected shape.
-  type RawTargetPlan = Partial<TTargetSavingsPlan> & { title?: string; Title?: string };
+  type RawTargetPlan = Partial<TTargetSavingsPlan> & {
+    title?: string;
+    Title?: string;
+  };
 
-  const targetCards: TTargetSavingsPlan[] = (data!.targetSavings as RawTargetPlan[]).map(
-    (card) => ({
-      Title: card.Title ?? card.title ?? "",
-      description: card.description ?? "",
-      amount: card.amount ?? 0,
-      targetAmount: card.targetAmount ?? 0,
-      accountNo: card.accountNo ?? "",
-    }),
-  );
+  const targetCards: TTargetSavingsPlan[] = (
+    data!.targetSavings as RawTargetPlan[]
+  ).map((card) => ({
+    Title: card.Title ?? card.title ?? "",
+    description: card.description ?? "",
+    amount: card.amount ?? 0,
+    targetAmount: card.targetAmount ?? 0,
+    accountNo: card.accountNo ?? "",
+  }));
 
   return (
     <div className={styles.container}>
@@ -76,7 +79,6 @@ const FamilyVault = () => {
       <div className={styles.cardContainer}>
         {targetCards.map(
           ({ Title: title, description, targetAmount, amount, accountNo }) => {
-            console.log(targetCards);
             return (
               <TargetCard
                 key={accountNo}

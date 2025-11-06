@@ -5,6 +5,7 @@ import { ErrorComponent } from "../Error";
 import { useGetLoanStatus } from "@/data/queries/useGetLoanStatus";
 import { useGetWallet } from "@/data/queries/useGetWallet";
 import LoanBalanceCard from "@/components/PendingReviewLoanBalance";
+import RecentActivity from "../Shared/RecentActivity";
 
 const PendingReview = () => {
   const { user } = useUser();
@@ -38,7 +39,9 @@ const PendingReview = () => {
           <LoanBalanceCard amount={loanData!.Amount} />
         </div>
         <div className={styles.contentContainer}>
-          <div className={styles.pendingReviewContainer}></div>
+          <div className={styles.pendingReviewContainer}>
+            <RecentActivity />
+          </div>
         </div>
       </div>
     </>

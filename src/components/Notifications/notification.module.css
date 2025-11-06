@@ -1,5 +1,6 @@
 .container {
 }
+
 .header {
   font-family: "montserrat", sans-serif;
   font-size: 3.4vh;
@@ -7,16 +8,19 @@
   color: #204d88;
   font-weight: 700;
 }
+
 .headerText {
   font-size: 1.7vh;
   font-weight: 500;
   color: #204d88;
   margin: 0.8vh 0;
 }
+
 .notificationWrapper {
   width: 71.46vw;
   margin-top: 6.06vh;
 }
+
 .emptyContainer {
   display: flex;
   flex-direction: column;
