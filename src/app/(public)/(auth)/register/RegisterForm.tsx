@@ -12,12 +12,12 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 
 const schema = yup.object({
-  firstName: yup
+  first_Name: yup
     .string()
     .required("You must specify a first name")
     .min(2, "This first name doesn't seem valid")
     .max(32, "You're first name cannot be longer than 32 characters"),
-  lastName: yup
+  last_Name: yup
     .string()
     .required("You must specify a last name")
     .min(2, "This last name doesn't seem valid")
@@ -50,8 +50,8 @@ const RegisterForm = () => {
   const signUpMutation = useSignup();
   const formik = useFormik<RegisterSchema>({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      first_Name: "",
+      last_Name: "",
       email: "",
       phoneNumber: "",
       password: "",
@@ -61,7 +61,10 @@ const RegisterForm = () => {
     onSubmit: (values) => {
       signUpMutation.mutate(
         {
-          ...values,
+          firstName: values.first_Name,
+          lastName: values.last_Name,
+          email: values.email,
+          password: values.password,
           mobileNumber: values.phoneNumber,
         },
         {
@@ -87,9 +90,9 @@ const RegisterForm = () => {
               label="First Name"
               type="text"
               placeholder="Enter your first Name"
-              id="firstName"
-              errors={handleErrorDisplay(formik, "firstName")}
-              {...formik.getFieldProps("firstName")}
+              id="first_Name"
+              errors={handleErrorDisplay(formik, "first_Name")}
+              {...formik.getFieldProps("first_Name")}
             />
           </div>
           <div className={styles.inputFlex}>
@@ -97,9 +100,9 @@ const RegisterForm = () => {
               label="Last Name"
               type="text"
               placeholder="Enter your last name"
-              id="lastName"
-              errors={handleErrorDisplay(formik, "lastName")}
-              {...formik.getFieldProps("lastName")}
+              id="last_Name"
+              errors={handleErrorDisplay(formik, "last_Name")}
+              {...formik.getFieldProps("last_Name")}
             />
           </div>
         </div>
