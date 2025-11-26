@@ -1,19 +1,27 @@
 import styles from "./recentactivity.module.css";
 import Image from "next/image";
-import NotificationContainer from "@/components/NotificationContainer";
+
+interface Activity {
+  id: string;
+  title: string;
+  description?: string;
+  amount?: number;
+  time: string;
+  type?: "deposit" | "withdrawal" | "created" | "update";
+}
 
 type Props = {
-  activity?: any[];
+  activity?: Activity[];
 };
 
 const RecentActivity: React.FC<Props> = ({ activity }) => {
-  if (!activity || activity.length == 0) {
+  if (!activity || activity.length === 0) {
     return (
       <div className={styles.container}>
         <div className={styles.notificationWrapper}>
           <div className={styles.emptyContainer}>
             <Image
-              src={"/noNotification.png"}
+              src="/noNotification.png"
               alt="No notification image"
               width={100}
               height={100}
@@ -27,32 +35,25 @@ const RecentActivity: React.FC<Props> = ({ activity }) => {
 
   return (
     <div className={styles.activities}>
-      <h5>Recent activitiy</h5>
-      <div className={styles.activitiesList}>
-        <h4>
-          <Image
-            src="/activityLogo.png"
-            alt="Activity Logo"
-            width={30}
-            height={30}
-          />
-          PAZ family vault created
-        </h4>
-        <p>2:45pm</p>
-      </div>
-      <div className={styles.activitiesList}>
-        <h4>
-          <Image
-            src="/activityLogo.png"
-            alt="Activity Logo"
-            width={30}
-            height={30}
-          />
-          Money withdrawn from savings
-        </h4>
-        <h6>₦ 50,000</h6>
-        <p>2 days ago</p>
-      </div>
+      <h5>Recent activity</h5>
+
+      {activity.map((item) => (
+        <div key={item.id} className={styles.activitiesList}>
+          <h4>
+            <Image
+              src="/activityLogo.png"
+              alt="Activity Logo"
+              width={30}
+              height={30}
+            />
+            {item.title}
+          </h4>
+
+          {item.amount && <h6>₦ {item.amount.toLocaleString()}</h6>}
+
+          <p>{item.time}</p>
+        </div>
+      ))}
     </div>
   );
 };

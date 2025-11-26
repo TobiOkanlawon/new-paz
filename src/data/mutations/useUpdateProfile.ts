@@ -6,25 +6,33 @@ import { AxiosError } from "axios";
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<ProfileResponseData, AxiosError, { email: string; profileData: TProfile }>({
-    mutationKey: ['update-profile'],
-     mutationFn: async ({ email, profileData }: { email: string; profileData: TProfile }) => {
-      const res = await axios.post<ProfileResponseData>(`/v1/users/user/set-profile?email=${email}`, profileData);
+  return useMutation<
+    ProfileResponseData,
+    AxiosError<ErrorResponse>,
+    { email: string; profileData: TProfile }
+  >({
+    mutationKey: ["update-profile"],
+
+    mutationFn: async ({ email, profileData }) => {
+      const res = await axios.post<ProfileResponseData>(
+        `/v1/users/user/set-profile?email=${email}`,
+        profileData
+      );
       return res.data;
     },
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
-
       toast.success("Profile updated successfully");
     },
 
-    onError: (error: AxiosError<unknown, any>) => {
+    onError: (error) => {
       console.error("Failed to update profile:", error);
 
       const message =
-        (error.response?.data as ErrorResponse | undefined)?.responseMessage ||
+        error.response?.data?.responseMessage ||
         "Failed to update profile 😢";
+
       toast.error(message);
     },
   });

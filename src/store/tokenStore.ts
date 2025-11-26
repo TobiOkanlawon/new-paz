@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 interface TokenState {
   token: string | null;
@@ -15,8 +15,13 @@ const useToken = create<TokenState>()(
       removeToken: () => set(() => ({ token: null })),
     }),
     {
-      name: 'auth-token', // key used in localStorage
-      partialize: (state) => ({ token: state.token }), // only persist `token`
+      name: "auth-token",
+
+      partialize: (state) => ({
+        token: state.token,
+      }),
+
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

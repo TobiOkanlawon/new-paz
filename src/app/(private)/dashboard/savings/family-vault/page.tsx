@@ -11,45 +11,58 @@ import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
 
+interface Family {
+  title: string;
+  description: string;
+  targetAmount: number;
+  amount: number;
+  accountNo: string;
+  owner?: boolean;
+  members?: number;
+  url?: string;
+}
+
+
 const FamilyVault = () => {
   const { user } = useUser();
-  const { data, isLoading, error } = useGetAccountDetails(
-    user?.email as string,
-  );
-  if (isLoading) {
-    return <Loading />;
-  }
 
-  const calculateTotal = (allPlans: TTargetSavingsPlan[]) => {
-    return allPlans.reduce((p, c) => p + c.amount, 0);
-  };
-
+  // ✅ All hooks must be at the top
   const [showMoney, setShowMoney] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const handleToggle = () => setShowMoney((prev) => !prev);
 
+  const { data, isLoading, error } = useGetAccountDetails(
+    user?.email as string
+  );
+
+  const handleToggle = () => setShowMoney((prev) => !prev);
   const showModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (error) {
+  if (isLoading) return <Loading />;
+  if (error)
     return (
       <ErrorComponent message="An error occurred" retryFunction={() => {}} />
     );
-  }
 
-  const families: any[] = (data!.familyVault as any[]).map((card) => ({
-    ...card,
-    Title: card.Title || card.title,
-  }));
+const families: Family[] = data!.familyVault.map((plan: TTargetSavingsPlan) => ({
+  title: plan.Title ?? "",
+  description: plan.description ?? "",
+  targetAmount: plan.targetAmount ?? 0,
+  amount: plan.amount ?? 0,
+  accountNo: plan.accountNo ?? "",
+  owner: true,
+  members: 1,
+  url: "",
+}));
 
-  console.log(data);
+
+  const calculateTotal = (allPlans: Family[]) =>
+    allPlans.reduce((p, c) => p + c.amount, 0);
+
   return (
     <div className={styles.container}>
       <Back />
+
       <div className={styles.topContainer}>
         <div className={styles.topContainerLeft}>
           <h2 className={styles.header}>PAZ Family Vault</h2>
@@ -57,6 +70,7 @@ const FamilyVault = () => {
             Explore all your family vault savings plans here.
           </p>
         </div>
+
         <div className={styles.topContainerRight}>
           <Button onClick={showModal} className="px-8">
             Create a Family Vault Plan
@@ -70,6 +84,7 @@ const FamilyVault = () => {
       />
 
       <FamilyCard Families={families} />
+
       <FamilyVaultModal
         isActive={isModalVisible}
         handleCloseModal={closeModal}

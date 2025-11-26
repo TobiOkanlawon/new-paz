@@ -14,7 +14,7 @@ export const useApplyForLoan = () => {
   const queryClient = useQueryClient();
   type LoanApplicationResponse = { success: boolean; message: string; data?: unknown };
 
-  return useMutation<LoanApplicationResponse, AxiosError, TLoanApplication>({
+  return useMutation<LoanApplicationResponse, unknown, TLoanApplication>({
     mutationKey: ["loan-application"],
     mutationFn: async (data) => {
       return await axios
