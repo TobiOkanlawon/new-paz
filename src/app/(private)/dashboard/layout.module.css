@@ -25,4 +25,8 @@
     align-items: center;
     height: auto;
   }
+
+  .content {
+    padding: 15px 0px;
+}
 }

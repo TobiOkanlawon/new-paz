@@ -33,6 +33,7 @@
 .addBVN > button {
   margin: 0;
   width: 27rem;
+  font-size: .7rem !important;
 }
 .addAccount > p,
 .addBVN > p {
@@ -62,6 +63,10 @@
 @media screen and (max-width: 430px) {
   .addAccount > button,
   .addBVN > button {
-    font-size: .9rem !important;
+    font-size: .6rem !important;
+  }
+
+  .modalDescription {
+    font-size: 0.7rem;
   }
 }
