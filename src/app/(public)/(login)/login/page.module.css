@@ -53,11 +53,12 @@
 .right {
   display: flex;
   flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
   width: 40vw;
 }
+
 .right h3 {
   font-family: var(--font-poppins);
   font-weight: 700;
@@ -89,6 +90,10 @@
 
 .form {
   width: 22rem;
+}
+
+.password {
+  width: 100%;
 }
 
 .formBottom div a {
@@ -143,6 +148,7 @@
     width: 92%;
   }
 }
+
 @media screen and (width: 1024px) and (height: 600px) {
   .PazIlls {
     object-fit: cover;
@@ -155,54 +161,67 @@
   .logo {
     margin: 0 auto;
   }
+
   .container {
     flex-direction: column;
     height: auto;
   }
+
   .left {
     width: 100vw;
     height: auto;
     margin: 0;
     padding: 0 2rem;
   }
+
   .right {
     width: 90vw;
     height: auto;
   }
+
   .right h3 {
     margin-top: 2rem;
   }
+
   .formBottom {
     width: 100%;
   }
+
   .form {
     width: 70%;
   }
 }
+
 @media screen and (max-width: 580px) {
   .left {
     display: none;
   }
+
   .right {
     display: none;
   }
+
   .mobile {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    padding-bottom: 5rem;
+    height: 100%;
     background-color: #243d7d;
   }
+
   .logo {
     padding: 2em 2em 2em 2em;
   }
+
   .mobileContainer {
-    padding: 2rem;
+    padding: 2rem 2rem 1.2rem;
     background-color: #fff;
     width: 70vw;
     border-radius: 1rem;
   }
+
   .mobileContainer h3 {
     font-family: Poppins;
     font-weight: 700;
@@ -298,27 +317,33 @@
 
   .createNewAccount {
     color: #204d88;
-    display: block;
     text-align: center;
     font-family: var(--font-montserrat);
-    font-weight: 600;
-    font-size: 10px;
-    line-height: 100%;
     letter-spacing: 0%;
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 100%;
     text-decoration: none;
+    display: block;
+    display: flex;
+    gap: .5rem;
   }
 }
+
 @media screen and (min-width: 1440px) {
   .right {
     padding-top: 5rem;
   }
+
   .form {
     width: 70%;
   }
+
   .right h3 {
     font-size: 2rem;
     margin-bottom: 3rem;
   }
+
   .formBottom {
     width: 95%;
   }

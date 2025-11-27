@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100vw;
@@ -8,29 +7,46 @@
   height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .left {
   display: flex;
-  position: relative;
+  position: fixed;
   flex-direction: column;
   align-items: center;
   width: 45vw;
-  height: 100%;
+  height: 100vh;
   /* flex: 1; */
   background-color: #243d7d;
   z-index: 2;
+  left: 0;
+  top: 0;
+  overflow: hidden;
 }
+
+.right {
+  flex: 1;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin-left: 0;
+  margin-bottom: 1rem;
+}
+
 .lightbulb {
   margin-top: rem;
 }
+
 .spacer {
   flex-grow: 1;
 }
+
 .logo {
   margin: 2rem;
   align-self: start;
 }
+
 .leftContainer {
   text-align: start;
   z-index: 2;
@@ -38,6 +54,7 @@
   margin: 1rem 0 0rem 2rem;
   position: relative;
 }
+
 .leftContainer p {
   font-family: var(--font-montserrat);
   font-weight: 700;
@@ -46,6 +63,7 @@
   letter-spacing: 0px;
   color: #8dccfe;
 }
+
 .leftContainer h1 {
   font-family: var(--font-poppins);
   font-weight: 700;
@@ -57,65 +75,67 @@
   max-width: 419px;
   z-index: 1;
 }
+
 .coin {
   position: absolute;
   bottom: 2%;
   left: 2%;
   z-index: 1;
 }
+
 .money {
   position: absolute;
   top: 10rem;
   left: -5%;
 }
+
 .target {
   position: absolute;
   top: 10rem;
   right: 0;
   z-index: 1;
 }
+
 .arrow {
   position: absolute;
   bottom: 0;
   right: 10%;
   z-index: 1;
 }
+
 @media screen and (max-width: 1030px) {
-  .logo {
-    margin: 2rem auto;
-  }
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
   .left {
-    width: 100vw;
+    display: none;
+  }
+
+  .container {
+    flex-direction: row;
     height: auto;
-    margin: 0;
-    padding: 0 2rem;
+    display: flex;
   }
-  .leftContainer{
-    text-align: center;
-  }
-  .leftContainer h1{
-    margin: 1rem auto;
-  }
+
   .right {
     width: 100vw !important;
     height: auto;
+    margin-left: 0;
   }
+
   .right h3 {
     margin-top: 2rem;
   }
 }
+
 @media screen and (max-width: 580px) {
+
   .left,
   .right {
     display: none;
   }
+
   .mobile {
     width: 90vw;
   }
+
   .mobile h3 {
     color: #243d7d;
     font-family: var(--font-poppins);

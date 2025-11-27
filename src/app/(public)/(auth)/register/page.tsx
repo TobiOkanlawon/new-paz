@@ -10,6 +10,13 @@ const register = () => {
   return (
     <>
       <div className={styles.right}>
+        <Image
+          src={"/PAZLogo2.png"}
+          alt="Logo"
+          width={104}
+          height={34.76}
+          className={styles.logoMain}
+        />
         <RegisterForm />
       </div>
       <div className={styles.mobile}>

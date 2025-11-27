@@ -2,7 +2,6 @@ import { axiosInstance as axios } from "@/libs/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import useUser from "@/store/userStore";
 
 // Define your mutation input
 type AddBVNData = {
