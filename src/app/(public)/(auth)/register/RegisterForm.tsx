@@ -103,45 +103,47 @@ const RegisterForm = () => {
             />
           </div>
         </div>
-        <div className={styles.inputFlex}>
-          <Input
-            label="Email Address"
-            type="email"
-            placeholder="Enter your email address"
-            id="email"
-            errors={handleErrorDisplay(formik, "email")}
-            {...formik.getFieldProps("email")}
-          />
-        </div>
-        <div className={styles.inputFlex}>
-          <Input
-            label="Phone Number"
-            type="tel"
-            placeholder="Enter your phone number"
-            id="phoneNumber"
-            errors={handleErrorDisplay(formik, "phoneNumber")}
-            {...formik.getFieldProps("phoneNumber")}
-          />
-        </div>
-        <div className={styles.inputFlex}>
-          <Input
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
-            id="password"
-            errors={handleErrorDisplay(formik, "password")}
-            {...formik.getFieldProps("password")}
-          />
-        </div>
-        <div className={styles.inputFlex}>
-          <Input
-            label="Re - Password"
-            type="password"
-            placeholder="Enter Password Again"
-            id="confirmPassword"
-            errors={handleErrorDisplay(formik, "confirmPassword")}
-            {...formik.getFieldProps("confirmPassword")}
-          />
+        <div className={styles.centralize}>
+          <div className={styles.inputFlex}>
+            <Input
+              label="Email Address"
+              type="email"
+              placeholder="Enter your email address"
+              id="email"
+              errors={handleErrorDisplay(formik, "email")}
+              {...formik.getFieldProps("email")}
+            />
+          </div>
+          <div className={styles.inputFlex}>
+            <Input
+              label="Phone Number"
+              type="tel"
+              placeholder="Enter your phone number"
+              id="phoneNumber"
+              errors={handleErrorDisplay(formik, "phoneNumber")}
+              {...formik.getFieldProps("phoneNumber")}
+            />
+          </div>
+          <div className={styles.inputFlex}>
+            <Input
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              id="password"
+              errors={handleErrorDisplay(formik, "password")}
+              {...formik.getFieldProps("password")}
+            />
+          </div>
+          <div className={styles.inputFlex}>
+            <Input
+              label="Re - Password"
+              type="password"
+              placeholder="Enter Password Again"
+              id="confirmPassword"
+              errors={handleErrorDisplay(formik, "confirmPassword")}
+              {...formik.getFieldProps("confirmPassword")}
+            />
+          </div>
         </div>
 
         <p>

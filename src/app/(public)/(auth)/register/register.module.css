@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0;
 }
+
 .left {
   display: flex;
   position: relative;
@@ -17,12 +18,15 @@
   background-color: #243d7d;
   z-index: 2;
 }
+
 .lightbulb {
   margin-top: rem;
 }
+
 .spacer {
   flex-grow: 1;
 }
+
 .logo {
   margin: 2rem;
   align-self: start;
@@ -61,7 +65,7 @@
   width: 55vw;
   padding: 2rem 1rem;
   margin: auto;
-   justify-content: center; 
+  justify-content: center;
 }
 .right h3 {
   color: #243d7d;
@@ -77,8 +81,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 700px; 
-  gap: 1rem; 
+  max-width: 700px;
+  gap: 1rem;
 }
 .returnToLogin {
   color: #204d88;
@@ -124,7 +128,7 @@
 .flexed {
   width: 100%;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
 }
@@ -139,7 +143,7 @@
 }
 
 .buttonContainer > button {
-    width: 100%;
+  width: 100%;
 }
 
 .linkWrapper {
@@ -202,6 +206,13 @@
   }
   .right h3 {
     margin-top: 2rem;
+  }
+
+  .centralize {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -284,16 +295,30 @@
   }
 
   .mobile a {
-    font-size: .8rem;
+    font-size: 0.8rem;
     color: #204d88;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
+  .centralize {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 @media screen and (max-width: 480px) {
   .mobile {
     width: 90vw;
+  }
+
+  .centralize {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
