@@ -58,7 +58,7 @@ const RegisterForm = () => {
       confirmPassword: "",
     },
     validationSchema: schema,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       signUpMutation.mutate(
         {
           ...values,
@@ -67,6 +67,9 @@ const RegisterForm = () => {
         {
           onSuccess: () => {
             router.replace("/login");
+          },
+          onError: () => {
+            setSubmitting(false);
           },
         },
       );

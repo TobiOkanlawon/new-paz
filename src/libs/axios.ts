@@ -49,5 +49,6 @@ axiosInstance.interceptors.response.use(
     if (!error.response) {
       toast.error("An error occured");
     }
+    return Promise.reject(data);
   },
 );
