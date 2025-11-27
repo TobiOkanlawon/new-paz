@@ -108,7 +108,7 @@ font-family: 'Montserrat', sans-serif;
     flex-direction: column;
 }
 
-@media screen and (max-width: 430px){
+@media screen and (max-width: 500px){
     .modalDetails{
         font-size: .9rem;
         font-weight: 400;
