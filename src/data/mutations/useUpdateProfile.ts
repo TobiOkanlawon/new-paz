@@ -8,7 +8,7 @@ export const useUpdateProfile = () => {
 
   return useMutation<
     ProfileResponseData,
-    AxiosError<ErrorResponse>,
+    ErrorResponse,
     { email: string; profileData: TProfile }
   >({
     mutationKey: ["update-profile"],
@@ -22,18 +22,14 @@ export const useUpdateProfile = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries({ queryKey: ["get-profile"] });
       toast.success("Profile updated successfully");
     },
 
     onError: (error) => {
       console.error("Failed to update profile:", error);
 
-      const message =
-        error.response?.data?.responseMessage ||
-        "Failed to update profile 😢";
-
-      toast.error(message);
+      toast.error(error?.responseMessage);
     },
   });
 };
