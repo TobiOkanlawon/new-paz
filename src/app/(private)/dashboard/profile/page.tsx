@@ -49,7 +49,7 @@ type TProfileFormValues = {
 const Profile = () => {
   const { user } = useUser();
   const { data, isLoading, error } = useGetProfile(user?.email as string);
-  const { mutateAsync } = useUpdateProfile();
+  const { mutate } = useUpdateProfile();
   const { isPending: isUpdating } = useUpdateProfile();
 
   const formik = useFormik<TProfileFormValues>({
@@ -67,36 +67,30 @@ const Profile = () => {
     },
     validationSchema: schema,
     onSubmit: async (values) => {
-      try {
-        const formattedValues = {
-          address: values.postalAddress,
-          gender: values.gender,
-          email: values.emailAddress,
-          birthday: values.birthday,
-          phoneNumber: values.phoneNumber,
-          nextOfKinFirstName: values.nextOfKinFirstName,
-          nextOfKinLastName: values.nextOfKinLastName,
-          nextOfKinEmail: values.nextOfKinEmail,
-          nextOfKinPhoneNumber: values.nextOfKinPhoneNumber,
-          nextOfKinRelationship: values.relationship,
-        };
+      const formattedValues = {
+        address: values.postalAddress,
+        gender: values.gender,
+        email: values.emailAddress,
+        birthday: values.birthday,
+        phoneNumber: values.phoneNumber,
+        nextOfKinFirstName: values.nextOfKinFirstName,
+        nextOfKinLastName: values.nextOfKinLastName,
+        nextOfKinEmail: values.nextOfKinEmail,
+        nextOfKinPhoneNumber: values.nextOfKinPhoneNumber,
+        nextOfKinRelationship: values.relationship,
+      };
 
-        await toast.promise(
-          mutateAsync({
-            email: data?.email as string,
-            profileData: formattedValues,
-          }),
-          {
-            pending: "Updating profile...",
-            error: "Failed to update profile 😢",
+      mutate(
+        { email: data?.email as string, profileData: formattedValues },
+        {
+          onSuccess: () => {
+            toast.success("Profile updated successfully");
           },
-          { theme: "colored" },
-        );
-
-        setIsSubmitted(true);
-      } catch (error) {
-        console.error("❌ Profile update failed:", error);
-      }
+          onError: () => {
+            toast.error("Profile failed to update");
+          },
+        },
+      );
     },
 
     enableReinitialize: true,
