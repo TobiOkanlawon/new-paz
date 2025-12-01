@@ -11,6 +11,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
 
   const handleLogout = () => {
     removeToken();
+    useUser.persist.clearStorage();
   };
 
   const pathname = usePathname();

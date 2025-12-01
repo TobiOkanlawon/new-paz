@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { removeToken } from "@/libs/auth";
+import useUser from "@/store/userStore";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const handleLogout = () => {
       removeToken();
+      useUser.persist.clearStorage();
       queryClient.removeQueries();
       router.replace("/login");
     };

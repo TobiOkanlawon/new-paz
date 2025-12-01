@@ -12,12 +12,11 @@ const useUser = create<UserStore>()(
     (set) => ({
       user: null,
 
-      // Partial update
       setUser: (updatedFields) =>
         set((state) => {
           if (!state.user) {
             console.warn("User is null. Can't perform partial update.");
-            return {};
+            return state;
           }
 
           return {
@@ -28,7 +27,6 @@ const useUser = create<UserStore>()(
           };
         }),
 
-      // Full replacement
       replaceUser: (newUser) =>
         set(() => ({
           user: newUser,
@@ -40,5 +38,6 @@ const useUser = create<UserStore>()(
     },
   ),
 );
+
 
 export default useUser;
