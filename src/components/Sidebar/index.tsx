@@ -38,20 +38,22 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
   return (
     <aside className={clsx(styles.sidebar, !isOpen && styles.collapsed)}>
       <div className={styles.sidebarContainer}>
-        <h3>Welcome {user?.first_name}</h3>
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={clsx(
-              styles.sidebarContent,
-              pathname === link.href && styles.active,
-            )}
-          >
-            <Image src={link.icon} alt={link.label} width={24} height={24} />
-            <p>{link.label}</p>
-          </Link>
-        ))}
+        <div className={styles.sidebarContainer1}>
+          <h3>Welcome {user?.first_name}</h3>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={clsx(
+                styles.sidebarContent,
+                pathname === link.href && styles.active,
+              )}
+            >
+              <Image src={link.icon} alt={link.label} width={24} height={24} />
+              <p>{link.label}</p>
+            </Link>
+          ))}
+        </div>
         <Link onClick={handleLogout} href="/" className={styles.logout}>
           <Image src="/sidebarLogout.png" alt="Logout" width={24} height={24} />
           <p>Logout</p>

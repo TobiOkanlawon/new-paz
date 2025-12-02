@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./navbar.module.css";
 import Image from "next/image";
 import NotificationDropdown from "@/components/NotificationDropdown";
@@ -9,8 +9,27 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const updateNavHeight = () => {
+      if (navRef.current) {
+        const navHeight = navRef.current.offsetHeight;
+        document.documentElement.style.setProperty(
+          "--navbar-height",
+          `${navHeight}px`
+        );
+      }
+    };
+
+    updateNavHeight();
+    window.addEventListener("resize", updateNavHeight);
+
+    return () => window.removeEventListener("resize", updateNavHeight);
+  }, []);
+
   return (
-    <nav className={styles.nav}>
+    <nav ref={navRef} className={styles.nav}>
       <div className={styles.navContainer}>
         <div className={styles.logoContainer}>
           <Image

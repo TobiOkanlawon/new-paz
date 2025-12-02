@@ -1,9 +1,10 @@
 .sidebar {
   width: 17.29vw;
   background-color: #fafafa;
-  height: 100%;
+  height: calc(100vh - var(--navbar-height, 0px));
   position: sticky;
-  top: 0;
+  top: var(--navbar-height, 0px);
+  z-index: 1;
 }
 
 .sidebarContainer {
@@ -13,6 +14,13 @@
   justify-content: space-between;
   position: sticky;
   top: 0;
+  height: 100%;
+}
+.sidebarContainer1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
 .sidebarContainer h3 {
@@ -99,18 +107,32 @@
 @media screen and (max-width: 950px) {
   .sidebar {
     left: 0;
-    top: 0;
-    height: 80rem;
+    width: 30%;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 1440px) {
   .sidebar {
-    width: 60%;
     padding: 1rem;
-    position: absolute;
-    top: 0;
+    position: fixed;
+    bottom: 0;
+    top: 2rem;
   }
   .collapsed {
     display: none;
+  }
+  .sidebarContainer h3 {
+    font-size: 1rem;
+  }
+  .sidebarContent, .logout {
+    font-size: 0.9rem;
+  }
+  .logout {
+    margin-top: 3rem;
+    margin-bottom: .2rem;
+  }
+}
+@media screen and (max-width: 450px){
+  .sidebar{
+    width: 60%;
   }
 }
