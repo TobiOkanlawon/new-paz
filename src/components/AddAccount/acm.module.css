@@ -157,4 +157,7 @@
     .submitButton{
         font-size: .9rem;
     }
+    .formContainer{
+        width: 100%;
+    }
 }

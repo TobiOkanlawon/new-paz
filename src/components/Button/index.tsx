@@ -2,6 +2,7 @@ import React, { lazy } from "react";
 import styles from "./button.module.css";
 import clsx from "clsx";
 import { LuLoaderCircle } from "react-icons/lu";
+import Spinner from "../LoadingSpinner";
 
 type Props = {
   label?: string;
@@ -30,7 +31,7 @@ const Button = ({
       {...rest}
     >
       {loading ? (
-        <LuLoaderCircle className={styles.spinner} />
+        <Spinner className={styles.spinner} />
       ) : (
         rest.children || rest.label
       )}
