@@ -29,25 +29,15 @@ const validationSchema = Yup.object().shape({
 });
 
 const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
-  const [isAccountConfirmed, setIsAccountConfirmed] = useState(true);
-
   const mutation = useAddAccount();
 
   const { user, setUser } = useUser();
 
-  const { data, isLoading, error } = useGetWallet(user?.email as string);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <ErrorComponent message="" retryFunction={() => {}} />;
-  }
+  const { data, isLoading, error } = useGetWallet(isOpen ? (user?.email as string) : "");
 
   return (
     <div className={styles.container}>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isLoading={isLoading}>
         <div className={styles.modalWrapper}>
           <h1 className={styles.modalHeader}>Add your Account</h1>
           <p className={styles.modalDetails}>

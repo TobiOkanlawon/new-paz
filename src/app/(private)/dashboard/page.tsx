@@ -64,6 +64,7 @@ const Dashboard = () => {
         onSuccess: () => {
           // set user to all of user but the bvn is verified
           setUser({ is_bvn_verified: true });
+          console.log("is BVN set? ", user.is_bvn_verified)
           navigateToHomeModal();
         },
       },
@@ -73,7 +74,7 @@ const Dashboard = () => {
 
   const handleBVNMOpen = () => setIsBVNModalOpen(true);
 
-  const handleACMOpen = () => {setIsACModalOpen(true); console.log(isACModalOpen)};
+  const handleACMOpen = () => {setIsACModalOpen(true); console.log("Is ACM open? ", isACModalOpen);};
 
   const [isSavingsAmountVisible, setIsSavingsAmountVisible] = useState(true);
   const [isLoansAmountVisible, setIsLoansAmountVisible] = useState(true);
