@@ -36,7 +36,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
     { href: "/thrift", icon: "/sidebarThrift.png", label: "Thrift" },
   ];
   return (
-    <aside className={clsx(styles.sidebar, !isOpen && styles.collapsed)}>
+    <aside className={clsx(styles.sidebar, isOpen && styles.open)}>
       <div className={styles.sidebarContainer}>
         <div className={styles.sidebarContainer1}>
           <h3>Welcome {user?.first_name}</h3>

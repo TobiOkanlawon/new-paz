@@ -1,5 +1,5 @@
 .sidebar {
-  width: 17.29vw;
+  width: 19.29vw;
   background-color: #fafafa;
   height: calc(100vh - var(--navbar-height, 0px));
   position: sticky;
@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-bottom: 4rem;
   color: #4e5a66;
   text-decoration: none;
@@ -97,44 +97,45 @@
 
 @media screen and (max-width: 1200px) {
   .sidebar {
-    width: 20rem;
-    padding: 1rem;
-    position: absolute;
-    top: 0;
-  }
-  .collapsed {
-    display: none;
-  }
-}
-@media screen and (max-width: 950px) {
-  .sidebar {
-    left: 0;
-    width: 30%;
-  }
-}
-@media screen and (max-width: 1440px) {
-  .sidebar {
+    width: 25.29vw;
     padding: 1rem;
     position: fixed;
-    bottom: 0;
-    top: 2rem;
+    left: 0;
+    top: var(--navbar-height, 0px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    height: calc(100vh - var(--navbar-height, 0px));
+    background-color: #fafafa;
+    z-index: 10;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   }
-  .collapsed {
-    display: none;
+
+  .sidebar.open {
+    transform: translateX(0);
   }
+}
+
+@media screen and (max-width: 950px) {
+  .sidebar {
+    width: 36vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .sidebar {
+    width: 60vw;
+  }
+
   .sidebarContainer h3 {
     font-size: 1rem;
   }
+
   .sidebarContent, .logout {
     font-size: 0.9rem;
   }
+
   .logout {
     margin-top: 3rem;
-    margin-bottom: .2rem;
-  }
-}
-@media screen and (max-width: 450px){
-  .sidebar{
-    width: 60%;
+    margin-bottom: 0.2rem;
   }
 }
