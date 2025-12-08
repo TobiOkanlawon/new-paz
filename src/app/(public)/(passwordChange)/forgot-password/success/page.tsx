@@ -8,7 +8,7 @@ const registerSuccess = () => {
   return (
     <>
       <div className={styles.right}>
-        <h3>Create Account Succesfully</h3>
+        <h3>You've got a mail</h3>
         <Image
           src={"/forgotPassword.png"}
           alt="Password Reset"

@@ -8,7 +8,6 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 
 const schema = yup.object({
-  email: yup.string().email("Enter a valid email").required(),
   password: yup
     .string()
     .required("Please Enter your password")
@@ -16,16 +15,13 @@ const schema = yup.object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Password must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
     ),
-  remember: yup.boolean(),
 });
 
 type ResetPasswordSchema = yup.InferType<typeof schema>;
 const ResetPasswordForm = () => {
   const formik = useFormik<ResetPasswordSchema>({
     initialValues: {
-      email: "",
       password: "",
-      remember: false,
     },
     validationSchema: schema,
     onSubmit: (values, formikHelpers) => {

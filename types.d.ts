@@ -112,3 +112,10 @@ type TFamilyVaultPlan = {
   ownerID: string;
   members: Person[];
 };
+
+type ResetPasswordResponseData = {
+  success: boolean;
+  message: string;
+  requestId?: string;     // optional but common
+  timestamp?: string;     // optional — ISO date 
+}
