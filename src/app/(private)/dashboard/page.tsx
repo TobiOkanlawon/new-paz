@@ -15,11 +15,11 @@ import { AccountCard } from "@/components/Dashboard/AccountCard/index";
 import { Loading } from "@/components/Loading";
 import { ErrorComponent } from "@/components/Error";
 import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
+import { useQueryClient } from "@tanstack/react-query";
+import { removeToken } from "@/libs/auth";
 
 const Dashboard = () => {
-  const user = useUser((state) => state.user) as TUser;
-
-  const { user: userInformation, setUser } = useUser();
+  const { user, setUser } = useUser();
 
   // Todo: Handle total savings as amalgamation of balance of all savings plans
   const totalSavings = 0;
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   // All My Modal States
   const [isSModalOpen, setIsSModalOpen] = useState(
-    !(userInformation?.is_bvn_verified && userInformation?.primary_account_linked)
+    !(user?.is_bvn_verified && user?.primary_account_linked),
   );
   const [isASSModalOpen, setIsASSModalOpen] = useState(false);
   const [isACModalOpen, setIsACModalOpen] = useState(false);
@@ -64,7 +64,7 @@ const Dashboard = () => {
         onSuccess: () => {
           // set user to all of user but the bvn is verified
           setUser({ is_bvn_verified: true });
-          console.log("is BVN set? ", user.is_bvn_verified)
+          console.log("is BVN set? ", user.is_bvn_verified);
           navigateToHomeModal();
         },
       },
@@ -74,7 +74,10 @@ const Dashboard = () => {
 
   const handleBVNMOpen = () => setIsBVNModalOpen(true);
 
-  const handleACMOpen = () => {setIsACModalOpen(true); console.log("Is ACM open? ", isACModalOpen);};
+  const handleACMOpen = () => {
+    setIsACModalOpen(true);
+    console.log("Is ACM open? ", isACModalOpen);
+  };
 
   const [isSavingsAmountVisible, setIsSavingsAmountVisible] = useState(true);
   const [isLoansAmountVisible, setIsLoansAmountVisible] = useState(true);
@@ -82,9 +85,11 @@ const Dashboard = () => {
     useState(true);
 
   const { data, error, isLoading } = useGetAccountDetails(
-  user?.email, 
-  // userInformation?.primary_account_linked ?? false
-);
+    user?.email as string,
+    // user?.primary_account_linked ?? false
+  );
+
+  const qc = useQueryClient();
 
   if (isLoading) return <Loading />;
 
@@ -97,6 +102,17 @@ const Dashboard = () => {
     );
 
   if (user == null) {
+    // if user is null, logout
+
+    const handleLogout = () => {
+      removeToken();
+      qc.resetQueries();
+      qc.clear();
+      useUser.persist.clearStorage();
+    };
+
+    handleLogout();
+
     return <>Error with user</>;
   }
 
@@ -231,7 +247,7 @@ const Dashboard = () => {
                 disabled={true}
               >
                 {/* Get Started */}
-                Coming Soon 
+                Coming Soon
               </button>
             </div>
           </div>

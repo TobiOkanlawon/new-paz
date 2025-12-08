@@ -5,12 +5,16 @@ import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { removeToken } from "@/libs/auth";
 import useUser from "@/store/userStore";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Sidebar({ isOpen }: { isOpen: boolean }) {
   const { user } = useUser();
+  const qc = useQueryClient();
 
   const handleLogout = () => {
     removeToken();
+    qc.resetQueries();
+    qc.clear();
     useUser.persist.clearStorage();
   };
 
@@ -28,12 +32,12 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
       label: "Savings",
     },
     { href: "/dashboard/loans", icon: "/sidebarLoan.png", label: "Loans" },
-    {
-      href: "/investments",
-      icon: "/sidebarInvestment.png",
-      label: "Investments",
-    },
-    { href: "/thrift", icon: "/sidebarThrift.png", label: "Thrift" },
+    // {
+    //   href: "/investments",
+    //   icon: "/sidebarInvestment.png",
+    //   label: "Investments",
+    // },
+    // { href: "/thrift", icon: "/sidebarThrift.png", label: "Thrift" },
   ];
   return (
     <aside className={clsx(styles.sidebar, isOpen && styles.open)}>
