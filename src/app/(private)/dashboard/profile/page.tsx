@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./profile.module.css";
 import Input from "@/components/Input";
 import SelectGroup from "@/components/InputGroup/SelectGroup";
@@ -27,6 +27,7 @@ const genderOptions = [
 
 const relationshipOptions = [
   { label: "Father", value: "father" },
+  { label: "Spouse", value: "spouse" },
   { label: "Mother", value: "mother" },
   { label: "Brother", value: "brother" },
   { label: "Sister", value: "sister" },
@@ -114,14 +115,11 @@ const Profile = () => {
     for (const value of Object.values(formik.values)) {
       if (typeof value == "string" && value !== "") {
         completed++;
-        continue;
       }
     }
 
-    console.log(completed, Object.keys(formik.values).length);
-
     const ratio = completed / Object.keys(formik.values).length;
-    return ratio * 100;
+    return Math.floor(ratio * 100);
   };
 
   if (isLoading) {
