@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./acm.module.css";
-import Modal from "../Modal";
+import Modal2 from "../Modal2";
 import Button from "../Button";
 import { LuArrowLeft } from "react-icons/lu";
 import { Formik, Form, Field, FieldProps } from "formik";
@@ -37,7 +37,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
 
   return (
     <div className={styles.container}>
-      <Modal isOpen={isOpen} onClose={onClose} isLoading={isLoading}>
+      <Modal2 isOpen={isOpen} isLoading={isLoading}>
         <div className={styles.modalWrapper}>
           <h1 className={styles.modalHeader}>Add your Account</h1>
           <p className={styles.modalDetails}>
@@ -127,7 +127,7 @@ const AccountModal: React.FC<acmPropTypes> = ({ isOpen, onClose }) => {
             )}
           </Formik>
         </div>
-      </Modal>
+      </Modal2>
     </div>
   );
 };

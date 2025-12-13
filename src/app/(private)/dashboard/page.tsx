@@ -469,6 +469,8 @@ const Dashboard = () => {
           isOpen={isSModalOpen}
           handleBVNMopen={handleBVNMOpen}
           handleACMopen={handleACMOpen}
+          isAllLinked={user?.is_bvn_verified && user?.primary_account_linked}
+          onClose={() => setIsSModalOpen(false)}
         />
       )}
       {isACModalOpen && (

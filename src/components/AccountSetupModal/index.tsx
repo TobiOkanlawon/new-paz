@@ -10,12 +10,16 @@ interface ASMProps {
   isOpen: boolean;
   handleBVNMopen: () => void;
   handleACMopen: () => void;
+  onClose: () => void;
+  isAllLinked?: boolean;
 }
 
 const SetupModal: React.FC<ASMProps> = ({
   isOpen,
   handleBVNMopen,
   handleACMopen,
+  onClose,
+  isAllLinked,
 }) => {
   const { user } = useUser();
 
@@ -26,7 +30,7 @@ const SetupModal: React.FC<ASMProps> = ({
 
   return (
     <div className={styles.container}>
-      <Modal2 isOpen={isOpen}>
+      <Modal2 isOpen={isOpen} onClose={isAllLinked ? onClose : undefined}>
         <div className={styles.modalHeader}>
           <h2>Welcome</h2>
           <Image src={"/confettiBall.png"} alt="" width={45} height={45} />
