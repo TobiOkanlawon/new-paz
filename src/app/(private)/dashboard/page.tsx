@@ -467,9 +467,6 @@ const Dashboard = () => {
       {isSModalOpen && (
         <SetupModal
           isOpen={isSModalOpen}
-          onClose={() => {
-            setIsSModalOpen(false);
-          }}
           handleBVNMopen={handleBVNMOpen}
           handleACMopen={handleACMOpen}
         />

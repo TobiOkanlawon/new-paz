@@ -8,14 +8,12 @@ import useUser from "@/store/userStore";
 
 interface ASMProps {
   isOpen: boolean;
-  // onClose: () => void;
   handleBVNMopen: () => void;
   handleACMopen: () => void;
 }
 
 const SetupModal: React.FC<ASMProps> = ({
   isOpen,
-  // onClose,
   handleBVNMopen,
   handleACMopen,
 }) => {
