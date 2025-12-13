@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./asm.module.css";
-import Modal from "../Modal";
+import Modal2 from "../Modal2";
 import Image from "next/image";
 import { LuUserRoundPlus, LuHash } from "react-icons/lu";
 import Button from "../Button";
@@ -8,14 +8,14 @@ import useUser from "@/store/userStore";
 
 interface ASMProps {
   isOpen: boolean;
-  onClose: () => void;
+  // onClose: () => void;
   handleBVNMopen: () => void;
   handleACMopen: () => void;
 }
 
 const SetupModal: React.FC<ASMProps> = ({
   isOpen,
-  onClose,
+  // onClose,
   handleBVNMopen,
   handleACMopen,
 }) => {
@@ -28,7 +28,7 @@ const SetupModal: React.FC<ASMProps> = ({
 
   return (
     <div className={styles.container}>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal2 isOpen={isOpen}>
         <div className={styles.modalHeader}>
           <h2>Welcome</h2>
           <Image src={"/confettiBall.png"} alt="" width={45} height={45} />
@@ -56,7 +56,7 @@ const SetupModal: React.FC<ASMProps> = ({
             <Button onClick={handleBVNMopen}>Add BVN</Button>
           )}
         </div>
-      </Modal>
+      </Modal2>
     </div>
   );
 };
