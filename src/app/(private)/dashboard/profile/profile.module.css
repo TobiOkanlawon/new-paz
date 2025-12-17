@@ -196,6 +196,7 @@
   .headers {
     flex-direction: column;
     gap: 4rem;
+    margin-top: 1rem;
   }
 
   .progressWrapper {
