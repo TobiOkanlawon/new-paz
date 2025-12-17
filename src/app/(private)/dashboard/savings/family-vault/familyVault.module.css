@@ -1,5 +1,6 @@
 .container {
   color: #243d7d;
+  padding: 0 1rem;
 }
 
 .header {
@@ -11,9 +12,6 @@
   line-height: 46px;
   letter-spacing: 0px;
   vertical-align: middle;
-}
-
-.topContainerRight {
 }
 
 .headingText {

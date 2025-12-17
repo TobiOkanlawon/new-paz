@@ -1,5 +1,6 @@
 .container {
   color: #243d7d;
+  padding: 0 1rem;
 }
 .headerContainer {
   display: flex;
@@ -19,9 +20,9 @@
   vertical-align: middle;
 }
 .headingText {
-  font-size: 2.13vh;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
+  font-size: 3.13vh;
+  font-family: var(--font-montserrat);
+  font-weight: 700;
   font-style: Medium;
   line-height: 100%;
   letter-spacing: 0%;
@@ -78,8 +79,27 @@
 .activities div p {
   margin: 0;
 }
+.totalContainer{
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
 @media screen and (max-width: 800px) {
   .container {
-    padding: 11vh 0 0 2vw;
+    padding: 2vh 0 0 2vw;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .totalContainer{
+    gap: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .headerContainer{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
   }
 }

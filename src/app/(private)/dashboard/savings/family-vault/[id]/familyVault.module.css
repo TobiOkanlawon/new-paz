@@ -108,7 +108,7 @@
 }
 @media screen and (max-width: 800px) {
   .container {
-      padding: 11vh 0 0 2vw;
+      padding: 1vh 0 0 2vw;
   }
   .cardContainers {
     flex-direction: column;
@@ -116,5 +116,12 @@
   }
   .cardContainers div {
     margin: 0 !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .topContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .1rem;
   }
 }

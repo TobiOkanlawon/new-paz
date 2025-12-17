@@ -103,7 +103,7 @@ const TargetSavings = () => {
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: "2rem" }}>
+      <div className={styles.totalContainer}>
         <TotalBalanceCard
           header="PAZ saver balance"
           buttonText="Instant top-up"

@@ -75,7 +75,7 @@ const FamilyVault = () => {
         </div>
 
         <div className={styles.topContainerRight}>
-          <Button onClick={showModal} className="px-8">
+          <Button onClick={showModal} className="px-8 font-normal text-[.8rem]">
             Create a Family Vault Plan
           </Button>
         </div>

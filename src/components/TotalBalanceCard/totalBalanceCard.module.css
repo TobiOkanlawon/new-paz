@@ -137,7 +137,7 @@
 @media screen and (max-width: 700px){
     .totalBalanceCard{
         height: 7rem;
-        margin-bottom: 0;
+        margin-bottom: 1rem;
     }
     .totalBalanceCard p{
         font-size: .8rem;
