@@ -25,6 +25,7 @@
   font-style: Medium;
   line-height: 100%;
   letter-spacing: 0%;
+  color: var(--primary);
 }
 .backContainer {
   display: flex;
@@ -107,6 +108,6 @@
     font-size: 1rem;
   }
   .container {
-    padding: 11vh 0 0 4vw;
+    padding: 1vh 0 0 4vw;
   }
 }
