@@ -30,10 +30,27 @@ const validationSchema = Yup.object({
   customDuration: Yup.number()
     .nullable()
     .when("savingsDuration", {
-      is: (val: string) => !val || val === "custom",
-      then: (schema) => schema.min(1, "Duration must be at least 1 month"),
+      is: "custom",
+      then: (schema) =>
+        schema
+          .required("Please enter duration")
+          .min(1, "Duration must be at least 1 month"),
     }),
+
 });
+
+const durationToMonths = (duration: string): number => {
+  if (duration.includes("month")) {
+    return parseInt(duration);
+  }
+
+  if (duration.includes("year")) {
+    return parseInt(duration) * 12;
+  }
+
+  return 0;
+};
+
 
 const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
   const mutation = useCreateFamilySavings();
@@ -58,7 +75,10 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
         title: values.familyName,
         targetAmount: values.targetAmount,
         frequency: values.savingFrequency,
-        duration: values.customDuration || values.savingsDuration,
+        duration:
+          values.savingsDuration === "custom"
+            ? `${values.customDuration} months`
+            : values.savingsDuration,
         walletId: data?.walletId as string,
         type: "FAMILYVAULT",
       });
@@ -108,13 +128,13 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
           </div>
 
           <div className={styles.formGroup}>
-            <Input
+            {/* <Input
               label="Select preferred amount"
               type="number"
               id="preferredAmount"
               placeholder="Or specify amount"
               {...formik.getFieldProps("amount")}
-            />
+            /> */}
             <div className={styles.pillContainer}>
               {targetAmounts.map((amount) => (
                 <Pill
@@ -178,23 +198,33 @@ const FamilyVaultModal: React.FC<Props> = ({ isActive, handleCloseModal }) => {
               {savingsDurations.map((duration) => (
                 <Pill
                   key={duration}
-                  handleClick={() => {
-                    formik.setFieldValue("savingsDuration", duration);
-                  }}
                   content={duration}
                   isActive={formik.values.savingsDuration === duration}
+                  handleClick={() => {
+                    const months = durationToMonths(duration);
+
+                    formik.setFieldValue("savingsDuration", duration);
+                    formik.setFieldValue("customDuration", months);
+                  }}
                 />
+
               ))}
             </div>
+
             <Input
               type="number"
               id="customDuration"
-              placeholder="Or specify duration"
-              label="Custom Duration"
+              name="customDuration"
+              placeholder="Enter duration in months"
+              label="Custom Duration (months)"
               value={formik.values.customDuration}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                formik.setFieldValue("savingsDuration", "custom");
+                formik.handleChange(e);
+              }}
               onBlur={formik.handleBlur}
             />
+
             {formik.touched.savingsDuration &&
               formik.errors.savingsDuration && (
                 <div className={styles.errorText}>
