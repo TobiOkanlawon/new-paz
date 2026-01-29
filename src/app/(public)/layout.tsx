@@ -3,7 +3,7 @@ import useToken from "@/store/tokenStore";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const publicRoutes = ["/", "/login", "register", "/forgot-password", "/reset-password"];
+const publicRoutes = ["/", "/login", "register", "/forgot-password", "/reset-password", "/onboarding"];
 
 export default function RootLayout({
   children,

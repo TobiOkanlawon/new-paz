@@ -1,0 +1,152 @@
+.container {
+    position: relative;
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5rem;
+    align-items: center;
+    margin: 0 auto;
+    z-index: 4;
+    font-size: 1em;
+    max-width: 549px;
+}
+
+.textContainer {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 45px;
+    height: 50vh;
+    border-radius: 20px;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-height: 528px;
+}
+
+.logo {
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #fff;
+    font-style: normal;
+    height: 120px;
+    overflow: hidden;
+}
+
+.buttonContainer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+.skipButton {
+    background: none;
+    border: none;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 12px;
+}
+
+.nextButton {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    padding: 1rem;
+    border-radius: 30px;
+    width: 100px;
+    font-family: var(--font-montserrat);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nextButton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, transparent 50%, rgba(255, 255, 255, 0.5) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.nextButton:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.chevronIcon{
+    color: #fff;
+}
+
+.indicatorContainer{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.indicatorsContainer{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.indicator{
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.indicatorActive{
+    position: relative;
+    box-shadow: 0 0 0 3px transparent, 0 0 0 3px rgb(255, 255, 255);
+}
+
+.indicatorActive::before{
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    transform: rotate(-45deg);
+}
+
+.getStartedButton{
+    width: 75px;
+}
+
+.getStartedContainer{
+    display: flex;
+    justify-self: start;
+    width: 100%;
+}
