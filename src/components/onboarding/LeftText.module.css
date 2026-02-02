@@ -22,7 +22,7 @@
     border-radius: 20px;
     box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    max-height: 528px;
+    max-height: 500px;
 }
 
 .logo {
@@ -128,17 +128,49 @@
     box-shadow: 0 0 0 3px transparent, 0 0 0 3px rgb(255, 255, 255);
 }
 
-.indicatorActive::before{
+.loader {
     content: '';
     position: absolute;
     top: -10px;
     left: -10px;
     width: 26px;
     height: 26px;
-    border: 2px solid #fff;
+    border: 2px solid transparent;
     border-radius: 50%;
-    border-top-color: transparent;
-    transform: rotate(-45deg);
+    border-top-color: #fff;
+    animation: rotateLoader linear forwards;
+}
+
+@keyframes rotateLoader {
+    0% {
+        transform: rotate(0deg);
+        border-top-color: #fff;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+    25% {
+        border-top-color: #fff;
+        border-right-color: #fff;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+    50% {
+        border-top-color: #fff;
+        border-right-color: #fff;
+        border-bottom-color: #fff;
+        border-left-color: transparent;
+    }
+    75% {
+        border-top-color: #fff;
+        border-right-color: #fff;
+        border-bottom-color: #fff;
+        border-left-color: #fff;
+    }
+    100% {
+        transform: rotate(360deg);
+        border-color: #fff;
+    }
 }
 
 .getStartedButton{

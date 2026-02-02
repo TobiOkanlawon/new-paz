@@ -9,9 +9,12 @@ type LeftTextProps = {
     totalSlides: number;
     onNext: () => void;
     onPrev: () => void;
+    animationKey: number;
+    slideDuration: number;
+    isAutoPlaying: boolean;
 };
 
-export default function LeftText({ text, currentIndex, totalSlides, onNext, onPrev }: LeftTextProps) {
+export default function LeftText({ text, currentIndex, totalSlides, onNext, onPrev, animationKey, slideDuration, isAutoPlaying }: LeftTextProps) {
     return (
         <div className={styles.container}>
             <div className={styles.textContainer} style={{ backdropFilter: "blur(20px)" }}>
@@ -29,7 +32,19 @@ export default function LeftText({ text, currentIndex, totalSlides, onNext, onPr
                         <span 
                             key={index} 
                             className={`${styles.indicator} ${currentIndex === index ? styles.indicatorActive : ''}`}
-                        ></span>
+                            style={currentIndex === index && isAutoPlaying ? {
+                                '--animation-duration': `${slideDuration}ms`,
+                                '--animation-key': animationKey
+                            } as React.CSSProperties : undefined}
+                        >
+                            {currentIndex === index && isAutoPlaying && (
+                                <span 
+                                    key={animationKey} 
+                                    className={styles.loader}
+                                    style={{ animationDuration: `${slideDuration}ms` }}
+                                ></span>
+                            )}
+                        </span>
                     ))}
                 </div>
                 <FaChevronRight className={styles.chevronIcon} onClick={onNext} style={{ cursor: 'pointer' }} />

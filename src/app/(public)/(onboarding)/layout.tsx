@@ -10,7 +10,9 @@ export default function OnboardingLayout({
 }) {
   return (
     <div className={styles.container}>
-      <LeftCaurosel />
+      <div className={styles.leftContainer}>
+        <LeftCaurosel />
+      </div>
       <div className={styles.rightContainer}>
         {children}
       </div>
