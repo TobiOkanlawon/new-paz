@@ -21,29 +21,22 @@ const LeftCaurosel = () => {
     useEffect(() => {
         if (!isAutoPlaying) return;
 
-        if (currentImageIndex >= bgImages.length - 1) {
-            setIsAutoPlaying(false);
-            return;
-        }
-
         const timer = setTimeout(() => {
-            setCurrentImageIndex((prev) => prev + 1);
+            setCurrentImageIndex((prev) => (prev + 1) % bgImages.length);
             setAnimationKey((prev) => prev + 1);
         }, SLIDE_DURATION);
 
         return () => clearTimeout(timer);
-    }, [currentImageIndex, isAutoPlaying]);
+    }, [currentImageIndex, isAutoPlaying, bgImages.length]);
 
 
     const goToNext = useCallback(() => {
-        if (currentImageIndex < bgImages.length - 1) {
-            setTimeout(() => {
-                setCurrentImageIndex((prevIndex) => prevIndex + 1);
-                setAnimationKey((prev) => prev + 1);
-                setIsAutoPlaying(currentImageIndex + 1 < bgImages.length - 1);
-            }, 30);
-        }
-    }, [bgImages.length, currentImageIndex]);
+        setTimeout(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
+            setAnimationKey((prev) => prev + 1);
+            setIsAutoPlaying(true);
+        }, 30);
+    }, [bgImages.length]);
 
     const goToPrev = useCallback(() => {
         setTimeout(() => {
@@ -55,7 +48,8 @@ const LeftCaurosel = () => {
 
     const skip = useCallback(() => {
         setCurrentImageIndex(bgImages.length - 1);
-        setIsAutoPlaying(false);
+        setAnimationKey((prev) => prev + 1);
+        setIsAutoPlaying(true);
     }, [bgImages.length]);
 
     return (
