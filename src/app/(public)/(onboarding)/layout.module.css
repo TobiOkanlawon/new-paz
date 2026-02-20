@@ -24,7 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: start;
-    padding-top: 70px;
+
     overflow: hidden;
     grid-column: 2;
 }
@@ -49,7 +49,6 @@
         width: 100%;
         height: auto;
         grid-column: unset;
-        padding-top: 40px;
         padding-bottom: 40px;
         overflow: visible;
         flex-shrink: 0;

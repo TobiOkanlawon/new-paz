@@ -2,12 +2,14 @@
     display: flex;
     height: 100%;
     min-height: 100vh;
-    width: 100%;
-    align-items: stretch;
+    padding: 0 26px;
+    align-items: center;
     background-color: #0E2B3D;
     overflow-y: auto;
+    justify-content: center;
 }
 .bgContainer{
+    max-width: 650px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -15,7 +17,7 @@
     padding: 20px 0;
 }
 .logoContainer {
-    padding: 0 26px;
+    padding: 26px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,7 +32,7 @@
     cursor: pointer;
 }
 .onboardingImage {
-    padding: 0 26px;
+    padding: 0 0px 25px;
     height: auto;
     margin-top: 30px;
     flex-shrink: 0;
@@ -74,8 +76,8 @@
 
 /* Text Container Styles */
 .textContainer {
-    padding: 20px 26px;
-    flex: 1;
+    padding: 0 0px 44px;
+    /* flex: 1; */
 }
 
 .text {
@@ -83,7 +85,7 @@
     font-weight: 400;
     color: #fff;
     font-style: normal;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.6;
     max-width: 100%;
 }
@@ -94,7 +96,7 @@
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
-    padding: 15px 26px;
+    padding: 15px 0px;
 }
 
 .indicatorsContainer {
@@ -178,8 +180,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 26px;
-    margin-top: auto;
+    padding: 52px 0px;
+    /* margin-top: auto; */
 }
 
 .loginButton {
