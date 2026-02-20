@@ -187,6 +187,7 @@
 
 .loginButton {
     width: 80px;
+    color: #fff !important;
 }
 
 .nextButton {
@@ -242,6 +243,12 @@
     }
     .indicatorContainer {
         padding: 6px 0;
+    }
+    .logo{
+        width: 5rem;
+    }
+    .bgImages{
+        height: 21rem;
     }
 }
 
