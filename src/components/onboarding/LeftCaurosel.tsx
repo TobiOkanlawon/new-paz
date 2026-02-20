@@ -4,10 +4,12 @@ import Image from "next/image";
 import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import styles from './LeftStyle.module.css';
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 const SLIDE_DURATION = 6000;
 
 const LeftCaurosel = () => {
+
     const bgImages = [
         { bg: "/images/leftBG11.png", text: "PAZ is a simple and secure platform that helps people save smarter and manage payments with ease. It is built for everyday users who want clarity, control, and peace of mind when handling their money." },
         { bg: "/images/leftBG21.png", text: "With PAZ, users can create an account in minutes, verify their identity seamlessly and start saving and making withdrawal without unnecessary complexity. Every feature is designed to feel intuitive, fast and trustworthy." },
@@ -52,6 +54,11 @@ const LeftCaurosel = () => {
         setIsAutoPlaying(true);
     }, [bgImages.length]);
 
+    const router = useRouter();
+
+     const handleLogin = () => {
+        router.push("/login");
+    };
     return (
         <div className={styles.container}>
             <div className={styles.bgContainer}>
@@ -108,7 +115,7 @@ const LeftCaurosel = () => {
 
                 <div className={styles.buttonContainer}>
                     <div className={styles.loginButton}>
-                        <Button variant="outlined">Login</Button>
+                        <Button variant="outlined" onClick={handleLogin}>Login</Button>
                     </div>
                     <button className={styles.nextButton} onClick={goToNext}>
                         Next <FaArrowRight />

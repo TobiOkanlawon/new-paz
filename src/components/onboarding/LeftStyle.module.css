@@ -133,8 +133,8 @@
 
 .loader {
     position: absolute;
-    top: -6px;
-    left: -6px;
+    top: -7px;
+    left: -7px;
     width: 18px;
     height: 18px;
     border: 2px solid transparent;
@@ -186,6 +186,7 @@
 
 .loginButton {
     width: 80px;
+    color: #fff !important;
 }
 
 .nextButton {
@@ -241,6 +242,12 @@
     }
     .indicatorContainer {
         padding: 6px 0;
+    }
+    .logo{
+        width: 5rem;
+    }
+    .bgImages{
+        height: 21rem;
     }
 }
 
