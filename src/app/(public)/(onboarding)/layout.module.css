@@ -28,6 +28,20 @@
     overflow: hidden;
     grid-column: 2;
 }
+/* Height responsive adjustments */
+@media screen and (max-height: 850px) {
+    .rightContainer {
+        padding-top: 0;
+        align-items: center;
+    }
+    .logo{
+        width: 75px;
+    }
+    .bgImages{
+        height: 21rem;
+    }
+}
+
 @media screen and (max-width: 1023px) {
     .container {
         display: flex;

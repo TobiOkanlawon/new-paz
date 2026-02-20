@@ -216,3 +216,82 @@
     box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
     transform: scale(1.02);
 }
+
+/* Height responsive adjustments */
+@media screen and (max-height: 850px) {
+    .bgContainer {
+        padding: 10px 0;
+    }
+    .logoContainer {
+        padding: 12px 0;
+    }
+    .onboardingImage {
+        margin-top: 14px;
+        padding-bottom: 14px;
+    }
+    .textContainer {
+        padding: 0 0 16px;
+    }
+    .text {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+    .buttonContainer {
+        padding: 20px 0;
+    }
+    .indicatorContainer {
+        padding: 6px 0;
+    }
+}
+
+@media screen and (max-height: 720px) {
+    .bgContainer {
+        padding: 6px 0;
+    }
+    .logoContainer {
+        padding: 8px 0;
+    }
+    .onboardingImage {
+        margin-top: 8px;
+        padding-bottom: 8px;
+    }
+    .textContainer {
+        padding: 0 0 10px;
+    }
+    .text {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .buttonContainer {
+        padding: 12px 0;
+    }
+    .indicatorContainer {
+        padding: 4px 0;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .bgContainer {
+        padding: 4px 0;
+    }
+    .logoContainer {
+        padding: 6px 0;
+    }
+    .onboardingImage {
+        margin-top: 4px;
+        padding-bottom: 6px;
+    }
+    .textContainer {
+        padding: 0 0 6px;
+    }
+    .text {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    .buttonContainer {
+        padding: 8px 0;
+    }
+    .indicatorContainer {
+        padding: 2px 0;
+    }
+}
