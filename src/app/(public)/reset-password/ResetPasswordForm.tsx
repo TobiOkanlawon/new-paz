@@ -1,5 +1,5 @@
 "use client";
-import styles from "./reset.module.css";
+import styles from "./resetForm.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
@@ -36,8 +36,9 @@ const ResetPasswordForm = () => {
     },
   });
   return (
-    <>
-      <h3>Reset Your Password</h3>
+    <div className={styles.container}>
+      <h3 className={styles.header}>Reset Password</h3>
+      <p className={styles.headerText}>Enter your new password</p>
 
       <form
         action="POST"
@@ -65,11 +66,11 @@ const ResetPasswordForm = () => {
         </Button>
         <div className={styles.centerAlign}>
           <Link href="/login" className={styles.returnToLogin}>
-            <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
+            Go Back
           </Link>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 
