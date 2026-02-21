@@ -61,12 +61,6 @@ const ForgotPasswordForm = () => {
           </Link>
         </div>
       </form>
-
-      <div className={styles.bottomContainer}>
-        <p>
-          Still having trouble? <a href="mailto:info@mypazfinance.com"></a>{" "}
-        </p>
-      </div>
     </div>
   );
 };
