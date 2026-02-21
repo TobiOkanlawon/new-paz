@@ -1,5 +1,5 @@
 "use client";
-import styles from "./forgot.module.css";
+import styles from "./forgotPassword.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
@@ -33,8 +33,8 @@ const ForgotPasswordForm = () => {
     },
   });
   return (
-    <>
-      <h3>Forgot Your Password</h3>
+    <div className={styles.container}>
+      <h3 className={styles.header}>Forgot Your Password</h3>
 
       <form
         action="POST"
@@ -63,7 +63,7 @@ const ForgotPasswordForm = () => {
           Still having trouble? <a href="mailto:info@mypazfinance.com"></a>{" "}
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
