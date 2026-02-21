@@ -34,7 +34,8 @@ const ForgotPasswordForm = () => {
   });
   return (
     <div className={styles.container}>
-      <h3 className={styles.header}>Forgot Your Password</h3>
+      <h3 className={styles.header}>Reset Password</h3>
+      <p className={styles.headerText}>Enter the email address you used to sign up and we’ll send instructions to reset your password</p>
 
       <form
         action="POST"
@@ -53,16 +54,10 @@ const ForgotPasswordForm = () => {
         </Button>
         <div className={styles.centerAlign}>
           <Link href="/login" className={styles.returnToLogin}>
-            <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
+           Go Back
           </Link>
         </div>
       </form>
-
-      <div className={styles.bottomContainer}>
-        <p>
-          Still having trouble? <a href="mailto:info@mypazfinance.com"></a>{" "}
-        </p>
-      </div>
     </div>
   );
 };
