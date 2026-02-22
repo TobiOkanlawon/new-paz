@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import LeftCaurosel from "@/components/onboarding/LeftCaurosel";
 
 
+
 const ForgotPasswordForm = dynamic(() => import("./ForgotPasswordForm"));
 
 const ForgotPassword = () => {
