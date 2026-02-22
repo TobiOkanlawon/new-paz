@@ -12,9 +12,13 @@ const StepIndicator = ({ current }: { current: number }) => (
             current >= step ? styles.stepDotActive : ""
           } ${current === step ? styles.stepDotCurrent : ""}`}
         >
-          <span className={`${styles.stepDot} ${
-            current >= step ? styles.stepDotActive : ""
-          } ${current === step ? styles.stepDotCurrent : ""}`}>{step}</span>
+          <span
+            className={`${styles.stepDot} ${
+              current >= step ? styles.stepDotActive : ""
+            } ${current === step ? styles.stepDotCurrent : ""}`}
+          >
+            {step}
+          </span>
         </div>
         {step < TOTAL_STEPS && (
           <div
