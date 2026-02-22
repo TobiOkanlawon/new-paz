@@ -60,6 +60,7 @@
 .bgImages {
     z-index: 0;
     transition: opacity 0.3s ease-in-out;
+    height: 20rem;
     width: 100%;
     /* height: auto; */
     display: block;
@@ -133,8 +134,8 @@
 
 .loader {
     position: absolute;
-    top: -6px;
-    left: -6px;
+    top: -7px;
+    left: -7px;
     width: 18px;
     height: 18px;
     border: 2px solid transparent;
