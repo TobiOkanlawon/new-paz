@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   animation: fadeIn 0.35s ease;
 }
 
@@ -25,9 +25,8 @@
 
 .modal {
   position: relative;
-  width: 100%;
-  max-width: 500px;
-  min-height: 250px;
+  width: 340px;
+  min-height: 480px;
   background: #ffffff;
   border-radius: 24px;
   padding: 32px 28px 28px;
@@ -80,7 +79,6 @@
 }
 
 .stepDot {
-  margin: 0 1rem;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -113,7 +111,7 @@
 
 .stepLine {
   height: 2px;
-  width: 117.87439727783203px;
+  width: 56px;
   background: #E5E7EB;
   transition: background 0.5s ease;
 }
@@ -172,26 +170,22 @@
 .stepContent {
   display: flex;
   flex-direction: column;
-  max-width: 627px;
+  gap: 20px;
 }
 
-.header {
-  text-align: center;
-  margin: 66px 0 48px 0;
-}
+.header { text-align: center; }
 
 .title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 32px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
   color: #111827;
   margin: 0 0 8px;
   letter-spacing: -0.3px;
 }
 
 .subtitle {
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  color: #878787;
+  font-size: 13.5px;
+  color: #6B7280;
   margin: 0;
   line-height: 1.6;
 }
@@ -202,12 +196,11 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 31px 24px;
+  padding: 16px;
   border: 1.5px solid #E5E7EB;
   border-radius: 14px;
   cursor: pointer;
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
-  margin-bottom: 48px;
 }
 
 .verificationCard:hover {
@@ -238,13 +231,11 @@
 
 .cardTitle {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   color: #111827;
-  font-family: 'Poppins', sans-serif;
 }
 
 .cardDesc {
-  font-family: 'Poppins', sans-serif;
   font-size: 12px;
   color: #9CA3AF;
   line-height: 1.45;
@@ -256,7 +247,7 @@
 
 .featureList {
   list-style: none;
-  margin: 0 0 48px;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -267,9 +258,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 18px;
-  color: #2E2E2E;
-  font-family: 'Poppins',  sans-serif;
+  font-size: 13.5px;
+  color: #374151;
   animation: itemFadeIn 0.4s ease both;
 }
 
@@ -304,9 +294,8 @@
 }
 
 .inputLabel {
-  font-size: 18px;
-  font-weight: 400;
-  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
   color: #374151;
 }
 
@@ -325,9 +314,9 @@
 .input {
   width: 100%;
   padding: 13px 14px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  color: #878787;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #111827;
   border: none;
   outline: none;
   background: transparent;
@@ -338,11 +327,9 @@
 .input::placeholder { color: #D1D5DB; }
 
 .charCount {
-  font-size: 18px;
-  font-family: 'Poppins', sans-serif;
-  color: #878787;
+  font-size: 11.5px;
+  color: #9CA3AF;
   transition: color 0.3s;
-  margin-bottom: 48px;
 }
 
 .charCountFull { color: #22C55E; }
@@ -354,7 +341,7 @@
   padding: 14px;
   background: #4361EE;
   color: white;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 600;
   border: none;
@@ -387,7 +374,7 @@
   padding: 14px;
   background: transparent;
   color: #4B5563;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 500;
   border: 1.5px solid #E5E7EB;
@@ -514,7 +501,7 @@
 }
 
 .successTitle {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Serif Display', serif;
   font-size: 24px;
   color: #111827;
   margin: 0;
