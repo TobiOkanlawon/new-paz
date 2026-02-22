@@ -406,6 +406,24 @@
   gap: 12px;
 }
 
+@media screen and (max-width: 1023px) {
+  .btnRow {
+    flex-direction: column;
+  }
+  
+  .secondaryBtn {
+    width: 100%;
+  }
+
+  .container{
+    margin-top: 4rem;
+  }
+
+  .stepLine{
+    width: 20vw;
+  }
+}
+
 .verifyBtn { flex: 1.6; }
 
 /* ---------- Spinner ---------- */
