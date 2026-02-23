@@ -1,3 +1,4 @@
+"use client";
 import styles from "./input.module.css";
 import clsx from "clsx";
 import { useState } from "react";

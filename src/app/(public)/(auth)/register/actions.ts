@@ -1,5 +1,6 @@
 "use server";
 
+
 // import { redirect } from "next/navigation";
 import * as yup from 'yup';
 import { RegisterSchema } from "./schema";
@@ -45,4 +46,3 @@ export async function registerUser(payload: RegisterSchema) {
       message: "Something went wrong",
     };
   }
-}

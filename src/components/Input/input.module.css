@@ -5,12 +5,12 @@
 }
 
 .label {
-  font-family: var(--font-montserrat);
+  font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-  color: #292727;
+  color: #2E2E2E;
   display: block;
   padding: 12px 4px;
   align-self: flex-start;
@@ -62,7 +62,7 @@
 }
 
 .input::placeholder {
-  font-family: var(--font-inter);
+  font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 12px;
   line-height: 100%;
