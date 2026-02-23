@@ -10,11 +10,14 @@ const RegisterForm = dynamic(() => import("./RegisterForm"));
 const register = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.leftSide}>
+      <div className={styles.leftContainer}>
         <LeftSide />
       </div>
+      <div className={styles.rightContainer}>
       <RegisterForm />
+      </div>
     </div>
+
   );
 };
 
