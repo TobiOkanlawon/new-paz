@@ -61,13 +61,13 @@
 }
 
 .bgImages {
-    z-index: 0;
-    transition: opacity 0.3s ease-in-out;
-    height: 20rem;
-    width: 100%;
-    /* height: auto; */
-    display: block;
-    border-radius: 20px;
+  z-index: 0;
+  transition: opacity 0.3s ease-in-out;
+  height: 20rem;
+  width: 100%;
+  /* height: auto; */
+  display: block;
+  border-radius: 20px;
 }
 
 .fadeIn {
@@ -80,7 +80,7 @@
 
 /* Text Container Styles */
 .textContainer {
-  padding: 0 0px 22px;
+  padding: 0 0px 44px;
   /* flex: 1; */
 }
 
@@ -190,8 +190,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-    padding: 52px 0px;
-    padding-top: 24px;
+  padding: 52px 0px;
   /* margin-top: auto; */
 }
 
@@ -204,10 +203,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-    background-color: white; 
+  background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  color: #214CCF;
+  color: white;
   padding: 12px 20px;
   border-radius: 30px;
   min-width: 100px;
@@ -230,35 +229,41 @@
 
 /* Height responsive adjustments */
 @media screen and (max-height: 850px) {
-    .bgContainer {
-        padding: 10px 0;
-    }
-    .logoContainer {
-        padding: 12px 0;
-    }
-    .onboardingImage {
-        margin-top: 14px;
-        padding-bottom: 14px;
-    }
-    .textContainer {
-        padding: 0 0 16px;
-    }
-    .text {
-        font-size: 15px;
-        line-height: 1.5;
-    }
-    .buttonContainer {
-        padding: 20px 0;
-    }
-    .indicatorContainer {
-        padding: 6px 0;
-    }
-    .logo{
-        width: 5rem;
-    }
-    .bgImages{
-        height: 21rem;
-    }
+  .bgContainer {
+    padding: 10px 0;
+  }
+
+  .logoContainer {
+    padding: 12px 0;
+  }
+
+  .onboardingImage {
+    margin-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .textContainer {
+    padding: 0 0 16px;
+  }
+
+  .text {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .buttonContainer {
+    padding: 20px 0;
+  }
+
+  .indicatorContainer {
+    padding: 6px 0;
+  }
+  .logo {
+    width: 5rem;
+  }
+  .bgImages {
+    height: 21rem;
+  }
 }
 
 @media screen and (max-height: 720px) {
