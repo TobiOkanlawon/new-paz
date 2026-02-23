@@ -3,13 +3,13 @@ import styles from "./register.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
-import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { handleErrorDisplay } from "@/libs/helpers";
-import { useSignup } from "@/data/mutations/useSignup";
-import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import { action } from "./actions";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 
 const schema = yup.object({
   firstName: yup
@@ -46,133 +46,119 @@ const schema = yup.object({
 
 type RegisterSchema = yup.InferType<typeof schema>;
 const RegisterForm = () => {
-  const router = useRouter();
-  const signUpMutation = useSignup();
-  const formik = useFormik<RegisterSchema>({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: schema,
-    onSubmit: (values, { setSubmitting }) => {
-      signUpMutation.mutate(
-        {
-          ...values,
-          mobileNumber: values.phoneNumber,
-        },
-        {
-          onSuccess: () => {
-            router.replace("/login");
-          },
-          onError: () => {
-            setSubmitting(false);
-          },
-        },
-      );
-    },
-  });
+  // const [state, dispatchAction, isPending] = useActionState();
+  const { pending } = useFormStatus();
+
   return (
-    <>
-      <h3>Create a secure account</h3>
+    <div>
+      <form className={styles.rightSide} action={action}>
+        <div className={styles.heading}>
+          <h1 className={styles.title}>Create a Secure Account</h1>
+          <p className={styles.subHeading}>
+            Fill in your details to be able to create a secure account for PAZ
+          </p>
+        </div>
 
-      <form
-        action="POST"
-        onSubmit={formik.handleSubmit}
-        className={styles.form}
-      >
-        <div className={styles.flexed}>
-          <div className={styles.inputFlex}>
+        <div className={styles.halfWidthInputsContainer}>
+          <div className={clsx(styles.inputGroup, styles.shortInputGroup)}>
             <Input
+              id="first-name"
               label="First Name"
-              type="text"
-              placeholder="Enter your first Name"
-              id="firstName"
-              errors={handleErrorDisplay(formik, "firstName")}
-              {...formik.getFieldProps("firstName")}
+              name="First Name"
+              placeholder="Esther"
             />
           </div>
-          <div className={styles.inputFlex}>
+
+          <div className={clsx(styles.inputGroup, styles.shortInputGroup)}>
             <Input
+              id="last-name"
               label="Last Name"
-              type="text"
-              placeholder="Enter your last name"
-              id="lastName"
-              errors={handleErrorDisplay(formik, "lastName")}
-              {...formik.getFieldProps("lastName")}
-            />
-          </div>
-        </div>
-        <div className={styles.centralize}>
-          <div className={styles.inputFlex}>
-            <Input
-              label="Email Address"
-              type="email"
-              placeholder="Enter your email address"
-              id="email"
-              errors={handleErrorDisplay(formik, "email")}
-              {...formik.getFieldProps("email")}
-            />
-          </div>
-          <div className={styles.inputFlex}>
-            <Input
-              label="Phone Number"
-              type="tel"
-              placeholder="Enter your phone number"
-              id="phoneNumber"
-              errors={handleErrorDisplay(formik, "phoneNumber")}
-              {...formik.getFieldProps("phoneNumber")}
-            />
-          </div>
-          <div className={styles.inputFlex}>
-            <Input
-              label="Password"
-              type="password"
-              placeholder="Enter your password"
-              id="password"
-              errors={handleErrorDisplay(formik, "password")}
-              {...formik.getFieldProps("password")}
-            />
-          </div>
-          <div className={styles.inputFlex}>
-            <Input
-              label="Re - Password"
-              type="password"
-              placeholder="Enter Password Again"
-              id="confirmPassword"
-              errors={handleErrorDisplay(formik, "confirmPassword")}
-              {...formik.getFieldProps("confirmPassword")}
+              name="Last Name"
+              placeholder="Williams"
             />
           </div>
         </div>
 
-        <p>
-          By clicking "Create Account”, I agree to PAZ’s{" "}
-          <a href="#">privacy policy</a> and <a href="#">terms of service</a>.
-        </p>
-        <div className={styles.buttonContainer}>
-          <Button
-            loading={formik.isSubmitting}
-            type="submit"
-            className={styles.primary}
-            label="Login"
-          >
-            Create Account
-          </Button>
+        <div className={styles.inputGroup}>
+          <Input
+            label="Email Address"
+            type="email"
+            id="email"
+            name="Email Address"
+            placeholder="estherwilliams22@gmail.com"
+          />
         </div>
-        <div className={styles.linkWrapper}>
-          <Link
-            href="/login"
-            className={clsx("special-underline", styles.returnToLogin)}
-          >
-            <FaArrowLeft className={styles.arrowLeft} /> Return to Log in{" "}
-          </Link>
+
+        <div className={styles.inputGroup}>
+          <Input
+            label="Phone Number"
+            name="Phone Number"
+            id="phone-number"
+            type="tel"
+            placeholder="08023451234"
+          />
         </div>
+
+        <div className={styles.inputGroup}>
+          <Input
+            label="Password"
+            type="password"
+            id="password"
+            name="Password"
+            placeholder="******"
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <Input
+            label="Confirm Password"
+            name="Confirm Password"
+            id="confirm-password"
+            type="password"
+            placeholder="******"
+          />
+        </div>
+
+        <div className={styles.tosContainer}>
+          <input
+            id="tos"
+            className={styles.tosInput}
+            name="tos"
+            type="checkbox"
+            value=""
+          />
+          <label htmlFor="tos">
+            I agree to{" "}
+            <Link className={styles.linkText} href="/tos">
+              terms and agreement
+            </Link>{" "}
+            &{" "}
+            <Link className={styles.linkText} href="/privacy">
+              privacy policy{" "}
+            </Link>
+          </label>
+        </div>
+
+        <Button loading={pending}>Create Account</Button>
       </form>
-    </>
+      <div style={{ display: "none" }}>
+        {/* We aren't doing the google sign up thing yet, so there's no need to implement it*/}
+        <div className={styles.orContainer}>
+          <hr />
+          <p className={styles.orText}>OR</p>
+          <hr />
+        </div>
+      </div>
+
+      <div className={styles.bottomText}>
+        <p>
+          Already have an account?{" "}
+          <Link href="/login" className={styles.linkText}>
+            Log in
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 };
 
