@@ -1,298 +1,326 @@
 .container {
-    display: flex;
-    height: 100%;
-    min-height: 100vh;
-    padding: 0 26px;
-    align-items: center;
-    background-color: #0E2B3D;
-    overflow-y: auto;
-    justify-content: center;
+  display: flex;
+  height: 100%;
+  min-height: 100vh;
+  padding: 0 26px;
+  align-items: center;
+  background-color: #0e2b3d;
+  overflow-y: auto;
+  justify-content: center;
 }
-.bgContainer{
-    max-width: 650px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 20px 0;
+
+.bgContainer {
+  max-width: 650px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 0;
 }
+
 .logoContainer {
-    padding: 26px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 26px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.onboardingSkip>p {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 32px;
-    max-width: 400px;
-    font-family: 'Poppins', sans-serif;
-    cursor: pointer;
+
+.onboardingSkip > p {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 32px;
+  max-width: 400px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
 }
+
 .onboardingImage {
-    padding: 0 0px 25px;
-    height: auto;
-    margin-top: 30px;
-    flex-shrink: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: start;
-    align-items: center;
+  padding: 0 0px 25px;
+  height: auto;
+  margin-top: 30px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 .logo {
-    position: relative;
-    z-index: 2;
-    object-fit: contain;
+  position: relative;
+  z-index: 2;
+  object-fit: contain;
 }
 
 .content {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    max-height: 610px;
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  max-height: 610px;
 }
 
 .bgImages {
-    z-index: 0;
-    transition: opacity 0.3s ease-in-out;
-    height: 20rem;
-    width: 100%;
-    /* height: auto; */
-    display: block;
-    border-radius: 20px;
+  z-index: 0;
+  transition: opacity 0.3s ease-in-out;
+  height: 20rem;
+  width: 100%;
+  /* height: auto; */
+  display: block;
+  border-radius: 20px;
 }
 
 .fadeIn {
-    opacity: 1;
+  opacity: 1;
 }
 
 .fadeOut {
-    opacity: 0;
+  opacity: 0;
 }
 
 /* Text Container Styles */
 .textContainer {
-    padding: 0 0px 44px;
-    /* flex: 1; */
+  padding: 0 0px 44px;
+  /* flex: 1; */
 }
 
 .text {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    color: #fff;
-    font-style: normal;
-    font-size: 18px;
-    line-height: 1.6;
-    max-width: 100%;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  color: #fff;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 100%;
 }
 
 /* Indicator Styles */
 .indicatorContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    padding: 15px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 15px 0px;
 }
 
 .indicatorsContainer {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .chevronIcon {
-    color: #fff;
-    cursor: pointer;
-    font-size: 12px;
-    transition: opacity 0.2s ease;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  transition: opacity 0.2s ease;
 }
 
 .chevronIcon:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 .indicator {
-    width: 8px;
-    height: 8px;
-    background-color: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    display: inline-block;
-    transition: all 0.3s ease;
-    position: relative;
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .indicatorActive {
-    background-color: #fff;
-    box-shadow: 0 0 0 2px transparent, 0 0 0 2px rgba(255, 255, 255, 0.3);
+  background-color: #fff;
+  box-shadow:
+    0 0 0 2px transparent,
+    0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .loader {
-    position: absolute;
-    top: -7px;
-    left: -7px;
-    width: 18px;
-    height: 18px;
-    border: 2px solid transparent;
-    border-radius: 50%;
-    border-top-color: #fff;
-    animation: rotateLoader linear forwards;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: rotateLoader linear forwards;
 }
 
 @keyframes rotateLoader {
-    0% {
-        transform: rotate(0deg);
-        border-top-color: #fff;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
-    }
-    25% {
-        border-top-color: #fff;
-        border-right-color: #fff;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
-    }
-    50% {
-        border-top-color: #fff;
-        border-right-color: #fff;
-        border-bottom-color: #fff;
-        border-left-color: transparent;
-    }
-    75% {
-        border-top-color: #fff;
-        border-right-color: #fff;
-        border-bottom-color: #fff;
-        border-left-color: #fff;
-    }
-    100% {
-        transform: rotate(360deg);
-        border-color: #fff;
-    }
+  0% {
+    transform: rotate(0deg);
+    border-top-color: #fff;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+
+  25% {
+    border-top-color: #fff;
+    border-right-color: #fff;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+
+  50% {
+    border-top-color: #fff;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    border-left-color: transparent;
+  }
+
+  75% {
+    border-top-color: #fff;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    border-left-color: #fff;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    border-color: #fff;
+  }
 }
 
 /* Button Container Styles */
 .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 52px 0px;
-    /* margin-top: auto; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 52px 0px;
+  /* margin-top: auto; */
 }
 
 .loginButton {
-    width: 80px;
+  width: 80px;
 }
 
 .nextButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 30px;
-    min-width: 100px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  min-width: 100px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .nextButton:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
-    transform: scale(1.02);
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
 }
 
 /* Height responsive adjustments */
 @media screen and (max-height: 850px) {
-    .bgContainer {
-        padding: 10px 0;
-    }
-    .logoContainer {
-        padding: 12px 0;
-    }
-    .onboardingImage {
-        margin-top: 14px;
-        padding-bottom: 14px;
-    }
-    .textContainer {
-        padding: 0 0 16px;
-    }
-    .text {
-        font-size: 15px;
-        line-height: 1.5;
-    }
-    .buttonContainer {
-        padding: 20px 0;
-    }
-    .indicatorContainer {
-        padding: 6px 0;
-    }
+  .bgContainer {
+    padding: 10px 0;
+  }
+
+  .logoContainer {
+    padding: 12px 0;
+  }
+
+  .onboardingImage {
+    margin-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .textContainer {
+    padding: 0 0 16px;
+  }
+
+  .text {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .buttonContainer {
+    padding: 20px 0;
+  }
+
+  .indicatorContainer {
+    padding: 6px 0;
+  }
 }
 
 @media screen and (max-height: 720px) {
-    .bgContainer {
-        padding: 6px 0;
-    }
-    .logoContainer {
-        padding: 8px 0;
-    }
-    .onboardingImage {
-        margin-top: 8px;
-        padding-bottom: 8px;
-    }
-    .textContainer {
-        padding: 0 0 10px;
-    }
-    .text {
-        font-size: 13px;
-        line-height: 1.4;
-    }
-    .buttonContainer {
-        padding: 12px 0;
-    }
-    .indicatorContainer {
-        padding: 4px 0;
-    }
+  .bgContainer {
+    padding: 6px 0;
+  }
+
+  .logoContainer {
+    padding: 8px 0;
+  }
+
+  .onboardingImage {
+    margin-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .textContainer {
+    padding: 0 0 10px;
+  }
+
+  .text {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .buttonContainer {
+    padding: 12px 0;
+  }
+
+  .indicatorContainer {
+    padding: 4px 0;
+  }
 }
 
 @media screen and (max-height: 600px) {
-    .bgContainer {
-        padding: 4px 0;
-    }
-    .logoContainer {
-        padding: 6px 0;
-    }
-    .onboardingImage {
-        margin-top: 4px;
-        padding-bottom: 6px;
-    }
-    .textContainer {
-        padding: 0 0 6px;
-    }
-    .text {
-        font-size: 12px;
-        line-height: 1.4;
-    }
-    .buttonContainer {
-        padding: 8px 0;
-    }
-    .indicatorContainer {
-        padding: 2px 0;
-    }
+  .bgContainer {
+    padding: 4px 0;
+  }
+
+  .logoContainer {
+    padding: 6px 0;
+  }
+
+  .onboardingImage {
+    margin-top: 4px;
+    padding-bottom: 6px;
+  }
+
+  .textContainer {
+    padding: 0 0 6px;
+  }
+
+  .text {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .buttonContainer {
+    padding: 8px 0;
+  }
+
+  .indicatorContainer {
+    padding: 2px 0;
+  }
 }
