@@ -1,6 +1,7 @@
 import Image from "next/image";
-import styles from "./page.module.css";
-import LoginForm from "./LoginForm";
+import styles from "./kyc.module.css";
+import KYCVerification from "@/components/KYCVerification/kycverifications";
+
 import LeftCaurosel from "@/components/onboarding/LeftCaurosel";
 
 export default function OnboardingLayout({
@@ -14,7 +15,7 @@ export default function OnboardingLayout({
         <LeftCaurosel />
       </div>
       <div className={styles.rightContainer}>
-        <LoginForm />
+        <KYCVerification />
       </div>
     </div>
   );

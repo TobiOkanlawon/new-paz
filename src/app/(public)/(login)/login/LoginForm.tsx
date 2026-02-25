@@ -1,5 +1,5 @@
 "use client";
-import styles from "./page.module.css";
+import styles from "./loginForm.module.css";
 import * as yup from "yup";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
@@ -12,6 +12,7 @@ import { useLogin } from "@/data/mutations/useLogin";
 import { useRouter } from "next/navigation";
 import useUser from "@/store/userStore";
 import useToken from "@/store/tokenStore";
+import Image from "next/image";
 
 const schema = yup.object({
   email: yup
@@ -56,8 +57,9 @@ const LoginForm = () => {
   });
 
   return (
-    <>
-      <h3>Login to your account</h3>
+    <div className={styles.container}>
+      <h3 className={styles.header}>Login</h3>
+      <p className={styles.headerText}>Enter your email to log in</p>
 
       <form
         action="POST"
@@ -95,7 +97,7 @@ const LoginForm = () => {
             <label htmlFor="remember">Remember me</label>
           </div>
           <div>
-            <Link href="/forgot-password">Forgot Password?</Link>
+            <Link href="/forgot-password" className={styles.forgot}>Forgot Password?</Link>
           </div>
         </div>
         <Button
@@ -106,18 +108,28 @@ const LoginForm = () => {
         >
           Login
         </Button>
+        <Button
+          loading={mutation.isPending}
+          type="submit"
+          variant="outlined"
+          className={styles.google}
+          label="Sign up with Google"
+        >
+          <Image src="/images/google.png" height={24} width={24} alt="Google logo" />
+          Sign up with Google
+        </Button>
         <div className={styles.linkContainer}>
           <div className={styles.linkWrapper}>
             <Link
               href="/register"
               className={clsx(" ", styles.createNewAccount)}
             >
-              Create New Account <FaArrowRight size={12} />
+              Don’t have an account? <span>Create one</span>
             </Link>
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

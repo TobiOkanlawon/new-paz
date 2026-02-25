@@ -1,0 +1,548 @@
+/* =============================================
+   KYC Verification — CSS Module
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+
+/* ---------- Overlay & Modal ---------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 30, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  min-height: 250px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.18),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: modalEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* ---------- Close Button ---------- */
+
+.closeBtn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #F3F4F6;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.closeBtn:hover {
+  background: #E5E7EB;
+  transform: scale(1.08);
+}
+
+.closeBtn svg { width: 14px; height: 14px; }
+
+/* ---------- Step Indicator ---------- */
+
+.stepIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
+  padding-top: 4px;
+}
+
+.stepDot {
+  margin: 0 1rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #E5E7EB;
+  color: #9CA3AF;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+}
+
+.stepDotActive {
+  background: #4361EE;
+  color: white;
+}
+
+.stepDotCurrent {
+  box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.18);
+}
+
+.checkIcon {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+
+.stepLine {
+  height: 2px;
+  width: 117.87439727783203px;
+  background: #E5E7EB;
+  transition: background 0.5s ease;
+}
+
+.stepLineActive {
+  background: #4361EE;
+}
+
+/* ---------- Content Transition ---------- */
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.cardArrow{
+  width: 1rem;
+}
+
+.contentWrap {
+  animation-duration: 0.35s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOutToLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-40px); }
+}
+
+@keyframes slideOutToRight {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(40px); }
+}
+
+.slideInRight  { animation-name: slideInFromRight; }
+.slideInLeft   { animation-name: slideInFromLeft; }
+.slideOutLeft  { animation-name: slideOutToLeft; }
+.slideOutRight { animation-name: slideOutToRight; }
+
+/* ---------- Shared Step Content ---------- */
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  max-width: 627px;
+}
+
+.header {
+  text-align: center;
+  margin: 66px 0 48px 0;
+}
+
+.title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  color: #111827;
+  margin: 0 0 8px;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: #878787;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ---------- Verification Card (Step 1) ---------- */
+
+.verificationCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 31px 24px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+  margin-bottom: 48px;
+}
+
+.verificationCard:hover {
+  border-color: #4361EE;
+  box-shadow: 0 4px 16px rgba(67, 97, 238, 0.12);
+  transform: translateY(-1px);
+}
+
+.cardIcon {
+  width: 44px;
+  height: 44px;
+  background: #EEF1FD;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardIcon svg { width: 22px; height: 22px; }
+
+.cardText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111827;
+  font-family: 'Poppins', sans-serif;
+}
+
+.cardDesc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: #9CA3AF;
+  line-height: 1.45;
+}
+
+.cardArrow svg { width: 18px; height: 18px; }
+
+/* ---------- Feature List (Step 2) ---------- */
+
+.featureList {
+  list-style: none;
+  margin: 0 0 48px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  color: #2E2E2E;
+  font-family: 'Poppins',  sans-serif;
+  animation: itemFadeIn 0.4s ease both;
+}
+
+.featureItem:nth-child(1) { animation-delay: 0.05s; }
+.featureItem:nth-child(2) { animation-delay: 0.12s; }
+.featureItem:nth-child(3) { animation-delay: 0.19s; }
+
+@keyframes itemFadeIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.checkCircle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #EEF1FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.checkCircle svg { width: 16px; height: 16px; }
+
+/* ---------- Input (Step 3) ---------- */
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inputLabel {
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Poppins', sans-serif;
+  color: #374151;
+}
+
+.inputWrapper {
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  overflow: hidden;
+}
+
+.inputFocused {
+  border-color: #4361EE;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.12);
+}
+
+.input {
+  width: 100%;
+  padding: 13px 14px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: #878787;
+  border: none;
+  outline: none;
+  background: transparent;
+  letter-spacing: 0.5px;
+  box-sizing: border-box;
+}
+
+.input::placeholder { color: #D1D5DB; }
+
+.charCount {
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+  color: #878787;
+  transition: color 0.3s;
+  margin-bottom: 48px;
+}
+
+.charCountFull { color: #22C55E; }
+
+/* ---------- Buttons ---------- */
+
+.primaryBtn {
+  width: 100%;
+  padding: 14px;
+  background: #4361EE;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.18s, box-shadow 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.primaryBtn:hover:not(.btnDisabled) {
+  background: #3451D1;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(67, 97, 238, 0.35);
+}
+
+.primaryBtn:active:not(.btnDisabled) {
+  transform: translateY(0);
+}
+
+.btnDisabled {
+  background: #A5B4FC;
+  cursor: not-allowed;
+}
+
+.secondaryBtn {
+  flex: 1;
+  padding: 14px;
+  background: transparent;
+  color: #4B5563;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.secondaryBtn:hover {
+  background: #F9FAFB;
+  border-color: #D1D5DB;
+}
+
+.btnRow {
+  display: flex;
+  gap: 12px;
+}
+
+@media screen and (max-width: 1023px) {
+  .btnRow {
+    flex-direction: column;
+  }
+  
+  .secondaryBtn {
+    width: 100%;
+  }
+
+  .container{
+    margin-top: 4rem;
+  }
+
+  .stepLine{
+    width: 20vw;
+  }
+}
+
+.verifyBtn { flex: 1.6; }
+
+/* ---------- Spinner ---------- */
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Success ---------- */
+
+.successContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0 8px;
+  animation: successEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes successEnter {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.successIconWrap {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.successRipple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #DCFCE7;
+  animation: ripple 1.6s ease-out infinite;
+}
+
+@keyframes ripple {
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  70%  { transform: scale(1.25); opacity: 0; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+.successCircle {
+  position: relative;
+  z-index: 1;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #22C55E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 32px rgba(34, 197, 94, 0.4);
+  animation: circlePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+@keyframes circlePop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+.successCircle svg { width: 38px; height: 38px; }
+
+.checkPath {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: drawCheck 0.45s ease 0.5s forwards;
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.successTitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.successMessage {
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.successBtn {
+  margin-top: 8px;
+  animation: btnSlideUp 0.4s ease 0.6s both;
+}
+
+@keyframes btnSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media screen and (max-width:1019px) {
+  .container {
+    width: 90%;
+    padding: 24px 20px 20px;
+  }
+  
+}
