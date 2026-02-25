@@ -50,9 +50,9 @@
 
 /* Outlined Variant - White with border */
 .outlined {
-  color: #ffffff;
+  color: #DFDFDF;
   background-color: transparent;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #DFDFDF;
 }
 
 .outlined:hover {
