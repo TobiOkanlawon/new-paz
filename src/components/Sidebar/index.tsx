@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 import styles from "./sidebar.module.css";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
@@ -7,62 +6,108 @@ import { removeToken } from "@/libs/auth";
 import useUser from "@/store/userStore";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function Sidebar({ isOpen }: { isOpen: boolean }) {
-  const { user } = useUser();
-  const qc = useQueryClient();
+import Image, { ImageProps } from "next/image";
+import DashboardIcon from "@/assets/dashboard-logo.svg";
+import Link from "next/link";
 
-  const handleLogout = () => {
-    removeToken();
-    qc.resetQueries();
-    qc.clear();
-    useUser.persist.clearStorage();
-  };
+type OptionProps = {
+  active: boolean;
+  icon: ImageProps["src"];
+  href: string;
+  title: string;
+  alt: string; // the alt tag for the svg
+};
+
+const SidebarOption: React.FC<OptionProps> = ({
+  active,
+  alt,
+  icon,
+  title,
+  href,
+}) => {
+  return (
+    <div
+      className={clsx(
+        styles.optionContainer,
+        active && styles.activeOptionContainer,
+      )}
+    >
+      <div className={styles.optionInnerContainer}>
+        <Image alt={alt} src={icon} />
+        <Link href={href}>{title}</Link>
+      </div>
+    </div>
+  );
+};
+
+export default function Sidebar({ isOpen }: { isOpen: boolean }) {
+  // const qc = useQueryClient();
+
+  // const handleLogout = () => {
+  //   removeToken();
+  //   qc.resetQueries();
+  //   qc.clear();
+  //   useUser.persist.clearStorage();
+  // };
 
   const pathname = usePathname();
-  const links = [
-    { href: "/dashboard", icon: "/sidebarHome.png", label: "Home" },
-    {
-      href: "/dashboard/profile",
-      icon: "/sidebarProfile.png",
-      label: "Profile",
-    },
-    {
-      href: "/dashboard/savings",
-      icon: "/sidebarSavings.png",
-      label: "Savings",
-    },
-    { href: "/dashboard/loans", icon: "/sidebarLoan.png", label: "Loans" },
-    // {
-    //   href: "/investments",
-    //   icon: "/sidebarInvestment.png",
-    //   label: "Investments",
-    // },
-    // { href: "/thrift", icon: "/sidebarThrift.png", label: "Thrift" },
-  ];
+
+  const isSubPath = (path: string, currentPath: string) => {
+    return currentPath.includes(path);
+  };
+
   return (
-    <aside className={clsx(styles.sidebar, isOpen && styles.open)}>
-      <div className={styles.sidebarContainer}>
-        <div className={styles.sidebarContainer1}>
-          <h3>Welcome {user?.first_name}</h3>
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={clsx(
-                styles.sidebarContent,
-                pathname === link.href && styles.active,
-              )}
-            >
-              <Image src={link.icon} alt={link.label} width={24} height={24} />
-              <p>{link.label}</p>
-            </Link>
-          ))}
+    <aside className={styles.sidebarContainer}>
+      <nav>
+        <div className={styles.headingContainer}>
+          {/* This is where the PAZ logo, name and sidebar toggle icon go */}
         </div>
-        <Link onClick={handleLogout} href="/" className={styles.logout}>
-          <Image src="/sidebarLogout.png" alt="Logout" width={24} height={24} />
-          <p>Logout</p>
-        </Link>
-      </div>
+
+        <div className={styles.centreContainer}>
+          <SidebarOption
+            alt="a four-sectioned square with curved edges"
+            icon={DashboardIcon}
+            title="Dashboard"
+            href="/dashboard"
+            active={pathname == "/dashboard"}
+          />
+          <SidebarOption
+            alt="a four-sectioned square with curved edges"
+            icon={DashboardIcon}
+            title="Savings"
+            href="/savings"
+            active={isSubPath("/savings", pathname)}
+          />
+          <SidebarOption
+            alt="a four-sectioned square with curved edges"
+            icon={DashboardIcon}
+            title="Loans"
+            href="/loans"
+            active={isSubPath("/loans", pathname)}
+          />
+          <SidebarOption
+            alt="a four-sectioned square with curved edges"
+            icon={DashboardIcon}
+            title="Thrifts"
+            href="/thrift"
+            active={isSubPath("/thrift", pathname)}
+          />
+          <SidebarOption
+            alt="a four-sectioned square with curved edges"
+            icon={DashboardIcon}
+            title="Investments"
+            href="/investments"
+            active={isSubPath("/investments", pathname)}
+          />
+          <SidebarOption
+            alt="a four-sectioned square with curved edges"
+            icon={DashboardIcon}
+            title="Settings"
+            href="/settings"
+            active={pathname == "/settings"}
+          />
+        </div>
+      </nav>
     </aside>
   );
 }

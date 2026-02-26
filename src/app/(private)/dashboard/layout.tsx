@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./layout.module.css";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -22,17 +22,18 @@ export default function DashboardLayout({
   }, [pathname]);
 
   return (
-    <>
-      <Navbar onToggleSidebar={toggleSidebar} />
-      <main className={styles.dashboardMain}>
-        <Sidebar isOpen={isSidebarOpen} />
-        <div 
-          className={styles.content}
+    <div className={styles.pageContainer}>
+      <Sidebar isOpen={isSidebarOpen} />
+
+      <div className={styles.dashboardMain}>
+        <Header />
+        <main
+          className={styles.mainContent}
           onClick={() => setIsSidebarOpen(false)}
         >
           {children}
-        </div>
-      </main>
-    </>
+        </main>
+      </div>
+    </div>
   );
 }

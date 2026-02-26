@@ -1,5 +1,12 @@
 /* side bar width is width: 17.29vw; */
 
+.pageContainer {
+    display: grid;
+    grid-template-columns: minmax(240px, 17.29vw) 1fr;
+
+    background-color: #F7F7F7;
+}
+
 .dashboardMain {
   display: grid;
   grid-template-columns: 17.29vw 1fr;
@@ -7,8 +14,8 @@
   width: 100%;
 }
 
-.content {
-    padding: 15px 48px;
+.mainContent {
+    padding: 38px 48px;
     overflow-y: auto;
 }
 
@@ -32,14 +39,14 @@
     transform: translateX(0);
   }
 
-  .content {
+  .mainContent {
     flex: 1;
     width: 100%;
   }
 }
 
 @media screen and (max-width: 950px) {
-  .content {
+  .mainContent {
     padding: 15px 20px;
   }
 }
@@ -50,7 +57,7 @@
     height: auto;
   }
 
-  .content {
+  .mainContent {
     padding: 0px;
     width: 100%;
   }
