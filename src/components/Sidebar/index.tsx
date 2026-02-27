@@ -2,12 +2,21 @@
 import styles from "./sidebar.module.css";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { removeToken } from "@/libs/auth";
-import useUser from "@/store/userStore";
-import { useQueryClient } from "@tanstack/react-query";
+// import { removeToken } from "@/libs/auth";
+// import useUser from "@/store/userStore";
+// import { useQueryClient } from "@tanstack/react-query";
 
 import Image, { ImageProps } from "next/image";
+
 import DashboardIcon from "@/assets/dashboard-logo.svg";
+import ToggleIcon from "@/assets/toggle-icon.png";
+import CompoundLogo from "@/assets/compound-logo.png";
+import SavingsIcon from "@/assets/piggy-bank.svg";
+import LoansIcon from "@/assets/wallet.svg";
+import ThriftIcon from "@/assets/thrift.svg";
+import InvestmentsIcon from "@/assets/investments.svg";
+import SettingsIcon from "@/assets/settings.svg";
+
 import Link from "next/link";
 
 type OptionProps = {
@@ -26,17 +35,26 @@ const SidebarOption: React.FC<OptionProps> = ({
   href,
 }) => {
   return (
-    <div
-      className={clsx(
-        styles.optionContainer,
-        active && styles.activeOptionContainer,
-      )}
-    >
-      <div className={styles.optionInnerContainer}>
-        <Image alt={alt} src={icon} />
-        <Link href={href}>{title}</Link>
+    <Link href={href}>
+      <div
+        className={clsx(
+          styles.optionContainer,
+          active && styles.activeOptionContainer,
+        )}
+      >
+        <div className={styles.optionInnerContainer}>
+          <Image alt={alt} src={icon} />
+          <p
+            className={clsx(
+              styles.sidebarOptionText,
+              active && styles.sidebarOptionTextActive,
+            )}
+          >
+            {title}
+          </p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -60,7 +78,12 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
     <aside className={styles.sidebarContainer}>
       <nav>
         <div className={styles.headingContainer}>
-          {/* This is where the PAZ logo, name and sidebar toggle icon go */}
+          <Image src={CompoundLogo} alt="Compound Logo" />
+          <Image
+            className={styles.toggleIcon}
+            src={ToggleIcon}
+            alt="Toggle Icon"
+          />
         </div>
 
         <div className={styles.centreContainer}>
@@ -73,38 +96,38 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
           />
           <SidebarOption
             alt="a four-sectioned square with curved edges"
-            icon={DashboardIcon}
+            icon={SavingsIcon}
             title="Savings"
             href="/savings"
             active={isSubPath("/savings", pathname)}
           />
           <SidebarOption
             alt="a four-sectioned square with curved edges"
-            icon={DashboardIcon}
+            icon={LoansIcon}
             title="Loans"
             href="/loans"
             active={isSubPath("/loans", pathname)}
           />
           <SidebarOption
             alt="a four-sectioned square with curved edges"
-            icon={DashboardIcon}
+            icon={ThriftIcon}
             title="Thrifts"
             href="/thrift"
             active={isSubPath("/thrift", pathname)}
           />
           <SidebarOption
             alt="a four-sectioned square with curved edges"
-            icon={DashboardIcon}
+            icon={InvestmentsIcon}
             title="Investments"
             href="/investments"
             active={isSubPath("/investments", pathname)}
           />
           <SidebarOption
             alt="a four-sectioned square with curved edges"
-            icon={DashboardIcon}
+            icon={SettingsIcon}
             title="Settings"
             href="/settings"
-            active={pathname == "/settings"}
+            active={isSubPath("/settings", pathname)}
           />
         </div>
       </nav>
