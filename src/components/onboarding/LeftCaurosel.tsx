@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import styles from "./LeftStyle.module.css";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 const SLIDE_DURATION = 6000;
 
@@ -61,6 +62,12 @@ const LeftCaurosel = () => {
     setAnimationKey((prev) => prev + 1);
     setIsAutoPlaying(true);
   }, [bgImages.length]);
+
+  const router = useRouter();
+
+  const handleLogin = () => {
+    router.push("/login");
+  };
 
   return (
     <div className={styles.container}>
@@ -124,7 +131,9 @@ const LeftCaurosel = () => {
 
         <div className={styles.buttonContainer}>
           <div className={styles.loginButton}>
-            <Button variant="outlined">Login</Button>
+            <Button variant="outlined" onClick={handleLogin}>
+              Login
+            </Button>
           </div>
           <button className={styles.nextButton} onClick={goToNext}>
             Next <FaArrowRight />
