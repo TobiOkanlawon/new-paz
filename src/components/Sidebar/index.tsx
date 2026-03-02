@@ -16,7 +16,7 @@ import LoansIcon from "@/assets/wallet.svg";
 import ThriftIcon from "@/assets/thrift.svg";
 import InvestmentsIcon from "@/assets/investments.svg";
 import SettingsIcon from "@/assets/settings.svg";
-
+import ProfileImage from "@/assets/profile-dummy.png";
 import Link from "next/link";
 
 type OptionProps = {
@@ -25,6 +25,7 @@ type OptionProps = {
   href: string;
   title: string;
   alt: string; // the alt tag for the svg
+  collapsed?: boolean;
 };
 
 const SidebarOption: React.FC<OptionProps> = ({
@@ -33,32 +34,44 @@ const SidebarOption: React.FC<OptionProps> = ({
   icon,
   title,
   href,
+  collapsed = false,
 }) => {
   return (
-    <Link href={href}>
+    <Link className={styles.navLink} href={href}>
       <div
         className={clsx(
           styles.optionContainer,
           active && styles.activeOptionContainer,
+          collapsed && styles.optionContainerCollapsed,
         )}
       >
         <div className={styles.optionInnerContainer}>
-          <Image alt={alt} src={icon} />
-          <p
-            className={clsx(
-              styles.sidebarOptionText,
-              active && styles.sidebarOptionTextActive,
-            )}
-          >
-            {title}
-          </p>
+          <Image alt={alt} src={icon} width={24} height={24} />
+          {!collapsed && (
+            <p
+              className={clsx(
+                styles.sidebarOptionText,
+                active && styles.sidebarOptionTextActive,
+              )}
+            >
+              {title}
+            </p>
+          )}
         </div>
       </div>
     </Link>
   );
 };
 
-export default function Sidebar({ isOpen }: { isOpen: boolean }) {
+export default function Sidebar({ 
+  isOpen, 
+  collapsed, 
+  onToggle 
+}: { 
+  isOpen: boolean; 
+  collapsed: boolean; 
+  onToggle: () => void;
+}) {
   // const qc = useQueryClient();
 
   // const handleLogout = () => {
@@ -75,60 +88,91 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
   };
 
   return (
-    <aside className={styles.sidebarContainer}>
-      <nav>
-        <div className={styles.headingContainer}>
-          <Image src={CompoundLogo} alt="Compound Logo" />
-          <Image
-            className={styles.toggleIcon}
-            src={ToggleIcon}
-            alt="Toggle Icon"
-          />
-        </div>
+    <aside className={clsx(styles.sidebarContainer, collapsed && styles.sidebarContainerCollapsed)}>
+      <nav className={styles.sidebar}>
+        <div className={styles.topContainer}>
+          <div className={clsx(styles.headingContainer, collapsed && styles.headingContainerCollapsed)}>
+            {!collapsed && <Image src={CompoundLogo} alt="Compound Logo" />}
+            <Image
+              className={clsx(styles.toggleIcon, collapsed && styles.toggleIconCollapsed)}
+              src={ToggleIcon}
+              alt="Toggle Icon"
+              onClick={onToggle}
+            />
+          </div>
 
-        <div className={styles.centreContainer}>
-          <SidebarOption
-            alt="a four-sectioned square with curved edges"
-            icon={DashboardIcon}
-            title="Dashboard"
-            href="/dashboard"
-            active={pathname == "/dashboard"}
-          />
-          <SidebarOption
-            alt="a four-sectioned square with curved edges"
-            icon={SavingsIcon}
-            title="Savings"
-            href="/savings"
-            active={isSubPath("/savings", pathname)}
-          />
-          <SidebarOption
-            alt="a four-sectioned square with curved edges"
-            icon={LoansIcon}
-            title="Loans"
-            href="/loans"
-            active={isSubPath("/loans", pathname)}
-          />
-          <SidebarOption
-            alt="a four-sectioned square with curved edges"
-            icon={ThriftIcon}
-            title="Thrifts"
-            href="/thrift"
-            active={isSubPath("/thrift", pathname)}
-          />
-          <SidebarOption
-            alt="a four-sectioned square with curved edges"
-            icon={InvestmentsIcon}
-            title="Investments"
-            href="/investments"
-            active={isSubPath("/investments", pathname)}
-          />
-          <SidebarOption
-            alt="a four-sectioned square with curved edges"
-            icon={SettingsIcon}
-            title="Settings"
-            href="/settings"
-            active={isSubPath("/settings", pathname)}
-          />
+          <div className={styles.centreContainer}>
+            <SidebarOption
+              alt="a four-sectioned square with curved edges"
+              icon={DashboardIcon}
+              title="Dashboard"
+              href="/dashboard"
+              active={pathname == "/dashboard"}
+              collapsed={collapsed}
+            />
+            <SidebarOption
+              alt="a four-sectioned square with curved edges"
+              icon={SavingsIcon}
+              title="Savings"
+              href="/savings"
+              active={isSubPath("/savings", pathname)}
+              collapsed={collapsed}
+            />
+            <SidebarOption
+              alt="a four-sectioned square with curved edges"
+              icon={LoansIcon}
+              title="Loans"
+              href="/loans"
+              active={isSubPath("/loans", pathname)}
+              collapsed={collapsed}
+            />
+            <SidebarOption
+              alt="a four-sectioned square with curved edges"
+              icon={ThriftIcon}
+              title="Thrifts"
+              href="/thrift"
+              active={isSubPath("/thrift", pathname)}
+              collapsed={collapsed}
+            />
+            <SidebarOption
+              alt="a four-sectioned square with curved edges"
+              icon={InvestmentsIcon}
+              title="Investments"
+              href="/investments"
+              active={isSubPath("/investments", pathname)}
+              collapsed={collapsed}
+            />
+            <SidebarOption
+              alt="a four-sectioned square with curved edges"
+              icon={SettingsIcon}
+              title="Settings"
+              href="/settings"
+              active={isSubPath("/settings", pathname)}
+              collapsed={collapsed}
+            />
+          </div>
+        </div>
+        <div className={clsx(styles.bottomContainer, collapsed && styles.bottomContainerCollapsed)}>
+          <div className={styles.userInfo}>
+            <Image src={ProfileImage} alt="User Avatar" width={32} height={32} className={styles.avatar} />
+            {!collapsed && (
+              <div>
+                <p className={styles.username}>Esther Williams</p>
+                <p className={styles.userEmail}>Esther22@gmail.com</p>
+              </div>
+            )}
+          </div>
+          <div>
+            <button className={styles.logoutButton}>
+              <Image
+                src='/images/logout.png'
+                alt="Logout Icon"
+                width={20}
+                height={20}
+              />
+              {!collapsed && "Logout"}
+            </button>
+          </div>
         </div>
       </nav>
     </aside>

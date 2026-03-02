@@ -1,22 +1,45 @@
 .sidebarContainer {
     padding: 18px;
     background-color: white;
+    width: 280px;
+    transition: width 0.25s ease;
+    z-index: 1000   ;
 }
 
+.sidebarContainerCollapsed {
+    width: 80px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
 .centreContainer {
-    padding: 50.84px 0px;
+    padding: 16px 0px;
 }
 
 .optionContainer {
     border-radius: 15px;
 
-    padding: 0px 20px;
+    padding: 12px 18px;
 
     color: #2E2E2E;
 
     font-family: var(--font-poppins), sans-serif;
-
+    font-size: 18px;
     margin-bottom: 16px;
+    transition: padding 0.25s ease;
+}
+
+.optionContainerCollapsed {
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+}
+.navLink{
+    text-decoration: none;
 }
 
 .activeOptionContainer {
@@ -36,6 +59,7 @@
     text-decoration: none;
     font-weight: normal;
     font-size: 18px;
+    margin: 0;
 }
 
 .sidebarOptionTextActive {
@@ -51,6 +75,75 @@
     align-items: center;
 }
 
+.headingContainerCollapsed {
+    justify-content: center;
+    padding: 14px 0;
+}
+
 .toggleIcon {
     cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+.toggleIconCollapsed {
+    transform: rotate(180deg);
+}
+
+.userInfo{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.username{
+    margin: 0;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 18px;
+} 
+.userEmail{
+    margin: 0;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.bottomContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border-top: 1px solid #E9EDFA;
+    transition: padding 0.25s ease;
+}
+
+.bottomContainerCollapsed {
+    align-items: center;
+    padding: 16px 8px;
+}
+
+.bottomContainerCollapsed .logoutButton {
+    justify-content: center;
+}
+
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.logoutButton{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    background: transparent;
+    color: #2E2E2E;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.logoutButton:hover {
+    color: #ef4444;
 }

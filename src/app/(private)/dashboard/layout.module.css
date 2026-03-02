@@ -2,9 +2,13 @@
 
 .pageContainer {
   display: grid;
-  grid-template-columns: minmax(240px, 17.29vw) 1fr;
-
+  grid-template-columns: minmax(240px, 11.29vw) 1fr;
   background-color: #f7f7f7;
+  transition: grid-template-columns 0.25s ease;
+}
+
+.pageContainerCollapsed {
+  grid-template-columns: 80px 1fr;
 }
 
 .dashboardMain {
@@ -15,13 +19,14 @@
 }
 
 .mainContent {
-  padding: 38px 48px;
+  padding: 8px 10px 38px 90px;
   overflow-y: auto;
 }
 
 @media screen and (max-width: 1201px) {
   .dashboardMain {
     display: flex;
+    flex-direction: column;
     position: relative;
   }
 
@@ -41,11 +46,10 @@
 
   .mainContent {
     flex: 1;
-    width: 100%;
   }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 550px) {
   .mainContent {
     padding: 15px 20px;
   }

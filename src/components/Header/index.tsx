@@ -1,16 +1,31 @@
 "use client";
 import Image from "next/image";
 import styles from "./header.module.css";
-import { useRef, useEffect, useState } from "react";
-
+import { useRef, useEffect, useState, useMemo } from "react";
+import NotificationsModal, { NotificationItem } from "@/components/NotificationModal/NotificationsModal";
+import NotificationDetailModal, { NotificationDetail } from "@/components/NotificationDetailModal/NotificationDetailModal";
 import Notifications from "@/assets/notifications.png";
 import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
+
+const MOCK: NotificationItem[] = [
+{ id: "1", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: false },
+{ id: "2", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: true },
+];
 
 const Header = () => {
   const navRef = useRef<HTMLDivElement>(null);
 
   const [firstName] = useState("Esther");
+
+  const [openList, setOpenList] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [data, setData] = useState<NotificationDetail | null>(null);
+
+  const notifications = useMemo(() => MOCK, []);
+
+
 
   useEffect(() => {
     const updateNavHeight = () => {
@@ -29,6 +44,21 @@ const Header = () => {
     return () => window.removeEventListener("resize", updateNavHeight);
   }, []);
 
+  const openNotification = (id: string) => {
+    setSelectedId(id);
+    setData({
+      id,
+      title: "Loan request successful",
+      statusLabel: "Loan request successful",
+      statusType: "success",
+      dateTime: "Jan 21, 2022 3:45pm",
+      body:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    });
+    setOpenList(false);
+    setOpenDetail(true);
+  };
+
   return (
     <div ref={navRef} className={styles.header}>
       <nav className={styles.headerRight}>
@@ -38,13 +68,34 @@ const Header = () => {
         </div>
 
         <div className={styles.headerRightRight}>
-          <Image src={Notifications} alt="Notifications" />
+          <button 
+            className={styles.notificationBtn} 
+            onClick={() => setOpenList(true)}
+            aria-label="Open notifications"
+          >
+            <Image src={Notifications} alt="Notifications" />
+            {notifications.some(n => !n.read) && <span className={styles.notificationDot} />}
+          </button>
           <div className={styles.profileContainer}>
             <Image src={ProfileImage} alt="Profile Image" />
             <p className={styles.profileFirstName}>{firstName}</p>
           </div>
         </div>
       </nav>
+
+      <NotificationsModal
+        open={openList}
+        onClose={() => setOpenList(false)}
+        notifications={notifications}
+        onMarkAllRead={() => console.log("mark all read")}
+        onOpenNotification={openNotification}
+      />
+
+      <NotificationDetailModal
+        open={openDetail}
+        onClose={() => setOpenDetail(false)}
+        data={data}
+      />
     </div>
   );
 };
