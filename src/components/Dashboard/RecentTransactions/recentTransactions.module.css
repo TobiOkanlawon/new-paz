@@ -1,0 +1,57 @@
+.card {
+  display: flex;
+  border-radius: 0px;
+  padding: 21px 16px;
+  background-color: white;
+  justify-content: space-between;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.iconContainer {
+  height: fit-content;
+  border-radius: 10px;
+  padding: 11px 14px;
+  width: fit-content;
+}
+
+.cardLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.card:first-of-type {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card:last-of-type {
+  border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom: none;
+}
+
+.iconContainer {
+}
+
+.title {
+  color: #2e2e2e;
+}
+
+.subTitle,
+.date {
+  color: #878787;
+}
+
+.title,
+.subTitle,
+.amount,
+.date {
+  margin: 4px 0px;
+}
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
