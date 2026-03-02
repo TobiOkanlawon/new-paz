@@ -105,7 +105,7 @@ const SoloSaver = () => {
           </p>
         </div>
         <div className={styles.buttonContainer}>
-          <button onClick={() => setShowWithdrawModal(true)} className={styles.widFunds}>
+          <button onClick={() => setOpenWithdraw(true)} className={styles.widFunds}>
             Withdraw Funds
           </button>
           <button onClick={() => setShowTopUpModal(true)} className={styles.topUpFunds}>
