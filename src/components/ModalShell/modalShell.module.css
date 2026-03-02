@@ -58,3 +58,25 @@
     padding: .1rem;
   }
 }
+
+@media screen and (max-height: 800px) {
+  .modal {
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #26345c transparent;
+  }
+
+  .modal::-webkit-scrollbar {
+    width: 1.5px;
+  }
+
+  .modal::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .modal::-webkit-scrollbar-thumb {
+    background: #214CCF;
+    border-radius: 1px;
+  }
+}
