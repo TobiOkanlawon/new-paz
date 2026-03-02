@@ -1,0 +1,176 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.topCard {
+    border-radius: 12px;
+    padding: 12px;
+
+}
+
+.topLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon {
+    width: 64px;
+    height: 54.85714340209961px;
+    border-radius: 10px;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.22);
+}
+
+.topTitle {
+    margin: 0;
+    font-size: 12px;
+    color: #878787;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+.topAmount {
+    margin: 16px 0 0;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'montserrat', sans-serif;
+    font-weight: 700;
+    color: #2E2E2E;
+}
+
+.quickWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 40px 0;
+}
+
+.sectionTitle {
+    margin: 0;
+    font-family: var(--font-montserrat);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #292727;
+    display: block;
+    padding: 12px 4px;
+    align-self: flex-start;
+}
+
+.quickGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.quickBtn {
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #DFDFDF;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    color: #878787;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+.quickBtn:hover {
+    background: #f9fafb;
+}
+
+.sourceWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sourceCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #DFDFDF;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    background: #fff;
+    position: relative;
+}
+
+.sourceCardActive {
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.sourceIconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #eff6ff;
+    flex-shrink: 0;
+    color: #3b82f6;
+}
+
+.sourceIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.sourceBody {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sourceTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2E2E2E;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.sourceSub {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #878787;
+}
+
+.checkIcon {
+    position: absolute;
+    top: -0.3rem;
+    right: -0.3rem;
+}
+
+.errorText {
+    margin: 0;
+    font-size: 12px;
+    color: #ef4444;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.actionBtn {
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .quickGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
