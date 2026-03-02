@@ -114,32 +114,32 @@ export default function Sidebar({
               alt="a four-sectioned square with curved edges"
               icon={SavingsIcon}
               title="Savings"
-              href="/savings"
-              active={isSubPath("/savings", pathname)}
+              href="/dashboard/savings"
+              active={isSubPath("/dashboard/savings", pathname)}
               collapsed={collapsed}
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
               icon={LoansIcon}
               title="Loans"
-              href="/loans"
-              active={isSubPath("/loans", pathname)}
+              href="/dashboard/loans"
+              active={isSubPath("/dashboard/loans", pathname)}
               collapsed={collapsed}
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
               icon={ThriftIcon}
               title="Thrifts"
-              href="/thrift"
-              active={isSubPath("/thrift", pathname)}
+              href="/dashboard/thrift"
+              active={isSubPath("/dashboard/thrift", pathname)}
               collapsed={collapsed}
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
               icon={InvestmentsIcon}
               title="Investments"
-              href="/investments"
-              active={isSubPath("/investments", pathname)}
+              href="/dashboard/investments"
+              active={isSubPath("/dashboard/investments", pathname)}
               collapsed={collapsed}
             />
             <SidebarOption
