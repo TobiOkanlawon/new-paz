@@ -7,12 +7,13 @@ import { LuEye, LuEyeClosed } from "react-icons/lu";
 type Props = {
   label: string;
   errors?: string;
+  name: string;
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >;
 
-const   Input = ({ label, id, className, errors, type, ...rest }: Props) => {
+const Input = ({ label, id, className, errors, type, ...rest }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
 
@@ -29,7 +30,7 @@ const   Input = ({ label, id, className, errors, type, ...rest }: Props) => {
             styles.input,
             className,
             errors && styles.errorInput,
-            isPassword && styles.passwordInput
+            isPassword && styles.passwordInput,
           )}
           {...rest}
         />
@@ -39,13 +40,7 @@ const   Input = ({ label, id, className, errors, type, ...rest }: Props) => {
             className={styles.eyeIcon}
             onClick={() => setShowPassword(!showPassword)}
           >
-            {
-              showPassword ? (
-                <LuEye/>
-              ) : (
-                <LuEyeClosed/>
-              )
-            }
+            {showPassword ? <LuEye /> : <LuEyeClosed />}
             {/* <Image
               src={showPassword ? "/eyeOff.png" : "/eyeOff2.png"}
               alt="Toggle password visibility"
