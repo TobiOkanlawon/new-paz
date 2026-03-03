@@ -4,7 +4,8 @@ import ModalShell from "@/components/ModalShell/ModalShell";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import FundingSourceCard from "@/components/FundingSourceCard/FundingSourceCard";
-// import { FiWallet } from "react-icons/fi";
+import Image from "next/image";
+
 
 type Props = {
   open: boolean;
@@ -57,7 +58,7 @@ const WithdrawSoloSavingsModal = ({
   };
 
   return (
-    <ModalShell open={open} onClose={onClose} title="Withdraw from Solo savers" width={980}>
+    <ModalShell open={open} onClose={onClose} title="Withdraw from Solo savers" width={700}>
       <div className={styles.wrap}>
         {/* Account summary row */}
         <div className={styles.summaryRow}>
@@ -112,7 +113,7 @@ const WithdrawSoloSavingsModal = ({
             title={fundingSourceTitle}
             subtitle={`Balance: ${formatMoney(fundingSourceBalance, currency)}`}
             selected
-            // icon={<FiWallet />}
+            icon={<Image src={'/images/wallet.png'} width={24} height={24} alt="Wallet Icon"/>}
           />
         </div>
 

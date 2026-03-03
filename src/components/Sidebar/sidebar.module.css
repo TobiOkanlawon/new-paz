@@ -147,6 +147,56 @@
 .logoutButton:hover {
     color: #ef4444;
 }
+
+/* Dropdown styles */
+.dropdownContainer {
+    margin-bottom: 16px;
+}
+
+.dropdownTrigger {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.chevron {
+    transition: transform 0.25s ease;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.subItemsContainer {
+    padding-left: 40px;
+    margin-top: 8px;
+}
+
+.subItem {
+    border-radius: 15px;
+    padding: 12px 18px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.subItemActive {
+    border: 2px solid #214CCF;
+    background-color: #E9EDFA;
+}
+
+.subItemText {
+    margin: 0;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 16px;
+    color: #2E2E2E;
+}
+
+.subItemTextActive {
+    color: #214CCF;
+}
+
 @media screen and (max-height: 700px) {
     .bottomContainer{
         padding-bottom: 0;

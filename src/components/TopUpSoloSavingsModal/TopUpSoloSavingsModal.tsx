@@ -58,7 +58,7 @@ const TopUpSoloSavingsModal = ({
   };
 
   return (
-    <ModalShell open={open} onClose={onClose} title="Top up Solo Savings" width={980}>
+    <ModalShell open={open} onClose={onClose} title="Top up Solo Savings" width={700}>
       <div className={styles.wrap}>
         {/* Account summary row */}
         <div className={styles.summaryRow}>

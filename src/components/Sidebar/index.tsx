@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import styles from "./sidebar.module.css";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
@@ -63,6 +64,98 @@ const SidebarOption: React.FC<OptionProps> = ({
   );
 };
 
+type SubItem = {
+  title: string;
+  href: string;
+};
+
+type SavingsDropdownProps = {
+  icon: ImageProps["src"];
+  alt: string;
+  collapsed: boolean;
+  pathname: string;
+  subItems: SubItem[];
+};
+
+const SavingsDropdown: React.FC<SavingsDropdownProps> = ({
+  icon,
+  alt,
+  collapsed,
+  pathname,
+  subItems,
+}) => {
+  const isInSavingsSection = pathname.includes("/dashboard/savings");
+  const [isOpen, setIsOpen] = useState(isInSavingsSection);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className={styles.dropdownContainer}>
+      <div
+        className={clsx(
+          styles.optionContainer,
+          styles.dropdownTrigger,
+          collapsed && styles.optionContainerCollapsed,
+        )}
+        onClick={handleToggle}
+      >
+        <div className={styles.optionInnerContainer}>
+          <Image alt={alt} src={icon} width={24} height={24} />
+          {!collapsed && (
+            <p className={styles.sidebarOptionText}>Savings</p>
+          )}
+        </div>
+        {!collapsed && (
+          <svg
+            className={clsx(styles.chevron, isOpen && styles.chevronOpen)}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6 9L12 15L18 9"
+              stroke="#2E2E2E"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </div>
+      {!collapsed && isOpen && (
+        <div className={styles.subItemsContainer}>
+          {subItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link key={item.href} href={item.href} className={styles.navLink}>
+                <div
+                  className={clsx(
+                    styles.subItem,
+                    isActive && styles.subItemActive,
+                  )}
+                >
+                  <p
+                    className={clsx(
+                      styles.subItemText,
+                      isActive && styles.subItemTextActive,
+                    )}
+                  >
+                    {item.title}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function Sidebar({ 
   isOpen, 
   collapsed, 
@@ -110,13 +203,16 @@ export default function Sidebar({
               active={pathname == "/dashboard"}
               collapsed={collapsed}
             />
-            <SidebarOption
-              alt="a four-sectioned square with curved edges"
+            <SavingsDropdown
+              alt="piggy bank icon"
               icon={SavingsIcon}
-              title="Savings"
-              href="/dashboard/savings"
-              active={isSubPath("/dashboard/savings", pathname)}
               collapsed={collapsed}
+              pathname={pathname}
+              subItems={[
+                { title: "Solo Savers", href: "/dashboard/savings/solo-saver" },
+                { title: "Target Savings", href: "/dashboard/savings/target-savings" },
+                { title: "Family Vault Saving", href: "/dashboard/savings/family-vault" },
+              ]}
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"

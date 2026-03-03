@@ -19,15 +19,16 @@
 
 .label {
   margin: 0;
-  font-size: 18px;
-  color: #9ca3af;
+  font-size: 16px;
+  color: #878787;
+  font-weight: 400;
 }
 
 .value {
   margin: 14px 0 0;
-  font-size: 28px;
-  font-weight: 500;
-  color: #111827;
+  font-size: 18px;
+  font-weight: 400;
+  color: #2E2E2E;
 }
 
 .hr {
@@ -39,14 +40,14 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 5px;
 }
 
 .sectionTitle {
   margin: 0;
-  font-size: 22px;
-  font-weight: 500;
-  color: #111827;
+  font-size: 16px;
+  font-weight: 400;
+  color: #2E2E2E;
 }
 
 /* Quick amounts */
@@ -61,9 +62,11 @@
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   background: #fff;
-  font-size: 20px;
+  font-size: 14px;
   color: #9ca3af;
+  font-weight: 400;
   cursor: pointer;
+  padding: 15px 44px;
 }
 
 .quickBtn:hover {
