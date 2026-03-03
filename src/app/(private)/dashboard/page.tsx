@@ -45,22 +45,6 @@ const BottomLeft = () => {
                 borderColor="#214CCF"
                 imageBackgroundColor="#E9EDFA"
               />
-              <SavingsPlanMiniCard
-                title="Valentine"
-                image={Rose}
-                content="Save money daily, bi-weekly plan with a purpose in mind."
-                action={() => {}}
-                borderColor="#214CCF"
-                imageBackgroundColor="#E9EDFA"
-              />
-              <SavingsPlanMiniCard
-                title="Valentine"
-                image={Rose}
-                content="Save money daily, bi-weekly plan with a purpose in mind."
-                action={() => {}}
-                borderColor="#214CCF"
-                imageBackgroundColor="#E9EDFA"
-              />
             </div>
           </div>
         </div>
@@ -72,22 +56,6 @@ const BottomLeft = () => {
           <div className={styles.miniCards}>
             <SavingsPlanMiniCard
               title="Vacation"
-              image={Rose}
-              content="Save money daily, bi-weekly plan with a purpose in mind."
-              action={() => {}}
-              borderColor="#214CCF"
-              imageBackgroundColor="#E9EDFA"
-            />
-            <SavingsPlanMiniCard
-              title="Valentine"
-              image={Rose}
-              content="Save money daily, bi-weekly plan with a purpose in mind."
-              action={() => {}}
-              borderColor="#214CCF"
-              imageBackgroundColor="#E9EDFA"
-            />
-            <SavingsPlanMiniCard
-              title="Valentine"
               image={Rose}
               content="Save money daily, bi-weekly plan with a purpose in mind."
               action={() => {}}
