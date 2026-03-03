@@ -53,22 +53,22 @@ const SavingsCard: React.FC<CardProps> = ({ card }) => {
 const Savings = () => {
   const router = useRouter();
   const { user } = useUser();
-  const { data, isLoading, error } = useGetAccountDetails(
-    user?.email as string,
-  );
+  // const { data, isLoading, error } = useGetAccountDetails(
+  //   user?.email as string,
+  // );
 
-  const {
-    data: walletAccountData,
-    isLoading: i,
-    error: e,
-  } = useGetWallet(user?.email as string);
+  // const {
+  //   data: walletAccountData,
+  //   isLoading: i,
+  //   error: e,
+  // } = useGetWallet(user?.email as string);
 
   // const mutation = useCreateSoloSaver(user?.email as string);
-  const {
-    mutate: createSoloSaver,
-    isPending,
-    isError,
-  } = useCreateSoloSaver(user?.email as string);
+  // const {
+  //   mutate: createSoloSaver,
+  //   isPending,
+  //   isError,
+  // } = useCreateSoloSaver(user?.email as string);
 
   const [modalType, setModalType] = useState<"family" | "target" | null>(null);
 
@@ -108,29 +108,29 @@ const Savings = () => {
     },
   ];
 
-  useEffect(() => {
-    // Check if data has loaded and there is no solo account
-    if (data && !data.hasSoloAccount) {
-      createSoloSaver({
-        title: "PERSONAL",
-        description: "Solo saver account",
-        currentAmount: 0,
-        walletId: walletAccountData!.walletId,
-        type: "SOLO",
-      });
-    }
-    // Dependencies are now stable and won't cause a loop
-  }, [data, isLoading, createSoloSaver, walletAccountData]);
+  // useEffect(() => {
+  //   // Check if data has loaded and there is no solo account
+  //   if (data && !data.hasSoloAccount) {
+  //     createSoloSaver({
+  //       title: "PERSONAL",
+  //       description: "Solo saver account",
+  //       currentAmount: 0,
+  //       walletId: walletAccountData!.walletId,
+  //       type: "SOLO",
+  //     });
+  //   }
+  //   // Dependencies are now stable and won't cause a loop
+  // }, [data, isLoading, createSoloSaver, walletAccountData]);
 
-  if (isLoading || i) return <Loading />;
+  // if (isLoading || i) return <Loading />;
 
-  if (error || e)
-    return (
-      <ErrorComponent
-        message="An error occured while trying to create a solo saver account"
-        retryFunction={() => {}}
-      />
-    );
+  // if (error || e)
+  //   return (
+  //     <ErrorComponent
+  //       message="An error occured while trying to create a solo saver account"
+  //       retryFunction={() => {}}
+  //     />
+  //   );
 
   // if (mutation.isPending) {
   //   return <Loading />;
@@ -145,30 +145,30 @@ const Savings = () => {
   //   );
   // }
 
-  if (isPending) {
-    return <Loading />;
-  }
+  // if (isPending) {
+  //   return <Loading />;
+  // }
 
-  if (isError) {
-    return (
-      <ErrorComponent
-        message="An error occured while trying to create a solo saver account"
-        retryFunction={() => {}}
-      />
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <ErrorComponent
+  //       message="An error occured while trying to create a solo saver account"
+  //       retryFunction={() => {}}
+  //     />
+  //   );
+  // }
 
   // the loading state shows in the case that the solo saver account is being created
-  if (!data?.hasSoloAccount) {
-    return <Loading />;
-  }
+  // if (!data?.hasSoloAccount) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className={styles.container}>
       <h2 className={styles.header}>Savings</h2>
       <p className={styles.headingText}>Explore all our savings plans here.</p>
       <TotalBalanceCard
-        money={addSavings(data).soloSavings}
+        money={0}
         header="Total savings"
       />
       <div className={styles.saversContainer}>

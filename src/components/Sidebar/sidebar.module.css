@@ -147,3 +147,11 @@
 .logoutButton:hover {
     color: #ef4444;
 }
+@media screen and (max-height: 700px) {
+    .bottomContainer{
+        padding-bottom: 0;
+    }
+    .sidebarContainer{
+        padding-bottom: 0;
+    }
+}

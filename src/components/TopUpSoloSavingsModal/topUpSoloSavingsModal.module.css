@@ -1,0 +1,109 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 2px 4px;
+}
+
+/* Summary */
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+.label {
+  margin: 0;
+  font-size: 18px;
+  color: #9ca3af;
+}
+
+.value {
+  margin: 14px 0 0;
+  font-size: 28px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.valueBlue {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: #1d4ed8;
+}
+
+.hr {
+  height: 1px;
+  background: #e5e7eb;
+}
+
+/* Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* Quick amounts */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.quickBtn {
+  height: 66px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 20px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.quickBtn:hover {
+  background: #f9fafb;
+}
+
+/* Actions */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 6px;
+}
+
+.actionBtn {
+  width: 100%;
+  height: 56px;
+  font-size: 18px;
+}
+
+@media (max-width: 900px) {
+  .value {
+    font-size: 22px;
+  }
+  .sectionTitle {
+    font-size: 18px;
+  }
+  .quickGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .quickBtn {
+    height: 54px;
+    font-size: 16px;
+  }
+}
