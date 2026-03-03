@@ -10,22 +10,27 @@
 
 .modal {
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 1rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
   overflow: hidden;
   max-width: 95vw;
+  padding: 44px;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid #eef0f5;
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #2e2e2e;
 }
 
 .title {
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 600;
   color: #111827;
   margin: 0;
@@ -35,7 +40,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  color: #6b7280;
+  color: #2e2e2e;
   padding: 6px;
   border-radius: 8px;
 }
@@ -46,4 +51,32 @@
 
 .body {
   padding: 16px;
+}  
+
+@media screen and (max-width:720px){
+  .modal{
+    padding: .1rem;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .modal {
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #26345c transparent;
+  }
+
+  .modal::-webkit-scrollbar {
+    width: 1.5px;
+  }
+
+  .modal::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .modal::-webkit-scrollbar-thumb {
+    background: #214CCF;
+    border-radius: 1px;
+  }
 }

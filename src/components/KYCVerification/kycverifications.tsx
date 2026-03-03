@@ -32,22 +32,24 @@ export default function KYCVerification() {
     }, 300);
   };
 
-  const contentClass = `${styles.contentWrap} ${
-    animating
+  const contentClass = `${styles.contentWrap} ${animating
       ? direction === "forward"
         ? styles.slideOutLeft
         : styles.slideOutRight
       : direction === "forward"
-      ? styles.slideInRight
-      : styles.slideInLeft
-  }`;
+        ? styles.slideInRight
+        : styles.slideInLeft
+    }`;
 
   if (step === "success") {
     return (
       <div className={styles.overlay}>
         <div className={styles.modal}>
           <div className={contentClass}>
-            <SuccessStep onBack={() => navigate("overview", "back")} />
+            <SuccessStep
+              title="BVN Verification"
+              text="Your BVN verification was successful"
+            />
           </div>
         </div>
       </div>
