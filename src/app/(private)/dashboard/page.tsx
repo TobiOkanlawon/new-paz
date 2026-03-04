@@ -4,6 +4,7 @@ import Link from "next/link";
 import Piggy from "@/assets/piggy-bank.svg";
 import Plus from "@/assets/plus.svg";
 import InvestmentIcon from "@/assets/investments.svg";
+import LoanIcon from "@/assets/wallet.svg";
 import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
@@ -168,16 +169,16 @@ const Dashboard = async () => {
           title="Total Savings"
         />
         <AccountCard
-          backgroundColor="#EBFFF2"
+          backgroundColor="#E0DFFD"
           amount={loanAmount ?? 0}
-          icon={Piggy}
+          icon={LoanIcon}
           color="#22C55E"
           title="Total Loans"
         />
         <AccountCard
-          backgroundColor="#EBFFF2"
+          backgroundColor="#F9EAD1"
           amount={investmentAmount ?? 0}
-          icon={Piggy}
+          icon={InvestmentIcon}
           color="#22C55E"
           title="Total Investments"
         />
