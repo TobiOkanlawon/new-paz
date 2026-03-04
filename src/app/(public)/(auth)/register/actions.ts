@@ -2,6 +2,7 @@
 
 import * as yup from 'yup';
 import { RegisterSchema } from "./schema";
+import { redirect } from 'next/navigation';
 
 type RegisterSchema = yup.InferType<typeof RegisterSchema>;
 
@@ -36,10 +37,7 @@ export async function registerUser(payload: RegisterSchema) {
       };
     }
 
-    return {
-      success: true,
-      data,
-    };
+     redirect("/login?registered=true");
   } catch (error) {
     return {
       success: false,
