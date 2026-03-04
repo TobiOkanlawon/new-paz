@@ -1,18 +1,11 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import styles from "./soloSaver.module.css";
-import TotalBalanceCard from "@/components/TotalBalanceCard";
-import NotificationContainer from "@/components/NotificationContainer";
-import TopUpModal from "@/components/TopupModal";
-import Modal from "@/components/Modal";
-import Back from "@/components/BackContainer";
-import Notifications from "@/components/Notifications";
-import useUser from "@/store/userStore";
 import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgressCard";
 import TransactionsTable, { TransactionRow } from "@/components/TransactionTable/TransactionTable";
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
+import MobileActions from "@/components/SoloSaversMobileActions/MobileActions";
 
 const rows: TransactionRow[] = [
   {
@@ -132,6 +125,11 @@ const SoloSaver = () => {
         />
       </div>
 
+      <MobileActions
+        setOpenWithdraw={setOpenWithdraw}
+        setShowTopUpModal={setShowTopUpModal}
+      />
+
       {/* <div className={styles.activities}>
         <Notifications
           header="Recent activities"
@@ -173,7 +171,7 @@ const SoloSaver = () => {
       />
 
       {/* Withdraw Modal */}
-        <WithdrawSoloSavingsModal
+      <WithdrawSoloSavingsModal
         open={openWithdraw}
         onClose={() => setOpenWithdraw(false)}
         accountName="Valentine Savings"

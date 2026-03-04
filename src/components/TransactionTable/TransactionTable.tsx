@@ -141,7 +141,7 @@ const TransactionsTable = ({
           )}
           {/* {leftControls} */}
         </div>
-        <div className={styles.right}>{rightControls}</div>
+        {/* <div className={styles.right}>{rightControls}</div> */}
       </div>
 
       <div className={styles.tableCard}>
@@ -150,19 +150,20 @@ const TransactionsTable = ({
             <tr>
               <th>S/N</th>
               <th>Savings Name</th>
-              <th>Amount Target</th>
+              <th className={styles.mobileHidden}>Amount Target</th>
               <th>Savings Amount</th>
-              <th>Savings Interest</th>
-              <th>Amount Debited</th>
-              <th>Date Debited</th>
-              <th>Status</th>
+              <th className={styles.mobileHidden}>Savings Interest</th>
+              <th className={styles.mobileHidden}>Amount Debited</th>
+              <th className={styles.mobileHidden}>Date Debited</th>
+              <th className={styles.mobileHidden}>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {paginatedRows.length === 0 ? (
               <tr>
-                <td colSpan={8} className={styles.emptyCell}>
+                <td colSpan={9} className={styles.emptyCell}>
                   No transactions found.
                 </td>
               </tr>
@@ -175,17 +176,28 @@ const TransactionsTable = ({
                   <tr key={r.id}>
                     <td>{sn}</td>
                     <td className={styles.nameCell}>{r.savingsName}</td>
-                    <td>{formatMoney(r.amountTarget, currency)}</td>
+                    <td className={styles.mobileHidden}>
+                      {formatMoney(r.amountTarget, currency)}
+                    </td>
                     <td>{formatMoney(r.savingsAmount, currency)}</td>
-                    <td>{r.savingsInterest}</td>
-                    <td className={styles.credit}>
+                    <td className={styles.mobileHidden}>{r.savingsInterest}</td>
+                    <td className={`${styles.mobileHidden} ${styles.amountDebited}`}>
                       +{formatMoney(r.amountDebited, currency)}
                     </td>
-                    <td>{r.dateDebited}</td>
-                    <td>
+                    <td className={styles.mobileHidden}>{r.dateDebited}</td>
+                    <td className={styles.mobileHidden}>
                       <span className={`${styles.pill} ${styles[statusClass]}`}>
                         {r.status}
                       </span>
+                    </td>
+                    <td className={styles.actionsCell}>
+                      <button type="button" className={styles.actionsBtn} aria-label="More actions">
+                        <svg width="4" height="16" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="2" cy="2" r="2" fill="#6B7280"/>
+                          <circle cx="2" cy="8" r="2" fill="#6B7280"/>
+                          <circle cx="2" cy="14" r="2" fill="#6B7280"/>
+                        </svg>
+                      </button>
                     </td>
                   </tr>
                 );
