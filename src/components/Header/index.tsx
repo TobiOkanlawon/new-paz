@@ -2,37 +2,56 @@
 import Image from "next/image";
 import styles from "./header.module.css";
 import { useRef, useEffect, useState, useMemo } from "react";
-import NotificationsModal, { NotificationItem } from "@/components/NotificationModal/NotificationsModal";
-import NotificationDetailModal, { NotificationDetail } from "@/components/NotificationDetailModal/NotificationDetailModal";
+import NotificationsModal, {
+  NotificationItem,
+} from "@/components/NotificationModal/NotificationsModal";
+import NotificationDetailModal, {
+  NotificationDetail,
+} from "@/components/NotificationDetailModal/NotificationDetailModal";
 import Notifications from "@/assets/notifications.png";
 import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
 import { useRouter } from "next/navigation";
 import HeaderDropdown from "../HeaderDropdowns";
 
+import { useSession } from "next-auth/react";
 
 const MOCK: NotificationItem[] = [
-{ id: "1", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: false },
-{ id: "2", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: true },
+  {
+    id: "1",
+    title: "Your Loan request was successful",
+    subtitle: "Click to view loan request details",
+    createdAt: "3 days ago",
+    read: false,
+  },
+  {
+    id: "2",
+    title: "Your Loan request was successful",
+    subtitle: "Click to view loan request details",
+    createdAt: "3 days ago",
+    read: true,
+  },
 ];
 
 const quickLinksDropdowns = [
-  {label: "Save Now", href: "/dashboard/savings"},
-  {label: "Apply for a Loan", href: "/dashboard/loans"},
-  {label: "Invest Now", href: "/dashboard/investments"},
-  {label: "Withdraw Funds", href: "/dashboard/withdraw"},
-]
+  { label: "Save Now", href: "/dashboard/savings" },
+  { label: "Apply for a Loan", href: "/dashboard/loans" },
+  { label: "Invest Now", href: "/dashboard/investments" },
+  { label: "Withdraw Funds", href: "/dashboard/withdraw" },
+];
 
 const profileDropdowns = [
-  {label: "My Profile", href: "/dashboard/profile"},
-  {label: "Settings", href: "/settings"},
+  { label: "My Profile", href: "/dashboard/profile" },
+  { label: "Settings", href: "/settings" },
   // {label: "Logout", href: "/logout"},
 ];
 
 const Header = () => {
   const navRef = useRef<HTMLDivElement>(null);
 
-  const [firstName] = useState("Esther");
+  const session = useSession();
+
+  const firstName = session.data?.user.firstName;
 
   const [openList, setOpenList] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
@@ -43,7 +62,7 @@ const Header = () => {
 
   const notifications = useMemo(() => MOCK, []);
 
-const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const updateNavHeight = () => {
@@ -82,8 +101,7 @@ const router = useRouter();
       statusLabel: "Loan request successful",
       statusType: "success",
       dateTime: "Jan 21, 2022 3:45pm",
-      body:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     });
     setOpenList(false);
     setOpenDetail(true);
@@ -93,7 +111,7 @@ const router = useRouter();
     <div ref={navRef} className={styles.header}>
       <nav className={styles.headerRight}>
         <div
-          onClick={(event)=>{
+          onClick={(event) => {
             event.stopPropagation();
             setOpenQuickLinks((prev) => !prev);
             setOpenProfileLinks(false);
@@ -105,8 +123,8 @@ const router = useRouter();
         </div>
 
         <div className={styles.headerRightRight}>
-          <button 
-            className={styles.notificationBtn} 
+          <button
+            className={styles.notificationBtn}
             onClick={() => {
               setOpenQuickLinks(false);
               setOpenProfileLinks(false);
@@ -115,10 +133,12 @@ const router = useRouter();
             aria-label="Open notifications"
           >
             <Image src={Notifications} alt="Notifications" />
-            {notifications.some(n => !n.read) && <span className={styles.notificationDot} />}
+            {notifications.some((n) => !n.read) && (
+              <span className={styles.notificationDot} />
+            )}
           </button>
           <div
-            onClick={(event)=>{
+            onClick={(event) => {
               event.stopPropagation();
               setOpenProfileLinks((prev) => !prev);
               setOpenQuickLinks(false);
@@ -144,8 +164,17 @@ const router = useRouter();
         onClose={() => setOpenDetail(false)}
         data={data}
       />
-      <HeaderDropdown isOpen={openQuickLinks} Header="Quick Actions" navLinks={quickLinksDropdowns} rightPos="12rem" />
-      <HeaderDropdown isOpen={openProfileLinks} Header="My Account" navLinks={profileDropdowns} />
+      <HeaderDropdown
+        isOpen={openQuickLinks}
+        Header="Quick Actions"
+        navLinks={quickLinksDropdowns}
+        rightPos="12rem"
+      />
+      <HeaderDropdown
+        isOpen={openProfileLinks}
+        Header="My Account"
+        navLinks={profileDropdowns}
+      />
     </div>
   );
 };

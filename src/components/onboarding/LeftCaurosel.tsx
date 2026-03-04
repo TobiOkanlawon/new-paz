@@ -4,10 +4,32 @@ import Image from "next/image";
 import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import styles from "./LeftStyle.module.css";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+
+type Props = {
+  view?: "logged in";
+};
 
 const SLIDE_DURATION = 6000;
 
-const LeftCaurosel = () => {
+const LoggedInView = () => {
+  const handleLogout = () => {
+    signOut();
+  };
+
+  return (
+    <div className={styles.buttonContainer}>
+      <div className={styles.loginButton}>
+        <Button variant="outlined" onClick={handleLogout}>
+          Logout
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const LeftCaurosel: React.FC<Props> = ({ view }) => {
   const bgImages = [
     {
       bg: "/images/leftBG11.png",
@@ -62,15 +84,12 @@ const LeftCaurosel = () => {
     setIsAutoPlaying(true);
   }, [bgImages.length]);
 
-<<<<<<< HEAD
   const router = useRouter();
 
   const handleLogin = () => {
     router.push("/login");
   };
 
-=======
->>>>>>> a656a08 (Make carousel implementation match design properly)
   return (
     <div className={styles.container}>
       <div className={styles.bgContainer}>
@@ -131,20 +150,20 @@ const LeftCaurosel = () => {
           />
         </div>
 
-        <div className={styles.buttonContainer}>
-          <div className={styles.loginButton}>
-<<<<<<< HEAD
-            <Button variant="outlined" onClick={handleLogin}>
-              Login
-            </Button>
-=======
-            <Button variant="outlined">Login</Button>
->>>>>>> a656a08 (Make carousel implementation match design properly)
+        {view == "logged in" ? (
+          <LoggedInView />
+        ) : (
+          <div className={styles.buttonContainer}>
+            <div className={styles.loginButton}>
+              <Button variant="outlined" onClick={handleLogin}>
+                Login
+              </Button>
+            </div>
+            <button className={styles.nextButton} onClick={goToNext}>
+              Next <FaArrowRight />
+            </button>
           </div>
-          <button className={styles.nextButton} onClick={goToNext}>
-            Next <FaArrowRight />
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,21 @@
-import React, { useRef, useState } from "react";
 import styles from "../kycverification.module.css";
+import * as yup from "yup";
+import Input from "@/components/Input";
+import { handleErrorDisplay } from "@/libs/helpers";
+import { useFormik } from "formik";
+import { verifyBvnAction } from "@/app/(public)/kyc/actions";
+import { toast } from "react-toastify";
+import Button from "@/components/Button";
+import { signOut } from "next-auth/react";
+
+const schema = yup.object({
+  bvn: yup
+    .string()
+    .required("BVN is required")
+    .matches(/^\d{11}$/, "BVN must be exactly 11 digits"),
+
+  dob: yup.string().required("Date of birth is required"),
+});
 
 const EnterStep = ({
   onVerify,
@@ -8,23 +24,24 @@ const EnterStep = ({
   onVerify: () => void;
   onBack: () => void;
 }) => {
-  const [bvn, setBvn] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const formik = useFormik({
+    initialValues: {
+      bvn: "",
+      dob: "",
+    },
+    validationSchema: schema,
+    onSubmit: async (values, { setSubmitting }) => {
+      const response = await verifyBvnAction(values);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, "").slice(0, 11);
-    setBvn(val);
-  };
+      if (!response.success) {
+        toast.error(response.message);
+        setSubmitting(false);
+        return;
+      }
 
-  const handleVerify = async () => {
-    if (bvn.length !== 11) return;
-    setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsLoading(false);
-    onVerify();
-  };
+      onVerify();
+    },
+  });
 
   return (
     <div className={styles.stepContent}>
@@ -35,49 +52,57 @@ const EnterStep = ({
         </p>
       </div>
 
-      <div className={styles.inputGroup}>
-        <label className={styles.inputLabel}>BVN Number</label>
-        <div
-          className={`${styles.inputWrapper} ${
-            isFocused ? styles.inputFocused : ""
-          }`}
-        >
-          <input
-            ref={inputRef}
+      <form onSubmit={formik.handleSubmit}>
+        <div className={styles.inputGroup}>
+          <Input
             type="text"
+            label="BVN"
             inputMode="numeric"
-            value={bvn}
-            onChange={handleChange}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
             placeholder="12345678901"
-            className={styles.input}
             maxLength={11}
+            {...formik.getFieldProps("bvn")}
+            errors={handleErrorDisplay(formik, "bvn")}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const val = e.target.value.replace(/\D/g, "").slice(0, 11);
+              formik.setFieldValue("bvn", val);
+            }}
+          />
+          <span
+            className={`${styles.charCount} ${
+              formik.values.bvn.length === 11 ? styles.charCountFull : ""
+            }`}
+          >
+            {formik.values.bvn.length}/11 digits
+          </span>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <Input
+            type="date"
+            label="Date of Birth"
+            {...formik.getFieldProps("dob")}
+            errors={handleErrorDisplay(formik, "dob")}
           />
         </div>
-        <span
-          className={`${styles.charCount} ${
-            bvn.length === 11 ? styles.charCountFull : ""
-          }`}
-        >
-          {bvn.length}/11 digits
-        </span>
-      </div>
 
-      <div className={styles.btnRow}>
-        <button className={styles.secondaryBtn} onClick={onBack}>
-          Back
-        </button>
-        <button
-          className={`${styles.primaryBtn} ${styles.verifyBtn} ${
-            bvn.length !== 11 ? styles.btnDisabled : ""
-          }`}
-          onClick={handleVerify}
-          disabled={bvn.length !== 11 || isLoading}
-        >
-          {isLoading ? <span className={styles.spinner} /> : "Verify BVN"}
-        </button>
-      </div>
+        <div className={styles.btnRow}>
+          <button
+            type="button"
+            className={styles.secondaryBtn}
+            onClick={onBack}
+          >
+            Back
+          </button>
+          <Button
+            type="submit"
+            className={`${styles.primaryBtn} ${styles.verifyBtn}`}
+            disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
+            loading={formik.isSubmitting}
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };

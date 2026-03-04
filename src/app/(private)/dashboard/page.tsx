@@ -1,5 +1,3 @@
-"use client";
-import Image, { ImageProps } from "next/image";
 import styles from "./dashboard.module.css";
 import Link from "next/link";
 import Wallet from "@/assets/wallet.svg";
@@ -10,9 +8,13 @@ import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
 import AccountCard from "@/components/Dashboard/AccountCard";
-
 import RecentTransactionsCard from "@/components/Dashboard/RecentTransactions";
 import InstantSavingsCard from "@/components/Dashboard/InstantSavingsCard";
+
+import { getDashboardData } from "@/actions/dashboard";
+import { getServerSession } from "next-auth";
+import QuickActionCard from "@/components/Dashboard/QuickActionCard";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const BottomLeft = () => {
   return (
@@ -33,7 +35,6 @@ const BottomLeft = () => {
                 title="Valentine"
                 image={Rose}
                 content="Save money daily, bi-weekly plan with a purpose in mind."
-                action={() => {}}
                 borderColor="#214CCF"
                 imageBackgroundColor="#E9EDFA"
               />
@@ -41,7 +42,6 @@ const BottomLeft = () => {
                 title="Valentine"
                 image={Rose}
                 content="Save money daily, bi-weekly plan with a purpose in mind."
-                action={() => {}}
                 borderColor="#214CCF"
                 imageBackgroundColor="#E9EDFA"
               />
@@ -58,7 +58,6 @@ const BottomLeft = () => {
               title="Vacation"
               image={Rose}
               content="Save money daily, bi-weekly plan with a purpose in mind."
-              action={() => {}}
               borderColor="#214CCF"
               imageBackgroundColor="#E9EDFA"
             />
@@ -66,7 +65,6 @@ const BottomLeft = () => {
               title="Valentine"
               image={Rose}
               content="Save money daily, bi-weekly plan with a purpose in mind."
-              action={() => {}}
               borderColor="#214CCF"
               imageBackgroundColor="#E9EDFA"
             />
@@ -140,39 +138,20 @@ const BottomRight = () => {
   );
 };
 
-type QuickActionProps = {
-  backgroundColor: string;
-  action: () => void;
-  text: string;
-  icon: ImageProps["src"];
-  color?: string;
-};
+const Dashboard = async () => {
+  const session = await getServerSession(authOptions);
+  const { accountSummary } = await getDashboardData();
 
-const QuickActionCard: React.FC<QuickActionProps> = ({
-  icon,
-  text,
-  backgroundColor,
-}) => {
-  return (
-    <div className={styles.quickActionCardContainer}>
-      <div className={styles.quickActionCardInnerContainer}>
-        <div
-          className={styles.quickActionCardIconContainer}
-          style={{ backgroundColor: backgroundColor }}
-        >
-          <Image src={icon} alt="icon" />
-        </div>
-        <p>{text}</p>
-      </div>
-    </div>
-  );
-};
-
-const Dashboard = () => {
-  const firstName = "Esther";
-  const savingsAmount = 0;
-  const loanAmount = 0;
-  const investmentAmount = 0;
+  const firstName = session?.user?.firstName as string;
+  const savingsAmount = accountSummary.success
+    ? accountSummary.data.totalSavings
+    : 0;
+  const loanAmount = accountSummary.success
+    ? accountSummary.data?.totalLoans
+    : 0;
+  const investmentAmount = accountSummary.success
+    ? accountSummary.data?.totalInvestments
+    : 0;
 
   return (
     <div className={styles.container}>
@@ -186,7 +165,7 @@ const Dashboard = () => {
       <div className={styles.accountCards}>
         <AccountCard
           backgroundColor="#EBFFF2"
-          amount={savingsAmount}
+          amount={savingsAmount ?? 0}
           icon={Piggy}
           color="#22C55E"
           title="total savings"
@@ -215,6 +194,7 @@ const Dashboard = () => {
           rateTextColor="#12B76A"
         />
       </div>
+
       <div className={styles.quickActionContainer}>
         <h2>Quick Actions</h2>
         <div className={styles.quickActionCards}>
@@ -225,14 +205,12 @@ const Dashboard = () => {
               icon={Plus}
               text="Apply for a loan"
             />
-
             <QuickActionCard
               action={() => {}}
               backgroundColor="#EBFFF2"
               icon={Piggy}
               text="Add to Savings"
             />
-
             <QuickActionCard
               action={() => {}}
               color="#F7B341"
@@ -240,7 +218,6 @@ const Dashboard = () => {
               icon={InvestmentIcon}
               text="Invest Now"
             />
-
             <QuickActionCard
               action={() => {}}
               color="#214CCF"
@@ -251,7 +228,9 @@ const Dashboard = () => {
           </div>
         </div>
         <div className={styles.quickActionPager} aria-hidden="true">
-          <span className={`${styles.quickActionDot} ${styles.quickActionDotActive}`} />
+          <span
+            className={`${styles.quickActionDot} ${styles.quickActionDotActive}`}
+          />
           <span className={styles.quickActionDot} />
         </div>
       </div>
@@ -263,4 +242,5 @@ const Dashboard = () => {
     </div>
   );
 };
+
 export default Dashboard;

@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { removeToken } from "@/libs/auth";
 import useUser from "@/store/userStore";
+import { SessionProvider } from "next-auth/react";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -26,19 +27,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, [router, queryClient]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-      />
-      {children}
-    </QueryClientProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+        />
+        {children}
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }

@@ -1,3 +1,4 @@
+"use client";
 import Image, { ImageProps } from "next/image";
 import styles from "./savingscard.module.css";
 import Upright from "@/assets/up-right.svg";
@@ -6,7 +7,7 @@ type MiniCardProps = {
   title: string;
   image: ImageProps["src"];
   content: string;
-  action: () => void;
+  action?: () => void;
   borderColor: string;
   imageBackgroundColor: string;
 };
