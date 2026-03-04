@@ -1,6 +1,5 @@
 "use server";
 
-// import { redirect } from "next/navigation";
 import * as yup from 'yup';
 import { RegisterSchema } from "./schema";
 
@@ -17,7 +16,7 @@ export async function registerUser(payload: RegisterSchema) {
   }
   
   try {
-    const res = await fetch(`${process.env.API_BASE_URL}/auth/register`, {
+    const res = await fetch(`${process.env.API_BASE_URL}/v1/users/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +26,9 @@ export async function registerUser(payload: RegisterSchema) {
     });
 
     const data = await res.json();
-
+    
+    console.log(data);
+    
     if (!res.ok) {
       return {
         success: false,
