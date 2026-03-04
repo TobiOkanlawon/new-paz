@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../kycverification.module.css";
+import styles from "../addaccountverification.module.css";
 
 const TOTAL_STEPS = 3;
 
