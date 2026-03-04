@@ -18,6 +18,7 @@ import InvestmentsIcon from "@/assets/investments.svg";
 import SettingsIcon from "@/assets/settings.svg";
 import ProfileImage from "@/assets/profile-dummy.png";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 type OptionProps = {
   active: boolean;
@@ -63,23 +64,23 @@ const SidebarOption: React.FC<OptionProps> = ({
   );
 };
 
-export default function Sidebar({ 
-  isOpen, 
-  collapsed, 
-  onToggle 
-}: { 
-  isOpen: boolean; 
-  collapsed: boolean; 
+export default function Sidebar({
+  isOpen,
+  collapsed,
+  onToggle,
+}: {
+  isOpen: boolean;
+  collapsed: boolean;
   onToggle: () => void;
 }) {
-  // const qc = useQueryClient();
+  const handleLogout = () => {
+    signOut();
+  };
 
-  // const handleLogout = () => {
-  //   removeToken();
-  //   qc.resetQueries();
-  //   qc.clear();
-  //   useUser.persist.clearStorage();
-  // };
+  const session = useSession();
+
+  const fullName = `${session?.data?.user?.firstName} ${session?.data?.user?.lastName}`;
+  const email = session.data?.user?.email;
 
   const pathname = usePathname();
 
@@ -88,13 +89,26 @@ export default function Sidebar({
   };
 
   return (
-    <aside className={clsx(styles.sidebarContainer, collapsed && styles.sidebarContainerCollapsed)}>
+    <aside
+      className={clsx(
+        styles.sidebarContainer,
+        collapsed && styles.sidebarContainerCollapsed,
+      )}
+    >
       <nav className={styles.sidebar}>
         <div className={styles.topContainer}>
-          <div className={clsx(styles.headingContainer, collapsed && styles.headingContainerCollapsed)}>
+          <div
+            className={clsx(
+              styles.headingContainer,
+              collapsed && styles.headingContainerCollapsed,
+            )}
+          >
             {!collapsed && <Image src={CompoundLogo} alt="Compound Logo" />}
             <Image
-              className={clsx(styles.toggleIcon, collapsed && styles.toggleIconCollapsed)}
+              className={clsx(
+                styles.toggleIcon,
+                collapsed && styles.toggleIconCollapsed,
+              )}
               src={ToggleIcon}
               alt="Toggle Icon"
               onClick={onToggle}
@@ -152,20 +166,31 @@ export default function Sidebar({
             />
           </div>
         </div>
-        <div className={clsx(styles.bottomContainer, collapsed && styles.bottomContainerCollapsed)}>
+        <div
+          className={clsx(
+            styles.bottomContainer,
+            collapsed && styles.bottomContainerCollapsed,
+          )}
+        >
           <div className={styles.userInfo}>
-            <Image src={ProfileImage} alt="User Avatar" width={32} height={32} className={styles.avatar} />
+            <Image
+              src={ProfileImage}
+              alt="User Avatar"
+              width={32}
+              height={32}
+              className={styles.avatar}
+            />
             {!collapsed && (
               <div>
-                <p className={styles.username}>Esther Williams</p>
-                <p className={styles.userEmail}>Esther22@gmail.com</p>
+                <p className={styles.username}>{fullName}</p>
+                <p className={styles.userEmail}>{email}</p>
               </div>
             )}
           </div>
           <div>
-            <button className={styles.logoutButton}>
+            <button className={styles.logoutButton} onClick={handleLogout}>
               <Image
-                src='/images/logout.png'
+                src="/images/logout.png"
                 alt="Logout Icon"
                 width={20}
                 height={20}

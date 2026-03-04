@@ -7,7 +7,7 @@ export default function () {
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
-        <LeftCaurosel />
+        <LeftCaurosel view="logged in" />
       </div>
       <div className={styles.rightContainer}>
         <KYCVerification />

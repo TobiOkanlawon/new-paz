@@ -18,6 +18,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // if isLogged in
+  if (pathname == "/") {
+    return NextResponse.redirect(new URL("/dashboard", req.url))
+  }
+  
   const isOnboarded =
     token.user?.isBvnVerified && token.user?.primaryAccountLinked;
 
@@ -35,5 +40,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/kyc/:path*"],
+  matcher: ["/dashboard/:path*", "/kyc/:path*", "/"],
 };
