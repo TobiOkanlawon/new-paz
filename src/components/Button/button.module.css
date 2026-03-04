@@ -30,6 +30,10 @@
   box-shadow: none;
 }
 
+.button:disabled {
+    cursor: not-allowed;
+}
+
 /* Secondary Variant - White with blue text */
 .secondary {
   background-color: #ffffff;
