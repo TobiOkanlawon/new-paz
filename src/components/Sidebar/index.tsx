@@ -1,7 +1,7 @@
 "use client";
 import styles from "./sidebar.module.css";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 // import { removeToken } from "@/libs/auth";
 // import useUser from "@/store/userStore";
 // import { useQueryClient } from "@tanstack/react-query";
@@ -82,6 +82,7 @@ export default function Sidebar({
   // };
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const isSubPath = (path: string, currentPath: string) => {
     return currentPath.includes(path);
@@ -153,7 +154,7 @@ export default function Sidebar({
           </div>
         </div>
         <div className={clsx(styles.bottomContainer, collapsed && styles.bottomContainerCollapsed)}>
-          <div className={styles.userInfo}>
+          <div onClick={()=>{router.push("/dashboard/profile")}} className={styles.userInfo}>
             <Image src={ProfileImage} alt="User Avatar" width={32} height={32} className={styles.avatar} />
             {!collapsed && (
               <div>

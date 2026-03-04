@@ -1,13 +1,9 @@
 "use client";
 import { useState } from "react";
 import styles from "./profile.module.css";
-import Input from "@/components/Input";
-import SelectGroup from "@/components/InputGroup/SelectGroup";
-import DateInput from "@/components/dateInput/page";
-import ProgressBar from "@/components/ProgressBar";
-import Button from "@/components/Button";
-import Modal from "@/components/Modal";
 import Image from "next/image";
+import Modal from "@/components/Modal";
+import { LuMapPin, LuCalendar, LuUser, LuMail, LuPhone, LuUsers, LuLink } from "react-icons/lu";
 import { useGetProfile } from "@/data/queries/useGetProfile";
 import useUser from "@/store/userStore";
 import { Loading } from "@/components/Loading";
@@ -36,7 +32,7 @@ const relationshipOptions = [
 
 type TProfileFormValues = {
   postalAddress: string;
-  gender: Gender;
+  gender: string;
   birthday: string;
   emailAddress: string;
   phoneNumber: string;
@@ -47,17 +43,43 @@ type TProfileFormValues = {
   relationship: string;
 };
 
+/* ── Reusable field components ── */
+
+type FieldProps = {
+  label: string;
+  icon?: React.ReactNode;
+  required?: boolean;
+  children: React.ReactNode;
+};
+const Field = ({ label, icon, required, children }: FieldProps) => (
+  <div className={styles.field}>
+    <label className={styles.fieldLabel}>
+      {label}
+      {required && <span className={styles.fieldRequired}>*</span>}
+    </label>
+    <div className={styles.inputWrap}>
+      {icon && <span className={styles.inputIcon}>{icon}</span>}
+      {children}
+    </div>
+  </div>
+);
+
+/* ── Main component ── */
+
 const Profile = () => {
   const { user } = useUser();
   const { data, isLoading, error } = useGetProfile(user?.email as string);
   const { mutate } = useUpdateProfile();
   const { isPending: isUpdating } = useUpdateProfile();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fileName, setFileName] = useState("No file chosen");
+
   const formik = useFormik<TProfileFormValues>({
     initialValues: {
       postalAddress: data?.address || "",
       birthday: formatBirthdayToDateInputFormat(data?.birthday) || "",
-      gender: data?.gender || "male" || "female",
+      gender: data?.gender || "male",
       emailAddress: data?.email || user?.email || "",
       phoneNumber: data?.phoneNumber || "",
       nextOfKinFirstName: data?.nextOfKinFirstName || "",
@@ -67,260 +89,244 @@ const Profile = () => {
       relationship: data?.nextOfKinRelationship || "",
     },
     validationSchema: schema,
+    enableReinitialize: true,
     onSubmit: async (values) => {
-      const formattedValues = {
-        address: values.postalAddress,
-        gender: values.gender,
-        email: values.emailAddress,
-        birthday: values.birthday,
-        phoneNumber: values.phoneNumber,
-        nextOfKinFirstName: values.nextOfKinFirstName,
-        nextOfKinLastName: values.nextOfKinLastName,
-        nextOfKinEmail: values.nextOfKinEmail,
-        nextOfKinPhoneNumber: values.nextOfKinPhoneNumber,
-        nextOfKinRelationship: values.relationship,
-      };
-
       mutate(
-        { email: data?.email as string, profileData: formattedValues },
         {
-          onSuccess: () => {
-            toast.success("Profile updated successfully");
+          email: data?.email as string,
+          profileData: {
+            address: values.postalAddress,
+            gender: values.gender as Gender,
+            email: values.emailAddress,
+            birthday: values.birthday,
+            phoneNumber: values.phoneNumber,
+            nextOfKinFirstName: values.nextOfKinFirstName,
+            nextOfKinLastName: values.nextOfKinLastName,
+            nextOfKinEmail: values.nextOfKinEmail,
+            nextOfKinPhoneNumber: values.nextOfKinPhoneNumber,
+            nextOfKinRelationship: values.relationship,
           },
-          onError: () => {
-            toast.error("Profile failed to update");
-          },
+        },
+        {
+          onSuccess: () => toast.success("Profile updated successfully"),
+          onError: () => toast.error("Profile failed to update"),
         },
       );
     },
-
-    enableReinitialize: true,
   });
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [fileName, setFileName] = useState("myPhoto.png");
-
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setFileName(file ? file.name : "myPhoto.png");
-  };
-  const [isActive, setIsActive] = useState(false);
 
   const calculateProgress = () => {
     let completed = 0;
-
     for (const value of Object.values(formik.values)) {
-      if (typeof value == "string" && value !== "") {
-        completed++;
-      }
+      if (typeof value === "string" && value !== "") completed++;
     }
-
-    const ratio = completed / Object.keys(formik.values).length;
-    return Math.floor(ratio * 100);
+    return Math.floor((completed / Object.keys(formik.values).length) * 100);
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const progress = calculateProgress();
 
-  if (error) {
-    return <ErrorComponent message="" retryFunction={() => {}} />;
-  }
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setFileName(file ? file.name : "No file chosen");
+  };
+
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorComponent message="" retryFunction={() => {}} />;
 
   return (
-    <div>
-      <form
-        className={styles.container}
-        onSubmit={formik.handleSubmit}
-        id="CONTAINER"
-      >
-        <section className={styles.headers}>
-          <div className={styles.profileContainer}>
-            <div className={styles.profileWrapper}>
-              <Image
-                src={"/profile.png"}
-                alt="Profile Image"
-                width={60}
-                height={60}
-              />
+    <div className={styles.page}>
+      <form onSubmit={formik.handleSubmit}>
+
+        {/* ── Hero Banner ── */}
+        <div className={styles.heroBanner}>
+          <div className={styles.heroLeft}>
+            <div className={styles.avatarWrap}>
+              <div className={styles.avatarRing}>
+                <Image
+                  src="/profile.png"
+                  alt="Profile"
+                  width={68}
+                  height={68}
+                  className={styles.avatarImg}
+                />
+              </div>
+              <div
+                className={styles.avatarEdit}
+                onClick={() => setIsModalOpen(true)}
+                role="button"
+                aria-label="Edit profile photo"
+              >
+                <Image src="/editProfile.png" alt="Edit" width={14} height={14} />
+              </div>
             </div>
-            <div className={styles.editProfileWrapper}>
-              <Image
-                src={"/editProfile.png"}
-                alt="Profile Image"
-                width={18}
-                height={18}
-                onClick={handleOpenModal}
-              />
+            <div className={styles.heroInfo}>
+              <h1 className={styles.heroName}>
+                {user?.first_name ? `${user.first_name} ${user.last_name ?? ""}` : user?.email ?? "My Profile"}
+              </h1>
+              <p className={styles.heroEmail}>{data?.email ?? user?.email}</p>
             </div>
           </div>
-          <div className={styles.progressWrapper}>
-            <ProgressBar progress={calculateProgress()} />
+
+          <div className={styles.progressPill}>
+            <p className={styles.progressLabel}>Profile Completion</p>
+            <div className={styles.progressBar}>
+              <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+            </div>
+            <p className={styles.progressPct}>{progress}%</p>
+            <p className={styles.progressSub}>Complete your profile</p>
           </div>
-          <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-            <h2 className={styles.modalHeader}>Change profile photo</h2>
-            <div className={styles.profileInputContainer}>
-              <label htmlFor="profileInput" className={styles.fakeButton}>
-                Choose File
-              </label>
-              <span className={styles.fileName}>{fileName}</span>
-              <Input
-                label=""
-                type="file"
-                id="profileInput"
-                className={styles.profileInput}
-                {...formik.getFieldProps("profileInput")}
+        </div>
+
+        {/* ── Personal Information ── */}
+        <div className={styles.formCard}>
+          <div className={styles.cardHeader}>
+            <div className={styles.cardHeaderIcon}><LuUser size={24} /></div>
+            <div>
+              <h2 className={styles.cardTitle}>Personal Information</h2>
+              <p className={styles.cardSubtitle}>Your basic details and contact info</p>
+            </div>
+          </div>
+
+          <div className={styles.inputGrid}>
+            <Field label="Postal Address" icon={<LuMapPin size={18} />} required>
+              <input
+                className={styles.input}
+                placeholder="Enter postal address"
+                {...formik.getFieldProps("postalAddress")}
               />
-            </div>
-            <div className={styles.buttonContainer}></div>
-            <Button
-              label="Submit"
-              loading={false}
-              className={styles.profileButton}
-            />
-          </Modal>
-        </section>
-        <section className={styles.form1}>
-          <div>
-            <div className={styles.groupInputs}>
-              <div className={styles.inputs}>
-                <Input
-                  id="postalAddress"
-                  label="Postal Address"
-                  placeholder="Enter postal address here"
-                  type="text"
-                  required
-                  disabled={isSubmitted}
-                  className={styles.postalAddress}
-                  {...formik.getFieldProps("postalAddress")}
-                />
-              </div>
-              <div className={styles.inputs}>
-                <DateInput
-                  label="Birthday"
-                  placeholder="Select Date"
-                  id="birthday"
-                  icon={
-                    <Image
-                      src={"/inputBirthday.png"}
-                      alt="Birthday"
-                      width={20}
-                      height={20}
-                    />
-                  }
-                  type="date"
-                  {...formik.getFieldProps("birthday")}
-                  required
-                />
-              </div>
-            </div>
-            <div className={styles.groupInputs}>
-              <div className={styles.inputs}>
-                <SelectGroup
-                  label="Gender"
-                  // name="gender"
-                  options={genderOptions}
-                  placeholder="Select Date"
-                  {...formik.getFieldProps("gender")}
-                />
-              </div>
-              <div className={styles.inputs}>
-                <Input
-                  label="Email"
-                  placeholder="Enter email address"
-                  id="email"
-                  type="email"
-                  required
-                  disabled={isSubmitted}
-                  {...formik.getFieldProps("emailAddress")}
-                />
-              </div>
-            </div>
-            <div className={styles.groupInputs}>
-              <div className={styles.inputs}>
-                <Input
-                  label="Phone Number"
-                  placeholder="Enter your phone number"
-                  id="phoneNumber"
-                  type="tel"
-                  required
-                  disabled={isSubmitted}
-                  {...formik.getFieldProps("phoneNumber")}
-                />
-              </div>
-              <div className={styles.inputs}></div>
+            </Field>
+
+            <Field label="Date of Birth" icon={<LuCalendar size={18} />} required>
+              <input
+                className={styles.input}
+                type="date"
+                {...formik.getFieldProps("birthday")}
+              />
+            </Field>
+
+            <Field label="Gender" icon={<LuUser size={18} />} required>
+              <select className={styles.select} {...formik.getFieldProps("gender")}>
+                <option value="">Select gender</option>
+                {genderOptions.map(o => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </Field>
+
+            <Field label="Email Address" icon={<LuMail size={18} />} required>
+              <input
+                className={styles.input}
+                type="email"
+                placeholder="Enter email address"
+                {...formik.getFieldProps("emailAddress")}
+              />
+            </Field>
+
+            <Field label="Phone Number" icon={<LuPhone size={18} />} required>
+              <input
+                className={styles.input}
+                type="tel"
+                placeholder="Enter phone number"
+                {...formik.getFieldProps("phoneNumber")}
+              />
+            </Field>
+          </div>
+        </div>
+
+        {/* ── Next of Kin ── */}
+        <div className={styles.formCard}>
+          <div className={styles.cardHeader}>
+            <div className={`${styles.cardHeaderIcon} ${styles.green}`}><LuUsers size={24} /></div>
+            <div>
+              <h2 className={styles.cardTitle}>Next of Kin</h2>
+              <p className={styles.cardSubtitle}>Emergency contact details</p>
             </div>
           </div>
-        </section>
-        <section className={styles.form2}>
-          <h3>Next of Kin Details</h3>
-          <div>
-            <div className={styles.groupInputs}>
-              <Input
-                label="First Name"
-                placeholder="Enter First Name"
-                id="nextOfKinFirstName"
-                type="text"
-                required
-                disabled={isSubmitted}
+
+          <div className={styles.inputGrid}>
+            <Field label="First Name" icon={<LuUser size={18} />} required>
+              <input
+                className={styles.input}
+                placeholder="First name"
                 {...formik.getFieldProps("nextOfKinFirstName")}
               />
-              <Input
-                label="Last Name"
-                placeholder="Enter Last Name"
-                id="nextOfKinLastName"
-                type="text"
-                required
-                disabled={isSubmitted}
+            </Field>
+
+            <Field label="Last Name" icon={<LuUser size={18} />} required>
+              <input
+                className={styles.input}
+                placeholder="Last name"
                 {...formik.getFieldProps("nextOfKinLastName")}
               />
-            </div>
-            <div className={styles.groupInputs}>
-              <Input
-                id="nextOfKinEmail"
-                label="Email"
-                placeholder="Enter their email address"
+            </Field>
+
+            <Field label="Email Address" icon={<LuMail size={18} />} required>
+              <input
+                className={styles.input}
                 type="email"
-                required
-                disabled={isSubmitted}
+                placeholder="Their email address"
                 {...formik.getFieldProps("nextOfKinEmail")}
               />
-              <Input
-                label="Phone Number"
-                placeholder="Enter their phone number"
-                id="nextOfKinPhoneNumber"
+            </Field>
+
+            <Field label="Phone Number" icon={<LuPhone size={18} />} required>
+              <input
+                className={styles.input}
                 type="tel"
-                required
-                disabled={isSubmitted}
+                placeholder="Their phone number"
                 {...formik.getFieldProps("nextOfKinPhoneNumber")}
               />
-            </div>
-            <div className={styles.groupInputs}>
-              <div className={styles.inputs}>
-                <SelectGroup
-                  label="Relationship"
-                  // name="relationship"
-                  placeholder="Who is the person to you?"
-                  options={relationshipOptions}
-                  required
-                  disabled={isSubmitted}
-                  {...formik.getFieldProps("relationship")}
-                />
-              </div>
-              <div className={styles.inputs}></div>
-            </div>
+            </Field>
+
+            <Field label="Relationship" icon={<LuLink size={18} />} required>
+              <select className={styles.select} {...formik.getFieldProps("relationship")}>
+                <option value="">Who are they to you?</option>
+                {relationshipOptions.map(o => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </Field>
           </div>
-        </section>
-        <Button
-          label={isUpdating ? "Updating..." : "Submit"}
-          loading={isUpdating}
-          className={styles.button}
-          type="submit"
-        />
+        </div>
+
+        {/* Submit */}
+        <div className={styles.submitRow}>
+          <button
+            type="submit"
+            className={styles.submitBtn}
+            disabled={isUpdating}
+          >
+            {isUpdating ? "Saving…" : "Save Changes →"}
+          </button>
+        </div>
+
       </form>
+
+      {/* ── Change Photo Modal ── */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <button
+          type="button"
+          className={styles.modalClose}
+          onClick={() => setIsModalOpen(false)}
+          aria-label="Close modal"
+        >✕</button>
+        <h2 className={styles.modalTitle}>Update Profile Photo</h2>
+        <p className={styles.modalSub}>Choose a clear, high-quality photo</p>
+        <label className={styles.fileInputWrap} htmlFor="profileInput">
+          <span className={styles.fileChooseBtn}>Choose File</span>
+          <span className={styles.fileName}>{fileName}</span>
+          <input
+            id="profileInput"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+        </label>
+        <button type="button" className={styles.submitBtn} style={{ width: "100%", justifyContent: "center" }}>
+          Upload Photo
+        </button>
+      </Modal>
     </div>
   );
 };

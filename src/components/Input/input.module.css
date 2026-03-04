@@ -36,6 +36,10 @@
   /* REMOVED: Redundant vendor prefixes for width */
 }
 
+.input:focus-visible{
+  border: 1px solid #E6FCEE;
+}
+
 .passwordInput {
   /* This creates space on the right for the icon */
   padding-right: 2.5rem; 

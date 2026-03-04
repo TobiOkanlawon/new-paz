@@ -335,6 +335,10 @@
   box-sizing: border-box;
 }
 
+.input:focus-visible{
+  border: 1px solid #E6FCEE;
+}
+
 .input::placeholder { color: #D1D5DB; }
 
 .charCount {

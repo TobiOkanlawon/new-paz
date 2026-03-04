@@ -1,0 +1,68 @@
+/* side bar width is width: 17.29vw; */
+
+.pageContainer {
+  display: grid;
+  grid-template-columns: minmax(240px, 11.29vw) 1fr;
+  background-color: #f7f7f7;
+  transition: grid-template-columns 0.25s ease;
+}
+
+.pageContainerCollapsed {
+  grid-template-columns: 80px 1fr;
+}
+
+.dashboardMain {
+  display: grid;
+  grid-template-rows: minmax(auto, 80px) 1fr;
+  width: 100%;
+  height: 100vh;
+}
+
+.mainContent {
+  padding: 8px 10px 38px 90px;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 1201px) {
+  .dashboardMain {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .dashboardMain > aside {
+    position: fixed;
+    left: 0;
+    top: var(--navbar-height, 0px);
+    height: calc(100vh - var(--navbar-height, 0px));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 10;
+  }
+
+  .dashboardMain > aside.open {
+    transform: translateX(0);
+  }
+
+  .mainContent {
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .mainContent {
+    padding: 15px 20px;
+  }
+}
+
+@media screen and (max-width: 743px) {
+  .dashboardMain {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .mainContent {
+    padding: 0px;
+    width: 100%;
+  }
+}

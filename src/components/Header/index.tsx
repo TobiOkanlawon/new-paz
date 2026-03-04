@@ -7,6 +7,7 @@ import NotificationDetailModal, { NotificationDetail } from "@/components/Notifi
 import Notifications from "@/assets/notifications.png";
 import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
+import { useRouter } from "next/navigation";
 
 const MOCK: NotificationItem[] = [
 { id: "1", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: false },
@@ -25,7 +26,7 @@ const Header = () => {
 
   const notifications = useMemo(() => MOCK, []);
 
-
+const router = useRouter();
 
   useEffect(() => {
     const updateNavHeight = () => {
@@ -76,7 +77,7 @@ const Header = () => {
             <Image src={Notifications} alt="Notifications" />
             {notifications.some(n => !n.read) && <span className={styles.notificationDot} />}
           </button>
-          <div className={styles.profileContainer}>
+          <div onClick={()=>{router.push("/dashboard/profile")}} className={styles.profileContainer}>
             <Image src={ProfileImage} alt="Profile Image" />
             <p className={styles.profileFirstName}>{firstName}</p>
           </div>
