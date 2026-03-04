@@ -32,14 +32,15 @@ export default function KYCVerification() {
     }, 300);
   };
 
-  const contentClass = `${styles.contentWrap} ${animating
+  const contentClass = `${styles.contentWrap} ${
+    animating
       ? direction === "forward"
         ? styles.slideOutLeft
         : styles.slideOutRight
       : direction === "forward"
         ? styles.slideInRight
         : styles.slideInLeft
-    }`;
+  }`;
 
   if (step === "success") {
     return (

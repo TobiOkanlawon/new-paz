@@ -230,35 +230,41 @@
 
 /* Height responsive adjustments */
 @media screen and (max-height: 850px) {
-    .bgContainer {
-        padding: 10px 0;
-    }
-    .logoContainer {
-        padding: 12px 0;
-    }
-    .onboardingImage {
-        margin-top: 14px;
-        padding-bottom: 14px;
-    }
-    .textContainer {
-        padding: 0 0 16px;
-    }
-    .text {
-        font-size: 15px;
-        line-height: 1.5;
-    }
-    .buttonContainer {
-        padding: 20px 0;
-    }
-    .indicatorContainer {
-        padding: 6px 0;
-    }
-    .logo{
-        width: 5rem;
-    }
-    .bgImages{
-        height: 21rem;
-    }
+  .bgContainer {
+    padding: 10px 0;
+  }
+
+  .logoContainer {
+    padding: 12px 0;
+  }
+
+  .onboardingImage {
+    margin-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .textContainer {
+    padding: 0 0 16px;
+  }
+
+  .text {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .buttonContainer {
+    padding: 20px 0;
+  }
+
+  .indicatorContainer {
+    padding: 6px 0;
+  }
+  .logo {
+    width: 5rem;
+  }
+  .bgImages {
+    height: 21rem;
+  }
 }
 
 @media screen and (max-height: 720px) {
