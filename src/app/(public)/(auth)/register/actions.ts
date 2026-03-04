@@ -1,24 +1,21 @@
 "use server";
 
-
-// import { redirect } from "next/navigation";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { RegisterSchema } from "./schema";
 
 type RegisterSchema = yup.InferType<typeof RegisterSchema>;
 
 export async function registerUser(payload: RegisterSchema) {
-
   const cleanedPayload = {
     firstName: payload.firstName,
     lastName: payload.lastName,
     email: payload.email,
     mobileNumber: payload.phoneNumber,
-    password: payload.password
-  }
-  
+    password: payload.password,
+  };
+
   try {
-    const res = await fetch(`${process.env.API_BASE_URL}/auth/register`, {
+    const res = await fetch(`${process.env.API_BASE_URL}/v1/users/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,6 +25,8 @@ export async function registerUser(payload: RegisterSchema) {
     });
 
     const data = await res.json();
+
+    console.log(data);
 
     if (!res.ok) {
       return {
@@ -46,3 +45,4 @@ export async function registerUser(payload: RegisterSchema) {
       message: "Something went wrong",
     };
   }
+}

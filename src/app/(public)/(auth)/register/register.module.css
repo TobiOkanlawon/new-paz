@@ -32,8 +32,6 @@
 }
 
 .rightSide {
-  max-width: 606px;
-  padding: 0 1rem;
 }
 @media screen and (max-height: 850px) {
   .rightContainer {

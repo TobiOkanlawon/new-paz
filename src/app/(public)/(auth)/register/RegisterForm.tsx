@@ -2,20 +2,20 @@
 import styles from "./register.module.css";
 import * as yup from "yup";
 import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import { handleErrorDisplay } from "@/libs/helpers";
 import clsx from "clsx";
+import { toast } from "react-toastify";
 import { RegisterSchema } from "./schema";
 import { registerUser } from "./actions";
-import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 
-type RegisterSchema = yup.InferType<typeof RegisterSchema>;
 const RegisterForm = () => {
   const router = useRouter();
 
-  const formik = useFormik<RegisterSchema>({
+  const formik = useFormik<yup.InferType<typeof RegisterSchema>>({
     initialValues: {
       firstName: "",
       lastName: "",
@@ -36,19 +36,19 @@ const RegisterForm = () => {
 
       if (!response.success) {
         setSubmitting(false);
-        // setErrors({
-        //   email: response.message,
-        // });
-        toast("error", response.message);
+        toast.error(response.message);
         return;
       }
+
+      toast.success("Sign up successful");
 
       router.replace("/login");
     },
   });
+
   return (
     <div>
-      <form className={styles.rightSide} action={action}>
+      <form className={styles.rightSide} onSubmit={formik.handleSubmit}>
         <div className={styles.heading}>
           <h1 className={styles.title}>Create a Secure Account</h1>
           <p className={styles.subHeading}>
@@ -61,8 +61,9 @@ const RegisterForm = () => {
             <Input
               id="first-name"
               label="First Name"
-              name="First Name"
               placeholder="Esther"
+              {...formik.getFieldProps("firstName")}
+              errors={handleErrorDisplay(formik, "firstName")}
             />
           </div>
 
@@ -70,8 +71,9 @@ const RegisterForm = () => {
             <Input
               id="last-name"
               label="Last Name"
-              name="Last Name"
               placeholder="Williams"
+              {...formik.getFieldProps("lastName")}
+              errors={handleErrorDisplay(formik, "lastName")}
             />
           </div>
         </div>
@@ -81,18 +83,20 @@ const RegisterForm = () => {
             label="Email Address"
             type="email"
             id="email"
-            name="Email Address"
             placeholder="estherwilliams22@gmail.com"
+            {...formik.getFieldProps("email")}
+            errors={handleErrorDisplay(formik, "email")}
           />
         </div>
 
         <div className={styles.inputGroup}>
           <Input
             label="Phone Number"
-            name="Phone Number"
             id="phone-number"
             type="tel"
             placeholder="08023451234"
+            {...formik.getFieldProps("phoneNumber")}
+            errors={handleErrorDisplay(formik, "phoneNumber")}
           />
         </div>
 
@@ -101,18 +105,20 @@ const RegisterForm = () => {
             label="Password"
             type="password"
             id="password"
-            name="Password"
+            {...formik.getFieldProps("password")}
             placeholder="******"
+            errors={handleErrorDisplay(formik, "password")}
           />
         </div>
 
         <div className={styles.inputGroup}>
           <Input
             label="Confirm Password"
-            name="Confirm Password"
             id="confirm-password"
             type="password"
             placeholder="******"
+            {...formik.getFieldProps("confirmPassword")}
+            errors={handleErrorDisplay(formik, "confirmPassword")}
           />
         </div>
 
@@ -136,7 +142,9 @@ const RegisterForm = () => {
           </label>
         </div>
 
-        <Button loading={pending}>Create Account</Button>
+        <Button onClick={formik.submitForm} loading={formik.isSubmitting}>
+          Create Account
+        </Button>
       </form>
       <div style={{ display: "none" }}>
         {/* We aren't doing the google sign up thing yet, so there's no need to implement it*/}
