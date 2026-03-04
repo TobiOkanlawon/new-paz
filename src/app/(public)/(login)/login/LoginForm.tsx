@@ -8,11 +8,11 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import { handleErrorDisplay } from "@/libs/helpers";
-import { useLogin } from "@/data/mutations/useLogin";
-import { useRouter } from "next/navigation";
-import useUser from "@/store/userStore";
-import useToken from "@/store/tokenStore";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { signIn } from "next-auth/react";
 
 const schema = yup.object({
   email: yup
@@ -32,11 +32,19 @@ const schema = yup.object({
 type LoginSchema = yup.InferType<typeof schema>;
 
 const LoginForm = () => {
-  const mutation = useLogin();
   const router = useRouter();
 
-  const { replaceUser } = useUser();
-  const { setToken } = useToken();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("registered") === "true") {
+      toast.success("Account created successfully");
+      router.replace("/login");
+    } else if (searchParams.get("kycComplete") === "true") {
+      toast.success("KYC complete. Log in again");
+      router.replace("/login");
+    }
+  }, []);
 
   const formik = useFormik<LoginSchema>({
     initialValues: {
@@ -45,14 +53,22 @@ const LoginForm = () => {
       remember: false,
     },
     validationSchema: schema,
-    onSubmit: (values) => {
-      mutation.mutate(values, {
-        onSuccess: (data) => {
-          setToken(data.token);
-          replaceUser(data.user);
-          router.replace("/dashboard");
-        },
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
       });
+
+      if (!result || result.error) {
+        setSubmitting(false);
+        setErrors({
+          email: "Invalid email or password",
+        });
+        return;
+      }
+
+      router.replace("/dashboard");
     },
   });
 
@@ -97,11 +113,13 @@ const LoginForm = () => {
             <label htmlFor="remember">Remember me</label>
           </div>
           <div>
-            <Link href="/forgot-password" className={styles.forgot}>Forgot Password?</Link>
+            <Link href="/forgot-password" className={styles.forgot}>
+              Forgot Password?
+            </Link>
           </div>
         </div>
         <Button
-          loading={mutation.isPending}
+          loading={formik.isSubmitting}
           type="submit"
           className={styles.primary}
           label="Login"
@@ -109,13 +127,18 @@ const LoginForm = () => {
           Login
         </Button>
         <Button
-          loading={mutation.isPending}
+          loading={formik.isSubmitting}
           type="submit"
           variant="outlined"
           className={styles.google}
           label="Sign up with Google"
         >
-          <Image src="/images/google.png" height={24} width={24} alt="Google logo" />
+          <Image
+            src="/images/google.png"
+            height={24}
+            width={24}
+            alt="Google logo"
+          />
           Sign up with Google
         </Button>
         <div className={styles.linkContainer}>
