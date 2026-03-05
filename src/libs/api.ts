@@ -6,6 +6,8 @@ const BASE_URL = process.env.API_BASE_URL ?? "";
 
 type FetchOptions = Omit<RequestInit, "body"> & {
   body?: Record<string, unknown>;
+  /* isProtected controls whether to send a token with the request */
+  isProtected?: boolean;
 };
 
 type InvalidTokenResponse = {
@@ -32,7 +34,7 @@ function isInvalidTokenResponse(body: unknown): body is InvalidTokenResponse {
  */
 export async function apiFetch<T = unknown>(
   path: string,
-  options: FetchOptions = {}
+  options: FetchOptions = {isProtected: true}
 ): Promise<T> {
   const session = await getServerSession(authOptions);
 
@@ -42,12 +44,18 @@ export async function apiFetch<T = unknown>(
 
   const { body, headers: extraHeaders, ...rest } = options;
 
+  let headers: any = {};
+  
+  if (options.isProtected) {
+    headers["Authorization"] = `Bearer ${session.accessToken}`
+  } 
+  
   const response = await fetch(`${BASE_URL}${path}`, {
     ...rest,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${session.accessToken}`,
       ...extraHeaders,
+      ...headers,
     },
     ...(body ? { body: JSON.stringify(body) } : {}),
     cache: "no-store",
