@@ -57,6 +57,7 @@ const FundAccountModal = ({
         <div className={styles.section}>
           <Input
             label="Input amount"
+            name="amount"
             placeholder="₦ 0.00"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}

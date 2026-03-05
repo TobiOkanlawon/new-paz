@@ -75,7 +75,7 @@ const Setting = () => {
               </div>
 
               {/* OTP */}
-              <div className={styles.otpCard}>
+              {/* <div className={styles.otpCard}>
                 <div className={styles.secCardLeft}>
                   <div className={styles.secCardIconWrap}><LuSmartphone size={24} /></div>
                   <div>
@@ -103,7 +103,7 @@ const Setting = () => {
                   </label>
                   <span className={styles.toggleText}>{otpEnabled ? 'Enabled' : 'Disabled'}</span>
                 </div>
-              </div>
+              </div> */}
 
               {/* Security Question */}
               <div className={styles.secCard}>
