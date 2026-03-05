@@ -1,8 +1,8 @@
 "use server";
 
 import { apiFetch } from "@/libs/api";
-import { getServerSession } from "next-auth";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { getServerSession } from "next-auth"
+import { ActionResult, fail, ok } from "./shared";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
@@ -39,22 +39,7 @@ export type InstantSavings = {
 
 // ─── Action Result Wrapper ─────────────────────────────────────────────────────
 
-type ActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: string; };
 
-function ok<T>(data: T): ActionResult<T> {
-  return { success: true, data };
-}
-
-function fail<T>(error: unknown): ActionResult<T> {
-  if (isRedirectError(error)) throw error;
-
-  const message =
-    error instanceof Error ? error.message : "An unexpected error occurred.";
-  console.error("[Server Action Error]", message);
-  return { success: false, error: message };
-}
 
 // ─── Server Actions ────────────────────────────────────────────────────────────
 

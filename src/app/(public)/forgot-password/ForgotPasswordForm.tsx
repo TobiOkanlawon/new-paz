@@ -6,17 +6,15 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import { resetPassword } from "@/actions/forgotPassword";
+import { toast } from "react-toastify";
+import { handleErrorDisplay } from "@/libs/helpers";
 
 const schema = yup.object({
-  email: yup.string().email("Enter a valid email").required(),
-  password: yup
+  email: yup
     .string()
-    .required("Please Enter your password")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Password must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
-    ),
-  remember: yup.boolean(),
+    .email("Enter a valid email")
+    .required("You have to supply an email"),
 });
 
 type ForgotPasswordSchema = yup.InferType<typeof schema>;
@@ -24,12 +22,18 @@ const ForgotPasswordForm = () => {
   const formik = useFormik<ForgotPasswordSchema>({
     initialValues: {
       email: "",
-      password: "",
-      remember: false,
     },
     validationSchema: schema,
-    onSubmit: (values, formikHelpers) => {
-      alert(values);
+    onSubmit: async (values, { setSubmitting }) => {
+      const response = await resetPassword(values.email);
+
+      if (!response.success) {
+        setSubmitting(false);
+        toast.error(response.error.responseMessage);
+        return;
+      }
+
+      toast.success("Reset instructions have been sent to your email address");
     },
   });
   return (
@@ -51,6 +55,7 @@ const ForgotPasswordForm = () => {
           placeholder="Enter the email address you registered"
           id="email"
           {...formik.getFieldProps("email")}
+          errors={handleErrorDisplay(formik, "email")}
         />
         <Button type="submit" className={styles.primary} label="Login">
           Reset Password
