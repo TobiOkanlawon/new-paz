@@ -8,10 +8,25 @@ import Notifications from "@/assets/notifications.png";
 import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
 import { useRouter } from "next/navigation";
+import HeaderDropdown from "../HeaderDropdowns";
+
 
 const MOCK: NotificationItem[] = [
 { id: "1", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: false },
 { id: "2", title: "Your Loan request was successful", subtitle: "Click to view loan request details", createdAt: "3 days ago", read: true },
+];
+
+const quickLinksDropdowns = [
+  {label: "Save Now", href: "/dashboard/savings"},
+  {label: "Apply for a Loan", href: "/dashboard/loans"},
+  {label: "Invest Now", href: "/dashboard/investments"},
+  {label: "Withdraw Funds", href: "/dashboard/withdraw"},
+]
+
+const profileDropdowns = [
+  {label: "My Profile", href: "/dashboard/profile"},
+  {label: "Settings", href: "/settings"},
+  // {label: "Logout", href: "/logout"},
 ];
 
 const Header = () => {
@@ -23,6 +38,8 @@ const Header = () => {
   const [openDetail, setOpenDetail] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [data, setData] = useState<NotificationDetail | null>(null);
+  const [openQuickLinks, setOpenQuickLinks] = useState(false);
+  const [openProfileLinks, setOpenProfileLinks] = useState(false);
 
   const notifications = useMemo(() => MOCK, []);
 
@@ -45,6 +62,18 @@ const router = useRouter();
     return () => window.removeEventListener("resize", updateNavHeight);
   }, []);
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpenQuickLinks(false);
+        setOpenProfileLinks(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
   const openNotification = (id: string) => {
     setSelectedId(id);
     setData({
@@ -63,7 +92,14 @@ const router = useRouter();
   return (
     <div ref={navRef} className={styles.header}>
       <nav className={styles.headerRight}>
-        <div className={styles.quickActionsContainer}>
+        <div
+          onClick={(event)=>{
+            event.stopPropagation();
+            setOpenQuickLinks((prev) => !prev);
+            setOpenProfileLinks(false);
+          }}
+          className={styles.quickActionsContainer}
+        >
           <Image src={StarIcon} alt="red star icon" />
           <p className={styles.quickActionsText}>Quick actions</p>
         </div>
@@ -71,13 +107,24 @@ const router = useRouter();
         <div className={styles.headerRightRight}>
           <button 
             className={styles.notificationBtn} 
-            onClick={() => setOpenList(true)}
+            onClick={() => {
+              setOpenQuickLinks(false);
+              setOpenProfileLinks(false);
+              setOpenList(true);
+            }}
             aria-label="Open notifications"
           >
             <Image src={Notifications} alt="Notifications" />
             {notifications.some(n => !n.read) && <span className={styles.notificationDot} />}
           </button>
-          <div onClick={()=>{router.push("/dashboard/profile")}} className={styles.profileContainer}>
+          <div
+            onClick={(event)=>{
+              event.stopPropagation();
+              setOpenProfileLinks((prev) => !prev);
+              setOpenQuickLinks(false);
+            }}
+            className={styles.profileContainer}
+          >
             <Image src={ProfileImage} alt="Profile Image" />
             <p className={styles.profileFirstName}>{firstName}</p>
           </div>
@@ -97,6 +144,8 @@ const router = useRouter();
         onClose={() => setOpenDetail(false)}
         data={data}
       />
+      <HeaderDropdown isOpen={openQuickLinks} Header="Quick Actions" navLinks={quickLinksDropdowns} rightPos="12rem" />
+      <HeaderDropdown isOpen={openProfileLinks} Header="My Account" navLinks={profileDropdowns} />
     </div>
   );
 };
