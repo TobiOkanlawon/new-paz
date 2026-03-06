@@ -17,7 +17,7 @@ import { getTotalBalance } from "@/libs/helpers";
 import Link from "next/link";
 import FundAccountModal from "@/components/FundAccountModal/FundAccountModal";
 
-import { usePaystackPayment } from "react-paystack";
+import { openPaystackPopup } from "@/libs/paystack";
 import { useSession } from "next-auth/react";
 
 const Savings = () => {
@@ -116,33 +116,35 @@ const Savings = () => {
   const [fundLoading, setFundLoading] = useState(false);
 
   const handleFundAccount = async ({ amount }: { amount: number }) => {
-    const email = data.user?.email;
+    const email = data?.user?.email;
 
     if (!email) {
       return;
     }
 
-    const config = {
-      reference: new Date().getTime().toString(),
-      email,
-      amount: amount * 100,
-      publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-    };
+    setFundLoading(true);
 
-    const initializePayment = usePaystackPayment(config);
-
-    initializePayment({
-      onSuccess: (reference) => {
-        console.log("Payment successful:", reference);
-
-        setFundModalOpen(false);
-
-        loadAccountSummary();
-      },
-      onClose: () => {
-        console.log("Payment closed");
-      },
-    });
+    try {
+      await openPaystackPopup({
+        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+        email,
+        amount: amount * 100,
+        ref: new Date().getTime().toString(),
+        onSuccess: (reference) => {
+          console.log("Payment successful:", reference);
+          setFundModalOpen(false);
+          setFundLoading(false);
+          loadAccountSummary();
+        },
+        onClose: () => {
+          console.log("Payment closed");
+          setFundLoading(false);
+        },
+      });
+    } catch (err) {
+      console.error("Paystack error:", err);
+      setFundLoading(false);
+    }
   };
 
   return (
