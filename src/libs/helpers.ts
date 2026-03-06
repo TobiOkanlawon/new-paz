@@ -62,13 +62,13 @@ export const getTotalBalance = (
 
     switch (type) {
       case "savings":
-        const hasSoloAccount = account.hasSoloAccount;
+        const hasSoloAccount = !!account.soloSavings;
         const hasTargetAccount = !!account.targetSavings;
 
         /* add the amount for target savings and solo savers. Do not add the one for family vault because it may inflate the amount too much */
 
         if (hasSoloAccount) {
-          balance += account.soloSavings.Amount;
+          balance += account.soloSavings.amount;
         }
 
         if (hasTargetAccount) {
