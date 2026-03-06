@@ -54,6 +54,7 @@ const CreateSoloSaversModal: React.FC<Props> = ({
       accountName: "",
       initialDeposit: "",
       contributionFrequency: "Monthly",
+
       contributionAmount: "",
     },
     validationSchema,

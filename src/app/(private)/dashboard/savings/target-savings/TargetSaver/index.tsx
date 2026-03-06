@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import styles from "../soloSaver.module.css";
+import styles from "../targetSavings.module.css";
 import TotalBalanceCard from "@/components/TotalBalanceCard";
 import NotificationContainer from "@/components/NotificationContainer";
 import TopUpModal from "@/components/TopupModal";
@@ -15,9 +15,6 @@ import TransactionsTable, {
 } from "@/components/TransactionTable/TransactionTable";
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
-import { getAccountSummary } from "@/actions/dashboard";
-import Link from "next/link";
-import Button from "@/components/Button";
 
 const rows: TransactionRow[] = [
   {
@@ -82,11 +79,7 @@ const rows: TransactionRow[] = [
   },
 ];
 
-type Props = {
-  accountDetails: TAccountDetails;
-};
-
-const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
+const TargetSaver = ({ accountDetails }) => {
   interface Notification {
     id: number;
     message: string;
@@ -94,30 +87,51 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
     amount?: string;
   }
 
-  // const data = getAccountSummary();
-
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
-
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [openWithdraw, setOpenWithdraw] = useState(false);
+  const [showTopUpModal, setShowTopUpModal] = useState(false);
 
-  const notifications: Notification[] = [];
+  // Backend sometimes returns `title` instead of `Title`. Normalize to the expected shape.
+  type RawTargetPlan = Partial<TTargetSavingsPlan> & {
+    title?: string;
+    Title?: string;
+  };
+
+  // const accountDetails: TAccountDetails =
+  //   data ??
+  //   ({
+  //     totalLoan: 0,
+  //     familyVault: [],
+  //     hasSoloAccount: false,
+  //     soloSavings: { AccountNo: "", Amount: 0 },
+  //     targetSavings: [],
+  //     firstName: "",
+  //     investmentAmount: 0,
+  //     lastName: "",
+  //     userName: "",
+  //   } as TAccountDetails);
+
+  // const targetCards: TTargetSavingsPlan[] = (
+  //   accountDetails.targetSavings as RawTargetPlan[]
+  // ).map((card) => ({
+  //   Title: card.Title ?? card.title ?? "",
+  //   description: card.description ?? "",
+  //   amount: card.amount ?? 0,
+  //   targetAmount: card.targetAmount ?? 0,
+  //   accountNo: card.accountNo ?? "",
+  // }));
 
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div>
-          <h2 className={styles.header}>Solo Saver</h2>
+          <h2 className={styles.header}>Target Savers</h2>
           <p className={styles.headingText}>
             Explore all our savings plans here
           </p>
         </div>
         <div className={styles.buttonContainer}>
-          <Link href="/dashboard/savings/create">
-            <button className={styles.topUpFunds}>Create Savings</button>
-          </Link>
           <button
             onClick={() => setOpenWithdraw(true)}
             className={styles.widFunds}
@@ -133,23 +147,17 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
         </div>
       </div>
 
-      {/* <div>
-        <TotalBalanceCard
-          money={0}
-          header="PAZ saver balance"
-          buttonText="Instant top-up "
-          modalContent={<TopUpModal />}
-        />
-      </div> */}
       <div className={styles.cardContainer}>
-        {accountDetails.soloSavings && (
-          <SavingsProgressCard
-            name="Personal Solo Savings"
-            accountId={accountDetails.soloSavings.AccountNo}
-            currentAmount={accountDetails.soloSavings.Amount}
-            onClick={() => {}}
-          />
-        )}
+        {accountDetails.targetSavings &&
+          accountDetails.targetSavings.map((plan) => {
+            <SavingsProgressCard
+              name={plan.Title}
+              accountId={plan.accountNo}
+              currentAmount={plan.amount}
+              targetAmount={plan.targetAmount}
+              onClick={() => console.log("open savings")}
+            />;
+          })}
       </div>
 
       {/* <div className={styles.activities}>
@@ -244,4 +252,4 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
   );
 };
 
-export default SoloSaver;
+export default TargetSaver;
