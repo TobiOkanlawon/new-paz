@@ -67,12 +67,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, trigger, user, session }) {
       if (trigger == "update") {
-        if (session?.isBvnVerified) {
-          token.user.isBvnVerified = session.isBvnVerified;
-        }
+        if (token.user) {
+          if (session?.isBvnVerified) {
+            token.user.isBvnVerified = session.isBvnVerified;
+          }
 
-        if (session?.primaryAccountLinked) {
-          token.user.primaryAccountLinked = session.primaryAccountLinked;
+          if (session?.primaryAccountLinked) {
+            token.user.primaryAccountLinked = session.primaryAccountLinked;
+          }
         }
       }
       if (user) {

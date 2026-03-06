@@ -233,17 +233,18 @@ export default function Sidebar({
                   title: "Target Savings",
                   href: "/dashboard/savings/target-savings",
                 },
-                {
-                  title: "Family Vault Saving",
-                  href: "/dashboard/savings/family-vault",
-                },
+                // {
+                //   title: "Family Vault Saving",
+                //   href: "/dashboard/savings/family-vault",
+                // },
               ]}
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
               icon={LoansIcon}
               title="Loans"
-              href="/dashboard/loans"
+              // href="/dashboard/loans"
+              href="#"
               active={isSubPath("/dashboard/loans", pathname)}
               collapsed={collapsed}
             />
@@ -251,7 +252,8 @@ export default function Sidebar({
               alt="a four-sectioned square with curved edges"
               icon={ThriftIcon}
               title="Thrifts"
-              href="/dashboard/thrift"
+              href="#"
+              // href="/dashboard/thrift"
               active={isSubPath("/dashboard/thrift", pathname)}
               collapsed={collapsed}
             />
@@ -259,7 +261,8 @@ export default function Sidebar({
               alt="a four-sectioned square with curved edges"
               icon={InvestmentsIcon}
               title="Investments"
-              href="/dashboard/investments"
+              href="#"
+              // href="/dashboard/investments"
               active={isSubPath("/dashboard/investments", pathname)}
               collapsed={collapsed}
             />
