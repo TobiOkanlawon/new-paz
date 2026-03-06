@@ -55,3 +55,27 @@
   align-items: center;
   gap: 16px;
 }
+
+@media screen and (max-width: 640px) {
+  .card {
+    padding: 14px 12px;
+    gap: 12px;
+  }
+
+  .cardLeft {
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .title,
+  .subTitle,
+  .amount,
+  .date {
+    font-size: 12px;
+  }
+
+  .cardRight {
+    gap: 8px;
+  }
+}

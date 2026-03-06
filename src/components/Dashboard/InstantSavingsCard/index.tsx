@@ -3,7 +3,7 @@ import styles from "./card.module.css";
 import Upright from "@/assets/up-right.svg";
 
 type Props = {
-  icon: ImageProps["src"];
+  icon?: ImageProps["src"];
   title: string;
   subTitle: string;
   secondDescription: string;

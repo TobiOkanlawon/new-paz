@@ -2,7 +2,7 @@
 import Image, { ImageProps } from "next/image";
 import styles from "./dashboard.module.css";
 import Link from "next/link";
-
+import Wallet from "@/assets/wallet.svg";
 import Piggy from "@/assets/piggy-bank.svg";
 import Plus from "@/assets/plus.svg";
 import InvestmentIcon from "@/assets/investments.svg";
@@ -114,18 +114,21 @@ const BottomRight = () => {
         </div>
         <div className={styles.instantSavingsContainer}>
           <InstantSavingsCard
+            icon={Piggy}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="Christmas"
             backgroundColor="#EBFFF2"
           />
           <InstantSavingsCard
+            icon={Piggy}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="Christmas"
             backgroundColor="#EBFFF2"
           />
           <InstantSavingsCard
+            icon={Piggy}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="Christmas"
@@ -172,7 +175,7 @@ const Dashboard = () => {
   const investmentAmount = 0;
 
   return (
-    <div>
+    <div className={styles.container}>
       <div>
         <h1 className={styles.firstNameText}>Welcome, {firstName}</h1>
         <p className={styles.subHeadingText}>
@@ -187,20 +190,29 @@ const Dashboard = () => {
           icon={Piggy}
           color="#22C55E"
           title="total savings"
+          rate={8.5}
+          rateBackgroundColor="#DBF8E8"
+          rateTextColor="#12B76A"
         />
         <AccountCard
-          backgroundColor="#EBFFF2"
-          amount={savingsAmount}
-          icon={Piggy}
-          color="#22C55E"
+          backgroundColor="#E0DFFD"
+          amount={loanAmount}
+          icon={Wallet}
+          color="#4F46E5"
           title="Total Loans"
+          rate={8.5}
+          rateBackgroundColor="#DBF8E8"
+          rateTextColor="#12B76A"
         />
         <AccountCard
-          backgroundColor="#EBFFF2"
-          amount={savingsAmount}
-          icon={Piggy}
-          color="#22C55E"
+          backgroundColor="#F9EAD1"
+          amount={investmentAmount}
+          icon={InvestmentIcon}
+          color="#F7B341"
           title="Total Investments"
+          rate={8.5}
+          rateBackgroundColor="#DBF8E8"
+          rateTextColor="#12B76A"
         />
       </div>
       <div className={styles.quickActionContainer}>
@@ -237,6 +249,10 @@ const Dashboard = () => {
               text="Withdraw Funds"
             />
           </div>
+        </div>
+        <div className={styles.quickActionPager} aria-hidden="true">
+          <span className={`${styles.quickActionDot} ${styles.quickActionDotActive}`} />
+          <span className={styles.quickActionDot} />
         </div>
       </div>
 

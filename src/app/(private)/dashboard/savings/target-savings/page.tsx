@@ -33,19 +33,28 @@ const FamilyVault = () => {
     );
   }
 
-  // this function is after the isLoading block because allPlans is null if the data hasn't loaded
-  const calculateTotal = (allPlans: TTargetSavingsPlan[]) => {
-    return allPlans.reduce((p, c) => p + c.amount, 0);
-  };
-
   // Backend sometimes returns `title` instead of `Title`. Normalize to the expected shape.
   type RawTargetPlan = Partial<TTargetSavingsPlan> & {
     title?: string;
     Title?: string;
   };
 
+  const accountDetails: TAccountDetails =
+    data ??
+    ({
+      totalLoan: 0,
+      familyVault: [],
+      hasSoloAccount: false,
+      soloSavings: { AccountNo: "", Amount: 0 },
+      targetSavings: [],
+      firstName: "",
+      investmentAmount: 0,
+      lastName: "",
+      userName: "",
+    } as TAccountDetails);
+
   const targetCards: TTargetSavingsPlan[] = (
-    data!.targetSavings as RawTargetPlan[]
+    accountDetails.targetSavings as RawTargetPlan[]
   ).map((card) => ({
     Title: card.Title ?? card.title ?? "",
     description: card.description ?? "",
@@ -73,7 +82,7 @@ const FamilyVault = () => {
 
       <TotalBalanceCard
         header="Total savings balance"
-        money={addSavings(data!).targetSavings}
+        money={addSavings(accountDetails).targetSavings}
       />
 
       <div className={styles.cardContainer}>

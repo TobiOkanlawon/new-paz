@@ -1,9 +1,10 @@
 .cardContainer {
-    background-color: white;
+    background-color: #ffffff;
     padding: 12px 18px;
     max-width: 350px;
-    min-width: 350px;
+    min-height: 112px;
     border-radius: 15px;
+    width: 100%;
 }
 
 .topContainer {
@@ -24,5 +25,66 @@
 }
 
 .bottomContainer {
-    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.amountWrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.amountText {
+    color: #2E2E2E;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 500;
+    line-height: 1;
+}
+
+.toggleAmountBtn {
+    border: none;
+    background: transparent;
+    color: #2E2E2E;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ratePill {
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: clamp(12px, 1.6vw, 18px);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 640px) {
+    .cardContainer {
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    .bottomContainer {
+        gap: 8px;
+    }
+
+    .amountWrap {
+        gap: 6px;
+    }
+
+    .amountText {
+        font-size: 18px;
+    }
+
+    .ratePill {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
 }
