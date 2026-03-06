@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt" as const,
   },
@@ -67,8 +68,10 @@ export const authOptions = {
     },
 
     async session({ session, token }) {
-      session.accessToken = token.accessToken as string;
-      session.user = token.user as any;
+      session.accessToken = token.accessToken;
+      if (token.user) {
+        session.user = token.user;
+      }
       return session;
     },
   },

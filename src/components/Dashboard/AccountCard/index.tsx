@@ -1,3 +1,4 @@
+'use client';
 import Image, { ImageProps } from "next/image";
 import styles from "./styles.module.css";
 import ThreeDots from "@/assets/three-dots.svg";

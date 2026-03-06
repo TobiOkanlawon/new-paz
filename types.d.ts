@@ -24,6 +24,18 @@ type TLoginResponse = {
   user: TUser;
 };
 
+type TAuthUser = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roleId: "1" | "2";
+  isActive: boolean;
+  isBvnVerified: boolean;
+  primaryAccountLinked: boolean;
+  walletAccount: string;
+};
+
 type TAddBVNResponse = {
   "BVN Validated": boolean;
   responseCode: string;

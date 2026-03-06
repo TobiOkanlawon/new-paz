@@ -89,6 +89,8 @@ const SoloSaver = () => {
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
+  const [openWithdraw, setOpenWithdraw] = useState(false);
+  const [showTopUpModal, setShowTopUpModal] = useState(false);
 
   // Backend sometimes returns `title` instead of `Title`. Normalize to the expected shape.
   type RawTargetPlan = Partial<TTargetSavingsPlan> & {

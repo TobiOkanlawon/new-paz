@@ -60,6 +60,8 @@ const LoginForm = () => {
         redirect: false,
       });
 
+      console.log(result);
+
       if (!result || result.error) {
         setSubmitting(false);
         setErrors({
@@ -67,8 +69,9 @@ const LoginForm = () => {
         });
         return;
       }
-
-      router.replace("/dashboard");
+      if (result.ok) {
+        router.push("/dashboard");
+      }
     },
   });
 
