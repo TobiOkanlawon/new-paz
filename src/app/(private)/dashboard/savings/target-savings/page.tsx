@@ -106,10 +106,7 @@
 "use client";
 import { useState } from "react";
 import styles from "./targetSavings.module.css";
-import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgressCard";
 import TransactionsTable, { TransactionRow } from "@/components/TransactionTable/TransactionTable";
-import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
-import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
 import WithdrawTargetSavingsModal from "@/components/WithdrawTargetSavings/WithdrawTargetSavingsModal";
 import TargetProgressCard from "@/components/TargetSavingsProgressCard/TargetProgressCard";
 import TopUpTargetSavingsModal from "@/components/TopUpTargetSavings";
@@ -180,23 +177,10 @@ const rows: TransactionRow[] = [
 
 
 const TargetSavings = () => {
-  interface Notification {
-    id: number;
-    message: string;
-    time: string;
-    amount?: string;
-  }
-
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
-
-
-
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [openWithdraw, setOpenWithdraw] = useState(false);
-
-  const notifications: Notification[] = [];
 
   return (
     <div className={styles.container}>
@@ -243,24 +227,6 @@ const TargetSavings = () => {
         /> */}
       </div>
 
-      <MobileActions
-        setOpenWithdraw={setOpenWithdraw}
-        setShowTopUpModal={setShowTopUpModal}
-      />
-
-      {/* <div className={styles.activities}>
-        <Notifications
-          header="Recent activities"
-          notifications={notifications}
-        />
-      </div>
-      {isActive && (
-        <Modal isOpen={isActive} onClose={handleCloseModal}>
-          {<WithdrawModal />}
-        </Modal>
-      )} */}
-
-
       <div className={styles.targetSavingsInfo}>
         <p>What is included in the Target Savings</p>
         <ul>
@@ -269,32 +235,33 @@ const TargetSavings = () => {
         </ul>
       </div>
 
+      <MobileActions
+        setOpenWithdraw={setOpenWithdraw}
+        setShowTopUpModal={setShowTopUpModal}
+      />
+
       <TransactionsTable
         rows={rows}
         total={20}
         page={page}
         pageSize={pageSize}
+        showFilter={false}
         onPageChange={setPage}
         onPageSizeChange={(s) => {
           setPageSize(s);
           setPage(1);
         }}
         leftControls={
-          <select style={{ height: 34, borderRadius: 8, border: "1px solid #e5e7eb", padding: "0 10px" }}>
+          <select className={styles.tableStatusSelect}>
             <option>Transaction status</option>
             <option>Success</option>
             <option>Pending</option>
           </select>
         }
         rightControls={
-          <>
-            <button style={{ height: 34, borderRadius: 8, border: "1px solid #e5e7eb", padding: "0 10px", background: "#fff" }}>
-              Filters
-            </button>
-            <button style={{ height: 34, borderRadius: 8, border: "1px solid #e5e7eb", padding: "0 10px", background: "#fff" }}>
-              Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
-            </button>
-          </>
+          <button className={styles.tableDateButton}>
+            3/09/2025 - 3/10/2025
+          </button>
         }
       />
 

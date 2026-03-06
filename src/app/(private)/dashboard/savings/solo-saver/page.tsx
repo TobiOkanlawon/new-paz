@@ -72,27 +72,17 @@ const rows: TransactionRow[] = [
 
 
 const SoloSaver = () => {
-  interface Notification {
-    id: number;
-    message: string;
-    time: string;
-    amount?: string;
-  }
-
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
 
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [openWithdraw, setOpenWithdraw] = useState(false);
-
-  const notifications: Notification[] = [];
 
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div>
-          <h2 className={styles.header}>Solo Saver</h2>
+          <h2 className={styles.header}>Solo Savers</h2>
           <p className={styles.headingText}>
             Explore all our savings plans here
           </p>
@@ -146,27 +136,23 @@ const SoloSaver = () => {
         total={20}
         page={page}
         pageSize={pageSize}
+        showFilter={false}
         onPageChange={setPage}
         onPageSizeChange={(s) => {
           setPageSize(s);
           setPage(1);
         }}
         leftControls={
-          <select style={{ height: 34, borderRadius: 8, border: "1px solid #e5e7eb", padding: "0 10px" }}>
+          <select className={styles.tableStatusSelect}>
             <option>Transaction status</option>
             <option>Success</option>
             <option>Pending</option>
           </select>
         }
         rightControls={
-          <>
-            <button style={{ height: 34, borderRadius: 8, border: "1px solid #e5e7eb", padding: "0 10px", background: "#fff" }}>
-              Filters
-            </button>
-            <button style={{ height: 34, borderRadius: 8, border: "1px solid #e5e7eb", padding: "0 10px", background: "#fff" }}>
-              Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
-            </button>
-          </>
+          <button className={styles.tableDateButton}>
+            3/09/2025 - 3/10/2025
+          </button>
         }
       />
 

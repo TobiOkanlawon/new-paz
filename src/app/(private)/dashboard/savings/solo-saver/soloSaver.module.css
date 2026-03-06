@@ -103,6 +103,26 @@
   margin: 0;
 }
 
+.tableStatusSelect,
+.tableDateButton {
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid #d6dae3;
+  padding: 0 14px;
+  background: #fff;
+  color: #878787;
+  font-family: var(--font-poppins), "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.tableStatusSelect {
+  min-width: 220px;
+}
+
+.tableDateButton {
+  min-width: 240px;
+}
+
 @media (max-width: 1200px) {
   .container {
     width: 100%;
@@ -147,8 +167,16 @@
 
   .cardContainer {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     max-width: 100%;
+  }
+
+  .tableStatusSelect,
+  .tableDateButton {
+    height: 44px;
+    min-width: 0;
+    width: 100%;
+    font-size: 13px;
   }
 }
 

@@ -248,6 +248,22 @@
 }
 
 @media (max-width: 900px) {
+    .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+    }
+
+    .left > *,
+    .right > * {
+        width: 100%;
+    }
+
     .tableCard {
         overflow-x: auto;
         max-width: 100%;
@@ -295,11 +311,6 @@
 }
 
 @media (max-width: 600px) {
-    .controls {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
     .filterGroup {
         flex-direction: column;
         width: 100%;

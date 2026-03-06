@@ -111,7 +111,7 @@ const TransactionsTable = ({
     <div className={`${styles.wrap} ${className ?? ""}`}>
       <div className={styles.controls}>
         <div className={styles.left}>
-          {showFilter && (
+          {showFilter && !leftControls && (
             <div className={styles.filterGroup}>
               <input
                 type="text"
@@ -139,9 +139,9 @@ const TransactionsTable = ({
               </select>
             </div>
           )}
-          {/* {leftControls} */}
+          {leftControls}
         </div>
-        {/* <div className={styles.right}>{rightControls}</div> */}
+        <div className={styles.right}>{rightControls}</div>
       </div>
 
       <div className={styles.tableCard}>
