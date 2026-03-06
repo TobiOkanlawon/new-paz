@@ -21,7 +21,7 @@ const SuccessStep = ({
     if (onButtonClick) {
       onButtonClick();
     } else {
-      navigate.back(); // go back one route
+      navigate.replace("/dashboard");
     }
   };
 

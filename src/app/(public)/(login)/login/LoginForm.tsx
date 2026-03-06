@@ -70,7 +70,7 @@ const LoginForm = () => {
         return;
       }
       if (result.ok) {
-        router.push("/dashboard");
+        window.location.href = "/dashboard";
       }
     },
   });
