@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import styles from "../kycverification.module.css";
 
 type SuccessStepProps = {
@@ -14,13 +14,14 @@ const SuccessStep = ({
   buttonText,
   onButtonClick,
 }: SuccessStepProps) => {
-  const navigate = useNavigate();
+  
+  const navigate = useRouter();
 
   const handleClick = () => {
     if (onButtonClick) {
       onButtonClick();
     } else {
-      navigate(-1); // go back one route
+      navigate.push("/kyc/add-account"); // go back one route
     }
   };
 
