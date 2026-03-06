@@ -15,8 +15,14 @@ import TransactionsTable, {
 import { getAccountSummary } from "@/actions/dashboard";
 import { getTotalBalance } from "@/libs/helpers";
 import Link from "next/link";
+import FundAccountModal from "@/components/FundAccountModal/FundAccountModal";
+
+import { usePaystackPayment } from "react-paystack";
+import { useSession } from "next-auth/react";
 
 const Savings = () => {
+  const { data } = useSession();
+
   const rows: TransactionRow[] = [
     {
       id: "1",
@@ -84,8 +90,8 @@ const Savings = () => {
 
   const loadAccountSummary = async () => {
     try {
-      const email = "user@email.com"; // replace with real user email
-
+      // email is no longer requried
+      let email = "";
       const result = await getAccountSummary(email);
 
       if (result.success) {
@@ -100,11 +106,44 @@ const Savings = () => {
   };
 
   useEffect(() => {
-    loadAccountSummary;
+    loadAccountSummary();
   }, []);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
+
+  const [fundModalOpen, setFundModalOpen] = useState(false);
+  const [fundLoading, setFundLoading] = useState(false);
+
+  const handleFundAccount = async ({ amount }: { amount: number }) => {
+    const email = data.user?.email;
+
+    if (!email) {
+      return;
+    }
+
+    const config = {
+      reference: new Date().getTime().toString(),
+      email,
+      amount: amount * 100,
+      publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+    };
+
+    const initializePayment = usePaystackPayment(config);
+
+    initializePayment({
+      onSuccess: (reference) => {
+        console.log("Payment successful:", reference);
+
+        setFundModalOpen(false);
+
+        loadAccountSummary();
+      },
+      onClose: () => {
+        console.log("Payment closed");
+      },
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -120,7 +159,13 @@ const Savings = () => {
             <Button className={styles.outlineButton}>Create Savings</Button>
           </Link>
           <Button className={styles.outlineButton}>Withdraw Funds</Button>
-          <Button>Fund Account</Button>
+          <Button
+            onClick={() => {
+              setFundModalOpen(true);
+            }}
+          >
+            Fund Account
+          </Button>
         </div>
       </div>
 
@@ -213,6 +258,12 @@ const Savings = () => {
             </button>
           </>
         }
+      />
+      <FundAccountModal
+        open={fundModalOpen}
+        onClose={() => setFundModalOpen(false)}
+        loading={fundLoading}
+        onFund={handleFundAccount}
       />
     </div>
   );

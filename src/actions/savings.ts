@@ -1,9 +1,9 @@
 "use server";
 
 import { getServerSession } from 'next-auth';
-import { apiFetch } from '@/libs/api';
 
 import { ok, fail, ActionResult } from "@/actions/shared";
+import { revalidatePath } from 'next/cache';
 
 interface CreateSavingsPayload {
   accountName: string;
@@ -29,12 +29,23 @@ export async function createSavingsAccount(
       type: "SOLO",
     };
 
-    const res = await apiFetch("/v1/users/user/savings/create-savings", {
+    const res = await fetch(
+    `${process.env.API_BASE_URL}/v1/users/user/savings/create-savings`,
+    {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.accessToken}`,
+      },
       body: JSON.stringify(body),
-    });
+      cache: "no-store",
+    }
+    );
 
-    return ok(res);
+    const data = await res.json();
+
+    revalidatePath("/dashboard/savings")
+    return ok(data);
   } catch (e) {
     return fail(e);
   }

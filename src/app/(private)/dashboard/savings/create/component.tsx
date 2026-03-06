@@ -193,6 +193,7 @@ export default function SavingsPlans() {
       return;
     }
     toast.success("Savings Plan created");
+    setIsSoloSaversModalVisible(false);
     router.push("/dashboard/savings/solo-saver");
   };
 
