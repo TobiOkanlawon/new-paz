@@ -51,7 +51,8 @@ const EnterStep = ({
       );
 
       if (!response.success) {
-        toast.error(error.responseMessage);
+        toast.error(response.error);
+        setIsLoading(false);
         setSubmitting(false);
         return;
       }

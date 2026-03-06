@@ -12,7 +12,16 @@ export function fail<T>(error: unknown): ActionResult<T> {
   if (isRedirectError(error)) throw error;
 
   const message =
-    error instanceof Error ? error.message : "An unexpected error occurred.";
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : typeof error === "object" && error !== null
+          ? ((error as { responseMessage?: string; message?: string })
+              .responseMessage ??
+            (error as { responseMessage?: string; message?: string }).message ??
+            "An unexpected error occurred.")
+          : "An unexpected error occurred.";
   console.error("[Server Action Error]", message);
   return { success: false, error: message };
 }
