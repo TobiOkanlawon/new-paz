@@ -16,6 +16,8 @@ import TransactionsTable, {
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
 import { getAccountSummary } from "@/actions/dashboard";
+import Link from "next/link";
+import Button from "@/components/Button";
 
 const rows: TransactionRow[] = [
   {
@@ -113,6 +115,9 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
           </p>
         </div>
         <div className={styles.buttonContainer}>
+          <Link href="/dashboard/savings/create">
+            <button className={styles.topUpFunds}>Create Savings</button>
+          </Link>
           <button
             onClick={() => setOpenWithdraw(true)}
             className={styles.widFunds}

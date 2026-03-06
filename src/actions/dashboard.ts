@@ -4,6 +4,7 @@ import { apiFetch } from "@/libs/api";
 import { getServerSession } from "next-auth";
 import { ActionResult, fail, ok } from "./shared";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
@@ -36,6 +37,17 @@ export type InstantSavings = {
 
 // ─── Server Actions ────────────────────────────────────────────────────────────
 
+function isInvalidTokenResponse(body: unknown): body is InvalidTokenResponse {
+  return (
+    typeof body === "object" &&
+    body !== null &&
+    (body as InvalidTokenResponse).responseCode === 400 &&
+    (body as InvalidTokenResponse).responseMessage
+      ?.toLowerCase()
+      .includes("invalid token")
+  );
+}
+
 /**
  * Fetches the user's account summary: total savings, loans, and investments.
  * Adjust the endpoint path to match your API spec.
@@ -61,11 +73,16 @@ export async function getAccountSummary(
       },
     );
 
-    const json = await res.json();
+    // Parse the body once — we need it for both the token check and normal errors
+    const responseBody = await res.json().catch(() => null);
 
-    const data = json.accountDetails;
+    // Detect expired/invalid token and immediately redirect to the logout route,
+    // which clears the session cookie and sends the user to /login
+    if (isInvalidTokenResponse(responseBody)) {
+      redirect("/api/auth/logout");
+    }
 
-    console.log(json)
+    const data = responseBody.accountDetails;
 
     return ok(data);
   } catch (e) {
