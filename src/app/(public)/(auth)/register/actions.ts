@@ -29,14 +29,17 @@ export async function registerUser(payload: RegisterSchema) {
 
     console.log(data);
 
-    if (!res.ok) {
+    if (data.responseCode !== "00") {
       return {
         success: false,
-        message: data.message || "Registration failed",
+        message: data.responseMessage || "Registration failed",
       };
     }
-
-     redirect("/login?registered=true");
+    return {
+      success: true,
+      message: "User created successfully"
+    }
+     
   } catch (error) {
     return {
       success: false,
