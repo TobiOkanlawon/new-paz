@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Account Summary card ─────────────────────────── */
+.summary {
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.summaryTitle {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.25rem;
+}
+
+/* ── Key/value rows ───────────────────────────────── */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.value {
+  font-size: 0.875rem;
+  color: #111827;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+.buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.backButton {
+  flex: 1;
+}
+
+.confirmButton {
+  flex: 1.4;
+}
+
+.errorText {
+  font-size: 0.8125rem;
+  color: #dc2626;
+  margin: 0;
+  text-align: center;
+}

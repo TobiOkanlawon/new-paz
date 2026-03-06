@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
+import Link from "next/link";
 
 const SavingsWalletCard = ({ amount }) => {
   return (
@@ -25,7 +26,9 @@ const SavingsWalletCard = ({ amount }) => {
             </div>
           </div>
           <div className={styles.walletBottom}>
-            <button className={styles.viewBtn}>View all savings</button>
+            <Link href="/dashboard/savings/create">
+              <button className={styles.viewBtn}>View all savings</button>
+            </Link>
           </div>
         </div>
 

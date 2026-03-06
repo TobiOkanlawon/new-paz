@@ -6,6 +6,9 @@ import Rose from "@/assets/noto_rose.svg";
 import clsx from "clsx";
 import { useState } from "react";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
+import { createSavingsAccount } from "@/actions/savings";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 // import Valentine from "../assets/Valentine.png";
 // import Christmas from "../assets/Christmas.png";
 // import Wigs from "../assets/Wigs.png";
@@ -169,9 +172,28 @@ export default function SavingsPlans() {
         borderColor={item.borderColor}
         imageBackgroundColor="#E9EDFA"
         showTopRightIcon={false}
-        action={action}
+        action={() => action()}
       />
     ));
+  };
+
+  const router = useRouter();
+
+  const createSoloSaversAction = async (values: {
+    accountName: string;
+    initialDeposit: number;
+    contributionFrequency: string;
+    contributionAmount: number;
+  }) => {
+    const result = await createSavingsAccount({
+      accountName: values.accountName,
+    });
+    if (!result.success) {
+      toast.error(result.error.responseMessage);
+      return;
+    }
+    toast.success("Savings Plan created");
+    router.push("/dashboard/savings/solo-saver");
   };
 
   return (
@@ -204,11 +226,12 @@ export default function SavingsPlans() {
         </Section>
            */}
       </div>
-      {/*<CreateSoloSaversModal
+      <CreateSoloSaversModal
+        title="Create your Solo Savers Plan"
         isOpen={isSoloSaverModalVisible}
         onClose={() => setIsSoloSaversModalVisible(false)}
         onSubmit={createSoloSaversAction}
-        />*/}
+      />
     </div>
   );
 }
