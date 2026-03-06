@@ -1,10 +1,11 @@
 .miniCardContainer {
     padding: 12px 15px;
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
     border-radius: 15px;
     max-width: 260px;
-    min-width: 240px;
+    min-width: 354px;
+    background-color: white;
 }
 
 .miniCardImageContainer {
@@ -46,6 +47,7 @@
     padding: 3px 8px;
     border: none;
     border-radius: 15px;
+    font-size: 16px;
 }
 
 .miniCardTitle {

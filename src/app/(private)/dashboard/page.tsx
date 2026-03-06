@@ -16,6 +16,7 @@ import { getDashboardData } from "@/actions/dashboard";
 import { getServerSession } from "next-auth";
 import QuickActionCard from "@/components/Dashboard/QuickActionCard";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getTotalBalance } from "@/libs/helpers";
 
 const BottomLeft = () => {
   return (
@@ -145,14 +146,14 @@ const Dashboard = async () => {
 
   const firstName = session?.user?.firstName as string;
   const savingsAmount = accountSummary.success
-    ? accountSummary.data.totalSavings
+    ? getTotalBalance(accountSummary.data, "savings")
     : 0;
-  const loanAmount = accountSummary.success
-    ? accountSummary.data?.totalLoans
-    : 0;
-  const investmentAmount = accountSummary.success
-    ? accountSummary.data?.totalInvestments
-    : 0;
+  // const loanAmount = accountSummary.success
+  //   ? accountSummary.data?.totalLoans
+  //   : 0;
+  // const investmentAmount = accountSummary.success
+  //   ? accountSummary.data?.totalInvestments
+  //   : 0;
 
   return (
     <div className={styles.container}>
@@ -174,7 +175,7 @@ const Dashboard = async () => {
           rateBackgroundColor="#DBF8E8"
           rateTextColor="#12B76A"
         />
-        <AccountCard
+        {/*<AccountCard
           backgroundColor="#E0DFFD"
           amount={loanAmount ?? 0}
           icon={LoanIcon}
@@ -190,10 +191,7 @@ const Dashboard = async () => {
           icon={InvestmentIcon}
           color="#22C55E"
           title="Total Investments"
-          rate={8.5}
-          rateBackgroundColor="#DBF8E8"
-          rateTextColor="#12B76A"
-        />
+          />*/}
       </div>
 
       <div className={styles.quickActionContainer}>

@@ -10,6 +10,7 @@ type MiniCardProps = {
   action?: () => void;
   borderColor: string;
   imageBackgroundColor: string;
+  showTopRightIcon?: boolean;
 };
 
 const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
@@ -19,6 +20,7 @@ const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
   action,
   borderColor,
   imageBackgroundColor,
+  showTopRightIcon = true,
 }) => {
   return (
     <div
@@ -35,9 +37,11 @@ const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
           </div>
           <h3 className={styles.miniCardTitle}>{title}</h3>
         </div>
-        <div className={styles.upRightContainer}>
-          <Image src={Upright} alt="" height={16} width={16} />
-        </div>
+        {showTopRightIcon && (
+          <div className={styles.upRightContainer}>
+            <Image src={Upright} alt="" height={16} width={16} />
+          </div>
+        )}
       </div>
 
       <div className={styles.miniCardContentContainer}>
