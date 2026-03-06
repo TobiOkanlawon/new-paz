@@ -93,12 +93,6 @@
   }
 }
 
-/* styling for the form */
-
-.shortInputGroup {
-  min-width: 400px;
-}
-
 @media screen and (min-width: 720px) and (max-width: 1320px) {
   .shortInputGroup {
     max-width: 280px;
