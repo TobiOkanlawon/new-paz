@@ -35,6 +35,8 @@ export async function middleware(req: NextRequest) {
   const hasPrimaryAccount = !!token.user?.primaryAccountLinked;
   const isOnboarded = isBvnVerified && hasPrimaryAccount;
 
+  console.log("token", token)
+
   if (pathname.startsWith("/dashboard")) {
     if (!isBvnVerified) {
       return NextResponse.redirect(new URL("/kyc", req.url));
@@ -50,8 +52,11 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
 
-    if (!isBvnVerified && pathname.startsWith("/kyc/add-account")) {
-      return NextResponse.redirect(new URL("/kyc", req.url));
+    // Only allow /kyc/add-account if BVN is verified
+    if (pathname.startsWith("/kyc/add-account")) {
+      if (!isBvnVerified) {
+        return NextResponse.redirect(new URL("/kyc", req.url));
+      }
     }
   }
 

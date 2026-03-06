@@ -1,35 +1,77 @@
-import React, { useRef, useState } from "react";
+"use client";
+
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
 import styles from "../addaccountverification.module.css";
+import Input from "@/components/Input";
+import { handleErrorDisplay } from "@/libs/helpers";
+import { addAccount } from "@/actions/preAuth";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+
+const validationSchema = yup.object({
+  accountNumber: yup
+    .string()
+    .required("Account number is required")
+    .length(10, "Account number must be 10 digits"),
+
+  accountName: yup.string().required("Account name is required"),
+  bankName: yup.string().required("You must supply the name of your bank"),
+});
 
 const EnterStep = ({
   onVerify,
   onBack,
 }: {
-  onVerify: () => void;
+  onVerify: (values: { accountNumber: string; accountName: string }) => void;
   onBack: () => void;
 }) => {
-  const [accountNumber, setAccountNumber] = useState("");
-  const [accountName, setAccountName] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFocused2, setIsFocused2] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { update } = useSession();
+
+  const formik = useFormik({
+    initialValues: {
+      accountNumber: "",
+      accountName: "",
+      bankName: "",
+    },
+
+    validationSchema,
+
+    onSubmit: async (values, { setSubmitting }) => {
+      setIsLoading(true);
+
+      const response = await addAccount(
+        values.accountName,
+        values.accountNumber,
+        values.bankName,
+      );
+
+      if (!response.success) {
+        toast.error(error.responseMessage);
+        setSubmitting(false);
+        return;
+      }
+
+      setIsLoading(false);
+
+      update({
+        primaryAccountLinked: true,
+      });
+
+      onVerify(values);
+    },
+  });
+
+  const handleAccountNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const val = e.target.value.replace(/\D/g, "").slice(0, 10);
-    setAccountNumber(val);
-  };
-  const handleChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setAccountName(val);
-  };
 
-  const handleVerify = async () => {
-    if (accountNumber.length !== 10) return;
-    setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    setIsLoading(false);
-    onVerify();
+    formik.setFieldValue("accountNumber", val);
   };
 
   return (
@@ -41,69 +83,75 @@ const EnterStep = ({
         </p>
       </div>
 
-      <div className={styles.inputGroup}>
-        <label className={styles.inputLabel}>Account Number</label>
-        <div
-          className={`${styles.inputWrapper} ${
-            isFocused ? styles.inputFocused : ""
-          }`}
-        >
-          <input
-            ref={inputRef}
-            type="text"
-            inputMode="numeric"
-            value={accountNumber}
-            onChange={handleChange}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+      <form onSubmit={formik.handleSubmit}>
+        <div className={styles.inputGroup}>
+          <Input
+            label="Account Number"
+            name="accountNumber"
             placeholder="1234567890"
-            className={styles.input}
+            inputMode="numeric"
             maxLength={10}
+            value={formik.values.accountNumber}
+            onChange={handleAccountNumberChange}
+            onBlur={formik.handleBlur}
+            errors={handleErrorDisplay(formik, "accountNumber")}
           />
-        </div>
-        <span
-          className={`${styles.charCount} ${
-            accountNumber.length === 10 ? styles.charCountFull : ""
-          }`}
-        >
-          {accountNumber.length}/10 digits
-        </span>
-      </div>
-      <div className={styles.inputGroup}>
-        <label className={styles.inputLabel}>Account Name</label>
-        <div
-          className={`${styles.inputWrapper} ${
-            isFocused2 ? styles.inputFocused : ""
-          }`}
-        >
-          <input
-            ref={inputRef}
-            type="text"
-            inputMode="text"
-            value={accountName}
-            onChange={handleChange2}
-            onFocus={() => setIsFocused2(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder="Name of Bank"
-            className={styles.input}
-          />
-        </div>
-      </div>
 
-      <div className={styles.btnRow}>
-        <button className={styles.secondaryBtn} onClick={onBack}>
-          Back
-        </button>
-        <button
-          className={`${styles.primaryBtn} ${styles.verifyBtn} ${
-            accountNumber.length !== 10 ? styles.btnDisabled : ""
-          }`}
-          onClick={handleVerify}
-          disabled={accountNumber.length !== 10 || isLoading}
-        >
-          {isLoading ? <span className={styles.spinner} /> : "Add Account Details"}
-        </button>
-      </div>
+          <span
+            className={`${styles.charCount} ${
+              formik.values.accountNumber.length === 10
+                ? styles.charCountFull
+                : ""
+            }`}
+          >
+            {formik.values.accountNumber.length}/10 digits
+          </span>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <Input
+            label="Account Name"
+            placeholder="Name of Account"
+            {...formik.getFieldProps("accountName")}
+            errors={handleErrorDisplay(formik, "accountName")}
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <Input
+            label="Bank Name"
+            placeholder="Name of Account"
+            {...formik.getFieldProps("bankName")}
+            errors={handleErrorDisplay(formik, "bankName")}
+          />
+        </div>
+
+        <div className={styles.btnRow}>
+          <button
+            type="button"
+            className={styles.secondaryBtn}
+            onClick={onBack}
+          >
+            Back
+          </button>
+
+          <button
+            type="submit"
+            className={`${styles.primaryBtn} ${styles.verifyBtn} ${
+              formik.values.accountNumber.length !== 10
+                ? styles.btnDisabled
+                : ""
+            }`}
+            disabled={formik.values.accountNumber.length !== 10 || isLoading}
+          >
+            {isLoading ? (
+              <span className={styles.spinner} />
+            ) : (
+              "Add Account Details"
+            )}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

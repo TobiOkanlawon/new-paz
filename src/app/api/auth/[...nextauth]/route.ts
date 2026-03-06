@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
               email: credentials?.email,
               password: credentials?.password,
             }),
-          }
+          },
         );
 
         const data = await res.json();
@@ -65,7 +65,16 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, trigger, user, session }) {
+      if (trigger == "update") {
+        if (session?.isBvnVerified) {
+          token.user.isBvnVerified = session.isBvnVerified;
+        }
+
+        if (session?.primaryAccountLinked) {
+          token.user.primaryAccountLinked = session.primaryAccountLinked;
+        }
+      }
       if (user) {
         token.accessToken = user.accessToken;
         token.user = user;

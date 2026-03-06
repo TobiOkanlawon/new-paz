@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { verifyBvnAction } from "@/app/(public)/kyc/actions";
 import { toast } from "react-toastify";
 import Button from "@/components/Button";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const schema = yup.object({
   bvn: yup
@@ -24,6 +24,8 @@ const EnterStep = ({
   onVerify: () => void;
   onBack: () => void;
 }) => {
+  const { update } = useSession();
+
   const formik = useFormik({
     initialValues: {
       bvn: "",
@@ -38,6 +40,10 @@ const EnterStep = ({
         setSubmitting(false);
         return;
       }
+
+      update({
+        isBvnVerified: true,
+      });
 
       onVerify();
     },

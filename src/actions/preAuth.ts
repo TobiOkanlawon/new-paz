@@ -22,18 +22,19 @@ export async function addAccount(
 
     const walletId = session?.user.walletAccount;
 
-    const res = await apiFetch(`/v1/users/user/add-account`, {
-      isProtected: false,
+    const res = await fetch(`${process.env.API_BASE_URL}/v1/users/signup`, {
       method: "POST",
-      body: {
-        accountName,
-        accountNo,
-        bankName,
-        walletId,
+      headers: {
+        "Content-Type": "application/json",
+	Authorization: `Bearer ${session.accessToken}`,
       },
+      body: JSON.stringify({accountName, accountNo, bankName, walletId}),
+      cache: "no-store",
     });
 
-    const data: TAddAccountResponse = res!.data;
+    const json = await res.json()
+
+    const data: TAddAccountResponse = json.data;
 
     return ok(data);
   } catch (e) {
