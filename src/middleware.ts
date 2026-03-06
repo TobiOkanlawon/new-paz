@@ -26,13 +26,26 @@ export async function middleware(req: NextRequest) {
   const isOnboarded =
     token.user?.isBvnVerified && token.user?.primaryAccountLinked;
 
+  
+  if (!token.user?.isBvnVerified && pathname.startsWith("/dashboard")) {
+    console.log("attempting to redirect to kyc")
+    return NextResponse.redirect(new URL("/kyc", req.url));
+  }
+
+  if(!token.user?.primaryAccountLinked && pathname.startsWith("/dashboard")) {
+    console.log("attempting to redirect to kyc add account")
+    return NextResponse.redirect(new URL("/kyc/add-account", req.url));
+  }
+  
   // User NOT onboarded → force /kyc
   if (!isOnboarded && pathname.startsWith("/dashboard")) {
+    console.log("attempting to redirect to kyc")
     return NextResponse.redirect(new URL("/kyc", req.url));
   }
 
   // User IS onboarded → block access to /kyc
   if (isOnboarded && pathname.startsWith("/kyc")) {
+    (console.log("redirecting to dashboard"))
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
