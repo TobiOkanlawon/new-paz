@@ -1,0 +1,192 @@
+import SavingsPlanMiniCard from "./SavingsPlanMiniCard";
+
+// images
+import Rose from "../assets/Rose.png";
+import Valentine from "../assets/Valentine.png";
+import Christmas from "../assets/Christmas.png";
+import Wigs from "../assets/Wigs.png";
+import Bags from "../assets/Bags.png";
+import Vacation from "../assets/Vacation.png";
+import Car from "../assets/Car.png";
+import Rent from "../assets/Rent.png";
+import School from "../assets/School.png";
+import Relocation from "../assets/Relocation.png";
+import BuyHouse from "../assets/BuyHouse.png";
+import Land from "../assets/Land.png";
+import Misc from "../assets/Misc.png";
+
+export default function SavingsPlans() {
+  const soloSavings = [
+    {
+      title: "Valentine",
+      image: Valentine,
+      borderColor: "#F43F5E",
+    },
+    {
+      title: "Christmas",
+      image: Christmas,
+      borderColor: "#22C55E",
+    },
+    {
+      title: "Wigs",
+      image: Wigs,
+      borderColor: "#A855F7",
+    },
+    {
+      title: "Bags",
+      image: Bags,
+      borderColor: "#F59E0B",
+    },
+  ];
+
+  const targetSavings = [
+    {
+      title: "Vacation",
+      image: Vacation,
+      borderColor: "#F59E0B",
+    },
+    {
+      title: "Car",
+      image: Car,
+      borderColor: "#EC4899",
+    },
+    {
+      title: "House Rent",
+      image: Rent,
+      borderColor: "#A855F7",
+    },
+    {
+      title: "School Fees",
+      image: School,
+      borderColor: "#22C55E",
+    },
+  ];
+
+  const familyVault = [
+    {
+      title: "Relocation",
+      image: Relocation,
+      borderColor: "#22C55E",
+    },
+    {
+      title: "Buy House",
+      image: BuyHouse,
+      borderColor: "#3B82F6",
+    },
+    {
+      title: "Land",
+      image: Land,
+      borderColor: "#F59E0B",
+    },
+    {
+      title: "Miscellaneous",
+      image: Misc,
+      borderColor: "#EC4899",
+    },
+  ];
+
+  const loans = [
+    {
+      title: "Business Loan",
+      image: Misc,
+      borderColor: "#A855F7",
+    },
+    {
+      title: "PAZ Loan",
+      image: Misc,
+      borderColor: "#F59E0B",
+    },
+    {
+      title: "Rent Loan",
+      image: Misc,
+      borderColor: "#EC4899",
+    },
+    {
+      title: "Car Loan",
+      image: Misc,
+      borderColor: "#22C55E",
+    },
+  ];
+
+  const investments = [
+    {
+      title: "Vacation",
+      image: Vacation,
+      borderColor: "#F59E0B",
+    },
+    {
+      title: "Car Loan",
+      image: Car,
+      borderColor: "#22C55E",
+    },
+    {
+      title: "Business Loan",
+      image: Misc,
+      borderColor: "#A855F7",
+    },
+    {
+      title: "Buy House",
+      image: BuyHouse,
+      borderColor: "#3B82F6",
+    },
+  ];
+
+  const description =
+    "Save money daily, bi-weekly plan with a purpose in mind.";
+
+  const renderCards = (items) =>
+    items.map((item, index) => (
+      <SavingsPlanMiniCard
+        key={index}
+        title={item.title}
+        image={item.image}
+        content={description}
+        borderColor={item.borderColor}
+        imageBackgroundColor="#E9EDFA"
+        showTopRightIcon={false}
+      />
+    ));
+
+  return (
+    <div className="p-6 bg-white rounded-xl border border-gray-200">
+      <h2 className="text-lg font-semibold mb-6">Savings Plans</h2>
+
+      {/* Solo Savings */}
+      <Section title="Solo Savings">{renderCards(soloSavings)}</Section>
+
+      {/* Target Savings */}
+      <Section title="Target Savings">{renderCards(targetSavings)}</Section>
+
+      {/* Family Vault */}
+      <Section title="Family Vault Savings">{renderCards(familyVault)}</Section>
+
+      {/* Loans */}
+      <Section title="Loans (Coming Soon)">{renderCards(loans)}</Section>
+
+      {/* Investments */}
+      <Section title="Investments (Coming Soon)">
+        {renderCards(investments)}
+      </Section>
+    </div>
+  );
+}
+
+function Section({ title, children }) {
+  return (
+    <div className="mb-10">
+      <h3 className="text-sm font-semibold text-gray-600 mb-4">{title}</h3>
+
+      <div
+        className="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        lg:grid-cols-4
+        gap-4
+      "
+      >
+        {children}
+      </div>
+    </div>
+  );
+}

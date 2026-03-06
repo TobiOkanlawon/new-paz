@@ -1,0 +1,9 @@
+.container {
+    background-color: white;
+    padding: 29px 43px;
+}
+
+.innerContainer {
+    display: flex;
+    gap: 16px;
+}

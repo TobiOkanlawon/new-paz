@@ -1,0 +1,95 @@
+.walletCard {
+  position: relative;
+  width: 600px;
+  padding: 30px;
+  border-radius: 20px;
+  color: white;
+  font-family: sans-serif;
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #0f2f3f, #6f93a8);
+}
+
+/* Top Row */
+
+.walletTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.walletTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 22px;
+}
+
+.returns {
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+/* Middle */
+
+.walletMiddle {
+  margin-top: 35px;
+}
+
+.balanceLabel {
+  font-size: 26px;
+  opacity: 0.9;
+}
+
+.balanceRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.balance {
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.eye {
+  font-size: 22px;
+}
+
+/* Bottom */
+
+.walletBottom {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.viewBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Decorative circles */
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.circleLeft {
+  width: 200px;
+  height: 200px;
+  bottom: -60px;
+  left: -60px;
+}
+
+.circleRight {
+  width: 220px;
+  height: 220px;
+  top: -60px;
+  right: -60px;
+}

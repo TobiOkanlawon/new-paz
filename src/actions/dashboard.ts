@@ -6,12 +6,6 @@ import { ActionResult, fail, ok } from "./shared";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
-export type AccountSummary = {
-  totalSavings: number;
-  totalLoans: number;
-  totalInvestments: number;
-};
-
 export type Transaction = {
   id: string;
   title: string;
@@ -47,13 +41,11 @@ export type InstantSavings = {
  * Fetches the user's account summary: total savings, loans, and investments.
  * Adjust the endpoint path to match your API spec.
  */
-export async function getAccountSummary(email: string): Promise<ActionResult<AccountSummary>> {
+export async function getAccountSummary(email: string): Promise<ActionResult<TAccountDetails>> {
   try {
-    const res = await apiFetch(`/v1/users/user/account-details?email=${email}`);
-
-    console.log("res", res)
+    const res: any  = await apiFetch(`/v1/users/user/account-details?email=${email}`);
     
-    const data = res!.accountDetails;
+    const data = res.accountDetails;
     
     return ok(data);
   } catch (e) {
@@ -116,7 +108,7 @@ export async function getInstantSavings(): Promise<
  * Use this to avoid waterfall requests on initial page load.
  */
 export async function getDashboardData(): Promise<{
-  accountSummary: ActionResult<AccountSummary>;
+  accountSummary: ActionResult<TAccountDetails>;
   // recentTransactions: ActionResult<Transaction[]>;
   // savingsPlans: ActionResult<{ solo: SavingsPlan[]; target: SavingsPlan[] }>;
   // instantSavings: ActionResult<InstantSavings[]>;

@@ -53,3 +53,33 @@ export const addSavings = (accountDetails: TAccountDetails) => {
     ),
   };
 };
+
+export const getTotalBalance = (
+    account: TAccountDetails,
+    type: "savings" | "investments" | "loans",
+  ) => {
+    let balance = 0;
+
+    switch (type) {
+      case "savings":
+        const hasSoloAccount = account.hasSoloAccount;
+        const hasTargetAccount = !!account.targetSavings;
+
+        /* add the amount for target savings and solo savers. Do not add the one for family vault because it may inflate the amount too much */
+
+        if (hasSoloAccount) {
+          balance += account.soloSavings.Amount;
+        }
+
+        if (hasTargetAccount) {
+          balance += +account.targetSavings.reduce((p, c) => {
+            return p + c.amount;
+          }, 0);
+        }
+        break;
+      default:
+        break;
+    }
+
+    return balance;
+  };
