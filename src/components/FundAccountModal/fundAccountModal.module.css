@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 60px 0 0px 0;
+  padding: 24px 0 0;
 }
 
 .section {
@@ -12,14 +12,11 @@
 }
 
 .label {
-  font-size: 12px;
-  color: #6b7280;
-  margin: 0;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #2C2D2D;
-  margin-bottom: 60px;
+  margin: 0;
 }
 
 .radioRow {
@@ -29,7 +26,7 @@
   font-size: 14px;
   color: #2E2E2E;
   font-family: 'Poppins', sans-serif;
-  margin-bottom: 60px;
+  margin-bottom: 12px;
 }
 
 .radioRow input {
@@ -40,7 +37,7 @@
 }
 
 .footer {
-  margin-top: 32px;
+  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
 }
@@ -51,4 +48,28 @@
 
 .fullBtn {
   width: 100%;
+}
+
+@media screen and (max-width: 720px) {
+  .wrap {
+    gap: 12px;
+    padding-top: 10px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .radioRow {
+    margin-bottom: 8px;
+  }
+
+  .footer {
+    margin-top: 12px;
+    justify-content: stretch;
+  }
+
+  .buttonWrapper {
+    width: 100%;
+  }
 }

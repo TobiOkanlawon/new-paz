@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./savings.module.css";
-import Image, { StaticImageData } from "next/image";
 import Button from "@/components/Button";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
-
+import { RiScanLine } from "react-icons/ri";
+import { TbArrowsUpDown } from "react-icons/tb";
+import { MdOutlineAddCard } from "react-icons/md";
+import { HiOutlineLink } from "react-icons/hi";
 import Rose from "@/assets/noto_rose.svg";
 import Piggy from "@/assets/piggy-bank.svg";
 import SavingsWalletCard from "@/components/Savings/SavingsScreenCard";
@@ -19,6 +21,7 @@ import FundAccountModal from "@/components/FundAccountModal/FundAccountModal";
 
 import { openPaystackPopup } from "@/libs/paystack";
 import { useSession } from "next-auth/react";
+import QuickActions from "@/components/SavingsQuickActions";
 
 const Savings = () => {
   const { data } = useSession();
@@ -88,25 +91,35 @@ const Savings = () => {
 
   const [amount, setAmount] = useState("0.00");
 
-  const loadAccountSummary = async () => {
-    try {
-      // email is no longer requried
-      let email = "";
-      const result = await getAccountSummary(email);
-
-      if (result.success) {
-        const balance = getTotalBalance(result.data, "savings");
-        setAmount(balance.toFixed(2));
-      } else {
-        console.error(result.error);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    loadAccountSummary();
+    let isMounted = true;
+
+    const loadAccountSummary = async () => {
+      try {
+        // email is no longer requried
+        let email = "";
+        const result = await getAccountSummary(email);
+
+        if (!isMounted) {
+          return;
+        }
+
+        if (result.success) {
+          const balance = getTotalBalance(result.data, "savings");
+          setAmount(balance.toFixed(2));
+        } else {
+          console.error(result.error);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    void loadAccountSummary();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const [page, setPage] = useState(1);
@@ -134,7 +147,19 @@ const Savings = () => {
           console.log("Payment successful:", reference);
           setFundModalOpen(false);
           setFundLoading(false);
-          loadAccountSummary();
+
+          void (async () => {
+            try {
+              let email = "";
+              const result = await getAccountSummary(email);
+              if (result.success) {
+                const balance = getTotalBalance(result.data, "savings");
+                setAmount(balance.toFixed(2));
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          })();
         },
         onClose: () => {
           console.log("Payment closed");
@@ -146,6 +171,41 @@ const Savings = () => {
       setFundLoading(false);
     }
   };
+
+  const QuickActionItems = [
+    {
+        id: "fund",
+        label: "Fund Account",
+        icon: <RiScanLine size={22} />,
+        iconBg: "#e8f5e9",
+        iconColor: "#43a047",
+        onClick: () => setFundModalOpen(true),
+      },
+      {
+        id: "withdraw",
+        label: "Withdraw Funds",
+        icon: <TbArrowsUpDown size={22} />,
+        iconBg: "#ede7f6",
+        iconColor: "#5c6bc0",
+        href: "/dashboard/withdraw",
+      },
+      {
+        id: "debit",
+        label: "Add debit card",
+        icon: <MdOutlineAddCard size={22} />,
+        iconBg: "#fff3e0",
+        iconColor: "#fb8c00",
+        href: "/dashboard/add-card",
+      },
+      {
+        id: "link",
+        label: "Link Account",
+        icon: <HiOutlineLink size={22} />,
+        iconBg: "#e8eaf6",
+        iconColor: "#3949ab",
+        href: "/dashboard/link-account",
+      },
+  ]
 
   return (
     <div className={styles.container}>
@@ -165,6 +225,7 @@ const Savings = () => {
             onClick={() => {
               setFundModalOpen(true);
             }}
+            style={{width: "140px"}}
           >
             Fund Account
           </Button>
@@ -173,12 +234,16 @@ const Savings = () => {
 
       <div className={styles.midSection}>
         <div className={styles.savingsCard}>
-          <SavingsWalletCard amount={amount} />
+          <SavingsWalletCard amount={parseFloat(amount)} />
         </div>
         <div className={styles.midSectionRight}>
           <Button className={styles.outlineButton}>Add Debit Card</Button>
-          <Button>Link Account</Button>
+          <Button className={styles.blockButton}>Link Account</Button>
         </div>
+      </div>
+
+      <div>
+        <QuickActions actions={QuickActionItems} />
       </div>
 
       <div className={styles.savingsPlansContainer}>
@@ -220,14 +285,10 @@ const Savings = () => {
           setPageSize(s);
           setPage(1);
         }}
+        showFilter={false}
         leftControls={
           <select
-            style={{
-              height: 34,
-              borderRadius: 8,
-              border: "1px solid #e5e7eb",
-              padding: "0 10px",
-            }}
+            className={styles.tableControl}
           >
             <option>Transaction status</option>
             <option>Success</option>
@@ -235,30 +296,18 @@ const Savings = () => {
           </select>
         }
         rightControls={
-          <>
+          <div className={styles.tableRightControls}>
             <button
-              style={{
-                height: 34,
-                borderRadius: 8,
-                border: "1px solid #e5e7eb",
-                padding: "0 10px",
-                background: "#fff",
-              }}
+              className={styles.tableControlButton}
             >
               Filters
             </button>
             <button
-              style={{
-                height: 34,
-                borderRadius: 8,
-                border: "1px solid #e5e7eb",
-                padding: "0 10px",
-                background: "#fff",
-              }}
+              className={styles.tableControlButton}
             >
               Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
             </button>
-          </>
+          </div>
         }
       />
       <FundAccountModal

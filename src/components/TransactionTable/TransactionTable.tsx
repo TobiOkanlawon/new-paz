@@ -139,7 +139,7 @@ const TransactionsTable = ({
               </select>
             </div>
           )}
-          {/* {leftControls} */}
+          {leftControls}
         </div>
         <div className={styles.right}>{rightControls}</div>
       </div>

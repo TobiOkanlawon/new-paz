@@ -2,14 +2,19 @@ import React from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import Link from "next/link";
+import Ngn from "@/assets/Ngn.png";
+import Image from "next/image";
+type Props = {
+  amount: number;
+};
 
-const SavingsWalletCard = ({ amount }) => {
+const SavingsWalletCard = ({ amount }: Props) => {
   return (
     <div>
       <div className={styles.walletCard}>
         <div className={styles.walletTop}>
           <div className={styles.walletTitle}>
-            <span className={styles.flag}>🇳🇬</span>
+            <Image className={styles.flag} src={Ngn} alt="Naira" width={18} height={18} />
             <span>Savings wallet</span>
           </div>
 
