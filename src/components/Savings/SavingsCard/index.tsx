@@ -49,7 +49,7 @@ const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
       </div>
 
       <div className={styles.miniCardBottomContainer}>
-        <button onClick={action} className={styles.miniCardActionButton}>
+        <button style={{ color: borderColor, backgroundColor: imageBackgroundColor }} onClick={action} className={styles.miniCardActionButton}>
           Setup
         </button>
       </div>

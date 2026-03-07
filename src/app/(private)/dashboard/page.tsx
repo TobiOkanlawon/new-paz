@@ -1,22 +1,28 @@
+'use client';
 import styles from "./dashboard.module.css";
 import Link from "next/link";
-import Wallet from "@/assets/wallet.svg";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import Piggy from "@/assets/piggy-bank.svg";
 import Plus from "@/assets/plus.svg";
 import InvestmentIcon from "@/assets/investments.svg";
 import LoanIcon from "@/assets/wallet.svg";
 import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
+import Tree from "@/assets/noto_christmas-tree.png";
+import Umbrella from "@/assets/umbrella.png";
+import Car from "@/assets/car.png";
+import House from "@/assets/house.png";
+import Plane from "@/assets/plane.png";
+import NoRecord from "@/assets/noRecord.png";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
 import AccountCard from "@/components/Dashboard/AccountCard";
 import RecentTransactionsCard from "@/components/Dashboard/RecentTransactions";
 import InstantSavingsCard from "@/components/Dashboard/InstantSavingsCard";
-
 import { getDashboardData } from "@/actions/dashboard";
-import { getServerSession } from "next-auth";
 import QuickActionCard from "@/components/Dashboard/QuickActionCard";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getTotalBalance } from "@/libs/helpers";
+import { useSession } from "next-auth/react";
 
 const BottomLeft = () => {
   return (
@@ -41,11 +47,11 @@ const BottomLeft = () => {
                 imageBackgroundColor="#E9EDFA"
               />
               <SavingsPlanMiniCard
-                title="Valentine"
-                image={Rose}
+                title="Christmas"
+                image={Tree}
                 content="Save money daily, bi-weekly plan with a purpose in mind."
-                borderColor="#214CCF"
-                imageBackgroundColor="#E9EDFA"
+                borderColor="#22C55E"
+                imageBackgroundColor="#EBFFF2"
               />
             </div>
           </div>
@@ -58,17 +64,17 @@ const BottomLeft = () => {
           <div className={styles.miniCards}>
             <SavingsPlanMiniCard
               title="Vacation"
-              image={Rose}
+              image={Umbrella}
               content="Save money daily, bi-weekly plan with a purpose in mind."
-              borderColor="#214CCF"
-              imageBackgroundColor="#E9EDFA"
+              borderColor="#F7B341"
+              imageBackgroundColor="#F9EAD1"
             />
             <SavingsPlanMiniCard
-              title="Valentine"
-              image={Rose}
+              title="Car"
+              image={Car}
               content="Save money daily, bi-weekly plan with a purpose in mind."
-              borderColor="#214CCF"
-              imageBackgroundColor="#E9EDFA"
+              borderColor="#FF06A4"
+              imageBackgroundColor="#FED9F0"
             />
           </div>
         </div>
@@ -98,11 +104,11 @@ const BottomRight = () => {
               date="Today, 2:30 P.M"
             />
             <RecentTransactionsCard
-              title="Payment Received"
-              subTitle="From Kelvin Bankole"
-              status="inbound"
-              amount="N150,000.00"
-              date="Today, 2:30 P.M"
+              title="Transfer to Savings"
+              subTitle="Monthly Savings"
+              status="outbound"
+              amount="N100,000.00"
+              date="Today, 10:00 A.M"
             />
           </div>
         </div>
@@ -112,26 +118,26 @@ const BottomRight = () => {
           <h2>Instant Savings</h2>
           <Link href="#">View All</Link>
         </div>
-        <div className={styles.instantSavingsContainer}>
+        <div className={styles.instantSavingsContainer1}>
           <InstantSavingsCard
-            icon={Piggy}
+            icon={Tree}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="Christmas"
             backgroundColor="#EBFFF2"
           />
           <InstantSavingsCard
-            icon={Piggy}
-            title="Solo Savers"
+            icon={House}
+            title="Target Savers"
             subTitle="SA0799259833"
-            secondDescription="Christmas"
-            backgroundColor="#EBFFF2"
+            secondDescription="House Rent"
+            backgroundColor="#F5E5FF"
           />
           <InstantSavingsCard
-            icon={Piggy}
-            title="Solo Savers"
+            icon={Plane}
+            title="Family vault"
             subTitle="SA0799259833"
-            secondDescription="Christmas"
+            secondDescription="Relocation"
             backgroundColor="#EBFFF2"
           />
         </div>
@@ -140,21 +146,43 @@ const BottomRight = () => {
   );
 };
 
-const Dashboard = async () => {
-  const session = await getServerSession(authOptions);
+const Dashboard = () => {
+  const { data: session } = useSession();
+  const [isTransactions] = useState(true);
+  const [savingsAmount, setSavingsAmount] = useState(0);
 
-  const { accountSummary } = await getDashboardData();
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadDashboardData = async () => {
+      const { accountSummary } = await getDashboardData();
+
+      if (!isMounted) {
+        return;
+      }
+
+      const amount = accountSummary.success
+        ? getTotalBalance(accountSummary.data, "savings")
+        : 0;
+
+      setSavingsAmount(amount ?? 0);
+    };
+
+    void loadDashboardData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const firstName = session?.user?.firstName as string;
-  const savingsAmount = accountSummary.success
-    ? getTotalBalance(accountSummary.data, "savings")
-    : 0;
   // const loanAmount = accountSummary.success
   //   ? accountSummary.data?.totalLoans
   //   : 0;
   // const investmentAmount = accountSummary.success
   //   ? accountSummary.data?.totalInvestments
   //   : 0;
+
 
   return (
     <div className={styles.container}>
@@ -225,6 +253,12 @@ const Dashboard = async () => {
               icon={WithdrawIcon}
               text="Withdraw Funds"
             />
+            <QuickActionCard
+              action={() => {}}
+              backgroundColor="#EBFFF2"
+              icon={Piggy}
+              text="Instant Savings"
+            />
           </div>
         </div>
         <div className={styles.quickActionPager} aria-hidden="true">
@@ -235,10 +269,16 @@ const Dashboard = async () => {
         </div>
       </div>
 
-      <div className={styles.bottomContainer}>
-        <BottomLeft />
-        <BottomRight />
-      </div>
+      {isTransactions ? (
+        <div className={styles.bottomContainer}>
+          <BottomLeft />
+          <BottomRight />
+        </div>
+      ) : (
+        <div className={styles.bottomContainerNone}>
+          <Image src={NoRecord} alt="No transactions" width={124} height={120} />
+        </div>
+      )}
     </div>
   );
 };

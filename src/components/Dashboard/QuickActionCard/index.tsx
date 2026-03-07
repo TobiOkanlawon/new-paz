@@ -23,7 +23,7 @@ const QuickActionCard: React.FC<QuickActionProps> = ({
         >
           <Image src={icon} alt="icon" />
         </div>
-        <p>{text}</p>
+        <p className={styles.quickActionText}>{text}</p>
       </div>
     </div>
   );

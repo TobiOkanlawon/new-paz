@@ -3,14 +3,19 @@
     border-width: 2px;
     border-style: solid;
     border-radius: 15px;
-    max-width: 260px;
-    min-width: 354px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     background-color: white;
 }
 
 .miniCardImageContainer {
     padding: 4px 8px;
     border-radius: 10px;
+}
+.miniCardImageContainer>img {
+    width: 18px;
+    object-fit: contain;
 }
 
 .miniCardTitleContainer {
@@ -23,17 +28,29 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
 }
 
 .miniCardContentContainer > p  {
     margin: 0;
     margin-bottom: 10px;
+    font-size: 14px;
+    color: #878787;
 }
 
 .upRightContainer {
     background-color: #DFDFDF;
     padding: 4px;
     border-radius: 50%;
+    width: 15.24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upRightContainer>img {
+    width: 12.9px;
+    object-fit: contain;
 }
 
 .miniCardBottomContainer {
@@ -47,9 +64,39 @@
     padding: 3px 8px;
     border: none;
     border-radius: 15px;
-    font-size: 16px;
+    font-size: 15.2px;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
 }
 
 .miniCardTitle {
     font-weight: 400;
+    font-size: 15.2px;
+    color: #2E2E2E;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 900px) {
+    .miniCardContainer {
+        min-width: 220px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .miniCardContainer {
+        padding: 12px;
+        min-width: 200px;
+    }
+
+    .miniCardContentContainer > p {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .miniCardActionButton {
+        font-size: 14px;
+    }
 }

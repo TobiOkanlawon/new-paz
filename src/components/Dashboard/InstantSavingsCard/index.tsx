@@ -24,7 +24,7 @@ const InstantSavingsCard: React.FC<Props> = ({
         style={{ backgroundColor: backgroundColor }}
         className={styles.iconContainer}
       >
-        <Image height={28} width={28} src={Upright} alt="" />
+        {icon && <Image src={icon} alt="icon" />}
       </div>
 
       <div className={styles.textContainer}>

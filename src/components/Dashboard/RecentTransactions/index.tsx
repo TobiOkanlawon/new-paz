@@ -1,7 +1,7 @@
 import styles from "./recentTransactions.module.css";
 import ThreeDots from "@/assets/three-dots.svg";
-import Upright from "@/assets/up-right.svg";
 import Image from "next/image";
+import { LuArrowUpRight, LuArrowDownLeft } from "react-icons/lu";
 
 type Props = {
   title: string;
@@ -20,16 +20,16 @@ const RecentTransactionsCard: React.FC<Props> = ({
   date,
 }) => {
   let backgroundColor = "";
-  let color = "";
+  let icon = null;
 
   switch (status) {
     case "outbound":
-      backgroundColor = "#EBFFF2";
-      color = "#22C55E";
+      backgroundColor = "#FFE8E8";
+      icon = <LuArrowUpRight color="#DC2626" size={24} />;
       break;
     default:
-      backgroundColor = "#FFE8E8";
-      color = "#DC2626";
+      backgroundColor = "#EBFFF2";
+      icon = <LuArrowDownLeft color="#22C55E" size={24} />;
   }
 
   return (
@@ -39,9 +39,7 @@ const RecentTransactionsCard: React.FC<Props> = ({
           style={{ backgroundColor: backgroundColor }}
           className={styles.iconContainer}
         >
-          {status == "inbound" && (
-            <Image height={28} width={28} src={Upright} alt="" />
-          )}
+          {icon}
         </div>
         <div className={styles.textContainer}>
           <p className={styles.title}>{title}</p>

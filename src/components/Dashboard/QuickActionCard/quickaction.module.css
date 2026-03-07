@@ -1,27 +1,37 @@
 .quickActionContainer {
     margin-top: 44px;
+    max-width: 100%;
+    max-height: none;
+    width: 100%;
+    height: 100%;
 }
 
 .quickActionCardsInnerContainer {
     display: flex;
     gap: 16px;
     overflow-x: scroll;
+    width: 100%;
+}
+
+.quickActionCardsInnerContainer>p{
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400    ;
 }
 
 .quickActionCardContainer {
     background-color: white;
-    /* height: 112px; */
-    /* width: 258px; */
-    padding: 21px 64px;
-    width: fit-content;
-    min-width: 258px;
+    padding: 21px 25px;
     border-radius: 15px;
+    min-width: 180px;
+    width: 100%;
+    max-width: 258px;
+    flex-shrink: 0;
 }
 
 .quickActionCardIconContainer {
     padding: 9px;
     border-radius: 10px;
-    width: fit-content;
 }
 
 .quickActionCardInnerContainer {
@@ -29,4 +39,30 @@
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    width: 100%;
+}
+
+@media screen and (max-width: 600px){
+    .quickActionCardContainer{
+        min-width: 132px;
+        width: 132px;
+        height: auto;
+        padding: 9px 6px;
+    }
+    .quickActionCardInnerContainer{
+        width: 100%;
+        height: auto;
+    }
+    .quickActionCardIconContainer{
+        padding: 4px 6px;
+    }
+    .quickActionCardIconContainer>img{
+        width: 17px;
+        object-fit: contain;
+    }
+    .quickActionText{
+        font-size: 14px;
+        text-wrap: wrap;
+        text-align: center;
+    }
 }

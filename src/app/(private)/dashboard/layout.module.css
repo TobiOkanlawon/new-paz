@@ -19,16 +19,16 @@
 }
 
 .mainContent {
-  padding: 8px 10px 38px 90px;
+  padding: 0px 0px 38px 90px;
   overflow-y: auto;
 }
 
 @media screen and (max-width: 1201px) {
-  .dashboardMain {
+  /* .dashboardMain {
     display: flex;
     flex-direction: column;
     position: relative;
-  }
+  } */
 
   .dashboardMain > aside {
     position: fixed;
