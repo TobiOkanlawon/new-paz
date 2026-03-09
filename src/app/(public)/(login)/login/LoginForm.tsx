@@ -69,9 +69,8 @@ const LoginForm = () => {
         });
         return;
       }
-      if (result.ok) {
-        window.location.href = "/dashboard";
-      }
+
+      if (result.ok) router.push("/dashboard");
     },
   });
 
