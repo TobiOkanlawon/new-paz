@@ -92,8 +92,6 @@ const SavingsDropdown: React.FC<SavingsDropdownProps> = ({
     setIsOpen(!isOpen);
   };
 
-  const router = useRouter();
-
   return (
     <div className={styles.dropdownContainer}>
       <div
@@ -103,15 +101,10 @@ const SavingsDropdown: React.FC<SavingsDropdownProps> = ({
           collapsed && styles.optionContainerCollapsed,
         )}
       >
-        <div
-          className={styles.optionInnerContainer}
-          onClick={() => {
-            router.push("/dashboard/savings");
-          }}
-        >
+        <Link className={styles.optionInnerContainer} href="/dashboard/savings">
           <Image alt={alt} src={icon} width={24} height={24} />
           {!collapsed && <p className={styles.sidebarOptionText}>Savings</p>}
-        </div>
+        </Link>
         {!collapsed && (
           <svg
             onClick={handleToggle}

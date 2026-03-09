@@ -6,9 +6,10 @@ import styles from "./LeftStyle.module.css";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 type Props = {
-  view?: "logged in";
+  view?: "logged in" | "logged out";
 };
 
 const SLIDE_DURATION = 6000;
@@ -78,12 +79,6 @@ const LeftCaurosel: React.FC<Props> = ({ view }) => {
     }, 300);
   }, [bgImages.length]);
 
-  const skip = useCallback(() => {
-    setCurrentImageIndex(bgImages.length - 1);
-    setAnimationKey((prev) => prev + 1);
-    setIsAutoPlaying(true);
-  }, [bgImages.length]);
-
   const router = useRouter();
 
   const handleLogin = () => {
@@ -101,9 +96,9 @@ const LeftCaurosel: React.FC<Props> = ({ view }) => {
             height={51}
             className={styles.logo}
           />
-          <div className={styles.onboardingSkip} onClick={skip}>
+          <Link href="/login" className={styles.onboardingSkip}>
             <p>Skip</p>
-          </div>
+          </Link>
         </div>
 
         <div className={styles.onboardingImage}>
