@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import styles from "./dashboard.module.css";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Piggy from "@/assets/piggy-bank.svg";
 import Plus from "@/assets/plus.svg";
 import InvestmentIcon from "@/assets/investments.svg";
-import LoanIcon from "@/assets/wallet.svg";
+// import LoanIcon from "@/assets/wallet.svg";
 import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
 import Tree from "@/assets/noto_christmas-tree.png";
@@ -183,7 +183,6 @@ const Dashboard = () => {
   //   ? accountSummary.data?.totalInvestments
   //   : 0;
 
-
   return (
     <div className={styles.container}>
       <div>
@@ -227,25 +226,25 @@ const Dashboard = () => {
         <h2>Quick Actions</h2>
         <div className={styles.quickActionCards}>
           <div className={styles.quickActionCardsInnerContainer}>
-            <QuickActionCard
+            {/*<QuickActionCard
               action={() => {}}
               backgroundColor="#E9EDFA"
               icon={Plus}
               text="Apply for a loan"
-            />
+              />*/}
             <QuickActionCard
               action={() => {}}
               backgroundColor="#EBFFF2"
               icon={Piggy}
               text="Add to Savings"
             />
-            <QuickActionCard
+            {/*<QuickActionCard
               action={() => {}}
               color="#F7B341"
               backgroundColor="#F9EAD1"
               icon={InvestmentIcon}
               text="Invest Now"
-            />
+              />*/}
             <QuickActionCard
               action={() => {}}
               color="#214CCF"
@@ -276,7 +275,12 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className={styles.bottomContainerNone}>
-          <Image src={NoRecord} alt="No transactions" width={124} height={120} />
+          <Image
+            src={NoRecord}
+            alt="No transactions"
+            width={124}
+            height={120}
+          />
         </div>
       )}
     </div>
