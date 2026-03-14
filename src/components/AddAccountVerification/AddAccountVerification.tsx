@@ -8,10 +8,14 @@ import OverviewStep from "./comps/OverviewStep";
 import InfoStep from "./comps/InfoStep";
 import EnterStep from "./comps/EnterStep";
 import SuccessStep from "./comps/SuccessStep";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type Step = "overview" | "info" | "enter" | "success";
 
 export default function AddAccountVerification() {
+  const router = useRouter();
+
   const [step, setStep] = useState<Step>("overview");
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
@@ -32,14 +36,15 @@ export default function AddAccountVerification() {
     }, 300);
   };
 
-  const contentClass = `${styles.contentWrap} ${animating
+  const contentClass = `${styles.contentWrap} ${
+    animating
       ? direction === "forward"
         ? styles.slideOutLeft
         : styles.slideOutRight
       : direction === "forward"
         ? styles.slideInRight
         : styles.slideInLeft
-    }`;
+  }`;
 
   if (step === "success") {
     return (
@@ -56,6 +61,11 @@ export default function AddAccountVerification() {
     );
   }
 
+  const handleVerify = () => {
+    toast("Primary Account Linked");
+    router.push("/login");
+  };
+
   return (
     <div className={styles.container}>
       <StepIndicator current={stepToNum[step]} />
@@ -71,7 +81,7 @@ export default function AddAccountVerification() {
         )}
         {step === "enter" && (
           <EnterStep
-            onVerify={() => navigate("success")}
+            onVerify={handleVerify}
             onBack={() => navigate("info", "back")}
           />
         )}

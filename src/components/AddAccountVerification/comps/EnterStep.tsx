@@ -9,7 +9,6 @@ import Input from "@/components/Input";
 import { handleErrorDisplay } from "@/libs/helpers";
 import { addAccount } from "@/actions/preAuth";
 import { toast } from "react-toastify";
-import { useSession } from "next-auth/react";
 
 const validationSchema = yup.object({
   accountNumber: yup
@@ -29,8 +28,6 @@ const EnterStep = ({
   onBack: () => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const { update } = useSession();
 
   const formik = useFormik({
     initialValues: {
@@ -57,11 +54,9 @@ const EnterStep = ({
         return;
       }
 
-      setIsLoading(false);
+      toast.success("Primary account linked. Log in");
 
-      update({
-        primaryAccountLinked: true,
-      });
+      setIsLoading(false);
 
       onVerify(values);
     },

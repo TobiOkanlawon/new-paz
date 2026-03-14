@@ -19,9 +19,9 @@ export default async function OnboardingLayout({
     <div className={styles.container}>
       <div className={styles.leftContainer}>
         {session?.accessToken ? (
-          <LeftCarousel view="logged in" />
+          <LeftCarousel view="show log-in view" />
         ) : (
-          <LeftCarousel view="logged out" />
+          <LeftCarousel view="show-logged-out-view" />
         )}
       </div>
       <div className={styles.rightContainer}>{children}</div>

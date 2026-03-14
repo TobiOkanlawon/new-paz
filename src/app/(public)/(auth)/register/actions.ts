@@ -2,7 +2,6 @@
 
 import * as yup from "yup";
 import { RegisterSchema } from "./schema";
-import { redirect } from 'next/navigation';
 
 type RegisterSchema = yup.InferType<typeof RegisterSchema>;
 

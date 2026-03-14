@@ -15,7 +15,7 @@ type InvalidTokenResponse = {
   responseMessage: "Invalid token provided";
 };
 
-function isInvalidTokenResponse(body: unknown): body is InvalidTokenResponse {
+export function isInvalidTokenResponse(body: unknown): body is InvalidTokenResponse {
   return (
     typeof body === "object" &&
     body !== null &&
@@ -38,17 +38,24 @@ export async function apiFetch<T = unknown>(
 ): Promise<T> {
   const session = await getServerSession(authOptions);
 
-  // if (!session?.accessToken) {
-  //   throw new InvalidTokenError();
-  // }
+  const isProtected = options.isProtected;
+  
+  if (!session?.user?.email && isProtected) {
+    // if the user's email does not exist in the session and the route is protected
+  }
 
   const { body, headers: extraHeaders, ...rest } = options;
 
   let headers: any = {};
+
+  if (!session?.accessToken && isProtected) {
+    // TODO: probably want to log the user out
+    redirect("/api/auth/logout")
+  }
   
-  if (options.isProtected) {
+  if (isProtected) {
     headers["Authorization"] = `Bearer ${session.accessToken}`
-  } 
+  }
   
   const response = await fetch(`${BASE_URL}${path}`, {
     ...rest,

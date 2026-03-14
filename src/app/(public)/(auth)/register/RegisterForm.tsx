@@ -11,9 +11,14 @@ import { RegisterSchema } from "./schema";
 import { registerUser } from "./actions";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const RegisterForm = () => {
   const router = useRouter();
+
+  const session = useSession();
+  const email = session.data?.user.email;
 
   const formik = useFormik<yup.InferType<typeof RegisterSchema>>({
     initialValues: {
@@ -25,7 +30,7 @@ const RegisterForm = () => {
       confirmPassword: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
+    onSubmit: async (values, { setSubmitting }) => {
       const response = await registerUser({
         firstName: values.firstName,
         lastName: values.lastName,
@@ -42,7 +47,11 @@ const RegisterForm = () => {
 
       toast.success("Sign up successful");
 
-      router.replace("/login");
+      // route to email validation page
+
+      router.replace(
+        `/verification/email?email=${values.email}&phone=${values.phoneNumber}`,
+      );
     },
   });
 

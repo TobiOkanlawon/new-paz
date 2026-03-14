@@ -3,14 +3,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ok, fail, ActionResult } from "./shared";
-
-// response body shape
-// {
-//   "accountName": "Tobi Okanlawon",
-//   "accountNo": "1100449265",
-//   "bankName": "Kuda Bank",
-//   "walletId": "0516549872"
-// }
+import { apiFetch } from "@/libs/api";
 
 export async function addAccount(
   accountName: string,
@@ -20,38 +13,57 @@ export async function addAccount(
   try {
     const session = await getServerSession(authOptions);
 
+    const updatedUser = await apiFetch(`/v1/users/fetch/user`, {
+      isProtected: true,
+      method: "POST",
+      body: {
+        email: session?.user.email,
+      },
+    });
+
+    if (!updatedUser) {
+      return fail("Failed to fetch user object");
+    }
+    
+    const walletAccount = updatedUser.user.wallet_account;
+
+    // const walletAccount = updatedUser.
+
     if (!session?.accessToken) {
       return fail("You are not authenticated. Please log in again.");
     }
 
-    if (!session.user?.walletAccount) {
+    if (!walletAccount) {
       return fail("Wallet account is missing on your profile.");
     }
 
-    const walletId = session.user.walletAccount;
+    // TODO: there's a bug where, if the user is doing the flow from registration and does the kyc right after, they won't have a "walletAccount". The only way that this gets resolved properly is if the user object can be fetched from an enpoint and we fetch the user object right after every important change so that it syncs with the backend.
+
     const token = session.accessToken;
 
     console.log("[addAccount] token present:", !!token);
-    console.log("[addAccount] walletId:", walletId);
 
     const body = {
       accountName,
       accountNo,
       bankName,
-      walletId,
+      walletId: walletAccount,
     };
 
     console.log("[addAccount] request body:", JSON.stringify(body));
 
-    const res = await fetch(`${process.env.API_BASE_URL}/v1/users/user/add-account`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.API_BASE_URL}/v1/users/user/add-account`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+        cache: "no-store",
       },
-      body: JSON.stringify(body),
-      cache: "no-store",
-    });
+    );
 
     const json = await res.json().catch(() => null);
 
