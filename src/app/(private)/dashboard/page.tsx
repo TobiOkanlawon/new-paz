@@ -120,21 +120,21 @@ const BottomRight = () => {
         </div>
         <div className={styles.instantSavingsContainer1}>
           <InstantSavingsCard
-            icon={Tree}
+            icon={<Tree width={24} height={24} />}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="Christmas"
             backgroundColor="#EBFFF2"
           />
           <InstantSavingsCard
-            icon={House}
-            title="Target Savers"
+            icon={<House width={24} height={24} />}
+            title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="House Rent"
             backgroundColor="#F5E5FF"
           />
           <InstantSavingsCard
-            icon={Plane}
+            icon={<Plane width={24} height={24} />}
             title="Family vault"
             subTitle="SA0799259833"
             secondDescription="Relocation"
@@ -196,8 +196,10 @@ const Dashboard = () => {
         <AccountCard
           backgroundColor="#EBFFF2"
           amount={savingsAmount ?? 0}
-          icon={Piggy}
-          color="#22C55E"
+          icon={
+            <Piggy fill="transparent" color="#22C55E" height={24} width={24} />
+          }
+          iconColor="#22C55E"
           title="total savings"
           rate={8.5}
           rateBackgroundColor="#DBF8E8"
@@ -235,7 +237,14 @@ const Dashboard = () => {
             <QuickActionCard
               action={() => {}}
               backgroundColor="#EBFFF2"
-              icon={Piggy}
+              icon={
+                <Piggy
+                  fill="transparent"
+                  color="#22C55E"
+                  height={24}
+                  width={24}
+                />
+              }
               text="Add to Savings"
             />
             {/*<QuickActionCard

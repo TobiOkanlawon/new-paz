@@ -12,7 +12,7 @@ import Image, { ImageProps } from "next/image";
 import DashboardIcon from "@/assets/dashboard-logo.svg";
 import ToggleIcon from "@/assets/toggle-icon.png";
 import CompoundLogo from "@/assets/compound-logo.png";
-import SavingsIcon from "@/assets/piggy-bank.svg";
+import Piggy from "@/assets/piggy-bank.svg";
 import LoansIcon from "@/assets/wallet.svg";
 import ThriftIcon from "@/assets/thrift.svg";
 import InvestmentsIcon from "@/assets/investments.svg";
@@ -23,7 +23,7 @@ import { signOut, useSession } from "next-auth/react";
 
 type OptionProps = {
   active: boolean;
-  icon: ImageProps["src"];
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   href: string;
   title: string;
   alt: string; // the alt tag for the svg
@@ -38,6 +38,8 @@ const SidebarOption: React.FC<OptionProps> = ({
   href,
   collapsed = false,
 }) => {
+  const Icon = icon;
+
   return (
     <Link className={styles.navLink} href={href}>
       <div
@@ -48,7 +50,7 @@ const SidebarOption: React.FC<OptionProps> = ({
         )}
       >
         <div className={styles.optionInnerContainer}>
-          <Image alt={alt} src={icon} width={24} height={24} />
+          <Icon width={24} height={24} />
           {!collapsed && (
             <p
               className={clsx(
@@ -71,7 +73,7 @@ type SubItem = {
 };
 
 type SavingsDropdownProps = {
-  icon: ImageProps["src"];
+  icon: React.ReactNode;
   alt: string;
   collapsed: boolean;
   pathname: string;
@@ -102,7 +104,7 @@ const SavingsDropdown: React.FC<SavingsDropdownProps> = ({
         )}
       >
         <Link className={styles.optionInnerContainer} href="/dashboard/savings">
-          <Image alt={alt} src={icon} width={24} height={24} />
+          {icon}
           {!collapsed && <p className={styles.sidebarOptionText}>Savings</p>}
         </Link>
         {!collapsed && (
@@ -217,7 +219,7 @@ export default function Sidebar({
             />
             <SavingsDropdown
               alt="piggy bank icon"
-              icon={SavingsIcon}
+              icon={<Piggy fill="transparent" width={24} height={24} />}
               collapsed={collapsed}
               pathname={pathname}
               subItems={[
