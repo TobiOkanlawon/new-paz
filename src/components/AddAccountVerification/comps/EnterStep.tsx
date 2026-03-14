@@ -54,8 +54,6 @@ const EnterStep = ({
         return;
       }
 
-      toast.success("Primary account linked. Log in");
-
       setIsLoading(false);
 
       onVerify(values);
