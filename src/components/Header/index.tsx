@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import HeaderDropdown from "../HeaderDropdowns";
 
 import { useSession } from "next-auth/react";
+import Dropdown from "@/assets/dropdown.svg";
 
 const MOCK: NotificationItem[] = [
   {
@@ -120,6 +121,7 @@ const Header = () => {
         >
           <Image src={StarIcon} alt="red star icon" />
           <p className={styles.quickActionsText}>Quick actions</p>
+          <Dropdown height={16} width={16} />
         </div>
 
         <div className={styles.headerRightRight}>
