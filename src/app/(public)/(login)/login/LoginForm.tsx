@@ -2,14 +2,12 @@
 import styles from "./loginForm.module.css";
 import * as yup from "yup";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
 import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import { handleErrorDisplay } from "@/libs/helpers";
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
@@ -62,6 +60,7 @@ const LoginForm = () => {
 
       if (!result || result.error) {
         setSubmitting(false);
+        toast.error(result?.error);
         setErrors({
           email: "Invalid email or password",
         });
@@ -126,7 +125,7 @@ const LoginForm = () => {
         >
           Login
         </Button>
-        <Button
+        {/*<Button
           loading={formik.isSubmitting}
           type="submit"
           variant="outlined"
@@ -140,7 +139,7 @@ const LoginForm = () => {
             alt="Google logo"
           />
           Sign up with Google
-        </Button>
+          </Button>*/}
         <div className={styles.linkContainer}>
           <div className={styles.linkWrapper}>
             <Link

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { apiFetch } from "@/libs/api";
 
 const authSecret =
   process.env.NEXTAUTH_SECRET ??
@@ -22,24 +23,18 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        const res = await fetch(
-          `${process.env.API_BASE_URL}/v1/users/user/login`,
-          {
+	let data: TLoginResponse;
+        try {
+          data = await apiFetch("/v1/users/user/login", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
+            isProtected: false,
+            body: {
               email: credentials?.email,
               password: credentials?.password,
-            }),
-          },
-        );
-
-        const data = await res.json();
-
-        if (data.responseCode !== "00") {
-          return null;
+            },
+          });
+        } catch (e) {
+	  throw e;
         }
 
         /*
