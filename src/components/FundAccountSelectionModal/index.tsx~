@@ -1,0 +1,7 @@
+import ModalShell from "@/components/ModalShell";
+
+const FundAccountSelectionModal = () => {
+  return <ModalShell></ModalShell>;
+};
+
+export default FundAccountSelectionModal;

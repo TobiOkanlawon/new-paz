@@ -1,0 +1,192 @@
+"use client";
+
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import styles from "./savings.module.css";
+
+import Button from "@/components/Button";
+import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
+import SavingsWalletCard from "@/components/Savings/SavingsScreenCard";
+import TransactionsTable, {
+  TransactionRow,
+} from "@/components/TransactionTable/TransactionTable";
+
+import FundAccountModal from "@/components/FundAccountModal/FundAccountModal";
+import AllAccountsModal from "@/components/Savings/AllAccountsModal";
+import QuickActions from "@/components/SavingsQuickActions";
+
+import { openPaystackPopup } from "@/libs/paystack";
+import { getAccountSummary } from "@/actions/dashboard";
+import { getTotalBalance } from "@/libs/helpers";
+
+import Link from "next/link";
+
+import { RiScanLine } from "react-icons/ri";
+import { TbArrowsUpDown } from "react-icons/tb";
+import { MdOutlineAddCard } from "react-icons/md";
+import { HiOutlineLink } from "react-icons/hi";
+
+import Rose from "@/assets/noto_rose.svg";
+import Piggy from "@/assets/piggy-bank.svg";
+
+type Props = {
+  accountSummary: any;
+  balance: number;
+  showFundAccountButton: boolean;
+};
+
+const SavingsClient = ({
+  accountSummary,
+  balance,
+  showFundAccountButton,
+}: Props) => {
+  const { data: session } = useSession();
+
+  const [amount, setAmount] = useState(balance);
+  const [fundModalOpen, setFundModalOpen] = useState(false);
+  const [fundLoading, setFundLoading] = useState(false);
+
+  const rows: TransactionRow[] = [
+    {
+      id: "1",
+      savingsName: "vacation savings",
+      amountTarget: 200000,
+      savingsAmount: 50000,
+      savingsInterest: "12%",
+      amountDebited: 50000,
+      dateDebited: "Mon, 21 Dec 2025",
+      status: "Success",
+    },
+  ];
+
+  const handleFundAccount = async ({ amount }: { amount: number }) => {
+    const email = session?.user?.email;
+    if (!email) return;
+
+    setFundLoading(true);
+
+    try {
+      await openPaystackPopup({
+        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+        email,
+        amount: amount * 100,
+        ref: new Date().getTime().toString(),
+
+        onSuccess: async () => {
+          setFundModalOpen(false);
+          setFundLoading(false);
+
+          const result = await getAccountSummary(email);
+
+          if (result.success) {
+            const newBalance = getTotalBalance(result.data, "savings");
+            setAmount(newBalance);
+          }
+        },
+
+        onClose: () => {
+          setFundLoading(false);
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      setFundLoading(false);
+    }
+  };
+
+  const QuickActionItems = [
+    {
+      id: "fund",
+      label: "Fund Account",
+      icon: <RiScanLine size={22} />,
+      onClick: () => setFundModalOpen(true),
+    },
+    {
+      id: "withdraw",
+      label: "Withdraw Funds",
+      icon: <TbArrowsUpDown size={22} />,
+      href: "/dashboard/withdraw",
+    },
+    {
+      id: "debit",
+      label: "Add debit card",
+      icon: <MdOutlineAddCard size={22} />,
+      href: "/dashboard/add-card",
+    },
+    {
+      id: "link",
+      label: "Link Account",
+      icon: <HiOutlineLink size={22} />,
+      href: "/dashboard/link-account",
+    },
+  ];
+
+  const showSoloSavers = !accountSummary.hasSoloAccount;
+
+  return (
+    <div className={styles.container}>
+      {/* HEADER */}
+      <div className={styles.heading}>
+        <div>
+          <h1>Savings</h1>
+          <p>Explore all savings plans</p>
+        </div>
+
+        <div>
+          <Link href="/dashboard/savings/create">
+            <Button>Create Savings</Button>
+          </Link>
+
+          {showFundAccountButton && (
+            <Button onClick={() => setFundModalOpen(true)}>Fund Account</Button>
+          )}
+        </div>
+      </div>
+
+      {/* BALANCE */}
+      <SavingsWalletCard amount={amount} />
+
+      {/* QUICK ACTIONS */}
+      <QuickActions actions={QuickActionItems} />
+
+      {/* SAVINGS PLANS */}
+      <div>
+        {showSoloSavers && (
+          <SavingsPlanMiniCard
+            title="Solo Savers"
+            icon={<Piggy />}
+            action={() => {}}
+          />
+        )}
+
+        <SavingsPlanMiniCard title="Target Savers" icon={<Rose />} />
+      </div>
+
+      {/* TABLE */}
+      <TransactionsTable
+        rows={rows}
+        total={20}
+        page={1}
+        pageSize={8}
+        onPageChange={() => {}}
+        onPageSizeChange={() => {}}
+      />
+
+      {/* MODALS */}
+      <AllAccountsModal
+        accounts={accountSummary}
+        open={fundModalOpen}
+        onClose={() => setFundModalOpen(false)}
+      />
+
+      <FundAccountModal
+        open={fundModalOpen}
+        onClose={() => setFundModalOpen(false)}
+        loading={fundLoading}
+        onFund={handleFundAccount}
+      />
+    </div>
+  );
+};
+
+export default SavingsClient;

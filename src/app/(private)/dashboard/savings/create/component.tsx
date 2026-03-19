@@ -1,3 +1,4 @@
+"use client";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
 import styles from "./card.module.css";
 
@@ -22,7 +23,11 @@ import { useRouter } from "next/navigation";
 // import Land from "../assets/Land.png";
 // import Misc from "../assets/Misc.png";
 
-export default function SavingsPlans() {
+type Props = {
+  showSoloSavers: boolean;
+};
+
+export default function SavingsPlans({ showSoloSavers }: Props) {
   const soloSavings = [
     {
       title: "Valentine",
@@ -189,7 +194,7 @@ export default function SavingsPlans() {
       accountName: values.accountName,
     });
     if (!result.success) {
-      toast.error(result.error.responseMessage);
+      toast.error(result.error);
       return;
     }
     toast.success("Savings Plan created");
@@ -203,9 +208,11 @@ export default function SavingsPlans() {
 
       <div className={styles.container}>
         {/* Solo Savings */}
-        <Section title="Solo Savings">
-          {renderCards(soloSavings, "solo")}
-        </Section>
+        {showSoloSavers && (
+          <Section title="Solo Savings">
+            {renderCards(soloSavings, "solo")}
+          </Section>
+        )}
 
         {/* Target Savings */}
         <Section title="Target Savings">

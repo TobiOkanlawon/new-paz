@@ -5,7 +5,7 @@
   background: linear-gradient(100.82deg, #0E2B3D 10%, #5C89A5 55%, #EFF9FE 100%);
 
   border-radius: 20px;
-  padding: 24px;
+    padding: 24px;
   width: 100%;
   min-height: 200px;
   display: flex;
@@ -13,7 +13,7 @@
   justify-content: space-between;
   color: #fff;
   box-sizing: border-box;
-  width: 358px;
+  min-width: 450px;
 }
 
 /* ── Top row ── */

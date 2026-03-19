@@ -73,8 +73,8 @@ export async function createTargetSavingsAccount(
     });
 
     revalidatePath("/dashboard/savings");
-    return ok({ success: true, data: res });
+    return ok(res.data);
   } catch (e: any) {
-    return fail(e.responseMessage || "Failed to create target savings");
+    return fail(e);
   }
 }

@@ -2,12 +2,12 @@
 import { useState } from "react";
 import styles from "./sidebar.module.css";
 import clsx from "clsx";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 // import { removeToken } from "@/libs/auth";
 // import useUser from "@/store/userStore";
 // import { useQueryClient } from "@tanstack/react-query";
 
-import Image, { ImageProps } from "next/image";
+import Image from "next/image";
 
 import DashboardIcon from "@/assets/dashboard-logo.svg";
 import ToggleIcon from "@/assets/toggle-icon.png";
@@ -23,7 +23,7 @@ import { signOut, useSession } from "next-auth/react";
 
 type OptionProps = {
   active: boolean;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: React.ReactNode;
   href: string;
   title: string;
   alt: string; // the alt tag for the svg
@@ -50,7 +50,7 @@ const SidebarOption: React.FC<OptionProps> = ({
         )}
       >
         <div className={styles.optionInnerContainer}>
-          <Icon width={24} height={24} />
+          {icon}
           {!collapsed && (
             <p
               className={clsx(
@@ -228,15 +228,11 @@ export default function Sidebar({
                   title: "Target Savings",
                   href: "/dashboard/savings/target-savings",
                 },
-                // {
-                //   title: "Family Vault Saving",
-                //   href: "/dashboard/savings/family-vault",
-                // },
               ]}
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={LoansIcon}
+              icon={<LoansIcon width={24} height={24} />}
               title="Loans"
               // href="/dashboard/loans"
               href="#"
@@ -245,7 +241,7 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={ThriftIcon}
+              icon={<ThriftIcon width={24} height={24} />}
               title="Thrifts"
               href="#"
               // href="/dashboard/thrift"
@@ -254,7 +250,7 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={InvestmentsIcon}
+              icon={<InvestmentsIcon width={24} height={24} />}
               title="Investments"
               href="#"
               // href="/dashboard/investments"
@@ -263,7 +259,7 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={SettingsIcon}
+              icon={<SettingsIcon width={24} height={24} />}
               title="Settings"
               href="/settings"
               active={isSubPath("/settings", pathname)}

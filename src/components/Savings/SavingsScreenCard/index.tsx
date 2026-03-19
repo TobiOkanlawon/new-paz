@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import Link from "next/link";
+// import Link from "next/link";
 import Ngn from "@/assets/Ngn.png";
 import Image from "next/image";
 type Props = {
@@ -14,7 +14,13 @@ const SavingsWalletCard = ({ amount }: Props) => {
       <div className={styles.walletCard}>
         <div className={styles.walletTop}>
           <div className={styles.walletTitle}>
-            <Image className={styles.flag} src={Ngn} alt="Naira" width={18} height={18} />
+            <Image
+              className={styles.flag}
+              src={Ngn}
+              alt="Naira"
+              width={18}
+              height={18}
+            />
             <span>Savings wallet</span>
           </div>
 
@@ -30,11 +36,11 @@ const SavingsWalletCard = ({ amount }: Props) => {
               <span className={styles.eye}>👁</span>
             </div>
           </div>
-          <div className={styles.walletBottom}>
+          {/*<div className={styles.walletBottom}>
             <Link href="/dashboard/savings/create">
               <button className={styles.viewBtn}>View all savings</button>
             </Link>
-          </div>
+            </div>*/}
         </div>
 
         <div className={clsx(styles.circle, styles.circleLeft)}></div>

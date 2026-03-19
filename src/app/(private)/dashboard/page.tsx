@@ -2,7 +2,6 @@
 import styles from "./dashboard.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import Piggy from "@/assets/piggy-bank.svg";
 
 // import LoanIcon from "@/assets/wallet.svg";
@@ -22,6 +21,8 @@ import { getDashboardData } from "@/actions/dashboard";
 import QuickActionCard from "@/components/Dashboard/QuickActionCard";
 import { getTotalBalance } from "@/libs/helpers";
 import BottomLeft from "@/components/Dashboard/BottomLeft";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const BottomRight = () => {
   return (
@@ -86,34 +87,12 @@ const BottomRight = () => {
   );
 };
 
-const Dashboard = () => {
-  const { data: session } = useSession();
-  const [isTransactions] = useState(true);
-  const [savingsAmount, setSavingsAmount] = useState(0);
+const Dashboard = async () => {
+  const isTransactions = true;
 
-  useEffect(() => {
-    let isMounted = true;
+  const session = await getServerSession(authOptions);
 
-    const loadDashboardData = async () => {
-      const { accountSummary } = await getDashboardData();
-
-      if (!isMounted) {
-        return;
-      }
-
-      const amount = accountSummary.success
-        ? getTotalBalance(accountSummary.data, "savings")
-        : 0;
-
-      setSavingsAmount(amount ?? 0);
-    };
-
-    void loadDashboardData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { accountSummary } = await getDashboardData();
 
   const firstName = session?.user?.firstName as string;
   const savingsAmount = accountSummary.success
@@ -200,7 +179,14 @@ const Dashboard = () => {
             <QuickActionCard
               action={() => {}}
               backgroundColor="#EBFFF2"
-              icon={Piggy}
+              icon={
+                <Piggy
+                  fill="transparent"
+                  color="#22C55E"
+                  height={24}
+                  width={24}
+                />
+              }
               text="Instant Savings"
             />
           </div>

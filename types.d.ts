@@ -63,13 +63,13 @@ type TProfile = {
 };
 
 type TProfileWithoutNextOfKin = {
-    profileImage: string;
+  profileImage: string;
   address: string;
   gender: Gender;
   email: string;
   birthday: string;
   phoneNumber: string;
-}
+};
 
 type ProfileResponseData = {
   message: string;
@@ -92,7 +92,7 @@ type TAccountDetails = {
   familyVault: FamilyVault[];
   hasSoloAccount: boolean;
   soloSavings: SoloSavings;
-  targetSavings: TTargetSavingsPlan[]
+  targetSavings: TTargetSavingsPlan[];
   firstName: string;
   investmentAmount: number;
   lastName: string;
@@ -122,9 +122,7 @@ type TTargetSavingsPlan = {
   accountNo: string;
 };
 
-type Person = {
-  
-};
+type Person = {};
 
 type TFamilyVaultPlan = {
   title: string;
@@ -138,6 +136,6 @@ type TFamilyVaultPlan = {
 type ResetPasswordResponseData = {
   success: boolean;
   message: string;
-  requestId?: string;     // optional but common
-  timestamp?: string;     // optional — ISO date 
-}
+  requestId?: string; // optional but common
+  timestamp?: string; // optional — ISO date
+};

@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
+"use server";
 import styles from "./savings.module.css";
 import Image, { StaticImageData } from "next/image";
 import Button from "@/components/Button";
@@ -12,8 +11,16 @@ import TransactionsTable, {
   TransactionRow,
 } from "@/components/TransactionTable/TransactionTable";
 import SavingsPlans from "./component";
+import { getAccountSummary } from "@/actions/dashboard";
 
-const Savings = () => {
+const Savings = async () => {
+  const accountDetails = await getAccountSummary();
+
+  if (!accountDetails.success) {
+    return;
+  }
+  const showSoloSavers = !accountDetails.data.hasSoloAccount;
+
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
@@ -39,7 +46,7 @@ const Savings = () => {
         </div>
       </div>
 
-      <SavingsPlans />
+      <SavingsPlans showSoloSavers={showSoloSavers} />
     </div>
   );
 };
