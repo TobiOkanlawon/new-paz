@@ -12,6 +12,42 @@ interface CreateSavingsPayload {
   description: string;
 }
 
+// snake_case (API shape)
+type SavingTopupApiResponse = {
+  responseCode: string;
+  responseMessage: string;
+  virualAccountData: {
+    reference: string;
+    status: string;
+    display_text: string;
+    account_number: string;
+    account_name: string;
+    bank: {
+      slug: string;
+      name: string;
+      id: number;
+    };
+    amount: number;
+    account_expires_at: string;
+  };
+};
+
+// camelCase (frontend-safe)
+export type SavingTopupResponse = {
+  reference: string;
+  status: string;
+  displayText: string;
+  accountNumber: string;
+  accountName: string;
+  bank: {
+    slug: string;
+    name: string;
+    id: number;
+  };
+  amount: number;
+  accountExpiresAt: string;
+};
+
 export async function createSoloSavingsAccount(
   payload: CreateSavingsPayload,
 ): Promise<ActionResult<any>> {
@@ -74,6 +110,45 @@ export async function createTargetSavingsAccount(
 
     revalidatePath("/dashboard/savings");
     return ok(res.data);
+  } catch (e: any) {
+    return fail(e);
+  }
+}
+
+export async function createSavingsTopup(payload: {
+  savingsWallet: string;
+  amount: number;
+}): Promise<ActionResult<SavingTopupResponse>> {
+  try {
+    const res = await apiFetch<SavingTopupApiResponse>(
+      "/v1/users/user/savings/saving-topup",
+      {
+        method: "POST",
+        isProtected: true,
+        body: {
+          savingsWallet: payload.savingsWallet,
+          amount: payload.amount,
+        },
+      }
+    );
+
+    const data = res.virualAccountData;
+
+    const transformed: SavingTopupResponse = {
+      reference: data.reference,
+      status: data.status,
+      displayText: data.display_text,
+      accountNumber: data.account_number,
+      accountName: data.account_name,
+      bank: data.bank,
+      amount: data.amount,
+      accountExpiresAt: data.account_expires_at,
+    };
+
+    // Optional: refresh savings page
+    revalidatePath("/dashboard/savings");
+
+    return ok(transformed);
   } catch (e: any) {
     return fail(e);
   }

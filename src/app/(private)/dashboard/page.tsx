@@ -176,7 +176,7 @@ const Dashboard = async () => {
               icon={<WithdrawIcon height={24} width={24} />}
               text="Withdraw Funds"
             />
-            <QuickActionCard
+            {/*<QuickActionCard
               action={() => {}}
               backgroundColor="#EBFFF2"
               icon={
@@ -188,7 +188,7 @@ const Dashboard = async () => {
                 />
               }
               text="Instant Savings"
-            />
+            />*/}
           </div>
         </div>
         <div className={styles.quickActionPager} aria-hidden="true">

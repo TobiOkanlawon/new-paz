@@ -12,6 +12,7 @@ import TransactionsTable, {
 } from "@/components/TransactionTable/TransactionTable";
 import SavingsPlans from "./component";
 import { getAccountSummary } from "@/actions/dashboard";
+import { getTotalBalance } from "@/libs/helpers";
 
 const Savings = async () => {
   const accountDetails = await getAccountSummary();
@@ -38,7 +39,9 @@ const Savings = async () => {
 
       <div className={styles.midSection}>
         <div className={styles.savingsCard}>
-          <SavingsWalletCard amount="0.00" />
+          <SavingsWalletCard
+            amount={getTotalBalance(accountDetails.data, "savings")}
+          />
         </div>
         <div className={styles.midSectionRight}>
           <Button className={styles.outlineButton}>Add Debit Card</Button>

@@ -28,6 +28,10 @@ import { HiOutlineLink } from "react-icons/hi";
 
 import Rose from "@/assets/noto_rose.svg";
 import Piggy from "@/assets/piggy-bank.svg";
+import { toast } from "react-toastify";
+import { createSavingsTopup } from "@/actions/savings";
+import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
+import TopUpTransferDetailsModal from "../TopUpDetailsModal";
 
 type Props = {
   accountSummary: any;
@@ -48,10 +52,41 @@ const SavingsClient = ({
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
 
-  const allAccounts = () => {
-    const a: TAccountDetails = accountSummary;
+  const accountDataForModal = () => {
+    const a: typeof accountSummary = accountSummary;
+    return {
+      soloSavings: a.hasSoloAccount ? a.soloSavings : undefined,
+      targetSavings: a.targetSavings,
+    };
+  };
 
-    return [a.soloSavings, ...a.targetSavings, a.familyVault];
+  const handleSelectAccount = (account: {
+    type: "solo" | "target";
+    accountNo: string;
+    title: string;
+  }) => {
+    setSelectedAccount(account);
+    setFundModalOpen(false);
+    setTopUpModalOpen(true);
+  };
+
+  const handleTopUpConfirm = async ({ amount }: { amount: number }) => {
+    if (!selectedAccount) return;
+
+    try {
+      const result = await createSavingsTopup({
+        savingsWallet: selectedAccount.accountNo,
+        amount,
+      });
+
+      if (result.success) {
+        setTopUpModalOpen(false);
+        setTopUpDetails(result.data);
+        setTopUpDetailsModalOpen(true);
+      }
+    } catch (err) {
+      toast.error(err?.message || "An error occured");
+    }
   };
 
   const handleFundAccount = async ({ amount }: { amount: number }) => {
@@ -117,6 +152,22 @@ const SavingsClient = ({
   ];
 
   const showSoloSavers = !accountSummary.hasSoloAccount;
+
+  const [topUpModalOpen, setTopUpModalOpen] = useState(false);
+  const [topUpDetailsModalOpen, setTopUpDetailsModalOpen] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState<{
+    type: "solo" | "target";
+    accountNo: string;
+    title: string;
+  } | null>(null);
+
+  const [topUpDetails, setTopUpDetails] = useState<{
+    accountName: string;
+    accountNumber: string;
+    bank: { name: string };
+    amount: number;
+    displayText: string;
+  } | null>(null);
 
   return (
     <div className={styles.container}>
@@ -221,15 +272,32 @@ const SavingsClient = ({
         }
       />
       <AllAccountsModal
-        accounts={allAccounts()}
         open={fundModalOpen}
         onClose={() => setFundModalOpen(false)}
+        data={accountDataForModal()}
+        onSelect={handleSelectAccount}
       />
-      <FundAccountModal
-        open={fundModalOpen}
-        onClose={() => setFundModalOpen(false)}
-        loading={fundLoading}
-        onFund={handleFundAccount}
+
+      {selectedAccount && (
+        <TopUpSoloSavingsModal
+          open={topUpModalOpen}
+          onClose={() => setTopUpModalOpen(false)}
+          accountName={selectedAccount.title}
+          currentBalance={
+            selectedAccount.type === "solo"
+              ? accountSummary.soloSavings.amount
+              : (accountSummary.targetSavings.find(
+                  (t) => t.accountNo === selectedAccount.accountNo,
+                )?.amount ?? 0)
+          }
+          loading={fundLoading}
+          onConfirm={handleTopUpConfirm}
+        />
+      )}
+      <TopUpTransferDetailsModal
+        open={topUpDetailsModalOpen}
+        onClose={() => setTopUpDetailsModalOpen(false)}
+        data={topUpDetails}
       />
     </div>
   );

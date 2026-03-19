@@ -7,8 +7,7 @@ import NotificationContainer from "@/components/NotificationContainer";
 import TopUpModal from "@/components/TopupModal";
 import Modal from "@/components/Modal";
 import Back from "@/components/BackContainer";
-import Notifications from "@/components/Notifications";
-import useUser from "@/store/userStore";
+
 import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgressCard";
 import TransactionsTable, {
   TransactionRow,
@@ -17,6 +16,12 @@ import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/With
 import TopUpTargetSavingsModal from "@/components/TopUpTargetSavingsModal";
 import Link from "next/link";
 import Button from "@/components/Button";
+
+import TopUpTransferDetailsModal from "@/components/Savings/TopUpDetailsModal";
+import { createSavingsTopup } from "@/actions/savings";
+
+import AllAccountsModal from "@/components/Savings/AllAccountsModal";
+import { toast } from "react-toastify";
 
 const rows: TransactionRow[] = [
   {
@@ -94,11 +99,15 @@ const TargetSaver = ({ accountDetails }) => {
   const [openWithdraw, setOpenWithdraw] = useState(false);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
 
-  // Backend sometimes returns `title` instead of `Title`. Normalize to the expected shape.
-  type RawTargetPlan = Partial<TTargetSavingsPlan> & {
-    title?: string;
-    Title?: string;
-  };
+  const [selectedAccount, setSelectedAccount] = useState<null | {
+    accountNo: string;
+    title: string;
+  }>(null);
+
+  const [transferDetails, setTransferDetails] = useState<any>(null);
+  const [showTransferModal, setShowTransferModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showAccountSelector, setShowAccountSelector] = useState(false);
 
   // const accountDetails: TAccountDetails =
   //   data ??
@@ -145,15 +154,25 @@ const TargetSaver = ({ accountDetails }) => {
             <>
               <Button
                 onClick={() => setOpenWithdraw(true)}
-                style={{
-                  backgroundColor: "transparent",
-                  color: "#214CCF",
-                  border: "1px solid #214CCF",
-                }}
+                className={styles.outlineButton}
               >
                 Withdraw Funds
               </Button>
-              <Button onClick={() => setShowTopUpModal(true)}>
+              <Button
+                className={styles.outlineButton}
+                onClick={() => {
+                  if (accountDetails.targetSavings.length === 1) {
+                    const plan = accountDetails.targetSavings[0];
+                    setSelectedAccount({
+                      accountNo: plan.accountNo,
+                      title: plan.title,
+                    });
+                    setShowTopUpModal(true);
+                  } else {
+                    setShowAccountSelector(true);
+                  }
+                }}
+              >
                 Top Up Account
               </Button>
             </>
@@ -248,6 +267,70 @@ const TargetSaver = ({ accountDetails }) => {
         fundingSourceTitle="PAZ Savings"
         fundingSourceBalance={500000}
         onConfirm={({ amount }) => console.log("Withdraw:", amount)}
+      />
+
+      <TopUpTargetSavingsModal
+        open={showTopUpModal}
+        onClose={() => setShowTopUpModal(false)}
+        accountName={selectedAccount?.title || ""}
+        currentBalance={
+          accountDetails.targetSavings.find(
+            (p) => p.accountNo === selectedAccount?.accountNo,
+          )?.amount || 0
+        }
+        remainingToTarget={(() => {
+          const plan = accountDetails.targetSavings.find(
+            (p) => p.accountNo === selectedAccount?.accountNo,
+          );
+          return plan ? plan.targetAmount - plan.amount : 0;
+        })()}
+        fundingSourceTitle="PAZ Wallet"
+        fundingSourceBalance={0}
+        loading={loading}
+        onConfirm={async ({ amount }) => {
+          if (!selectedAccount) return;
+
+          setLoading(true);
+
+          const result = await createSavingsTopup({
+            savingsWallet: selectedAccount.accountNo!,
+            amount,
+          });
+
+          setLoading(false);
+
+          if (!result.success) {
+            toast.error(result.error?.message);
+            return;
+          }
+
+          setTransferDetails(result.data);
+          setShowTransferModal(true);
+          setShowTopUpModal(false);
+        }}
+      />
+
+      <AllAccountsModal
+        open={showAccountSelector}
+        onClose={() => setShowAccountSelector(false)}
+        data={{
+          targetSavings: accountDetails.targetSavings,
+        }}
+        onSelect={(account) => {
+          setSelectedAccount(account);
+          setShowAccountSelector(false);
+          setShowTopUpModal(true);
+        }}
+      />
+
+      <TopUpTransferDetailsModal
+        open={showTransferModal}
+        onClose={() => {
+          setShowTransferModal(false);
+          setTransferDetails(null);
+          setSelectedAccount(null);
+        }}
+        data={transferDetails}
       />
 
       {/* Top Up Modal */}

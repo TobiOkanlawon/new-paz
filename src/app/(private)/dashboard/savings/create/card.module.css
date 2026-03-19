@@ -1,6 +1,7 @@
 .container {
     background-color: white;
     padding: 29px 43px;
+    overflow-x: scroll;
 }
 
 .innerContainer {

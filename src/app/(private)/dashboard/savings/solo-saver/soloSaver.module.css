@@ -45,6 +45,16 @@
   color: white;
   border: 1px solid #214CCF;
 }
+
+.outlineButton {
+  background-color: transparent;
+  color: #214ccf;
+  border: 1px solid #214ccf;
+  padding: 8px 12px;
+  min-width: 200px;
+  max-width: 240px;
+}
+
 .cardContainer {
   margin-top: 29px;
   margin-bottom: 32px;

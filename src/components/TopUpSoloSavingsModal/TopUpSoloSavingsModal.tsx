@@ -5,7 +5,6 @@ import styles from "./topUpSoloSavingsModal.module.css";
 import ModalShell from "@/components/ModalShell/ModalShell";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import FundingSourceCard from "@/components/FundingSourceCard/FundingSourceCard";
 import { handleErrorDisplay } from "@/libs/helpers";
 
 import { useFormik } from "formik";

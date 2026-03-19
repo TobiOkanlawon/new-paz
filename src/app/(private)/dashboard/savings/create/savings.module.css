@@ -20,8 +20,9 @@
   background-color: transparent;
   color: #214ccf;
   border: 1px solid #214ccf;
-  padding: 8px 2px;
-  min-width: 140px;
+  padding: 8px 12px;
+  min-width: 200px;
+  max-width: 240px;
 }
 
 .midSection {
@@ -34,6 +35,6 @@
 }
 
 .savingsPlanInnerContainer {
-    display: flex;
-    gap: 16px;
+  display: flex;
+  gap: 16px;
 }

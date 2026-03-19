@@ -122,14 +122,15 @@ const TopUpTargetSavingsModal = ({
           </div>
         </div>
 
-        {/* Funding source */}
+        {/* Funding source
         <div className={styles.section}>
           <FundingSourceCard
             title={fundingSourceTitle}
             subtitle={`Balance: ${formatMoney(fundingSourceBalance, currency)}`}
             selected
           />
-        </div>
+          </div>
+           */}
 
         {/* Actions */}
         <div className={styles.actions}>

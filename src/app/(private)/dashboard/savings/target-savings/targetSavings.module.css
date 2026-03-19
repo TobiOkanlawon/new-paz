@@ -9,6 +9,16 @@
   align-items: center;
   width: 100%;
 }
+
+.outlineButton {
+  background-color: transparent;
+  color: #214ccf;
+  border: 1px solid #214ccf;
+  padding: 8px 12px;
+  min-width: 200px;
+  max-width: 240px;
+}
+
 .header {
   font-size: 32px;
   margin: 0;

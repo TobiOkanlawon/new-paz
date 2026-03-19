@@ -7,9 +7,13 @@ import Rose from "@/assets/noto_rose.svg";
 import clsx from "clsx";
 import { useState } from "react";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
-import { createSoloSavingsAccount } from "@/actions/savings";
+import {
+  createSoloSavingsAccount,
+  createTargetSavingsAccount,
+} from "@/actions/savings";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import CreateTargetSaversModal from "@/components/Savings/CreateTargetSavingsModal";
 // import Valentine from "../assets/Valentine.png";
 // import Christmas from "../assets/Christmas.png";
 // import Wigs from "../assets/Wigs.png";
@@ -177,7 +181,7 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
         borderColor={item.borderColor}
         imageBackgroundColor="#E9EDFA"
         showTopRightIcon={false}
-        action={() => action()}
+        action={action}
       />
     ));
   };
@@ -202,8 +206,19 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
     router.push("/dashboard/savings/solo-saver");
   };
 
+  const createTargetSaversAction = async (values: any) => {
+    const result = await createTargetSaversAction(values);
+    if (!result.success) {
+      toast.error(result.error);
+      return;
+    }
+    toast.success("Savings Plan created");
+    setIsSoloSaversModalVisible(false);
+    router.push("/dashboard/savings/target-saver");
+  };
+
   return (
-    <div className="bg-white rounded-xl border border-gray-200">
+    <div className="bg-white rounded-xl border border-gray-200 overflow-x-scroll">
       <h2 className="text-lg font-semibold mb-6">Savings Plans</h2>
 
       <div className={styles.container}>
@@ -239,6 +254,12 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
         isOpen={isSoloSaverModalVisible}
         onClose={() => setIsSoloSaversModalVisible(false)}
         onSubmit={createSoloSaversAction}
+      />
+      <CreateTargetSaversModal
+        title="Create your Target Savers Plan"
+        isOpen={isTargetSaverModalVisible}
+        onClose={() => setIsTargetSaversModalVisible(false)}
+        onSubmit={createTargetSavingsAccount}
       />
     </div>
   );

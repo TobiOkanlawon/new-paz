@@ -25,7 +25,7 @@ interface Props {
   title: string;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (values: SubmitValues) => Promise<void>;
+  onSubmit: (values: SubmitValues) => any;
 }
 
 const validationSchema = yup.object({
@@ -64,7 +64,6 @@ const CreateTargetSaversModal: React.FC<Props> = ({
 }) => {
   // Controls which step is visible: "form" | "confirm"
   const [step, setStep] = useState<"form" | "confirm">("form");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formik = useFormik({
     initialValues: {
