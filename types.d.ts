@@ -88,6 +88,8 @@ type SoloSavings = {
 };
 
 type TAccountDetails = {
+  profileImage: string;
+  bankAccount: string;
   totalLoan: number;
   familyVault: FamilyVault[];
   hasSoloAccount: boolean;
@@ -114,7 +116,7 @@ type TWalletInfo = {
 };
 
 type TTargetSavingsPlan = {
-  Title: string;
+  title: string;
   description: string;
   amount: number;
   targetAmount: number;
