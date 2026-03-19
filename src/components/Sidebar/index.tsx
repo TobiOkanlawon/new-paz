@@ -230,7 +230,7 @@ export default function Sidebar({
                 },
               ]}
             />
-            <SidebarOption
+            {/*<SidebarOption
               alt="a four-sectioned square with curved edges"
               icon={<LoansIcon width={24} height={24} />}
               title="Loans"
@@ -256,7 +256,7 @@ export default function Sidebar({
               // href="/dashboard/investments"
               active={isSubPath("/dashboard/investments", pathname)}
               collapsed={collapsed}
-            />
+              />*/}
             <SidebarOption
               alt="a four-sectioned square with curved edges"
               icon={<SettingsIcon width={24} height={24} />}
