@@ -4,7 +4,7 @@ import { apiFetch } from "@/libs/api";
 import { getServerSession } from "next-auth";
 import { ActionResult, fail, ok } from "./shared";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
+import { getProfile } from "./profile";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
@@ -33,108 +33,21 @@ export type InstantSavings = {
   backgroundColor: string;
 };
 
-// ─── Action Result Wrapper ─────────────────────────────────────────────────────
-
-// ─── Server Actions ────────────────────────────────────────────────────────────
-
-function isInvalidTokenResponse(body: unknown): body is InvalidTokenResponse {
-  return (
-    typeof body === "object" &&
-    body !== null &&
-    (body as InvalidTokenResponse).responseCode === 400 &&
-    (body as InvalidTokenResponse).responseMessage
-      ?.toLowerCase()
-      .includes("invalid token")
-  );
-}
-
-/**
- * Fetches the user's account summary: total savings, loans, and investments.
- * Adjust the endpoint path to match your API spec.
- */
-export async function getAccountSummary(
-  email: string,
-): Promise<ActionResult<TAccountDetails>> {
+export async function getAccountSummary(): Promise<
+  ActionResult<TAccountDetails>
+> {
   const session = await getServerSession(authOptions);
-
-  if (!session?.user?.email) {
-    return { success: false, error: "Unauthorized" };
-  }
-
+  
   try {
-    const res = await fetch(
-      `${process.env.API_BASE_URL}/v1/users/user/account-details?email=${session.user.email}`,
+    const data: {accountDetails: TAccountDetails} = await apiFetch(
+      `/v1/users/user/account-details?email=${session?.user.email}`,
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.accessToken}`,
-        },
-        cache: "no-store",
+	isProtected: true,
+	method: "GET",
       },
     );
 
-    // Parse the body once — we need it for both the token check and normal errors
-    const responseBody = await res.json().catch(() => null);
-
-    // Detect expired/invalid token and immediately redirect to the logout route,
-    // which clears the session cookie and sends the user to /login
-    if (isInvalidTokenResponse(responseBody)) {
-      redirect("/api/auth/logout");
-    }
-
-    const data = responseBody.accountDetails;
-
-    return ok(data);
-  } catch (e) {
-    return fail(e);
-  }
-}
-
-/**
- * Fetches the N most recent transactions for the dashboard preview.
- * Pass `limit` to control how many rows are shown.
- */
-export async function getRecentTransactions(
-  limit = 5,
-): Promise<ActionResult<Transaction[]>> {
-  try {
-    const data = await apiFetch<Transaction[]>(
-      `/transactions/recent?limit=${limit}`,
-    );
-    return ok(data);
-  } catch (e) {
-    return fail(e);
-  }
-}
-
-/**
- * Fetches the user's savings plans, optionally filtered by type.
- */
-export async function getSavingsPlans(): Promise<
-  ActionResult<{ solo: SavingsPlan[]; target: SavingsPlan[] }>
-> {
-  try {
-    const data = await apiFetch<SavingsPlan[]>("/savings/plans");
-
-    // Split by plan type for the two sections on the dashboard
-    const solo = data.filter((p) => p.type === "solo");
-    const target = data.filter((p) => p.type === "target");
-
-    return ok({ solo, target });
-  } catch (e) {
-    return fail(e);
-  }
-}
-
-/**
- * Fetches the user's instant savings accounts.
- */
-export async function getInstantSavings(): Promise<
-  ActionResult<InstantSavings[]>
-> {
-  try {
-    const data = await apiFetch<InstantSavings[]>("/savings/instant");
-    return ok(data);
+    return ok(data.accountDetails);
   } catch (e) {
     return fail(e);
   }
@@ -144,22 +57,11 @@ export async function getInstantSavings(): Promise<
  * Convenience action: fetches all dashboard data in parallel.
  * Use this to avoid waterfall requests on initial page load.
  */
-export async function getDashboardData(): Promise<{
-  accountSummary: ActionResult<TAccountDetails>;
-  // recentTransactions: ActionResult<Transaction[]>;
-  // savingsPlans: ActionResult<{ solo: SavingsPlan[]; target: SavingsPlan[] }>;
-  // instantSavings: ActionResult<InstantSavings[]>;
-}> {
-  const session = await getServerSession();
-
-  // const [accountSummary, recentTransactions, savingsPlans, instantSavings] =
-  const [accountSummary] = await Promise.all([
-    getAccountSummary(session?.user?.email as string),
-    // getRecentTransactions(5),
-    // getSavingsPlans(),
-    // getInstantSavings(),
+export async function getDashboardData(): Promise<any> {
+  const [accountSummary, profileData] = await Promise.all([
+    getAccountSummary(),
+    getProfile(),
   ]);
 
-  // return { accountSummary, recentTransactions, savingsPlans, instantSavings };
-  return { accountSummary };
+  return { accountSummary, profileData };
 }

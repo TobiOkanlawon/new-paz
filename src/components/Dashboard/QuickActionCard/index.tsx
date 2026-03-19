@@ -1,11 +1,10 @@
-import Image, { ImageProps } from "next/image";
 import styles from "./quickaction.module.css";
 
 type QuickActionProps = {
   backgroundColor: string;
   action: () => void;
   text: string;
-  icon: ImageProps["src"];
+  icon: React.ReactNode;
   color?: string;
 };
 
@@ -21,7 +20,7 @@ const QuickActionCard: React.FC<QuickActionProps> = ({
           className={styles.quickActionCardIconContainer}
           style={{ backgroundColor: backgroundColor }}
         >
-          <Image src={icon} alt="icon" />
+          {icon}
         </div>
         <p className={styles.quickActionText}>{text}</p>
       </div>

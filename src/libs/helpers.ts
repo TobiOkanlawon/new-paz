@@ -35,7 +35,7 @@ export const formatBirthdayToDateInputFormat = (
 ) => {
   /* This function takes a birthday string in the form dd/mm/yyyy and transforms it to the form yyyy-mm-dd */
 
-  if (!dateFromBackend) return undefined;
+  if (!dateFromBackend) return "";
 
   if (dateFromBackend === "") return "";
   const splitString = dateFromBackend.split("/");

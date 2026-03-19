@@ -5,7 +5,7 @@ import Upright from "@/assets/up-right.svg";
 
 type MiniCardProps = {
   title: string;
-  image: ImageProps["src"];
+  icon: React.ReactNode;
   content: string;
   action?: () => void;
   borderColor: string;
@@ -15,7 +15,7 @@ type MiniCardProps = {
 
 const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
   title,
-  image,
+  icon,
   content,
   action,
   borderColor,
@@ -33,13 +33,13 @@ const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
             className={styles.miniCardImageContainer}
             style={{ backgroundColor: imageBackgroundColor }}
           >
-            <Image src={image} alt="" height={16} width={16} />
+            {icon}
           </div>
           <h3 className={styles.miniCardTitle}>{title}</h3>
         </div>
         {showTopRightIcon && (
           <div className={styles.upRightContainer}>
-            <Image src={Upright} alt="" height={16} width={16} />
+            <Upright height={16} width={16} />
           </div>
         )}
       </div>
@@ -49,7 +49,11 @@ const SavingsPlanMiniCard: React.FC<MiniCardProps> = ({
       </div>
 
       <div className={styles.miniCardBottomContainer}>
-        <button style={{ color: borderColor, backgroundColor: imageBackgroundColor }} onClick={action} className={styles.miniCardActionButton}>
+        <button
+          onClick={action}
+          className={styles.miniCardActionButton}
+          style={{ backgroundColor: imageBackgroundColor, color: borderColor }}
+        >
           Setup
         </button>
       </div>

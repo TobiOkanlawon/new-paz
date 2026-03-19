@@ -15,8 +15,11 @@ type Props = {
 const SLIDE_DURATION = 6000;
 
 const LoggedInView = () => {
+  const router = useRouter();
+
   const handleLogout = () => {
     signOut();
+    router.push("/");
   };
 
   return (

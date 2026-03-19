@@ -11,7 +11,6 @@ import NotificationDetailModal, {
 import Notifications from "@/assets/notifications.png";
 import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
-import { useRouter } from "next/navigation";
 import HeaderDropdown from "../HeaderDropdowns";
 
 import { useSession } from "next-auth/react";
@@ -62,8 +61,6 @@ const Header = () => {
   const [openProfileLinks, setOpenProfileLinks] = useState(false);
 
   const notifications = useMemo(() => MOCK, []);
-
-  const router = useRouter();
 
   useEffect(() => {
     const updateNavHeight = () => {

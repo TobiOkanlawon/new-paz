@@ -6,9 +6,9 @@ import styles from "./confirmationDetailsModal.module.css";
 
 interface ConfirmationValues {
   accountName: string;
-  initialDeposit: number;
-  contributionFrequency: string;
-  contributionAmount: number;
+  // initialDeposit: number;
+  // contributionFrequency: string;
+  // contributionAmount: number;
 }
 
 interface Props {
@@ -53,7 +53,7 @@ const ConfirmationDetailsModal: React.FC<Props> = ({
             <span className={styles.label}>Account Name:</span>
             <span className={styles.value}>{values.accountName}</span>
           </div>
-          <div className={styles.row}>
+          {/*<div className={styles.row}>
             <span className={styles.label}>Initial Deposit:</span>
             <span className={styles.value}>
               {formatCurrency(values.initialDeposit)}
@@ -65,7 +65,7 @@ const ConfirmationDetailsModal: React.FC<Props> = ({
               {formatCurrency(values.contributionAmount)}{" "}
               {values.contributionFrequency.toLowerCase()}
             </span>
-          </div>
+            </div>*/}
         </div>
 
         {serverError && <p className={styles.errorText}>{serverError}</p>}

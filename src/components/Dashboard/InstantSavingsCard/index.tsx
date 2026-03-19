@@ -1,10 +1,9 @@
 "use client";
-import Image, { ImageProps } from "next/image";
 import styles from "./card.module.css";
 import Upright from "@/assets/up-right.svg";
 
 type Props = {
-  icon?: ImageProps["src"];
+  icon?: React.ReactNode;
   title: string;
   subTitle: string;
   secondDescription: string;
@@ -24,7 +23,7 @@ const InstantSavingsCard: React.FC<Props> = ({
         style={{ backgroundColor: backgroundColor }}
         className={styles.iconContainer}
       >
-        {icon && <Image src={icon} alt="icon" />}
+        <Upright height={28} width={28} />
       </div>
 
       <div className={styles.textContainer}>

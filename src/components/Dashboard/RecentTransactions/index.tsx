@@ -1,6 +1,5 @@
 import styles from "./recentTransactions.module.css";
 import ThreeDots from "@/assets/three-dots.svg";
-import Image from "next/image";
 import { LuArrowUpRight, LuArrowDownLeft } from "react-icons/lu";
 
 type Props = {
@@ -53,7 +52,7 @@ const RecentTransactionsCard: React.FC<Props> = ({
             <p className={styles.date}>{date}</p>
           </div>
         </div>
-        <Image src={ThreeDots} alt="" />
+        <ThreeDots height={28} width={28} />
       </div>
     </div>
   );

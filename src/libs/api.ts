@@ -39,22 +39,17 @@ export async function apiFetch<T = unknown>(
   const session = await getServerSession(authOptions);
 
   const isProtected = options.isProtected;
-  
-  if (!session?.user?.email && isProtected) {
-    // if the user's email does not exist in the session and the route is protected
-  }
 
   const { body, headers: extraHeaders, ...rest } = options;
 
   let headers: any = {};
 
   if (!session?.accessToken && isProtected) {
-    // TODO: probably want to log the user out
     redirect("/api/auth/logout")
   }
   
   if (isProtected) {
-    headers["Authorization"] = `Bearer ${session.accessToken}`
+    headers["Authorization"] = `Bearer ${session?.accessToken}`
   }
   
   const response = await fetch(`${BASE_URL}${path}`, {
@@ -77,10 +72,9 @@ export async function apiFetch<T = unknown>(
     redirect("/api/auth/logout");
   }
 
-  if (!response.ok) {
-    throw new Error(
-      `API error [${response.status}] on ${path}: ${JSON.stringify(responseBody)}`
-    );
+  if (responseBody.responseCode !== "00") {
+    /* Backend returns a 00 code on success*/
+    throw new Error(responseBody.responseMessage);
   }
 
   return responseBody as T;

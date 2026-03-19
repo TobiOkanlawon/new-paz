@@ -18,13 +18,14 @@ import { getAccountSummary } from "@/actions/dashboard";
 import { getTotalBalance } from "@/libs/helpers";
 import Link from "next/link";
 import FundAccountModal from "@/components/FundAccountModal/FundAccountModal";
+import AllAccountsModal from "@/components/Savings/AllAccountsModal";
 
 import { openPaystackPopup } from "@/libs/paystack";
 import { useSession } from "next-auth/react";
 import QuickActions from "@/components/SavingsQuickActions";
 
 const Savings = () => {
-  const { data } = useSession();
+  const { data: session } = useSession();
 
   const rows: TransactionRow[] = [
     {
@@ -91,36 +92,38 @@ const Savings = () => {
 
   const [amount, setAmount] = useState("0.00");
 
-  useEffect(() => {
-    let isMounted = true;
+  const [accountSummary, setAccountSummary] = useState({});
 
-    const loadAccountSummary = async () => {
-      try {
-        // email is no longer requried
-        let email = "";
-        const result = await getAccountSummary(email);
+  const [showFundAccountButton, setShowFundAccountButton] = useState(false);
 
-        if (!isMounted) {
-          return;
-        }
+  const loadAccountSummary = async () => {
+    try {
+      // email is no longer requried
+      let email = "";
+      const result = await getAccountSummary(email);
 
-        if (result.success) {
-          const balance = getTotalBalance(result.data, "savings");
-          setAmount(balance.toFixed(2));
-        } else {
-          console.error(result.error);
-        }
-      } catch (err) {
-        console.error(err);
+      if (result.success) {
+        setAccountSummary(result.data);
+        const balance = getTotalBalance(result.data, "savings");
+        setAmount(balance.toFixed(2));
+
+        // if the user has a target savings plan, a solo savers plan or a family vault plan, then we can load the fund account button
+
+        const hasSoloAccount = result.data.hasSoloAccount;
+        // targetSavings can be both null and an empty array. The double bang covers both cases.
+        const hasTargetSavings = !!result.data.targetSavings;
+        const hasFamilyVault = !!result.data.familyVault;
+
+        setShowFundAccountButton(
+          hasSoloAccount || hasTargetSavings || hasFamilyVault,
+        );
+      } else {
+        console.error(result.error);
       }
-    };
-
-    void loadAccountSummary();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
@@ -128,8 +131,26 @@ const Savings = () => {
   const [fundModalOpen, setFundModalOpen] = useState(false);
   const [fundLoading, setFundLoading] = useState(false);
 
+  const [isSoloSaverVisible, setIsSoloSaversVisible] = useState(false);
+
+  const showCreateSoloSaversModal = () => {
+    setIsSoloSaversVisible(true);
+  };
+
+  const allAccounts = () => {
+    if (accountSummary == {}) {
+      return {};
+    }
+
+    return {
+      soloSavings: accountSummary.soloSavings,
+      targetSavings: accountSummary.targetSavings,
+      familySavings: accountSummary.familySavings,
+    };
+  };
+
   const handleFundAccount = async ({ amount }: { amount: number }) => {
-    const email = data?.user?.email;
+    const email = session?.user?.email;
 
     if (!email) {
       return;
@@ -144,7 +165,7 @@ const Savings = () => {
         amount: amount * 100,
         ref: new Date().getTime().toString(),
         onSuccess: (reference) => {
-          console.log("Payment successful:", reference);
+          // console.log("Payment successful:", reference);
           setFundModalOpen(false);
           setFundLoading(false);
 
@@ -174,38 +195,38 @@ const Savings = () => {
 
   const QuickActionItems = [
     {
-        id: "fund",
-        label: "Fund Account",
-        icon: <RiScanLine size={22} />,
-        iconBg: "#e8f5e9",
-        iconColor: "#43a047",
-        onClick: () => setFundModalOpen(true),
-      },
-      {
-        id: "withdraw",
-        label: "Withdraw Funds",
-        icon: <TbArrowsUpDown size={22} />,
-        iconBg: "#ede7f6",
-        iconColor: "#5c6bc0",
-        href: "/dashboard/withdraw",
-      },
-      {
-        id: "debit",
-        label: "Add debit card",
-        icon: <MdOutlineAddCard size={22} />,
-        iconBg: "#fff3e0",
-        iconColor: "#fb8c00",
-        href: "/dashboard/add-card",
-      },
-      {
-        id: "link",
-        label: "Link Account",
-        icon: <HiOutlineLink size={22} />,
-        iconBg: "#e8eaf6",
-        iconColor: "#3949ab",
-        href: "/dashboard/link-account",
-      },
-  ]
+      id: "fund",
+      label: "Fund Account",
+      icon: <RiScanLine size={22} />,
+      iconBg: "#e8f5e9",
+      iconColor: "#43a047",
+      onClick: () => setFundModalOpen(true),
+    },
+    {
+      id: "withdraw",
+      label: "Withdraw Funds",
+      icon: <TbArrowsUpDown size={22} />,
+      iconBg: "#ede7f6",
+      iconColor: "#5c6bc0",
+      href: "/dashboard/withdraw",
+    },
+    {
+      id: "debit",
+      label: "Add debit card",
+      icon: <MdOutlineAddCard size={22} />,
+      iconBg: "#fff3e0",
+      iconColor: "#fb8c00",
+      href: "/dashboard/add-card",
+    },
+    {
+      id: "link",
+      label: "Link Account",
+      icon: <HiOutlineLink size={22} />,
+      iconBg: "#e8eaf6",
+      iconColor: "#3949ab",
+      href: "/dashboard/link-account",
+    },
+  ];
 
   return (
     <div className={styles.container}>
@@ -221,14 +242,16 @@ const Savings = () => {
             <Button className={styles.outlineButton}>Create Savings</Button>
           </Link>
           <Button className={styles.outlineButton}>Withdraw Funds</Button>
-          <Button
-            onClick={() => {
-              setFundModalOpen(true);
-            }}
-            style={{width: "140px"}}
-          >
-            Fund Account
-          </Button>
+
+          {showFundAccountButton && (
+            <Button
+              onClick={() => {
+                setFundModalOpen(true);
+              }}
+            >
+              Fund Account
+            </Button>
+          )}
         </div>
       </div>
 
@@ -236,7 +259,7 @@ const Savings = () => {
         <div className={styles.savingsCard}>
           <SavingsWalletCard amount={parseFloat(amount)} />
         </div>
-        <div className={styles.midSectionRight}>
+        <div className={styles.midSectionRight} style={{ display: "none" }}>
           <Button className={styles.outlineButton}>Add Debit Card</Button>
           <Button className={styles.blockButton}>Link Account</Button>
         </div>
@@ -251,15 +274,16 @@ const Savings = () => {
         <div className={styles.savingsPlanInnerContainer}>
           <SavingsPlanMiniCard
             title="Solo Savers"
-            image={Piggy}
+            icon={<Piggy color="#214CCF" width={24} height={24} />}
             content="Save money regularly in a locked plan with interest up to 12% per annum."
             borderColor="#214CCF"
             imageBackgroundColor="#E9EDFA"
             showTopRightIcon={false}
+            action={showCreateSoloSaversModal}
           />
           <SavingsPlanMiniCard
             title="Target Savers"
-            image={Rose}
+            icon={<Rose color="#22C55E" width={24} height={24} />}
             content="Save money regularly in a locked plan with interest up to 12% per annum."
             borderColor="#22C55E"
             imageBackgroundColor="#E9EDFA"
@@ -287,9 +311,7 @@ const Savings = () => {
         }}
         showFilter={false}
         leftControls={
-          <select
-            className={styles.tableControl}
-          >
+          <select className={styles.tableControl}>
             <option>Transaction status</option>
             <option>Success</option>
             <option>Pending</option>
@@ -297,18 +319,17 @@ const Savings = () => {
         }
         rightControls={
           <div className={styles.tableRightControls}>
-            <button
-              className={styles.tableControlButton}
-            >
-              Filters
-            </button>
-            <button
-              className={styles.tableControlButton}
-            >
+            <button className={styles.tableControlButton}>Filters</button>
+            <button className={styles.tableControlButton}>
               Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
             </button>
           </div>
         }
+      />
+      <AllAccountsModal
+        accounts={allAccounts()}
+        open={fundModalOpen}
+        onClose={() => setFundModalOpen(false)}
       />
       <FundAccountModal
         open={fundModalOpen}

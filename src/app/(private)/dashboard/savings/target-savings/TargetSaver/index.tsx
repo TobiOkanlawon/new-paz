@@ -13,8 +13,10 @@ import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgres
 import TransactionsTable, {
   TransactionRow,
 } from "@/components/TransactionTable/TransactionTable";
-import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
+import TopUpTargetSavingsModal from "@/components/TopUpTargetSavingsModal";
+import Link from "next/link";
+import Button from "@/components/Button";
 
 const rows: TransactionRow[] = [
   {
@@ -122,6 +124,8 @@ const TargetSaver = ({ accountDetails }) => {
   //   accountNo: card.accountNo ?? "",
   // }));
 
+  console.log("targetSavings: ", accountDetails.targetSavings);
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -132,31 +136,43 @@ const TargetSaver = ({ accountDetails }) => {
           </p>
         </div>
         <div className={styles.buttonContainer}>
-          <button
-            onClick={() => setOpenWithdraw(true)}
-            className={styles.widFunds}
-          >
-            Withdraw Funds
-          </button>
-          <button
-            onClick={() => setShowTopUpModal(true)}
-            className={styles.topUpFunds}
-          >
-            Top Up Account
-          </button>
+          {!accountDetails.targetSavings.length && (
+            <Link href="/dashboard/savings/create">
+              <Button>Create Savings Plan</Button>
+            </Link>
+          )}
+          {accountDetails.targetSavings.length > 0 && (
+            <>
+              <Button
+                onClick={() => setOpenWithdraw(true)}
+                style={{
+                  backgroundColor: "transparent",
+                  color: "#214CCF",
+                  border: "1px solid #214CCF",
+                }}
+              >
+                Withdraw Funds
+              </Button>
+              <Button onClick={() => setShowTopUpModal(true)}>
+                Top Up Account
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
       <div className={styles.cardContainer}>
-        {accountDetails.targetSavings &&
+        {accountDetails.targetSavings.length > 0 &&
           accountDetails.targetSavings.map((plan) => {
-            <SavingsProgressCard
-              name={plan.Title}
-              accountId={plan.accountNo}
-              currentAmount={plan.amount}
-              targetAmount={plan.targetAmount}
-              onClick={() => console.log("open savings")}
-            />;
+            return (
+              <SavingsProgressCard
+                name={plan.title}
+                accountId={plan.accountNo}
+                currentAmount={plan.amount}
+                targetAmount={plan.targetAmount}
+                onClick={() => console.log("open savings")}
+              />
+            );
           })}
       </div>
 
@@ -235,19 +251,17 @@ const TargetSaver = ({ accountDetails }) => {
       />
 
       {/* Top Up Modal */}
-      <TopUpSoloSavingsModal
+      {/*<TopUpTargetSavingsModal
         open={showTopUpModal}
         onClose={() => setShowTopUpModal(false)}
-        accountName="Solo Savings"
-        currentBalance={5000}
-        remainingToTarget={45000}
-        fundingSourceTitle="PAZ Wallet"
-        fundingSourceBalance={150000}
-        onConfirm={async ({ amount }) => {
-          console.log("Top up amount:", amount);
-          setShowTopUpModal(false);
-        }}
-      />
+        accountName="Target Savings Plan"
+        currentBalance={selectedPlan.amount}
+        remainingToTarget={selectedPlan.targetAmount - selectedPlan.amount}
+        fundingSourceTitle="PAZ Wallet" // This could also come from accountDetails
+        fundingSourceBalance={accountDetails.walletBalance || 0}
+        loading={isSubmitting}
+        onConfirm={handleTopUpConfirm}
+        />*/}
     </div>
   );
 };

@@ -12,6 +12,7 @@ type Props = {
   currency?: string; // default ₦
   onClick?: () => void;
   className?: string;
+  isTarget?: boolean;
 
   /** Optional: override computed percentage (0-100) */
   percentOverride?: number;
@@ -20,17 +21,19 @@ type Props = {
   showArrow?: boolean;
 };
 
-const formatMoney = (value: number, currency: string) => {
-  const formatted = value.toLocaleString("en-NG", {
+const formatMoney = (value: string, currency: string) => {
+  const formatted = Number(value).toLocaleString("en-NG", {
     maximumFractionDigits: 0,
   });
   return `${currency}${formatted}`;
 };
 
-const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
+const clamp = (n: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, n));
 
 const SavingsProgressCard = ({
   name,
+  isTarget = true,
   accountId,
   currentAmount,
   targetAmount,
@@ -46,7 +49,7 @@ const SavingsProgressCard = ({
   const percent = clamp(
     typeof percentOverride === "number" ? percentOverride : computedPercent,
     0,
-    100
+    100,
   );
 
   return (
@@ -73,21 +76,25 @@ const SavingsProgressCard = ({
         <p className={styles.amountLeft}>
           {formatMoney(currentAmount, currency)}
         </p>
-        <p className={styles.amountRight}>
-          of {formatMoney(targetAmount, currency)}
-        </p>
+        {isTarget && (
+          <p className={styles.amountRight}>
+            of {formatMoney(targetAmount, currency)}
+          </p>
+        )}
       </div>
 
-      <div className={styles.progressTrack} aria-label="progress">
-        <div
-          className={styles.progressFill}
-          style={{ width: `${percent}%` }}
-        />
-      </div>
+      {isTarget && (
+        <>
+          <div className={styles.progressTrack} aria-label="progress">
+            <div
+              className={styles.progressFill}
+              style={{ width: `${percent}%` }}
+            />
+          </div>
 
-      <p className={styles.percentText}>
-        {percent.toFixed(1)}% of target
-      </p>
+          <p className={styles.percentText}>{percent.toFixed(1)}% of target</p>
+        </>
+      )}
     </button>
   );
 };

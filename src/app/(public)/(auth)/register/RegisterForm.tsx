@@ -12,13 +12,11 @@ import { registerUser } from "./actions";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 const RegisterForm = () => {
   const router = useRouter();
 
   const session = useSession();
-  const email = session.data?.user.email;
 
   const formik = useFormik<yup.InferType<typeof RegisterSchema>>({
     initialValues: {
@@ -46,8 +44,6 @@ const RegisterForm = () => {
       }
 
       toast.success("Sign up successful");
-
-      // route to email validation page
 
       router.replace(
         `/verification/email?email=${values.email}&phone=${values.phoneNumber}`,

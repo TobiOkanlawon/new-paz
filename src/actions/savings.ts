@@ -1,25 +1,28 @@
 "use server";
 
-import { getServerSession } from 'next-auth';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import { ok, fail, ActionResult } from "@/actions/shared";
-import { revalidatePath } from 'next/cache';
+import { revalidatePath } from "next/cache";
+import { apiFetch } from "@/libs/api";
 
 interface CreateSavingsPayload {
   accountName: string;
+  description: string;
 }
 
-export async function createSavingsAccount(
-  payload: CreateSavingsPayload
+export async function createSoloSavingsAccount(
+  payload: CreateSavingsPayload,
 ): Promise<ActionResult<any>> {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
 
     if (!session?.user) {
       throw new Error("User not authenticated");
     }
-
-    const walletId = session.user.wallet_account;
+    
+    const walletId = session.user.walletAccount;
 
     const body = {
       title: payload.accountName,
@@ -29,24 +32,49 @@ export async function createSavingsAccount(
       type: "SOLO",
     };
 
-    const res = await fetch(
-    `${process.env.API_BASE_URL}/v1/users/user/savings/create-savings`,
-    {
+    const res = await apiFetch("/v1/users/user/savings/create-savings", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.accessToken}`,
-      },
-      body: JSON.stringify(body),
-      cache: "no-store",
-    }
-    );
+      isProtected: true,
+      body,
+    });
 
-    const data = await res.json();
-
-    revalidatePath("/dashboard/savings")
-    return ok(data);
+    revalidatePath("/dashboard/savings");
+    return ok({success: true, data: res});
   } catch (e) {
-    return fail(e);
+    return fail({success: false, error: e});
+  }
+}
+
+export async function createTargetSavingsAccount(
+  payload: CreateTargetSavingsPayload): Promise<ActionResult<any>> {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    // Map the incoming payload to the API's required structure
+    const body = {
+      title: payload.accountName, // e.g., "PERSONAL"
+      description: payload.description,
+      currentAmount: 0.0,
+      walletId: session.user.walletAccount,
+      duration: payload.targetDate,
+      targetAmount: payload.targetAmount,
+      frequency: payload.contributionFrequency,
+      type: "TARGETSAVINGS",
+    };
+
+    const res = await apiFetch("/v1/users/user/savings/create-savings", {
+      method: "POST",
+      isProtected: true,
+      body,
+    });
+
+    revalidatePath("/dashboard/savings");
+    return ok({ success: true, data: res });
+  } catch (e: any) {
+    return fail(e.responseMessage || "Failed to create target savings");
   }
 }

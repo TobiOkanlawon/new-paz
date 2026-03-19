@@ -86,6 +86,14 @@ const PhoneVerification = () => {
     // TODO: ideally, there should be a redirect from the page if there's no email in the URL, but we'll leave it till the backend implementation for the alternate path is up
   }, [params, router]);
 
+  useEffect(() => {
+    /* send an OTP once the page opens for the first time */
+
+    if (!phone) return;
+
+    handleResend();
+  }, [phone]);
+
   return (
     <div
       style={{

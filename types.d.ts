@@ -49,6 +49,7 @@ type AccountType = {
 };
 
 type TProfile = {
+  profileImage: string;
   address: string;
   gender: Gender;
   email: string;
@@ -60,6 +61,15 @@ type TProfile = {
   nextOfKinRelationship: string;
   nextOfKinPhoneNumber: string;
 };
+
+type TProfileWithoutNextOfKin = {
+    profileImage: string;
+  address: string;
+  gender: Gender;
+  email: string;
+  birthday: string;
+  phoneNumber: string;
+}
 
 type ProfileResponseData = {
   message: string;

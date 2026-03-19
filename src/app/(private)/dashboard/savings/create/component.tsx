@@ -6,7 +6,7 @@ import Rose from "@/assets/noto_rose.svg";
 import clsx from "clsx";
 import { useState } from "react";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
-import { createSavingsAccount } from "@/actions/savings";
+import { createSoloSavingsAccount } from "@/actions/savings";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 // import Valentine from "../assets/Valentine.png";
@@ -167,7 +167,7 @@ export default function SavingsPlans() {
       <SavingsPlanMiniCard
         key={index}
         title={item.title}
-        image={item.image}
+        icon={item.image}
         content={description}
         borderColor={item.borderColor}
         imageBackgroundColor="#E9EDFA"
@@ -185,7 +185,7 @@ export default function SavingsPlans() {
     contributionFrequency: string;
     contributionAmount: number;
   }) => {
-    const result = await createSavingsAccount({
+    const result = await createSoloSavingsAccount({
       accountName: values.accountName,
     });
     if (!result.success) {

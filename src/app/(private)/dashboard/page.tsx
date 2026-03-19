@@ -1,11 +1,10 @@
-"use client";
+"use server";
 import styles from "./dashboard.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Piggy from "@/assets/piggy-bank.svg";
-import Plus from "@/assets/plus.svg";
-import InvestmentIcon from "@/assets/investments.svg";
+
 // import LoanIcon from "@/assets/wallet.svg";
 import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
@@ -22,66 +21,7 @@ import InstantSavingsCard from "@/components/Dashboard/InstantSavingsCard";
 import { getDashboardData } from "@/actions/dashboard";
 import QuickActionCard from "@/components/Dashboard/QuickActionCard";
 import { getTotalBalance } from "@/libs/helpers";
-import { useSession } from "next-auth/react";
-
-const BottomLeft = () => {
-  return (
-    <div className={styles.bottomLeftContainer}>
-      <div className={styles.savingsPlan}>
-        <div className={styles.savingsPlansTitleContainer}>
-          <h2>Savings Plans</h2>
-          <Link style={{ color: "#214CCF" }} href="">
-            View All
-          </Link>
-        </div>
-
-        <div className={styles.savingsPlanInnerContainer}>
-          <div className={styles.savingsPlanInnerContainerLine}>
-            <h3>Solo Savings</h3>
-            <div className={styles.miniCards}>
-              <SavingsPlanMiniCard
-                title="Valentine"
-                image={Rose}
-                content="Save money daily, bi-weekly plan with a purpose in mind."
-                borderColor="#214CCF"
-                imageBackgroundColor="#E9EDFA"
-              />
-              <SavingsPlanMiniCard
-                title="Christmas"
-                image={Tree}
-                content="Save money daily, bi-weekly plan with a purpose in mind."
-                borderColor="#22C55E"
-                imageBackgroundColor="#EBFFF2"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.savingsPlanInnerContainer}>
-        <div className={styles.savingsPlanInnerContainerLine}>
-          <h3>Target Savings</h3>
-          <div className={styles.miniCards}>
-            <SavingsPlanMiniCard
-              title="Vacation"
-              image={Umbrella}
-              content="Save money daily, bi-weekly plan with a purpose in mind."
-              borderColor="#F7B341"
-              imageBackgroundColor="#F9EAD1"
-            />
-            <SavingsPlanMiniCard
-              title="Car"
-              image={Car}
-              content="Save money daily, bi-weekly plan with a purpose in mind."
-              borderColor="#FF06A4"
-              imageBackgroundColor="#FED9F0"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import BottomLeft from "@/components/Dashboard/BottomLeft";
 
 const BottomRight = () => {
   return (
@@ -176,12 +116,9 @@ const Dashboard = () => {
   }, []);
 
   const firstName = session?.user?.firstName as string;
-  // const loanAmount = accountSummary.success
-  //   ? accountSummary.data?.totalLoans
-  //   : 0;
-  // const investmentAmount = accountSummary.success
-  //   ? accountSummary.data?.totalInvestments
-  //   : 0;
+  const savingsAmount = accountSummary.success
+    ? getTotalBalance(accountSummary.data, "savings")
+    : 0;
 
   return (
     <div className={styles.container}>
@@ -201,7 +138,6 @@ const Dashboard = () => {
           }
           iconColor="#22C55E"
           title="total savings"
-          rate={8.5}
           rateBackgroundColor="#DBF8E8"
           rateTextColor="#12B76A"
         />
@@ -258,7 +194,7 @@ const Dashboard = () => {
               action={() => {}}
               color="#214CCF"
               backgroundColor="#E9EDFA"
-              icon={WithdrawIcon}
+              icon={<WithdrawIcon height={24} width={24} />}
               text="Withdraw Funds"
             />
             <QuickActionCard
@@ -279,7 +215,7 @@ const Dashboard = () => {
 
       {isTransactions ? (
         <div className={styles.bottomContainer}>
-          <BottomLeft />
+          <BottomLeft showSoloSavings={!accountSummary.data.hasSoloAccount} />
           <BottomRight />
         </div>
       ) : (

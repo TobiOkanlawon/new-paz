@@ -8,13 +8,17 @@ import Button from "@/components/Button";
 import styles from "./createSavingsAccountModal.module.css";
 import { handleErrorDisplay } from "@/libs/helpers";
 import SelectGroup from "../InputGroup/SelectGroup";
-import ConfirmationDetailsModal from "./ConfirmDetailsModal";
+import ConfirmationDetailsModal from "@/components/Savings/ConfirmTargetSavingsDetails";
 
 interface SubmitValues {
   accountName: string;
   initialDeposit: number;
   contributionFrequency: string;
   contributionAmount: number;
+
+  targetAmount: number;
+  targetDate: string;
+  description: string;
 }
 
 interface Props {
@@ -26,20 +30,33 @@ interface Props {
 
 const validationSchema = yup.object({
   accountName: yup.string().required("Account name is required"),
+
   initialDeposit: yup
     .number()
     .typeError("Enter a valid amount")
     .required("Initial deposit is required")
     .min(1000, "Minimum deposit is 1,000"),
+
   contributionFrequency: yup.string().required("Select a frequency"),
+
   contributionAmount: yup
     .number()
     .typeError("Enter a valid amount")
     .required("Contribution amount is required")
     .min(500, "Minimum contribution is 500"),
+
+  targetAmount: yup
+    .number()
+    .typeError("Enter a valid target amount")
+    .required("Target amount is required")
+    .min(1000, "Target must be at least 1,000"),
+
+  targetDate: yup.string().required("Target date is required"),
+
+  description: yup.string().max(200, "Max 200 characters"),
 });
 
-const CreateSoloSaversModal: React.FC<Props> = ({
+const CreateTargetSaversModal: React.FC<Props> = ({
   title,
   isOpen,
   onClose,
@@ -54,33 +71,43 @@ const CreateSoloSaversModal: React.FC<Props> = ({
       accountName: "",
       initialDeposit: "",
       contributionFrequency: "Monthly",
-
       contributionAmount: "",
+      targetAmount: "",
+      targetDate: "",
+      description: "",
     },
     validationSchema,
-    // "Continue" validates the form then advances to the confirmation screen
-    onSubmit: () => {
-      setStep("confirm");
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      // STEP 1 → Just go to confirm, STOP here
+      if (step === "form") {
+        setStep("confirm");
+        return;
+      }
+
+      // STEP 2 → Actual submission
+      setSubmitting(true);
+
+      try {
+        await onSubmit({
+          accountName: values.accountName,
+          initialDeposit: Number(values.initialDeposit),
+          contributionFrequency: values.contributionFrequency,
+          contributionAmount: Number(values.contributionAmount),
+          targetAmount: Number(values.targetAmount),
+          targetDate: values.targetDate,
+          description: values.description,
+        });
+
+        resetForm();
+        setStep("form");
+        onClose();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
-
-  const handleConfirm = async () => {
-    setIsSubmitting(true);
-    try {
-      await onSubmit({
-        accountName: formik.values.accountName,
-        initialDeposit: Number(formik.values.initialDeposit),
-        contributionFrequency: formik.values.contributionFrequency,
-        contributionAmount: Number(formik.values.contributionAmount),
-      });
-      // Reset everything on success
-      formik.resetForm();
-      setStep("form");
-      onClose();
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handleClose = () => {
     formik.resetForm();
@@ -106,12 +133,24 @@ const CreateSoloSaversModal: React.FC<Props> = ({
             <Input
               label="Account Name"
               name="accountName"
-              placeholder="Valentine Savings"
+              placeholder={title}
               value={formik.values.accountName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               errors={handleErrorDisplay(formik, "accountName")}
             />
+
+            {/* Description */}
+            <Input
+              label="Description (Optional)"
+              name="description"
+              placeholder="What are you saving for?"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              errors={handleErrorDisplay(formik, "description")}
+            />
+
             <Input
               label="Initial Deposit"
               placeholder="10,000.00"
@@ -125,6 +164,7 @@ const CreateSoloSaversModal: React.FC<Props> = ({
                 { label: "Daily", value: "Daily" },
                 { label: "Weekly", value: "Weekly" },
                 { label: "Monthly", value: "Monthly" },
+                { label: "Yearly", value: "Yearly" },
               ]}
               {...formik.getFieldProps("contributionFrequency")}
               errors={handleErrorDisplay(formik, "contributionFrequency")}
@@ -138,6 +178,29 @@ const CreateSoloSaversModal: React.FC<Props> = ({
               onBlur={formik.handleBlur}
               errors={handleErrorDisplay(formik, "contributionAmount")}
             />
+
+            {/* Target Amount */}
+            <Input
+              label="Target Amount"
+              name="targetAmount"
+              placeholder="100,000.00"
+              value={formik.values.targetAmount}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              errors={handleErrorDisplay(formik, "targetAmount")}
+            />
+
+            {/* Target Date */}
+            <Input
+              label="Target Date"
+              name="targetDate"
+              type="date"
+              value={formik.values.targetDate}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              errors={handleErrorDisplay(formik, "targetDate")}
+            />
+
             <div className={styles.buttons}>
               <Button
                 type="button"
@@ -147,7 +210,12 @@ const CreateSoloSaversModal: React.FC<Props> = ({
               >
                 Back
               </Button>
-              <Button type="submit">Continue</Button>
+              <Button
+                disabled={!formik.isValid || formik.isSubmitting}
+                type="submit"
+              >
+                Continue
+              </Button>
             </div>
           </form>
         </div>
@@ -156,20 +224,24 @@ const CreateSoloSaversModal: React.FC<Props> = ({
       {/* ── Step 2: Confirmation ─────────────────────────── */}
       <ConfirmationDetailsModal
         isOpen={isOpen && step === "confirm"}
-        accountType="Solo Saver"
+        accountType="Target Saver"
         values={{
           accountName: formik.values.accountName,
           initialDeposit: Number(formik.values.initialDeposit),
           contributionFrequency: formik.values.contributionFrequency,
           contributionAmount: Number(formik.values.contributionAmount),
+
+          targetAmount: Number(formik.values.targetAmount),
+          targetDate: formik.values.targetDate,
+          description: formik.values.description,
         }}
-        isSubmitting={isSubmitting}
+        isSubmitting={formik.isSubmitting}
         onBack={handleBackToEdit}
         onClose={handleClose}
-        onConfirm={handleConfirm}
+        onConfirm={formik.submitForm}
       />
     </>
   );
 };
 
-export default CreateSoloSaversModal;
+export default CreateTargetSaversModal;

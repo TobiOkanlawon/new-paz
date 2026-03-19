@@ -211,7 +211,7 @@ export default function Sidebar({
           <div className={styles.centreContainer}>
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={DashboardIcon}
+              icon={<DashboardIcon stroke="#214CCF" />}
               title="Dashboard"
               href="/dashboard"
               active={pathname == "/dashboard"}

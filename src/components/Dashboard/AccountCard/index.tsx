@@ -1,17 +1,15 @@
-'use client';
-import Image, { ImageProps } from "next/image";
+"use client";
 import styles from "./styles.module.css";
 import ThreeDots from "@/assets/three-dots.svg";
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 
 type AccountCardProps = {
-  icon: string | ImageProps["src"];
+  icon: React.ReactNode;
   backgroundColor: string;
-  color: string;
+  iconColor: string;
   title: string;
   amount: number;
-  rate?: number;
   rateBackgroundColor?: string;
   rateTextColor?: string;
 };
@@ -20,9 +18,8 @@ const AccountCard: React.FC<AccountCardProps> = ({
   icon,
   title,
   backgroundColor,
-  color,
+  iconColor: color,
   amount = 0,
-  rate = 0,
   rateBackgroundColor = "#E8F8EE",
   rateTextColor = "#12B76A",
 }) => {
@@ -44,16 +41,10 @@ const AccountCard: React.FC<AccountCardProps> = ({
           style={{ backgroundColor: backgroundColor }}
           className={styles.iconContainer}
         >
-          <Image
-            style={{ stroke: color }}
-            width={24}
-            height={24}
-            src={icon}
-            alt=""
-          />
+          {icon}
         </div>
 
-        <Image width={16} height={16} src={ThreeDots} alt="three-dots" />
+        <ThreeDots height={16} width={16} />
       </div>
 
       <p className={styles.titleText}>{title}</p>
@@ -72,13 +63,14 @@ const AccountCard: React.FC<AccountCardProps> = ({
             {showAmount ? <LuEye size={24} /> : <LuEyeOff size={24} />}
           </button>
         </div>
-
+        {/*
         <span
           className={styles.ratePill}
           style={{ backgroundColor: rateBackgroundColor, color: rateTextColor }}
         >
-          {rate > 0 ? `+${rate}%` : `${rate}%`}
+        {//rate > 0 ? `+${rate}%` : `${rate}%`}
         </span>
+          */}
       </div>
     </div>
   );

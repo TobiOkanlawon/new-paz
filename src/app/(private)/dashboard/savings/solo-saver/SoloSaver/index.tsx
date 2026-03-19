@@ -4,7 +4,6 @@ import Image from "next/image";
 import styles from "../soloSaver.module.css";
 import TotalBalanceCard from "@/components/TotalBalanceCard";
 import NotificationContainer from "@/components/NotificationContainer";
-import TopUpModal from "@/components/TopupModal";
 import Modal from "@/components/Modal";
 import Back from "@/components/BackContainer";
 import Notifications from "@/components/Notifications";
@@ -18,6 +17,10 @@ import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/With
 import { getAccountSummary } from "@/actions/dashboard";
 import Link from "next/link";
 import Button from "@/components/Button";
+import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
+import { createSoloSavingsAccount } from "@/actions/savings";
+import { openPaystackPopup } from "@/libs/paystack";
+import { useSession } from "next-auth/react";
 
 const rows: TransactionRow[] = [
   {
@@ -94,7 +97,7 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
     amount?: string;
   }
 
-  // const data = getAccountSummary();
+  const { data: session } = useSession();
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
@@ -102,8 +105,54 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [openWithdraw, setOpenWithdraw] = useState(false);
+  const [isSoloSaverModalOpen, setIsSoloSaverModalOpen] = useState(false);
+
+  const [fundModalOpen, setFundModalOpen] = useState(false);
+  const [fundLoading, setFundLoading] = useState(false);
 
   const notifications: Notification[] = [];
+
+  const handleShowSoloSavingsModal = () => {
+    setIsSoloSaverModalOpen(true);
+  };
+
+  const closeSoloSavingsModal = () => {
+    setIsSoloSaverModalOpen(false);
+  };
+
+  const handleFundAccount = async ({ amount }: { amount: number }) => {
+    const email = session?.user?.email;
+
+    if (!email) {
+      return;
+    }
+
+    /* send a request to the backend*/
+
+    setFundLoading(true);
+
+    try {
+      await openPaystackPopup({
+        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+        email,
+        amount: amount * 100,
+        ref: new Date().getTime().toString(),
+        onSuccess: (reference) => {
+          // console.log("Payment successful:", reference);
+          setFundModalOpen(false);
+          setFundLoading(false);
+          loadAccountSummary();
+        },
+        onClose: () => {
+          console.log("Payment closed");
+          setFundLoading(false);
+        },
+      });
+    } catch (err) {
+      console.error("Paystack error:", err);
+      setFundLoading(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -115,38 +164,35 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
           </p>
         </div>
         <div className={styles.buttonContainer}>
-          <Link href="/dashboard/savings/create">
-            <button className={styles.topUpFunds}>Create Savings</button>
-          </Link>
-          <button
-            onClick={() => setOpenWithdraw(true)}
-            className={styles.widFunds}
-          >
-            Withdraw Funds
-          </button>
-          <button
-            onClick={() => setShowTopUpModal(true)}
-            className={styles.topUpFunds}
-          >
-            Top Up Account
-          </button>
+          {!accountDetails.hasSoloAccount && (
+            <Button onClick={handleShowSoloSavingsModal}>Create Savings</Button>
+          )}
+          {accountDetails.hasSoloAccount && (
+            <>
+              <Button
+                onClick={() => setOpenWithdraw(true)}
+                className={styles.widFunds}
+              >
+                Withdraw Funds
+              </Button>
+              <Button
+                onClick={() => setShowTopUpModal(true)}
+                className={styles.topUpFunds}
+              >
+                Top Up Account
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
-      {/* <div>
-        <TotalBalanceCard
-          money={0}
-          header="PAZ saver balance"
-          buttonText="Instant top-up "
-          modalContent={<TopUpModal />}
-        />
-      </div> */}
       <div className={styles.cardContainer}>
         {accountDetails.soloSavings && (
           <SavingsProgressCard
-            name="Personal Solo Savings"
-            accountId={accountDetails.soloSavings.AccountNo}
-            currentAmount={accountDetails.soloSavings.Amount}
+            name={accountDetails.soloSavings.title}
+            accountId={accountDetails.soloSavings.accountNo}
+            currentAmount={accountDetails.soloSavings.amount}
+            isTarget={false}
             onClick={() => {}}
           />
         )}
@@ -230,14 +276,19 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
       <TopUpSoloSavingsModal
         open={showTopUpModal}
         onClose={() => setShowTopUpModal(false)}
-        accountName="Solo Savings"
-        currentBalance={5000}
-        remainingToTarget={45000}
-        fundingSourceTitle="PAZ Wallet"
-        fundingSourceBalance={150000}
+        accountName={accountDetails.soloSavings.title}
+        currentBalance={accountDetails.soloSavings.amount}
         onConfirm={async ({ amount }) => {
-          console.log("Top up amount:", amount);
+          handleFundAccount(amount);
           setShowTopUpModal(false);
+        }}
+      />
+
+      <CreateSoloSaversModal
+        onSubmit={createSoloSavingsAccount}
+        isOpen={isSoloSaverModalOpen}
+        onClose={() => {
+          closeSoloSavingsModal;
         }}
       />
     </div>

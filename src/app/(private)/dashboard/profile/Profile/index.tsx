@@ -12,17 +12,18 @@ import {
   LuUsers,
   LuLink,
 } from "react-icons/lu";
-import { useGetProfile } from "@/data/queries/useGetProfile";
-import useUser from "@/store/userStore";
-import { Loading } from "@/components/Loading";
-import { ErrorComponent } from "@/components/Error";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { formatBirthdayToDateInputFormat } from "@/libs/helpers";
-import { useUpdateProfile } from "@/data/mutations/useUpdateProfile";
 import { toast } from "react-toastify";
+import { saveProfile } from "@/actions/profile";
 
 const schema = Yup.object();
+
+type Props = {
+  data: TProfile;
+};
 
 const genderOptions = [
   { label: "Male", value: "male" },
@@ -38,7 +39,7 @@ const relationshipOptions = [
   { label: "Other", value: "other" },
 ];
 
-type TProfileFormValues = {
+export type TProfileFormValues = {
   postalAddress: string;
   gender: string;
   birthday: string;
@@ -74,52 +75,53 @@ const Field = ({ label, icon, required, children }: FieldProps) => (
 
 /* ── Main component ── */
 
-const Profile = () => {
-  const { user } = useUser();
-  const { data, isLoading, error } = useGetProfile(user?.email as string);
-  const { mutate } = useUpdateProfile();
-  const { isPending: isUpdating } = useUpdateProfile();
-
+const Profile: React.FC<Props> = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileName, setFileName] = useState("No file chosen");
 
   const formik = useFormik<TProfileFormValues>({
+    enableReinitialize: true,
     initialValues: {
-      postalAddress: data?.address || "",
-      birthday: formatBirthdayToDateInputFormat(data?.birthday) || "",
-      gender: data?.gender || "male",
-      emailAddress: data?.email || user?.email || "",
-      phoneNumber: data?.phoneNumber || "",
-      nextOfKinFirstName: data?.nextOfKinFirstName || "",
-      nextOfKinLastName: data?.nextOfKinLastName || "",
-      nextOfKinEmail: data?.nextOfKinEmail || "",
-      nextOfKinPhoneNumber: data?.nextOfKinPhoneNumber || "",
-      relationship: data?.nextOfKinRelationship || "",
+      postalAddress: data?.address,
+      birthday: formatBirthdayToDateInputFormat(data?.birthday),
+      gender: data?.gender,
+      emailAddress: data?.email,
+      phoneNumber: data?.phoneNumber,
+      nextOfKinFirstName: data?.nextOfKinFirstName,
+      nextOfKinLastName: data?.nextOfKinLastName,
+      nextOfKinEmail: data?.nextOfKinEmail,
+      nextOfKinPhoneNumber: data?.nextOfKinPhoneNumber,
+      relationship: data?.nextOfKinRelationship,
     },
     validationSchema: schema,
-    enableReinitialize: true,
     onSubmit: async (values) => {
-      mutate(
-        {
-          email: data?.email as string,
-          profileData: {
-            address: values.postalAddress,
-            gender: values.gender as Gender,
-            email: values.emailAddress,
-            birthday: values.birthday,
-            phoneNumber: values.phoneNumber,
-            nextOfKinFirstName: values.nextOfKinFirstName,
-            nextOfKinLastName: values.nextOfKinLastName,
-            nextOfKinEmail: values.nextOfKinEmail,
-            nextOfKinPhoneNumber: values.nextOfKinPhoneNumber,
-            nextOfKinRelationship: values.relationship,
-          },
-        },
-        {
-          onSuccess: () => toast.success("Profile updated successfully"),
-          onError: () => toast.error("Profile failed to update"),
-        },
-      );
+      /* NOTE: Currently, the backend only allows you to set up your next of kin once
+
+So, we'll have to remove the next of kin data--iff the next of kin data is present in the data--from the paylaod, so that the request passes.
+       */
+
+      let req;
+
+      if (data.nextOfKinFirstName) {
+        const payload = {
+          postalAddress: values.postalAddress,
+          birthday: values.birthday,
+          gender: values.gender,
+          emailAddress: values.emailAddress,
+          phoneNumber: values.phoneNumber,
+        };
+
+        req = await saveProfile(payload);
+      } else {
+        req = await saveProfile(values);
+      }
+
+      if (!req.success) {
+        toast.error(req.error);
+        return;
+      }
+
+      toast.success("Profile submitted successfully");
     },
   });
 
@@ -137,9 +139,6 @@ const Profile = () => {
     const file = e.target.files?.[0];
     setFileName(file ? file.name : "No file chosen");
   };
-
-  if (isLoading) return <Loading />;
-  if (error) return <ErrorComponent message="" retryFunction={() => {}} />;
 
   return (
     <div className={styles.page}>
@@ -172,12 +171,8 @@ const Profile = () => {
               </div>
             </div>
             <div className={styles.heroInfo}>
-              <h1 className={styles.heroName}>
-                {user?.first_name
-                  ? `${user.first_name} ${user.last_name ?? ""}`
-                  : (user?.email ?? "My Profile")}
-              </h1>
-              <p className={styles.heroEmail}>{data?.email ?? user?.email}</p>
+              <h1 className={styles.heroName}>My Profile </h1>
+              <p className={styles.heroEmail}>{data?.email}</p>
             </div>
           </div>
 
@@ -284,6 +279,7 @@ const Profile = () => {
               <input
                 className={styles.input}
                 placeholder="First name"
+                disabled={!!data.nextOfKinFirstName}
                 {...formik.getFieldProps("nextOfKinFirstName")}
               />
             </Field>
@@ -292,6 +288,7 @@ const Profile = () => {
               <input
                 className={styles.input}
                 placeholder="Last name"
+                disabled={!!data.nextOfKinLastName}
                 {...formik.getFieldProps("nextOfKinLastName")}
               />
             </Field>
@@ -301,6 +298,7 @@ const Profile = () => {
                 className={styles.input}
                 type="email"
                 placeholder="Their email address"
+                disabled={!!data.nextOfKinEmail}
                 {...formik.getFieldProps("nextOfKinEmail")}
               />
             </Field>
@@ -310,6 +308,7 @@ const Profile = () => {
                 className={styles.input}
                 type="tel"
                 placeholder="Their phone number"
+                disabled={!!data.nextOfKinPhoneNumber}
                 {...formik.getFieldProps("nextOfKinPhoneNumber")}
               />
             </Field>
@@ -318,6 +317,7 @@ const Profile = () => {
               <select
                 className={styles.select}
                 {...formik.getFieldProps("relationship")}
+                disabled={!!data.nextOfKinRelationship}
               >
                 <option value="">Who are they to you?</option>
                 {relationshipOptions.map((o) => (
@@ -335,9 +335,9 @@ const Profile = () => {
           <button
             type="submit"
             className={styles.submitBtn}
-            disabled={isUpdating}
+            disabled={formik.isSubmitting}
           >
-            {isUpdating ? "Saving…" : "Save Changes →"}
+            {formik.isSubmitting ? "Saving…" : "Save Changes →"}
           </button>
         </div>
       </form>
