@@ -12,8 +12,8 @@ const PhoneVerification = () => {
   const inputRefs = useRef(Array(6).fill(null));
 
   const [phone, setPhone] = useState("");
-  // const timeInSeconds = 2 * 60; // two minutes
-  const timeInSeconds = 16;
+  const timeInSeconds = 2 * 60; // two minutes
+  // const timeInSeconds = 16;
   const [time, setTime, isDone] = useCountdownTimer(timeInSeconds);
 
   const params = useSearchParams();
@@ -137,7 +137,7 @@ const PhoneVerification = () => {
                 marginBottom: "36px",
               }}
             >
-              Enter OTP code sent to {phone}
+              Enter OTP code sent to {phone.slice(0, 4)}****{phone.slice(8)}
             </p>
           ) : (
             <p
