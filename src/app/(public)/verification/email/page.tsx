@@ -128,15 +128,27 @@ const EmailVerification = () => {
           >
             Email Verification
           </h2>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              marginBottom: "36px",
-            }}
-          >
-            Enter OTP code sent to your email below
-          </p>
+          {email ? (
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "36px",
+              }}
+            >
+              Enter OTP code sent to {email}
+            </p>
+          ) : (
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "36px",
+              }}
+            >
+              Enter OTP code sent to your email below
+            </p>
+          )}
 
           {/* OTP Inputs */}
           <div

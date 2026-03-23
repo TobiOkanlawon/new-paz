@@ -129,15 +129,27 @@ const PhoneVerification = () => {
           >
             Phone Verification
           </h2>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#666",
-              marginBottom: "36px",
-            }}
-          >
-            Enter OTP code sent to your phone number below
-          </p>
+          {phone ? (
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "36px",
+              }}
+            >
+              Enter OTP code sent to {phone}
+            </p>
+          ) : (
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "36px",
+              }}
+            >
+              Enter OTP code sent to your phone number below
+            </p>
+          )}
 
           {/* OTP Inputs */}
           <div
