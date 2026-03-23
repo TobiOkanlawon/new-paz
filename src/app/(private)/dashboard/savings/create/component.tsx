@@ -4,7 +4,6 @@ import styles from "./card.module.css";
 
 // images
 import Rose from "@/assets/noto_rose.svg";
-import clsx from "clsx";
 import { useState } from "react";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
 import {

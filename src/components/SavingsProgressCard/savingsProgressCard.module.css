@@ -86,3 +86,13 @@
   color: #878787;
   font-weight: 400;
 }
+
+.amountRowLeft {
+    display: flex;
+    gap: 8px;
+}
+
+.toggleAmountBtn {
+    background-color: transparent;
+    border: none;
+}

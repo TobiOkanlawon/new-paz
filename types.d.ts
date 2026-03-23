@@ -83,6 +83,7 @@ type APIResponse<T> = {
 } & T;
 
 type SoloSavings = {
+  title: string;
   accountNo: string;
   amount: number;
 };

@@ -293,14 +293,14 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
           setFundLoading(true);
 
           const result = await createSavingsTopup({
-            savingsWallet: session?.user.walletAccount!,
+            savingsWallet: accountDetails.soloSavings.accountNo,
             amount,
           });
 
           setFundLoading(false);
 
           if (!result.success) {
-            console.error(result.error);
+            toast.error(result.error);
             return;
           }
 

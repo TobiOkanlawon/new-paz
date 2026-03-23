@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./savingsProgressCard.module.css";
 import { FiArrowUpRight } from "react-icons/fi";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 type Props = {
   name: string;
   accountId: string;
 
   currentAmount: number;
-  targetAmount: number;
+  targetAmount?: number;
 
   currency?: string; // default ₦
   onClick?: () => void;
@@ -43,22 +44,22 @@ const SavingsProgressCard = ({
   percentOverride,
   showArrow = true,
 }: Props) => {
-  const computedPercent =
-    targetAmount > 0 ? (currentAmount / targetAmount) * 100 : 0;
+  const computedPercent = () => {
+    return targetAmount && targetAmount > 0
+      ? (currentAmount / targetAmount) * 100
+      : 0;
+  };
+
+  const [showAmount, setShowAmount] = useState(true);
 
   const percent = clamp(
-    typeof percentOverride === "number" ? percentOverride : computedPercent,
+    typeof percentOverride === "number" ? percentOverride : computedPercent(),
     0,
     100,
   );
 
   return (
-    <button
-      type="button"
-      className={`${styles.card} ${className ?? ""}`}
-      onClick={onClick}
-      disabled={!onClick}
-    >
+    <div className={`${styles.card} ${className ?? ""}`} onClick={onClick}>
       <div className={styles.topRow}>
         <div>
           <p className={styles.name}>{name}</p>
@@ -73,17 +74,29 @@ const SavingsProgressCard = ({
       </div>
 
       <div className={styles.amountRow}>
-        <p className={styles.amountLeft}>
-          {formatMoney(currentAmount, currency)}
-        </p>
-        {isTarget && (
+        <div className={styles.amountRowLeft}>
+          <p className={styles.amountLeft}>
+            {showAmount
+              ? formatMoney(currentAmount, currency)
+              : `${currency}****`}
+          </p>
+          <button
+            type="button"
+            className={styles.toggleAmountBtn}
+            onClick={() => setShowAmount((prev) => !prev)}
+            aria-label={showAmount ? "Hide amount" : "Show amount"}
+          >
+            {showAmount ? <LuEye size={24} /> : <LuEyeOff size={24} />}
+          </button>
+        </div>
+        {targetAmount && isTarget && (
           <p className={styles.amountRight}>
             of {formatMoney(targetAmount, currency)}
           </p>
         )}
       </div>
 
-      {isTarget && (
+      {targetAmount && isTarget && (
         <>
           <div className={styles.progressTrack} aria-label="progress">
             <div
@@ -95,7 +108,7 @@ const SavingsProgressCard = ({
           <p className={styles.percentText}>{percent.toFixed(1)}% of target</p>
         </>
       )}
-    </button>
+    </div>
   );
 };
 

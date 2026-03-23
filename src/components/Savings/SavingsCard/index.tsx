@@ -1,5 +1,4 @@
 "use client";
-import Image, { ImageProps } from "next/image";
 import styles from "./savingscard.module.css";
 import Upright from "@/assets/up-right.svg";
 
