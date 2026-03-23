@@ -5,17 +5,23 @@ import { verifyEmail, resendCode } from "../actions";
 import { toast } from "react-toastify";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import styles from "../verification.module.css";
+import useCountdownTimer from "@/hooks/useCountdownTimer";
 
 /* The email verification page */
 const EmailVerification = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const timeInSeconds = 2 * 60; // two minutes
+  const [time, setTime, isDone] = useCountdownTimer(timeInSeconds);
+
   const inputRefs = useRef([]);
 
   const router = useRouter();
 
   const params = useSearchParams();
+
+  const hasSentRef = useRef(false);
 
   useEffect(() => {
     // basically, if there's no email in the URL, then there's actually no way to correlate the OTP with the user
@@ -25,7 +31,11 @@ const EmailVerification = () => {
 
     if (email) {
       setEmail(email);
-      setPhone(mobilePhone);
+      if (mobilePhone) {
+        setPhone(mobilePhone);
+      } else {
+        toast.error("Something seems wrong");
+      }
       router.replace("/verification/email");
     }
     // TODO: ideally, there should be a redirect from the page if there's no email in the URL, but we'll leave it till the backend implementation for the alternate path is up
@@ -65,24 +75,28 @@ const EmailVerification = () => {
 
   const handleResendCode = async () => {
     // just return if the email does not succeed
-    if (!email) return;
+    if (!email || hasSentRef.current) return;
 
     const res = await resendCode("email", email);
 
     if (!res.success) {
       toast.error("Failed to resend OTP");
+    } else {
+      setTime(timeInSeconds);
     }
 
     setOtp(["", "", "", "", "", ""]);
   };
 
-  console.log("email", email);
-
   const handleVerify = async () => {
+    if (email === "") {
+      return;
+    }
+
     const response = await verifyEmail(otp.join(""), email);
 
     if (!response.success) {
-      toast.error(response.error.message || "Email verification failed");
+      toast.error(response.error || "Email verification failed");
       return;
     }
 
@@ -90,8 +104,6 @@ const EmailVerification = () => {
 
     router.push(`/verification/phone?phone=${phone}`);
   };
-
-  const timer = "Expires in 2 minutes";
 
   return (
     <div
@@ -163,7 +175,7 @@ const EmailVerification = () => {
             ))}
           </div>
 
-          <div className={styles.timer}>{timer}</div>
+          <div className={styles.timer}>{time}</div>
 
           {/* Verify Button */}
           <Button disabled={otp.join("").length !== 6} onClick={handleVerify}>
@@ -172,8 +184,13 @@ const EmailVerification = () => {
 
           {/* Resend */}
           <p
-            style={{ fontSize: "13px", color: "#888" }}
-            onClick={handleResendCode}
+            onClick={isDone ? handleResendCode : undefined}
+            style={{
+              opacity: isDone ? 1 : 0.5,
+              cursor: isDone ? "pointer" : "not-allowed",
+              fontSize: "13px",
+              color: "#888",
+            }}
           >
             Didn't receive a code?{" "}
             <span

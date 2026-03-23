@@ -1,20 +1,26 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Button from "@/components/Button";
-import { verifyEmail, resendCode } from "../actions";
+import { verifyEmail as verifyPhone, resendCode } from "../actions";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
+import useCountdownTimer from "@/hooks/useCountdownTimer";
 
 /* The Phone verification page */
 const PhoneVerification = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const inputRefs = useRef([]);
+  const inputRefs = useRef(Array(6).fill(null));
 
   const [phone, setPhone] = useState("");
+  // const timeInSeconds = 2 * 60; // two minutes
+  const timeInSeconds = 16;
+  const [time, setTime, isDone] = useCountdownTimer(timeInSeconds);
 
   const params = useSearchParams();
 
   const router = useRouter();
+
+  const hasSentRef = useRef(false);
 
   const handleChange = (index, value) => {
     if (!/^\d?$/.test(value)) return;
@@ -34,12 +40,14 @@ const PhoneVerification = () => {
 
   const handleResend = async () => {
     // just return if the email does not succeed
-    if (!phone) return;
+    if (!phone || hasSentRef.current) return;
 
     const res = await resendCode("phone", phone);
 
     if (!res.success) {
       toast.error("Failed to resend OTP");
+    } else {
+      setTime(timeInSeconds);
     }
 
     setOtp(["", "", "", "", "", ""]);
@@ -62,7 +70,11 @@ const PhoneVerification = () => {
   };
 
   const handleVerify = async () => {
-    const response = await verifyEmail(otp.join(""), phone);
+    if (phone === "") {
+      return;
+    }
+
+    const response = await verifyPhone(otp.join(""), phone);
 
     if (!response.success) {
       toast.error("Phone verification failed");
@@ -87,7 +99,7 @@ const PhoneVerification = () => {
   }, [params, router]);
 
   useEffect(() => {
-    /* send an OTP once the page opens for the first time */
+    /* send an OTP once the page opens for the first time, because it doesn't send authomatically from the backend */
 
     if (!phone) return;
 
@@ -164,13 +176,23 @@ const PhoneVerification = () => {
             ))}
           </div>
 
+          <p>{time}</p>
+
           {/* Verify Button */}
           <Button disabled={otp.join("").length !== 6} onClick={handleVerify}>
             Verify Phone Number
           </Button>
 
           {/* Resend */}
-          <p style={{ fontSize: "13px", color: "#888" }} onClick={handleResend}>
+          <p
+            onClick={isDone ? handleResend : undefined}
+            style={{
+              opacity: isDone ? 1 : 0.5,
+              cursor: isDone ? "pointer" : "not-allowed",
+              fontSize: "13px",
+              color: "#888",
+            }}
+          >
             Didn't receive a code?{" "}
             <span
               style={{
