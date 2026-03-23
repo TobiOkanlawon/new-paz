@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Piggy from "@/assets/piggy-bank.svg";
 
-// import LoanIcon from "@/assets/wallet.svg";
+import LoanIcon from "@/assets/wallet.svg";
+import InvestmentIcon from "@/assets/investments.svg";
 import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
 import Tree from "@/assets/noto_christmas-tree.png";
@@ -99,6 +100,14 @@ const Dashboard = async () => {
     ? getTotalBalance(accountSummary.data, "savings")
     : 0;
 
+  const loanAmount = accountSummary.success
+    ? getTotalBalance(accountSummary.data, "loans")
+    : 0;
+
+  const investmentAmount = accountSummary.success
+    ? getTotalBalance(accountSummary.data, "investments")
+    : 0;
+
   return (
     <div className={styles.container}>
       <div>
@@ -120,12 +129,12 @@ const Dashboard = async () => {
           rateBackgroundColor="#DBF8E8"
           rateTextColor="#12B76A"
         />
-        {/*<AccountCard
+        <AccountCard
           backgroundColor="#E0DFFD"
           amount={loanAmount ?? 0}
-          icon={LoanIcon}
+          icon={<LoanIcon />}
           color="#22C55E"
-          title="Total Loans"
+          title="Total Loans (COMING SOON)"
           rate={8.5}
           rateBackgroundColor="#DBF8E8"
           rateTextColor="#12B76A"
@@ -133,10 +142,10 @@ const Dashboard = async () => {
         <AccountCard
           backgroundColor="#F9EAD1"
           amount={investmentAmount ?? 0}
-          icon={InvestmentIcon}
+          icon={<InvestmentIcon />}
           color="#22C55E"
-          title="Total Investments"
-          />*/}
+          title="Total Investments (COMING SOON)"
+        />
       </div>
 
       <div className={styles.quickActionContainer}>
