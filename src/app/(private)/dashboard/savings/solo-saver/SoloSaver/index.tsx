@@ -184,10 +184,7 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
               >
                 Withdraw Funds
               </Button>
-              <Button
-                onClick={() => setShowTopUpModal(true)}
-                className={styles.outlineButton}
-              >
+              <Button onClick={() => setShowTopUpModal(true)}>
                 Top Up Account
               </Button>
             </>

@@ -3,7 +3,7 @@ import styles from "./card.module.css";
 import Upright from "@/assets/up-right.svg";
 
 type Props = {
-  icon?: React.ReactNode;
+  icon: React.ReactNode;
   title: string;
   subTitle: string;
   secondDescription: string;
@@ -23,7 +23,7 @@ const InstantSavingsCard: React.FC<Props> = ({
         style={{ backgroundColor: backgroundColor }}
         className={styles.iconContainer}
       >
-        <Upright height={28} width={28} />
+        {icon}
       </div>
 
       <div className={styles.textContainer}>

@@ -10,7 +10,5 @@ export default async function Page() {
     return <div>Failed to load account</div>;
   }
 
-  console.log(result.data);
-
   return <SoloSaver accountDetails={result.data} />;
 }

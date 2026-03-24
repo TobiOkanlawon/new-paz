@@ -17,8 +17,10 @@ import CreateTargetSaversModal from "@/components/Savings/CreateTargetSavingsMod
 // import Christmas from "../assets/Christmas.png";
 // import Wigs from "../assets/Wigs.png";
 // import Bags from "../assets/Bags.png";
-// import Vacation from "../assets/Vacation.png";
-// import Car from "../assets/Car.png";
+import Vacation from "@/assets/vacation.svg";
+import Car from "@/assets/car.svg";
+import House from "@/assets/house.svg";
+import School from "@/assets/school.svg";
 // import Rent from "../assets/Rent.png";
 // import School from "../assets/School.png";
 // import Relocation from "../assets/Relocation.png";
@@ -36,44 +38,52 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
       title: "Valentine",
       image: Rose,
       borderColor: "#F43F5E",
+      imageBackgroundColor: "#E9EDFA",
     },
     {
       title: "Christmas",
       image: Rose,
       borderColor: "#22C55E",
+      imageBackgroundColor: "#EBFFF2",
     },
     {
       title: "Wigs",
       image: Rose,
-      borderColor: "#A855F7",
+      borderColor: "#9401F5",
+      imageBackgroundColor: "#F5E5FF",
     },
     {
       title: "Bags",
       image: Rose,
-      borderColor: "#F59E0B",
+      borderColor: "#F7B341",
+      imageBackgroundColor: "#F9EAD1",
     },
   ];
 
   const targetSavings = [
     {
       title: "Vacation",
-      image: Rose,
+      image: Vacation,
       borderColor: "#F59E0B",
+      imageBackgroundColor: "#F9EAD1",
     },
     {
       title: "Car",
-      image: Rose,
+      image: Car,
       borderColor: "#EC4899",
+      imageBackgroundColor: "#FED9F0",
     },
     {
       title: "House Rent",
-      image: Rose,
+      image: House,
       borderColor: "#A855F7",
+      imageBackgroundColor: "#F5E5FF",
     },
     {
       title: "School Fees",
-      image: Rose,
+      image: School,
       borderColor: "#22C55E",
+      imageBackgroundColor: "#EBFFF2",
     },
   ];
 
@@ -171,18 +181,22 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
       action = showCreateTargetSaversModal;
     }
 
-    return items.map((item, index) => (
-      <SavingsPlanMiniCard
-        key={index}
-        title={item.title}
-        icon={item.image}
-        content={description}
-        borderColor={item.borderColor}
-        imageBackgroundColor="#E9EDFA"
-        showTopRightIcon={false}
-        action={action}
-      />
-    ));
+    return items.map((item, index) => {
+      const Icon = item.image;
+
+      return (
+        <SavingsPlanMiniCard
+          key={index}
+          title={item.title}
+          icon={<Icon height={24} width={24} />}
+          content={description}
+          borderColor={item.borderColor}
+          imageBackgroundColor={item.imageBackgroundColor || "#E9EDFA"}
+          showTopRightIcon={false}
+          action={action}
+        />
+      );
+    });
   };
 
   const router = useRouter();

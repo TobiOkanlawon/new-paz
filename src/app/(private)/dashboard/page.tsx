@@ -62,21 +62,21 @@ const BottomRight = () => {
         </div>
         <div className={styles.instantSavingsContainer1}>
           <InstantSavingsCard
-            icon={<Tree width={24} height={24} />}
+            icon={<Piggy color="#22C55E" width={24} height={24} />}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="Christmas"
             backgroundColor="#EBFFF2"
           />
           <InstantSavingsCard
-            icon={<House width={24} height={24} />}
+            icon={<Piggy color="#22C55E" width={24} height={24} />}
             title="Solo Savers"
             subTitle="SA0799259833"
             secondDescription="House Rent"
-            backgroundColor="#F5E5FF"
+            backgroundColor="#EBFFF2"
           />
           <InstantSavingsCard
-            icon={<Plane width={24} height={24} />}
+            icon={<Piggy color="#22C55E" width={24} height={24} />}
             title="Family vault"
             subTitle="SA0799259833"
             secondDescription="Relocation"

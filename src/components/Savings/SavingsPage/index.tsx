@@ -231,7 +231,7 @@ const SavingsClient = ({
             icon={<Rose color="#22C55E" width={24} height={24} />}
             content="Save money regularly in a locked plan with interest up to 12% per annum."
             borderColor="#22C55E"
-            imageBackgroundColor="#E9EDFA"
+            imageBackgroundColor="#EBFFF2"
             showTopRightIcon={false}
           />
           {/*<SavingsPlanMiniCard

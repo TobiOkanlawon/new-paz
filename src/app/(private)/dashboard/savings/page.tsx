@@ -1,5 +1,6 @@
 import { getAccountSummary } from "@/actions/dashboard";
 import SavingsClient from "@/components/Savings/SavingsPage";
+import { toast } from "react-toastify";
 
 const Savings = async () => {
   const rows = [

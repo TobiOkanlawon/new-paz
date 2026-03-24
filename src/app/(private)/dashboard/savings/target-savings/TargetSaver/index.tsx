@@ -159,7 +159,6 @@ const TargetSaver = ({ accountDetails }) => {
                 Withdraw Funds
               </Button>
               <Button
-                className={styles.outlineButton}
                 onClick={() => {
                   if (accountDetails.targetSavings.length === 1) {
                     const plan = accountDetails.targetSavings[0];
