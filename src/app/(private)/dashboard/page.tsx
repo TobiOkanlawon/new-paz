@@ -132,7 +132,7 @@ const Dashboard = async () => {
         <AccountCard
           backgroundColor="#E0DFFD"
           amount={loanAmount ?? 0}
-          icon={<LoanIcon />}
+          icon={<LoanIcon color="#4F46E5" height={24} width={24} />}
           color="#22C55E"
           title="Total Loans (COMING SOON)"
           rate={8.5}
@@ -142,7 +142,7 @@ const Dashboard = async () => {
         <AccountCard
           backgroundColor="#F9EAD1"
           amount={investmentAmount ?? 0}
-          icon={<InvestmentIcon />}
+          icon={<InvestmentIcon color="#F7B341" height={24} width={24} />}
           color="#22C55E"
           title="Total Investments (COMING SOON)"
         />
