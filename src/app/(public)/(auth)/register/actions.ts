@@ -26,8 +26,6 @@ export async function registerUser(payload: RegisterSchema) {
 
     const data = await res.json();
 
-    console.log(data);
-
     if (data.responseCode !== "00") {
       return {
         success: false,

@@ -1,0 +1,26 @@
+meta {
+  name: Fetch Single Transaction
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/users/user/fetch-single-transaction?email=tobiinlondon34@gmail.com
+  body: json
+  auth: inherit
+}
+
+params:query {
+  email: tobiinlondon34@gmail.com
+}
+
+body:json {
+  {
+    "id": "1"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

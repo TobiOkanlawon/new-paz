@@ -46,7 +46,7 @@ export async function getAccountSummary(): Promise<
 	method: "GET",
       },
     );
-
+    
     return ok(data.accountDetails);
   } catch (e) {
     return fail(e);

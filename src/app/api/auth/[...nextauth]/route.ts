@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiFetch } from "@/libs/api";
+import { BackendError, NotVerifiedError } from "@/libs/errors";
 
 const authSecret =
   process.env.NEXTAUTH_SECRET ??
@@ -23,7 +24,7 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-	let data: TLoginResponse;
+        let data: TLoginResponse;
         try {
           data = await apiFetch("/v1/users/user/login", {
             method: "POST",
@@ -34,14 +35,22 @@ export const authOptions: NextAuthOptions = {
             },
           });
         } catch (e) {
-	  throw e;
+          if (e instanceof BackendError) {
+            // so, if the problem is that the user's email is not verified, then we will throw a redirect to the email verification page.
+
+            if (e.message == "email not verified") {
+              throw new NotVerifiedError(e.message, "EMAIL");
+            } else if (e.message == "phone number not verified") {
+              throw new NotVerifiedError(e.message, "PHONE");
+            }
+          }
+          throw e;
         }
 
         /*
           Transform backend shape into clean frontend shape.
           This prevents snake_case leaking into your app.
         */
-
         return {
           id: data.user.username, // required field
           email: data.user.email,

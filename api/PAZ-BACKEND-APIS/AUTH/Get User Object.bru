@@ -1,0 +1,22 @@
+meta {
+  name: Get User Object
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/fetch/user
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "tobiinlondon34@gmail.com"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

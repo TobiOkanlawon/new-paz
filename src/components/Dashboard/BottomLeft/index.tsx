@@ -8,9 +8,14 @@ import Rose from "@/assets/noto_rose.svg";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
 
 import CreateTargetSaversModal from "@/components/Savings/CreateTargetSavingsModal";
-import { createTargetSavingsAccount } from "@/actions/savings";
+import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
+import {
+  createSoloSavingsAccount,
+  createTargetSavingsAccount,
+} from "@/actions/savings";
 
 import { toast } from "react-toastify";
+import { close } from "fs";
 
 type Props = {
   showSoloSavings: boolean;
@@ -19,6 +24,15 @@ type Props = {
 const BottomLeft: React.FC<Props> = ({ showSoloSavings }) => {
   const [isTargetModalOpen, setIsTargetModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isSoloModalOpen, setIsSoloModalOpen] = useState(false);
+
+  const openSoloSavingsModal = () => {
+    setIsSoloModalOpen(true);
+  };
+
+  const closeSoloSavingsModal = () => {
+    setIsSoloModalOpen(false);
+  };
 
   const showTargetSavingsModal = (planName: string) => {
     setSelectedPlan(planName);
@@ -31,18 +45,16 @@ const BottomLeft: React.FC<Props> = ({ showSoloSavings }) => {
   };
 
   const handleCreateTargetSavings = async (values: any) => {
-    try {
-      const result = await createTargetSavingsAccount(values);
+    const result = await createTargetSavingsAccount(values);
 
-      if (result.status === "error") {
-        throw new Error(result.error);
-      }
-
-      toast.success("Target savings created successfully!");
+    if (!result.success) {
+      toast.error(result.error);
       closeTargetSavingsModal();
-    } catch (e: any) {
-      toast.error(e.message || "Failed to create target savings plan");
+      return;
     }
+
+    toast.success("Target savings created successfully!");
+    closeTargetSavingsModal();
   };
 
   return (
@@ -66,6 +78,7 @@ const BottomLeft: React.FC<Props> = ({ showSoloSavings }) => {
                   content="Save money daily, bi-weekly plan with a purpose in mind."
                   borderColor="#214CCF"
                   imageBackgroundColor="#E9EDFA"
+                  action={openSoloSavingsModal}
                 />
                 <SavingsPlanMiniCard
                   title="Valentine"
@@ -73,6 +86,7 @@ const BottomLeft: React.FC<Props> = ({ showSoloSavings }) => {
                   content="Save money daily, bi-weekly plan with a purpose in mind."
                   borderColor="#214CCF"
                   imageBackgroundColor="#E9EDFA"
+                  action={openSoloSavingsModal}
                 />
               </div>
             </div>
@@ -108,6 +122,12 @@ const BottomLeft: React.FC<Props> = ({ showSoloSavings }) => {
         isOpen={isTargetModalOpen}
         onClose={closeTargetSavingsModal}
         onSubmit={handleCreateTargetSavings}
+      />
+
+      <CreateSoloSaversModal
+        isOpen={isSoloModalOpen}
+        onClose={closeSoloSavingsModal}
+        onSubmit={createSoloSavingsAccount}
       />
     </div>
   );

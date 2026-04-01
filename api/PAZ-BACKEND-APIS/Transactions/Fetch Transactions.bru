@@ -1,0 +1,26 @@
+meta {
+  name: Fetch Transactions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/users/user/fetch-transactions?email=tobiinlondon34@gmail.com
+  body: json
+  auth: inherit
+}
+
+params:query {
+  email: tobiinlondon34@gmail.com
+}
+
+body:json {
+  {
+    "accountNo": ["3729095457", "8478791626"]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -11,6 +11,10 @@ export function ok<T>(data: T): ActionResult<T> {
 export function fail<T>(error: unknown): ActionResult<T> {
   if (isRedirectError(error)) throw error;
 
+  /* I want it to always log the reson for the error if it's a backend returned error response, because there's this intermittent failure thing that happens and it is shady */
+
+  console.log("data fetching failure: ", error)
+
   const message =
     error instanceof Error
       ? error.message
@@ -22,6 +26,5 @@ export function fail<T>(error: unknown): ActionResult<T> {
             (error as { responseMessage?: string; message?: string }).message ??
             "An unexpected error occurred.")
           : "An unexpected error occurred.";
-  console.error("[Server Action Error]", message);
   return { success: false, error: message };
 }

@@ -11,12 +11,22 @@ post {
 }
 
 body:json {
+  /*{
+    "email": "valaj11905@fanwn.com",
+    "password": "Password1234#"
+  }*/
   {
     "email": "tobiinlondon34@gmail.com",
     "password": "Password1234#"
   }
   
-  /* */
+}
+
+script:post-response {
+  if (res.body.token) {
+  bru.setVar("authToken", res.body.token);  
+  }
+  
 }
 
 settings {

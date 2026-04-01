@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { BackendError } from "./errors";
 
 const BASE_URL = process.env.API_BASE_URL ?? "";
 
@@ -15,7 +16,9 @@ type InvalidTokenResponse = {
   responseMessage: "Invalid token provided";
 };
 
-export function isInvalidTokenResponse(body: unknown): body is InvalidTokenResponse {
+export function isInvalidTokenResponse(
+  body: unknown,
+): body is InvalidTokenResponse {
   return (
     typeof body === "object" &&
     body !== null &&
@@ -34,7 +37,7 @@ export function isInvalidTokenResponse(body: unknown): body is InvalidTokenRespo
  */
 export async function apiFetch<T = unknown>(
   path: string,
-  options: FetchOptions = {isProtected: true}
+  options: FetchOptions = { isProtected: true },
 ): Promise<T> {
   const session = await getServerSession(authOptions);
 
@@ -45,14 +48,14 @@ export async function apiFetch<T = unknown>(
   let headers: any = {};
 
   if (!session?.accessToken && isProtected) {
-    redirect("/api/auth/logout")
+    redirect("/api/auth/logout");
   }
-  
+
   if (isProtected) {
-    headers["Authorization"] = `Bearer ${session?.accessToken}`
+    headers["Authorization"] = `Bearer ${session?.accessToken}`;
   }
-  
-  const response = await fetch(`${BASE_URL}${path}`, {
+
+  const res = await fetch(`${BASE_URL}${path}`, {
     ...rest,
     headers: {
       "Content-Type": "application/json",
@@ -61,21 +64,23 @@ export async function apiFetch<T = unknown>(
     },
     ...(body ? { body: JSON.stringify(body) } : {}),
     cache: "no-store",
+  }).catch((e) => {
+    /* the request failed for some reason*/
+    throw e;
   });
 
-  // Parse the body once — we need it for both the token check and normal errors
-  const responseBody = await response.json().catch(() => null);
+  return res.json().then((body) => {
+    if (res.ok) return body;
 
-  // Detect expired/invalid token and immediately redirect to the logout route,
-  // which clears the session cookie and sends the user to /login
-  if (isInvalidTokenResponse(responseBody)) {
-    redirect("/api/auth/logout");
-  }
-
-  if (responseBody.responseCode !== "00") {
-    /* Backend returns a 00 code on success*/
-    throw new Error(responseBody.responseMessage);
-  }
-
-  return responseBody as T;
+    // if the backend's error is that the token is invalid
+    if (isInvalidTokenResponse(body)) {
+      redirect("/api/auth/logout");
+    } else {
+      if (body.responseCode !== "00") {
+        /* Backend returns a 00 code on success*/
+        throw new BackendError(body.responseMessage);
+      }
+      throw new BackendError("An error occurred")
+    }
+  });
 }

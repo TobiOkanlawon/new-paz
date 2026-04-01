@@ -1,0 +1,23 @@
+meta {
+  name: Verify Email
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{protocol}}:{{url}}/v1/users/verify-otp
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "otp": "789153",
+    "userIdentifier": "testerwilliam@yopmail.com"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

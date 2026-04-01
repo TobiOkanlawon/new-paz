@@ -210,7 +210,7 @@ const Dashboard = async () => {
 
       {isTransactions ? (
         <div className={styles.bottomContainer}>
-          <BottomLeft showSoloSavings={!accountSummary.data.hasSoloAccount} />
+          <BottomLeft showSoloSavings={!accountSummary.data?.hasSoloAccount} />
           <BottomRight />
         </div>
       ) : (

@@ -7,10 +7,11 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import { handleErrorDisplay } from "@/libs/helpers";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
+import { NotVerifiedError } from "@/libs/errors";
 
 const schema = yup.object({
   email: yup
@@ -52,22 +53,31 @@ const LoginForm = () => {
     },
     validationSchema: schema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
-      const result = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      });
-
-      if (!result || result.error) {
-        setSubmitting(false);
-        toast.error(result?.error);
-        setErrors({
-          email: "Invalid email or password",
+      try {
+        const result = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
         });
-        return;
-      }
 
-      if (result.ok) router.push("/dashboard");
+        if (result && result.ok) router.push("/dashboard");
+      } catch (e) {
+        if (e instanceof NotVerifiedError) {
+          console.log(e, e.type);
+          if (e.type == "EMAIL") {
+            console.log("HERE NOW");
+            redirect("/verification/email");
+          } else if (e.type == "PHONE") {
+            redirect("/verification/phone");
+          }
+
+          setSubmitting(false);
+          toast.error(e.message);
+          setErrors({
+            email: "Invalid email or password",
+          });
+        }
+      }
     },
   });
 

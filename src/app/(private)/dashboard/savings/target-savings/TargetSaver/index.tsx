@@ -184,6 +184,7 @@ const TargetSaver = ({ accountDetails }) => {
           accountDetails.targetSavings.map((plan) => {
             return (
               <SavingsProgressCard
+                key={plan.accountNo}
                 name={plan.title}
                 accountId={plan.accountNo}
                 currentAmount={plan.amount}
