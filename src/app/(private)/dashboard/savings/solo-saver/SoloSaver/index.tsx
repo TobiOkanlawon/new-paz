@@ -93,9 +93,10 @@ const rows: TransactionRow[] = [
 
 type Props = {
   accountDetails: TAccountDetails;
+  hasSoloSaver: boolean;
 };
 
-const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
+const SoloSaver: React.FC<Props> = ({ accountDetails, hasSoloSaver }) => {
   interface Notification {
     id: number;
     message: string;
@@ -163,6 +164,10 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
     }
   };
 
+  if (!hasSoloSaver) {
+    /* if the user has not yet set up a solo saver page, then we need a screen that shows that and has a quick way to route them to the dashboard/savings/create page. This is a special cas */
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -193,7 +198,7 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
       </div>
 
       <div className={styles.cardContainer}>
-        {accountDetails.soloSavings && (
+        {hasSoloSaver && accountDetails.soloSavings && (
           <SavingsProgressCard
             name={accountDetails.soloSavings.title}
             accountId={accountDetails.soloSavings.accountNo}
@@ -267,60 +272,65 @@ const SoloSaver: React.FC<Props> = ({ accountDetails }) => {
         }
       />
 
-      {/* Withdraw Modal */}
-      <WithdrawSoloSavingsModal
-        open={openWithdraw}
-        onClose={() => setOpenWithdraw(false)}
-        accountName="Valentine Savings"
-        currentSavings={100000}
-        fundingSourceTitle="PAZ Savings"
-        fundingSourceBalance={500000}
-        onConfirm={({ amount }) => console.log("Withdraw:", amount)}
-      />
+      {hasSoloSaver && (
+        <WithdrawSoloSavingsModal
+          open={openWithdraw}
+          onClose={() => setOpenWithdraw(false)}
+          accountName="Valentine Savings"
+          currentSavings={100000}
+          fundingSourceTitle="PAZ Savings"
+          fundingSourceBalance={500000}
+          onConfirm={({ amount }) => console.log("Withdraw:", amount)}
+        />
+      )}
 
-      {/* Top Up Modal */}
-      <TopUpSoloSavingsModal
-        open={showTopUpModal}
-        onClose={() => setShowTopUpModal(false)}
-        accountName={accountDetails.soloSavings.title}
-        currentBalance={accountDetails.soloSavings.amount}
-        onConfirm={async ({ amount }) => {
-          if (!accountDetails?.soloSavings?.accountNo) return;
+      {hasSoloSaver && (
+        <TopUpSoloSavingsModal
+          open={showTopUpModal}
+          onClose={() => setShowTopUpModal(false)}
+          accountName={accountDetails.soloSavings.title}
+          currentBalance={accountDetails.soloSavings.amount}
+          onConfirm={async ({ amount }) => {
+            if (!accountDetails?.soloSavings?.accountNo) return;
 
-          setFundLoading(true);
+            setFundLoading(true);
 
-          const result = await createSavingsTopup({
-            savingsWallet: accountDetails.soloSavings.accountNo,
-            amount,
-          });
+            const result = await createSavingsTopup({
+              savingsWallet: accountDetails.soloSavings.accountNo,
+              amount,
+            });
 
-          setFundLoading(false);
+            setFundLoading(false);
 
-          if (!result.success) {
-            toast.error(result.error);
-            return;
-          }
+            if (!result.success) {
+              toast.error(result.error);
+              return;
+            }
 
-          setTransferDetails(result.data);
-          setShowTransferModal(true);
+            setTransferDetails(result.data);
+            setShowTransferModal(true);
 
-          // close amount modal
-          setShowTopUpModal(false);
-        }}
-      />
-
-      <CreateSoloSaversModal
-        onSubmit={createSoloSavingsAccount}
-        isOpen={isSoloSaverModalOpen}
-        onClose={() => {
-          closeSoloSavingsModal;
-        }}
-      />
-      <TopUpTransferDetailsModal
-        open={showTransferModal}
-        onClose={() => setShowTransferModal(false)}
-        data={transferDetails}
-      />
+            // close amount modal
+            setShowTopUpModal(false);
+          }}
+        />
+      )}
+      {!hasSoloSaver && (
+        <CreateSoloSaversModal
+          onSubmit={createSoloSavingsAccount}
+          isOpen={isSoloSaverModalOpen}
+          onClose={() => {
+            closeSoloSavingsModal;
+          }}
+        />
+      )}
+      {hasSoloSaver && (
+        <TopUpTransferDetailsModal
+          open={showTransferModal}
+          onClose={() => setShowTransferModal(false)}
+          data={transferDetails}
+        />
+      )}
     </div>
   );
 };
