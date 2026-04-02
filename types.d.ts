@@ -153,6 +153,6 @@ type Transaction = {
   currency: string;
   description: string;
   reference: string;
-  status: "COMPLETED" | "FAILED"
+  status: "COMPLETED" | "FAILED";
   createdAt: string;
 };
