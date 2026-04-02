@@ -138,7 +138,7 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
   //   accountNo: card.accountNo ?? "",
   // }));
 
-  console.log("targetSavings: ", accountDetails.targetSavings);
+  const hasTargetSavings = accountDetails.targetSavings;
 
   return (
     <div className={styles.container}>
@@ -150,12 +150,12 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
           </p>
         </div>
         <div className={styles.buttonContainer}>
-          {!accountDetails.targetSavings.length && (
+          {!hasTargetSavings && (
             <Link href="/dashboard/savings/create">
               <Button>Create Savings Plan</Button>
             </Link>
           )}
-          {accountDetails.targetSavings.length > 0 && (
+          {hasTargetSavings && (
             <>
               <Button
                 onClick={() => setOpenWithdraw(true)}
@@ -185,7 +185,7 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
       </div>
 
       <div className={styles.cardContainer}>
-        {accountDetails.targetSavings.length > 0 &&
+        {hasTargetSavings &&
           accountDetails.targetSavings.map((plan) => {
             return (
               <SavingsProgressCard
@@ -263,80 +263,87 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
         }
       />
 
-      {/* Withdraw Modal */}
-      <WithdrawSoloSavingsModal
-        open={openWithdraw}
-        onClose={() => setOpenWithdraw(false)}
-        accountName="Valentine Savings"
-        currentSavings={100000}
-        fundingSourceTitle="PAZ Savings"
-        fundingSourceBalance={500000}
-        onConfirm={({ amount }) => console.log("Withdraw:", amount)}
-      />
+      {hasTargetSavings && (
+        <WithdrawSoloSavingsModal
+          open={openWithdraw}
+          onClose={() => setOpenWithdraw(false)}
+          accountName="Valentine Savings"
+          currentSavings={100000}
+          fundingSourceTitle="PAZ Savings"
+          fundingSourceBalance={500000}
+          onConfirm={({ amount }) => console.log("Withdraw:", amount)}
+        />
+      )}
 
-      <TopUpTargetSavingsModal
-        open={showTopUpModal}
-        onClose={() => setShowTopUpModal(false)}
-        accountName={selectedAccount?.title || ""}
-        currentBalance={
-          accountDetails.targetSavings.find(
-            (p) => p.accountNo === selectedAccount?.accountNo,
-          )?.amount || 0
-        }
-        remainingToTarget={(() => {
-          const plan = accountDetails.targetSavings.find(
-            (p) => p.accountNo === selectedAccount?.accountNo,
-          );
-          return plan ? plan.targetAmount - plan.amount : 0;
-        })()}
-        fundingSourceTitle="PAZ Wallet"
-        fundingSourceBalance={0}
-        loading={loading}
-        onConfirm={async ({ amount }) => {
-          if (!selectedAccount) return;
-
-          setLoading(true);
-
-          const result = await createSavingsTopup({
-            savingsWallet: selectedAccount.accountNo!,
-            amount,
-          });
-
-          setLoading(false);
-
-          if (!result.success) {
-            toast.error(result.error?.message);
-            return;
+      {hasTargetSavings && (
+        <TopUpTargetSavingsModal
+          open={showTopUpModal}
+          onClose={() => setShowTopUpModal(false)}
+          accountName={selectedAccount?.title || ""}
+          currentBalance={
+            accountDetails.targetSavings.find(
+              (p) => p.accountNo === selectedAccount?.accountNo,
+            )?.amount || 0
           }
+          remainingToTarget={(() => {
+            const plan = accountDetails.targetSavings.find(
+              (p) => p.accountNo === selectedAccount?.accountNo,
+            );
+            return plan ? plan.targetAmount - plan.amount : 0;
+          })()}
+          fundingSourceTitle="PAZ Wallet"
+          fundingSourceBalance={0}
+          loading={loading}
+          onConfirm={async ({ amount }) => {
+            if (!selectedAccount) return;
 
-          setTransferDetails(result.data);
-          setShowTransferModal(true);
-          setShowTopUpModal(false);
-        }}
-      />
+            setLoading(true);
 
-      <AllAccountsModal
-        open={showAccountSelector}
-        onClose={() => setShowAccountSelector(false)}
-        data={{
-          targetSavings: accountDetails.targetSavings,
-        }}
-        onSelect={(account) => {
-          setSelectedAccount(account);
-          setShowAccountSelector(false);
-          setShowTopUpModal(true);
-        }}
-      />
+            const result = await createSavingsTopup({
+              savingsWallet: selectedAccount.accountNo!,
+              amount,
+            });
 
-      <TopUpTransferDetailsModal
-        open={showTransferModal}
-        onClose={() => {
-          setShowTransferModal(false);
-          setTransferDetails(null);
-          setSelectedAccount(null);
-        }}
-        data={transferDetails}
-      />
+            setLoading(false);
+
+            if (!result.success) {
+              toast.error(result.error?.message);
+              return;
+            }
+
+            setTransferDetails(result.data);
+            setShowTransferModal(true);
+            setShowTopUpModal(false);
+          }}
+        />
+      )}
+
+      {hasTargetSavings && (
+        <AllAccountsModal
+          open={showAccountSelector}
+          onClose={() => setShowAccountSelector(false)}
+          data={{
+            targetSavings: accountDetails.targetSavings,
+          }}
+          onSelect={(account) => {
+            setSelectedAccount(account);
+            setShowAccountSelector(false);
+            setShowTopUpModal(true);
+          }}
+        />
+      )}
+
+      {hasTargetSavings && (
+        <TopUpTransferDetailsModal
+          open={showTransferModal}
+          onClose={() => {
+            setShowTransferModal(false);
+            setTransferDetails(null);
+            setSelectedAccount(null);
+          }}
+          data={transferDetails}
+        />
+      )}
 
       {/* Top Up Modal */}
       {/*<TopUpTargetSavingsModal
