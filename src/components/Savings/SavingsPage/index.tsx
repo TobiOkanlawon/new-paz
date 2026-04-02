@@ -169,6 +169,18 @@ const SavingsClient = ({
     displayText: string;
   } | null>(null);
 
+  function showCreateSoloSaversModal(): void {
+    throw new Error("Function not implemented.");
+  }
+
+  function showCreateSoloSaversModal(): void {
+    throw new Error("Function not implemented.");
+  }
+
+  function showCreateSoloSaversModal(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
