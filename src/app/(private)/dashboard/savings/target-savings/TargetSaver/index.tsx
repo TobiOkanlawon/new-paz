@@ -86,7 +86,12 @@ const rows: TransactionRow[] = [
   },
 ];
 
-const TargetSaver = ({ accountDetails }) => {
+type Props = {
+  accountDetails: TAccountDetails;
+  transactions: TAllTransactions;
+};
+
+const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
   interface Notification {
     id: number;
     message: string;

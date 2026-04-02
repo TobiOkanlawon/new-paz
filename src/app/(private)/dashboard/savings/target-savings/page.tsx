@@ -1,14 +1,27 @@
 "use server";
 
+import { getAllTransactions } from "@/actions/transactions";
 import TargetSaver from "./TargetSaver";
 import { getAccountSummary } from "@/actions/dashboard";
 
 export default async function Page() {
-  const result = await getAccountSummary();
+  const [accountDetails, transactions] = await Promise.all([
+    getAccountSummary(),
+    getAllTransactions(),
+  ]);
 
-  if (!result.success) {
-    return <div>Failed to load account</div>;
+  if (!accountDetails.success) {
+    throw new Error("failed to load account");
   }
 
-  return <TargetSaver accountDetails={result.data} />;
+  if (!transactions.success) {
+    throw new Error("failed to get transactions");
+  }
+
+  return (
+    <TargetSaver
+      transactions={transactions.data}
+      accountDetails={accountDetails.data}
+    />
+  );
 }
