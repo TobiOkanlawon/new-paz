@@ -93,10 +93,10 @@ const rows: TransactionRow[] = [
 
 type Props = {
   accountDetails: TAccountDetails;
-  hasSoloSaver: boolean;
+  transactions: TAllTransactions;
 };
 
-const SoloSaver: React.FC<Props> = ({ accountDetails, hasSoloSaver }) => {
+const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
   interface Notification {
     id: number;
     message: string;
@@ -163,6 +163,8 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, hasSoloSaver }) => {
       setFundLoading(false);
     }
   };
+
+  const hasSoloSaver = accountDetails.hasSoloAccount;
 
   if (!hasSoloSaver) {
     /* if the user has not yet set up a solo saver page, then we need a screen that shows that and has a quick way to route them to the dashboard/savings/create page. This is a special cas */

@@ -1,14 +1,27 @@
 "use server";
 
+import { getAllTransactions } from "@/actions/transactions";
 import SoloSaver from "./SoloSaver";
 import { getAccountSummary } from "@/actions/dashboard";
 
 export default async function Page() {
-  const result = await getAccountSummary();
+  const [accountDetails, transactions] = await Promise.all([
+    getAccountSummary(),
+    getAllTransactions(),
+  ]);
 
-  if (!result.success) {
+  if (!accountDetails.success) {
     throw new Error("failed to load account");
   }
 
-  return <SoloSaver accountDetails={result.data} />;
+  if (!transactions.success) {
+    throw new Error("failed to get transactions");
+  }
+
+  return (
+    <SoloSaver
+      transactions={transactions.data}
+      accountDetails={accountDetails.data}
+    />
+  );
 }
