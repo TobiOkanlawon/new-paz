@@ -25,6 +25,8 @@ import BottomLeft from "@/components/Dashboard/BottomLeft";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+import { getAllTransactions } from "@/actions/transactions";
+
 const BottomRight = () => {
   return (
     <div className={styles.bottomRightContainer}>
@@ -89,11 +91,19 @@ const BottomRight = () => {
 };
 
 const Dashboard = async () => {
-  const isTransactions = true;
-
   const session = await getServerSession(authOptions);
 
   const { accountSummary } = await getDashboardData();
+  const allTransactionsResult = await getAllTransactions();
+
+  if (!allTransactionsResult.success) {
+    // some error handling, we can just force the empty screen and log the error
+  }
+
+  const allTransactions = allTransactionsResult.data;
+
+  // if the transactions data is an array, and if it is more than 1 in length
+  const isTransactions = allTransactions && allTransactions.length > 0;
 
   const firstName = session?.user?.firstName as string;
   const savingsAmount = accountSummary.success

@@ -1,6 +1,6 @@
 import { apiFetch } from '@/libs/api';
 import { getServerSession } from 'next-auth';
-import { ActionResult, ok, fail } from './shared';
+import { ActionResult, ok, fail } from '@/actions/shared';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 type GetAllTransactionsAPIResponse = {
@@ -22,9 +22,6 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
     const res: GetAllTransactionsAPIResponse  = await apiFetch(`/v1/users/user/fetch-transactions?email=${email}`, {
       isProtected: true,
       method: "GET",
-      body: {
-	accountNo: accountNo
-      }
     })
 
     return ok(res.transactions)
