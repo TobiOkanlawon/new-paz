@@ -142,3 +142,17 @@ type ResetPasswordResponseData = {
   requestId?: string; // optional but common
   timestamp?: string; // optional — ISO date
 };
+
+type TAllTransactions = Transaction[];
+
+type Transaction = {
+  id: number;
+  fromAccount: string;
+  toAccount: string;
+  amount: number;
+  currency: string;
+  description: string;
+  reference: string;
+  status: "COMPLETED" | "FAILED"
+  createdAt: string;
+};

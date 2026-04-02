@@ -8,35 +8,14 @@ import { getProfile } from "./profile";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
-export type Transaction = {
-  id: string;
-  title: string;
-  subTitle: string;
-  status: "inbound" | "outbound";
-  amount: string;
-  date: string;
-};
-
-export type SavingsPlan = {
-  id: string;
-  name: string;
-  type: "solo" | "target" | "group";
-  description: string;
-  imageUrl?: string;
-};
-
-export type InstantSavings = {
-  id: string;
-  title: string;
-  accountNumber: string;
-  label: string;
-  backgroundColor: string;
-};
-
 export async function getAccountSummary(): Promise<
   ActionResult<TAccountDetails>
 > {
   const session = await getServerSession(authOptions);
+  
+  if (!session) {
+    throw new Error("user not authenticated")
+  }
   
   try {
     const data: {accountDetails: TAccountDetails} = await apiFetch(

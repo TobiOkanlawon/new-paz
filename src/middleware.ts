@@ -35,8 +35,6 @@ export async function middleware(req: NextRequest) {
   const hasPrimaryAccount = !!token.user?.primaryAccountLinked;
   const isOnboarded = isBvnVerified && hasPrimaryAccount;
 
-  console.log("token", token)
-
   if (pathname.startsWith("/dashboard")) {
     if (!isBvnVerified) {
       return NextResponse.redirect(new URL("/kyc", req.url));
