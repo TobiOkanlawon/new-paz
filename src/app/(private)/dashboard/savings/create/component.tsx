@@ -232,7 +232,7 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-x-scroll">
-      <h2 className="text-lg font-semibold mb-6">Savings Plans</h2>
+      <h2 className={styles.savingsPlanContainer}>Savings Plans</h2>
 
       <div className={styles.container}>
         {/* Solo Savings */}

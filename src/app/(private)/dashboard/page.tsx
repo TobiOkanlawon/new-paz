@@ -95,6 +95,7 @@ const Dashboard = async () => {
 
   const { accountSummary } = await getDashboardData();
   const allTransactionsResult = await getAllTransactions();
+  
 
   if (!allTransactionsResult.success) {
     // some error handling, we can just force the empty screen and log the error

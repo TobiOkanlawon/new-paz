@@ -95,7 +95,9 @@
 .savingsPlanInnerContainer {
   display: flex;
   gap: 16px;
+  overflow-x: scroll;
 }
+
 
 .tableControl,
 .tableControlButton {
@@ -122,6 +124,17 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.bottomContainerNone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 17rem;
+}
+
+.bottomContainerNone>img{
+  object-fit: contain;
 }
 
 @media screen and (max-width: 1440px) {

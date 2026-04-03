@@ -24,6 +24,10 @@
   min-width: 200px;
   max-width: 240px;
 }
+.blockedButton{
+  min-width: 200px;
+  max-width: 240px;
+}
 
 .midSection {
   margin-top: 26px;
@@ -37,4 +41,25 @@
 .savingsPlanInnerContainer {
   display: flex;
   gap: 16px;
+}
+
+@media screen and (max-width: 1023px){
+  .heading{
+    flex-direction: column;
+    align-items: start;
+  }
+  .midSection{
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+  }
+  .midSection>div{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 490px){
+  .headingRight, .midSectionRight{
+    flex-direction: column;
+  }
 }

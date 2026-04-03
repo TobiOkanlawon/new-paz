@@ -9,14 +9,15 @@ export default async function Page() {
     getAccountSummary(),
     getAllTransactions(),
   ]);
+  console.log("This is the transaction", transactions)
 
   if (!accountDetails.success) {
     throw new Error("failed to load account");
   }
 
-  if (!transactions.success) {
-    throw new Error("failed to get transactions");
-  }
+  // if (!transactions.success) {
+  //   throw new Error("failed to get transactions");
+  // }
 
   return (
     <SoloSaver

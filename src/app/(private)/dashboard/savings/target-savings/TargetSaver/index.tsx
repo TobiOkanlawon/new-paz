@@ -88,7 +88,7 @@ const rows: TransactionRow[] = [
 
 type Props = {
   accountDetails: TAccountDetails;
-  transactions: TAllTransactions;
+  transactions?: TAllTransactions;
 };
 
 const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {

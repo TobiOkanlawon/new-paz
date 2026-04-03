@@ -36,6 +36,16 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
       method: "GET",
     })
 
+    console.log("This is the response from the backend", res.transactions)
+
+    if (res == null){
+      return ok([])
+    }
+
+    if (!res || !res.transactions) {
+      return fail(new Error("Invalid response from API"));
+    }
+
     const transformedData: TAllTransactions = res.transactions.map((i: TransactionsDataResponse) => {
       return {
 	id: i.id,

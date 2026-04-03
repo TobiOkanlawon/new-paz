@@ -45,7 +45,7 @@ const Savings = async () => {
         </div>
         <div className={styles.midSectionRight}>
           <Button className={styles.outlineButton}>Add Debit Card</Button>
-          <Button>Link Account</Button>
+          <Button className={styles.blockedButton}>Link Account</Button>
         </div>
       </div>
 

@@ -18,9 +18,9 @@ import QuickActions from "@/components/SavingsQuickActions";
 import { openPaystackPopup } from "@/libs/paystack";
 import { getAccountSummary } from "@/actions/dashboard";
 import { getTotalBalance } from "@/libs/helpers";
-
+import Image from "next/image";
 import Link from "next/link";
-
+import NoRecord from "@/assets/noRecord.png";
 import { RiScanLine } from "react-icons/ri";
 import { TbArrowsUpDown } from "react-icons/tb";
 import { MdOutlineAddCard } from "react-icons/md";
@@ -29,9 +29,10 @@ import { HiOutlineLink } from "react-icons/hi";
 import Rose from "@/assets/noto_rose.svg";
 import Piggy from "@/assets/piggy-bank.svg";
 import { toast } from "react-toastify";
-import { createSavingsTopup } from "@/actions/savings";
+import { createSavingsTopup, createSoloSavingsAccount } from "@/actions/savings";
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import TopUpTransferDetailsModal from "../TopUpDetailsModal";
+import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
 
 type Props = {
   accountSummary: any;
@@ -48,6 +49,8 @@ const SavingsClient = ({
 
   const [fundModalOpen, setFundModalOpen] = useState(false);
   const [fundLoading, setFundLoading] = useState(false);
+  const [soloSaversModalOpen, setSoloSaversModalOpen] = useState(false);
+  const [amount, setAmount] = useState(0);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
@@ -85,7 +88,8 @@ const SavingsClient = ({
         setTopUpDetailsModalOpen(true);
       }
     } catch (err) {
-      toast.error(err?.message || "An error occured");
+      const errorMessage = err instanceof Error ? err.message : "An error occurred";
+      toast.error(errorMessage);
     }
   };
 
@@ -106,7 +110,7 @@ const SavingsClient = ({
           setFundModalOpen(false);
           setFundLoading(false);
 
-          const result = await getAccountSummary(email);
+          const result = await getAccountSummary();
 
           if (result.success) {
             const newBalance = getTotalBalance(result.data, "savings");
@@ -169,18 +173,6 @@ const SavingsClient = ({
     displayText: string;
   } | null>(null);
 
-  function showCreateSoloSaversModal(): void {
-    throw new Error("Function not implemented.");
-  }
-
-  function showCreateSoloSaversModal(): void {
-    throw new Error("Function not implemented.");
-  }
-
-  function showCreateSoloSaversModal(): void {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
@@ -221,11 +213,11 @@ const SavingsClient = ({
       </div>
 
       <div>
-        <QuickActions actions={QuickActionItems} />
+        <QuickActions actions={QuickActionItems as any} />
       </div>
 
       <div className={styles.savingsPlansContainer}>
-        <h2>Savings Plans</h2>
+        <h2 className={styles.savingsPlanHeader}>Savings Plans</h2>
         <div className={styles.savingsPlanInnerContainer}>
           {showSoloSavers && (
             <SavingsPlanMiniCard
@@ -235,7 +227,7 @@ const SavingsClient = ({
               borderColor="#214CCF"
               imageBackgroundColor="#E9EDFA"
               showTopRightIcon={false}
-              action={showCreateSoloSaversModal}
+              action={() => setSoloSaversModalOpen(true)}
             />
           )}
           <SavingsPlanMiniCard
@@ -256,33 +248,44 @@ const SavingsClient = ({
              />*/}
         </div>
       </div>
-      <TransactionsTable
-        rows={rows}
-        total={20}
-        page={page}
-        pageSize={pageSize}
-        onPageChange={() => {}}
-        onPageSizeChange={(s) => {
-          setPageSize(s);
-          setPage(1);
-        }}
-        showFilter={false}
-        leftControls={
-          <select className={styles.tableControl}>
-            <option>Transaction status</option>
-            <option>Success</option>
-            <option>Pending</option>
-          </select>
-        }
-        rightControls={
-          <div className={styles.tableRightControls}>
-            <button className={styles.tableControlButton}>Filters</button>
-            <button className={styles.tableControlButton}>
-              Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
-            </button>
+      {rows && rows.length > 0 ? (
+          <TransactionsTable
+            rows={rows}
+            total={20}
+            page={page}
+            pageSize={pageSize}
+            onPageChange={() => {}}
+            onPageSizeChange={(s) => {
+              setPageSize(s);
+              setPage(1);
+            }}
+            showFilter={false}
+            leftControls={
+              <select className={styles.tableControl}>
+                <option>Transaction status</option>
+                <option>Success</option>
+                <option>Pending</option>
+              </select>
+            }
+            rightControls={
+              <div className={styles.tableRightControls}>
+                <button className={styles.tableControlButton}>Filters</button>
+                <button className={styles.tableControlButton}>
+                  Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
+                </button>
+              </div>
+            }
+          />
+        ) : (
+          <div className={styles.bottomContainerNone}>
+            <Image
+              src={NoRecord}
+              alt="No transactions"
+              width={124}
+              height={120}
+            />
           </div>
-        }
-      />
+        )}
       <AllAccountsModal
         open={fundModalOpen}
         onClose={() => setFundModalOpen(false)}
@@ -299,7 +302,7 @@ const SavingsClient = ({
             selectedAccount.type === "solo"
               ? accountSummary.soloSavings.amount
               : (accountSummary.targetSavings.find(
-                  (t) => t.accountNo === selectedAccount.accountNo,
+                  (t: any) => t.accountNo === selectedAccount.accountNo,
                 )?.amount ?? 0)
           }
           loading={fundLoading}
@@ -310,6 +313,11 @@ const SavingsClient = ({
         open={topUpDetailsModalOpen}
         onClose={() => setTopUpDetailsModalOpen(false)}
         data={topUpDetails}
+      />
+      <CreateSoloSaversModal
+        isOpen={soloSaversModalOpen}
+        onClose={() => setSoloSaversModalOpen(false)}
+        onSubmit={createSoloSavingsAccount}
       />
     </div>
   );
