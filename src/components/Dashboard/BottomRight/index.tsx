@@ -86,7 +86,7 @@ const BottomRight: React.FC<BottomRightProps> = ({
   };
 
   const routeToTargetSavings = () => {
-    router.push("/dashboard/savings/target-saver");
+    router.push("/dashboard/savings/target-savings");
   };
 
   // then we'll also need to enforce the currency to be capital and acceptable.
