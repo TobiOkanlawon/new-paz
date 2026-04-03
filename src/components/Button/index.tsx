@@ -5,7 +5,7 @@ import Spinner from "../LoadingSpinner";
 
 type Props = {
   label?: string;
-  variant?: "primary" | "secondary" | "outlined";
+  variant?: "primary" | "secondary" | "outlined"| "outlined2";
   loading?: boolean;
   children?: React.ReactNode;
 } & React.DetailedHTMLProps<
@@ -27,6 +27,7 @@ const Button = ({
     primary: styles.primary,
     secondary: styles.secondary,
     outlined: styles.outlined,
+    outlined2: styles.outlined2
   }[variant];
 
   return (

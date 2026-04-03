@@ -158,6 +158,7 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
               <Button
                 onClick={() => setOpenWithdraw(true)}
                 className={styles.outlineButton}
+                variant="outlined2"
               >
                 Withdraw Funds
               </Button>

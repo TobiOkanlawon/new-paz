@@ -59,6 +59,11 @@
   background-color: transparent;
   border: 1px solid #DFDFDF;
 }
+.outlined2 {
+  color: #3475df;
+  background-color: transparent;
+  border: 1px solid #3475df;
+}
 
 .outlined:hover {
   background-color: #f9f9f9;
