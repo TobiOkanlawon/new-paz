@@ -2,16 +2,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../soloSaver.module.css";
-import TotalBalanceCard from "@/components/TotalBalanceCard";
-import NotificationContainer from "@/components/NotificationContainer";
-import Modal from "@/components/Modal";
-import Back from "@/components/BackContainer";
-import Notifications from "@/components/Notifications";
-import useUser from "@/store/userStore";
 import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgressCard";
 import TransactionsTable, {
   TransactionRow,
 } from "@/components/TransactionTable/TransactionTable";
+import NoRecord from '@/assets/noRecord.png'
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
 import { getAccountSummary } from "@/actions/dashboard";
@@ -28,68 +23,70 @@ import { createSavingsTopup } from "@/actions/savings";
 import TopUpTransferDetailsModal from "@/components/Savings/TopUpDetailsModal/index";
 import { toast } from "react-toastify";
 
-const rows: TransactionRow[] = [
-  {
-    id: "1",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "2",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Pending",
-  },
-  {
-    id: "3",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "4",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "5",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "6",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-];
+// const rows: TransactionRow[] = [
+//   {
+//     id: "1",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "2",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Pending",
+//   },
+//   {
+//     id: "3",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "4",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "5",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "6",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+// ];
+
+const rows: TransactionRow[] = []
 
 type Props = {
   accountDetails: TAccountDetails;
@@ -158,8 +155,9 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
           setFundLoading(false);
         },
       });
-    } catch (err) {
-      toast.error(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      toast.error(message);
       setFundLoading(false);
     }
   };
@@ -222,6 +220,17 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
           {<WithdrawModal />}
         </Modal>
       )} */}
+
+      {rows.length === 0 ? (
+        <div className={styles.bottomContainerNone}>
+          <Image
+            src={NoRecord}
+            alt="No transactions"
+            width={154}
+            height={140}
+          />
+        </div>
+      ) : (
       <TransactionsTable
         rows={rows}
         total={20}
@@ -273,6 +282,7 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
           </>
         }
       />
+      )}
 
       {hasSoloSaver && (
         <WithdrawSoloSavingsModal

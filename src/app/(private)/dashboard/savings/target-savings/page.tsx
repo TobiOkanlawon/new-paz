@@ -14,9 +14,15 @@ export default async function Page() {
     throw new Error("failed to load account");
   }
 
-  // if (!transactions.success) {
-  //   throw new Error("failed to get transactions");
-  // }
+  if (!transactions.success) {
+    // throw new Error("failed to get transactions");
+      return (
+    <TargetSaver
+      transactions={[]}
+      accountDetails={accountDetails.data}
+    />
+  );
+  }
 
   return (
     <TargetSaver

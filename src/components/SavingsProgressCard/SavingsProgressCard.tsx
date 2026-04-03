@@ -22,8 +22,8 @@ type Props = {
   showArrow?: boolean;
 };
 
-const formatMoney = (value: string, currency: string) => {
-  const formatted = Number(value).toLocaleString("en-NG", {
+const formatMoney = (value: number, currency: string) => {
+  const formatted = value.toLocaleString("en-NG", {
     maximumFractionDigits: 0,
   });
   return `${currency}${formatted}`;

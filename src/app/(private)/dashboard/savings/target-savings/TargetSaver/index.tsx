@@ -2,11 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../targetSavings.module.css";
-import TotalBalanceCard from "@/components/TotalBalanceCard";
-import NotificationContainer from "@/components/NotificationContainer";
-import TopUpModal from "@/components/TopupModal";
-import Modal from "@/components/Modal";
-import Back from "@/components/BackContainer";
+import NoRecord from "@/assets/noRecord.png"
 
 import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgressCard";
 import TransactionsTable, {
@@ -23,68 +19,70 @@ import { createSavingsTopup } from "@/actions/savings";
 import AllAccountsModal from "@/components/Savings/AllAccountsModal";
 import { toast } from "react-toastify";
 
-const rows: TransactionRow[] = [
-  {
-    id: "1",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "2",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Pending",
-  },
-  {
-    id: "3",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "4",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "5",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-  {
-    id: "6",
-    savingsName: "vacation savings",
-    amountTarget: 200000,
-    savingsAmount: 50000,
-    savingsInterest: "12%",
-    amountDebited: 50000,
-    dateDebited: "Mon, 21 Dec 2025",
-    status: "Success",
-  },
-];
+// const rows: TransactionRow[] = [
+//   {
+//     id: "1",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "2",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Pending",
+//   },
+//   {
+//     id: "3",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "4",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "5",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+//   {
+//     id: "6",
+//     savingsName: "vacation savings",
+//     amountTarget: 200000,
+//     savingsAmount: 50000,
+//     savingsInterest: "12%",
+//     amountDebited: 50000,
+//     dateDebited: "Mon, 21 Dec 2025",
+//     status: "Success",
+//   },
+// ];
+
+const rows: TransactionRow[] = []
 
 type Props = {
   accountDetails: TAccountDetails;
@@ -211,57 +209,69 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
           {<WithdrawModal />}
         </Modal>
       )} */}
-      <TransactionsTable
-        rows={rows}
-        total={20}
-        page={page}
-        pageSize={pageSize}
-        onPageChange={setPage}
-        onPageSizeChange={(s) => {
-          setPageSize(s);
-          setPage(1);
-        }}
-        leftControls={
-          <select
-            style={{
-              height: 34,
-              borderRadius: 8,
-              border: "1px solid #e5e7eb",
-              padding: "0 10px",
-            }}
-          >
-            <option>Transaction status</option>
-            <option>Success</option>
-            <option>Pending</option>
-          </select>
-        }
-        rightControls={
-          <>
-            <button
+
+      {rows.length === 0 ? (
+        <div className={styles.bottomContainerNone}>
+          <Image
+            src={NoRecord}
+            alt="No transactions"
+            width={154}
+            height={140}
+          />
+        </div>
+      ) : (
+        <TransactionsTable
+          rows={rows}
+          total={20}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={setPage}
+          onPageSizeChange={(s) => {
+            setPageSize(s);
+            setPage(1);
+          }}
+          leftControls={
+            <select
               style={{
                 height: 34,
                 borderRadius: 8,
                 border: "1px solid #e5e7eb",
                 padding: "0 10px",
-                background: "#fff",
               }}
             >
-              Filters
-            </button>
-            <button
-              style={{
-                height: 34,
-                borderRadius: 8,
-                border: "1px solid #e5e7eb",
-                padding: "0 10px",
-                background: "#fff",
-              }}
-            >
-              Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
-            </button>
-          </>
-        }
-      />
+              <option>Transaction status</option>
+              <option>Success</option>
+              <option>Pending</option>
+            </select>
+          }
+          rightControls={
+            <>
+              <button
+                style={{
+                  height: 34,
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                  padding: "0 10px",
+                  background: "#fff",
+                }}
+              >
+                Filters
+              </button>
+              <button
+                style={{
+                  height: 34,
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                  padding: "0 10px",
+                  background: "#fff",
+                }}
+              >
+                Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
+              </button>
+            </>
+          }
+        />
+      )}
 
       {hasTargetSavings && (
         <WithdrawSoloSavingsModal
@@ -307,7 +317,7 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
             setLoading(false);
 
             if (!result.success) {
-              toast.error(result.error?.message);
+              toast.error(result.error || "Unable to top up savings.");
               return;
             }
 
