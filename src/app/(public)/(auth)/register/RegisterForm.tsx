@@ -52,7 +52,7 @@ const RegisterForm = () => {
   });
 
   return (
-    <div>
+    <div style={{"width": "90%"}}>
       <form className={styles.rightSide} onSubmit={formik.handleSubmit}>
         <div className={styles.heading}>
           <h1 className={styles.title}>Create a Secure Account</h1>
