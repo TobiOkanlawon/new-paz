@@ -8,6 +8,7 @@ type Props = {
   subTitle: string;
   secondDescription: string;
   backgroundColor: string;
+  onClick: () => void;
 };
 
 const InstantSavingsCard: React.FC<Props> = ({
@@ -16,9 +17,10 @@ const InstantSavingsCard: React.FC<Props> = ({
   title,
   subTitle,
   secondDescription,
+  onClick,
 }) => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <div
         style={{ backgroundColor: backgroundColor }}
         className={styles.iconContainer}

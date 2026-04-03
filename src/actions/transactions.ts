@@ -36,8 +36,6 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
       method: "GET",
     })
 
-    console.log("This is the response from the backend", res.transactions)
-
     if (res == null){
       return ok([])
     }
