@@ -8,11 +8,6 @@ import LoanIcon from "@/assets/wallet.svg";
 import InvestmentIcon from "@/assets/investments.svg";
 import WithdrawIcon from "@/assets/withdraw-icon.svg";
 import Rose from "@/assets/noto_rose.svg";
-import Tree from "@/assets/noto_christmas-tree.png";
-import Umbrella from "@/assets/umbrella.png";
-import Car from "@/assets/car.png";
-import House from "@/assets/house.png";
-import Plane from "@/assets/plane.png";
 import NoRecord from "@/assets/noRecord.png";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
 import AccountCard from "@/components/Dashboard/AccountCard";
@@ -26,69 +21,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import { getAllTransactions } from "@/actions/transactions";
-
-const BottomRight = () => {
-  return (
-    <div className={styles.bottomRightContainer}>
-      <div>
-        <div className={styles.recentTransactionsContainer}>
-          <div className={styles.recentTransactionsTitleContainer}>
-            <h2>Recent Transactions</h2>
-            <Link href="#">View All</Link>
-          </div>
-          <div
-            id="#home-bound-recent-transactions-container"
-            className={styles.recentTransactionsInnerContainer}
-          >
-            <RecentTransactionsCard
-              title="Payment Received"
-              subTitle="From Kelvin Bankole"
-              status="inbound"
-              amount="N150,000.00"
-              date="Today, 2:30 P.M"
-            />
-            <RecentTransactionsCard
-              title="Transfer to Savings"
-              subTitle="Monthly Savings"
-              status="outbound"
-              amount="N100,000.00"
-              date="Today, 10:00 A.M"
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.instantSavingsContainer}>
-        <div className={styles.instantSavingsTitleContainer}>
-          <h2>Instant Savings</h2>
-          <Link href="#">View All</Link>
-        </div>
-        <div className={styles.instantSavingsContainer1}>
-          <InstantSavingsCard
-            icon={<Piggy color="#22C55E" width={24} height={24} />}
-            title="Solo Savers"
-            subTitle="SA0799259833"
-            secondDescription="Christmas"
-            backgroundColor="#EBFFF2"
-          />
-          <InstantSavingsCard
-            icon={<Piggy color="#22C55E" width={24} height={24} />}
-            title="Solo Savers"
-            subTitle="SA0799259833"
-            secondDescription="House Rent"
-            backgroundColor="#EBFFF2"
-          />
-          <InstantSavingsCard
-            icon={<Piggy color="#22C55E" width={24} height={24} />}
-            title="Family vault"
-            subTitle="SA0799259833"
-            secondDescription="Relocation"
-            backgroundColor="#EBFFF2"
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
+import BottomRight from "@/components/Dashboard/BottomRight";
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
@@ -96,29 +29,28 @@ const Dashboard = async () => {
   const { accountSummary } = await getDashboardData();
   const allTransactionsResult = await getAllTransactions();
 
-  if (!allTransactionsResult.success) {
-    // some error handling, we can just force the empty screen and log the error
-  }
-
   const allTransactions = allTransactionsResult.success
     ? allTransactionsResult.data
     : [];
+
+  if (!accountSummary.success) {
+    throw new Error("failed to get account summary");
+  }
 
   // if the transactions data is an array, and if it is more than 1 in length
   const isTransactions = allTransactions && allTransactions.length > 0;
 
   const firstName = session?.user?.firstName as string;
-  const savingsAmount = accountSummary.success
-    ? getTotalBalance(accountSummary.data, "savings")
-    : 0;
+  const savingsAmount = getTotalBalance(accountSummary.data, "savings");
 
-  const loanAmount = accountSummary.success
-    ? getTotalBalance(accountSummary.data, "loans")
-    : 0;
+  const loanAmount = getTotalBalance(accountSummary.data, "loans");
 
-  const investmentAmount = accountSummary.success
-    ? getTotalBalance(accountSummary.data, "investments")
-    : 0;
+  const investmentAmount = getTotalBalance(accountSummary.data, "investments");
+
+  const accounts = {
+    soloSavings: accountSummary.data.soloSavings,
+    targetSavings: accountSummary.data.targetSavings,
+  };
 
   return (
     <div className={styles.container}>
@@ -222,7 +154,10 @@ const Dashboard = async () => {
       {isTransactions ? (
         <div className={styles.bottomContainer}>
           <BottomLeft showSoloSavings={!accountSummary.data?.hasSoloAccount} />
-          <BottomRight />
+          <BottomRight
+            savingsAccounts={accounts}
+            transactions={allTransactions}
+          />
         </div>
       ) : (
         <div className={styles.bottomContainerNone}>

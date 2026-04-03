@@ -9,12 +9,14 @@ import NotificationDetailModal, {
   NotificationDetail,
 } from "@/components/NotificationDetailModal/NotificationDetailModal";
 import Notifications from "@/assets/notifications.png";
-import ProfileImage from "@/assets/profile-dummy.png";
+// import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
 import HeaderDropdown from "../HeaderDropdowns";
 
 import { useSession } from "next-auth/react";
 import Dropdown from "@/assets/dropdown.svg";
+
+const ProfileImage = "/profile.png";
 
 const MOCK: NotificationItem[] = [
   {
@@ -144,7 +146,12 @@ const Header = () => {
             }}
             className={styles.profileContainer}
           >
-            <Image src={ProfileImage} alt="Profile Image" />
+            <Image
+              height={20}
+              width={20}
+              src={ProfileImage}
+              alt="Profile Image"
+            />
             <p className={styles.profileFirstName}>{firstName}</p>
           </div>
         </div>

@@ -41,16 +41,12 @@ export async function addAccount(
 
     const token = session.accessToken;
 
-    console.log("[addAccount] token present:", !!token);
-
     const body = {
       accountName,
       accountNo,
       bankName,
       walletId: walletAccount,
     };
-
-    console.log("[addAccount] request body:", JSON.stringify(body));
 
     const res = await fetch(
       `${process.env.API_BASE_URL}/v1/users/user/add-account`,

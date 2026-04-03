@@ -17,7 +17,7 @@ import LoansIcon from "@/assets/wallet.svg";
 import ThriftIcon from "@/assets/thrift.svg";
 import InvestmentsIcon from "@/assets/investments.svg";
 import SettingsIcon from "@/assets/settings.svg";
-import ProfileImage from "@/assets/profile-dummy.png";
+// import ProfileImage from "@/assets/profile-dummy.png";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 
@@ -29,6 +29,8 @@ type OptionProps = {
   alt: string; // the alt tag for the svg
   collapsed?: boolean;
 };
+
+const ProfileImage = "/profile.png";
 
 const SidebarOption: React.FC<OptionProps> = ({
   active,

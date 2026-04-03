@@ -53,30 +53,37 @@ const LoginForm = () => {
     },
     validationSchema: schema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
-      try {
-        const result = await signIn("credentials", {
-          email: values.email,
-          password: values.password,
-          redirect: false,
-        });
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
 
-        if (result && result.ok) router.push("/dashboard");
-      } catch (e) {
-        if (e instanceof NotVerifiedError) {
-          console.log(e, e.type);
-          if (e.type == "EMAIL") {
-            console.log("HERE NOW");
-            redirect("/verification/email");
-          } else if (e.type == "PHONE") {
-            redirect("/verification/phone");
-          }
+      if (!result) {
+        toast.error("An error occurred");
+        return;
+      }
 
-          setSubmitting(false);
-          toast.error(e.message);
-          setErrors({
-            email: "Invalid email or password",
-          });
+      if (result.error) {
+        if (result.error === "EMAIL_NOT_VERIFIED") {
+          router.push("/verification/email");
+          return;
         }
+
+        if (result.error === "PHONE_NOT_VERIFIED") {
+          router.push("/verification/phone");
+          return;
+        }
+
+        toast.error("Invalid email or password");
+        setErrors({
+          email: "Invalid email or password",
+        });
+        return;
+      }
+
+      if (result.ok) {
+        router.push("/dashboard");
       }
     },
   });

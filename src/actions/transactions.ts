@@ -36,8 +36,6 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
       method: "GET",
     })
 
-    console.log("This is the response from the backend", res.transactions)
-
     if (res == null){
       return ok([])
     }
@@ -66,3 +64,46 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
   }
 };
 
+
+export const getSavingsTransactions = async (accountNo: string) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    throw new Error("user not authenticated")
+  }
+
+  const email = session.user.email;
+
+  try {
+    const res: GetAllTransactionsAPIResponse  = await apiFetch(`/v1/users/user/savings/fetch-transactions?email=${email}&acctno=${accountNo}`, {
+      isProtected: true,
+      method: "GET",
+    })
+
+    if (res == null){
+      return ok([])
+    }
+
+    if (!res || !res.transactions) {
+      return fail(new Error("Invalid response from API"));
+    }
+
+    const transformedData: TAllTransactions = res.transactions.map((i: TransactionsDataResponse) => {
+      return {
+	id: i.id,
+	fromAccount: i.from_account,
+	toAccount: i.to_account,
+	amount: i.amount,
+	currency: i.currency,
+	description: i.description,
+	reference: i.reference,
+	status: i.status,
+	createdAt: i.created_at
+      }
+    })
+
+    return ok(transformedData)
+  } catch (e) {
+    return fail(e)
+  }
+};
