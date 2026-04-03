@@ -95,13 +95,14 @@ const Dashboard = async () => {
 
   const { accountSummary } = await getDashboardData();
   const allTransactionsResult = await getAllTransactions();
-  
 
   if (!allTransactionsResult.success) {
     // some error handling, we can just force the empty screen and log the error
   }
 
-  const allTransactions = allTransactionsResult.data;
+  const allTransactions = allTransactionsResult.success
+    ? allTransactionsResult.data
+    : [];
 
   // if the transactions data is an array, and if it is more than 1 in length
   const isTransactions = allTransactions && allTransactions.length > 0;
@@ -144,9 +145,8 @@ const Dashboard = async () => {
           backgroundColor="#E0DFFD"
           amount={loanAmount ?? 0}
           icon={<LoanIcon color="#4F46E5" height={24} width={24} />}
-          color="#22C55E"
+          iconColor="#22C55E"
           title="Total Loans (COMING SOON)"
-          rate={8.5}
           rateBackgroundColor="#DBF8E8"
           rateTextColor="#12B76A"
         />
@@ -154,7 +154,7 @@ const Dashboard = async () => {
           backgroundColor="#F9EAD1"
           amount={investmentAmount ?? 0}
           icon={<InvestmentIcon color="#F7B341" height={24} width={24} />}
-          color="#22C55E"
+          iconColor="#22C55E"
           title="Total Investments (COMING SOON)"
         />
       </div>
