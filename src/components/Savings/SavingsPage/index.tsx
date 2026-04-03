@@ -29,7 +29,10 @@ import { HiOutlineLink } from "react-icons/hi";
 import Rose from "@/assets/noto_rose.svg";
 import Piggy from "@/assets/piggy-bank.svg";
 import { toast } from "react-toastify";
-import { createSavingsTopup, createSoloSavingsAccount } from "@/actions/savings";
+import {
+  createSavingsTopup,
+  createSoloSavingsAccount,
+} from "@/actions/savings";
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import TopUpTransferDetailsModal from "../TopUpDetailsModal";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
@@ -45,12 +48,9 @@ const SavingsClient = ({
   rows,
   showFundAccountButton,
 }: Props) => {
-  const { data: session } = useSession();
-
   const [fundModalOpen, setFundModalOpen] = useState(false);
   const [fundLoading, setFundLoading] = useState(false);
   const [soloSaversModalOpen, setSoloSaversModalOpen] = useState(false);
-  const [amount, setAmount] = useState(0);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
@@ -88,43 +88,9 @@ const SavingsClient = ({
         setTopUpDetailsModalOpen(true);
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An error occurred";
+      const errorMessage =
+        err instanceof Error ? err.message : "An error occurred";
       toast.error(errorMessage);
-    }
-  };
-
-  const handleFundAccount = async ({ amount }: { amount: number }) => {
-    const email = session?.user?.email;
-    if (!email) return;
-
-    setFundLoading(true);
-
-    try {
-      await openPaystackPopup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-        email,
-        amount: amount * 100,
-        ref: new Date().getTime().toString(),
-
-        onSuccess: async () => {
-          setFundModalOpen(false);
-          setFundLoading(false);
-
-          const result = await getAccountSummary();
-
-          if (result.success) {
-            const newBalance = getTotalBalance(result.data, "savings");
-            setAmount(newBalance);
-          }
-        },
-
-        onClose: () => {
-          setFundLoading(false);
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      setFundLoading(false);
     }
   };
 
@@ -249,43 +215,43 @@ const SavingsClient = ({
         </div>
       </div>
       {rows && rows.length > 0 ? (
-          <TransactionsTable
-            rows={rows}
-            total={20}
-            page={page}
-            pageSize={pageSize}
-            onPageChange={() => {}}
-            onPageSizeChange={(s) => {
-              setPageSize(s);
-              setPage(1);
-            }}
-            showFilter={false}
-            leftControls={
-              <select className={styles.tableControl}>
-                <option>Transaction status</option>
-                <option>Success</option>
-                <option>Pending</option>
-              </select>
-            }
-            rightControls={
-              <div className={styles.tableRightControls}>
-                <button className={styles.tableControlButton}>Filters</button>
-                <button className={styles.tableControlButton}>
-                  Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
-                </button>
-              </div>
-            }
+        <TransactionsTable
+          rows={rows}
+          total={20}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={() => {}}
+          onPageSizeChange={(s) => {
+            setPageSize(s);
+            setPage(1);
+          }}
+          showFilter={false}
+          leftControls={
+            <select className={styles.tableControl}>
+              <option>Transaction status</option>
+              <option>Success</option>
+              <option>Pending</option>
+            </select>
+          }
+          rightControls={
+            <div className={styles.tableRightControls}>
+              <button className={styles.tableControlButton}>Filters</button>
+              <button className={styles.tableControlButton}>
+                Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
+              </button>
+            </div>
+          }
+        />
+      ) : (
+        <div className={styles.bottomContainerNone}>
+          <Image
+            src={NoRecord}
+            alt="No transactions"
+            width={124}
+            height={120}
           />
-        ) : (
-          <div className={styles.bottomContainerNone}>
-            <Image
-              src={NoRecord}
-              alt="No transactions"
-              width={124}
-              height={120}
-            />
-          </div>
-        )}
+        </div>
+      )}
       <AllAccountsModal
         open={fundModalOpen}
         onClose={() => setFundModalOpen(false)}

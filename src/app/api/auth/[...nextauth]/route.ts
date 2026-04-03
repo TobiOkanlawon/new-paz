@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiFetch } from "@/libs/api";
-import { BackendError, NotVerifiedError } from "@/libs/errors";
+import { BackendError } from "@/libs/errors";
 
 const authSecret =
   process.env.NEXTAUTH_SECRET ??
@@ -38,10 +38,10 @@ export const authOptions: NextAuthOptions = {
           if (e instanceof BackendError) {
             // so, if the problem is that the user's email is not verified, then we will throw a redirect to the email verification page.
 
-            if (e.message == "email not verified") {
-              throw new NotVerifiedError(e.message, "EMAIL");
-            } else if (e.message == "phone number not verified") {
-              throw new NotVerifiedError(e.message, "PHONE");
+            if (e.message === "email not verified") {
+              throw new Error("EMAIL_NOT_VERIFIED");
+            } else if (e.message === "phone number not verified") {
+              throw new Error("PHONE_NOT_VERIFIED");
             }
           }
           throw e;

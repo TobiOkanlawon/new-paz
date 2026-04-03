@@ -6,18 +6,17 @@ import SavingsProgressCard from "@/components/SavingsProgressCard/SavingsProgres
 import TransactionsTable, {
   TransactionRow,
 } from "@/components/TransactionTable/TransactionTable";
-import NoRecord from '@/assets/noRecord.png'
+import NoRecord from "@/assets/noRecord.png";
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
-import { getAccountSummary } from "@/actions/dashboard";
-import Link from "next/link";
+
 import Button from "@/components/Button";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
 import {
   createSoloSavingsAccount,
   SavingTopupResponse,
 } from "@/actions/savings";
-import { openPaystackPopup } from "@/libs/paystack";
+
 import { useSession } from "next-auth/react";
 import { createSavingsTopup } from "@/actions/savings";
 import TopUpTransferDetailsModal from "@/components/Savings/TopUpDetailsModal/index";
@@ -86,7 +85,7 @@ import { toast } from "react-toastify";
 //   },
 // ];
 
-const rows: TransactionRow[] = []
+const rows: TransactionRow[] = [];
 
 type Props = {
   accountDetails: TAccountDetails;
@@ -101,8 +100,6 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
     amount?: string;
   }
 
-  const { data: session } = useSession();
-
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
 
@@ -114,8 +111,6 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
   const [fundModalOpen, setFundModalOpen] = useState(false);
   const [fundLoading, setFundLoading] = useState(false);
 
-  const notifications: Notification[] = [];
-
   const [transferDetails, setTransferDetails] =
     useState<null | SavingTopupResponse>(null);
   const [showTransferModal, setShowTransferModal] = useState(false);
@@ -126,40 +121,6 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
 
   const closeSoloSavingsModal = () => {
     setIsSoloSaverModalOpen(false);
-  };
-
-  const handleFundAccount = async ({ amount }: { amount: number }) => {
-    const email = session?.user?.email;
-
-    if (!email) {
-      return;
-    }
-
-    /* send a request to the backend*/
-
-    setFundLoading(true);
-
-    try {
-      await openPaystackPopup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-        email,
-        amount: amount * 100,
-        ref: new Date().getTime().toString(),
-        onSuccess: (reference) => {
-          // console.log("Payment successful:", reference);
-          setFundModalOpen(false);
-          setFundLoading(false);
-        },
-        onClose: () => {
-          console.log("Payment closed");
-          setFundLoading(false);
-        },
-      });
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Something went wrong";
-      toast.error(message);
-      setFundLoading(false);
-    }
   };
 
   const hasSoloSaver = accountDetails.hasSoloAccount;
@@ -209,19 +170,7 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
         )}
       </div>
 
-      {/* <div className={styles.activities}>
-        <Notifications
-          header="Recent activities"
-          notifications={notifications}
-        />
-      </div>
-      {isActive && (
-        <Modal isOpen={isActive} onClose={handleCloseModal}>
-          {<WithdrawModal />}
-        </Modal>
-      )} */}
-
-      {rows.length === 0 ? (
+      {transactions.length ? (
         <div className={styles.bottomContainerNone}>
           <Image
             src={NoRecord}
@@ -231,57 +180,57 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
           />
         </div>
       ) : (
-      <TransactionsTable
-        rows={rows}
-        total={20}
-        page={page}
-        pageSize={pageSize}
-        onPageChange={setPage}
-        onPageSizeChange={(s) => {
-          setPageSize(s);
-          setPage(1);
-        }}
-        leftControls={
-          <select
-            style={{
-              height: 34,
-              borderRadius: 8,
-              border: "1px solid #e5e7eb",
-              padding: "0 10px",
-            }}
-          >
-            <option>Transaction status</option>
-            <option>Success</option>
-            <option>Pending</option>
-          </select>
-        }
-        rightControls={
-          <>
-            <button
+        <TransactionsTable
+          rows={rows}
+          total={20}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={setPage}
+          onPageSizeChange={(s) => {
+            setPageSize(s);
+            setPage(1);
+          }}
+          leftControls={
+            <select
               style={{
                 height: 34,
                 borderRadius: 8,
                 border: "1px solid #e5e7eb",
                 padding: "0 10px",
-                background: "#fff",
               }}
             >
-              Filters
-            </button>
-            <button
-              style={{
-                height: 34,
-                borderRadius: 8,
-                border: "1px solid #e5e7eb",
-                padding: "0 10px",
-                background: "#fff",
-              }}
-            >
-              Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
-            </button>
-          </>
-        }
-      />
+              <option>Transaction status</option>
+              <option>Success</option>
+              <option>Pending</option>
+            </select>
+          }
+          rightControls={
+            <>
+              <button
+                style={{
+                  height: 34,
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                  padding: "0 10px",
+                  background: "#fff",
+                }}
+              >
+                Filters
+              </button>
+              <button
+                style={{
+                  height: 34,
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                  padding: "0 10px",
+                  background: "#fff",
+                }}
+              >
+                Wed, 3 Sept, 2024 - Sat, 5 Sept, 2024
+              </button>
+            </>
+          }
+        />
       )}
 
       {hasSoloSaver && (
