@@ -1,7 +1,7 @@
 "use server";
 
 import {
-  getAllTransactions,
+  // getAllTransactions,
   getSavingsTransactions,
 } from "@/actions/transactions";
 import SoloSaver from "./SoloSaver";

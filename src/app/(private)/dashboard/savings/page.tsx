@@ -1,4 +1,5 @@
 import { getAccountSummary } from "@/actions/dashboard";
+import { getSavingsTransactions } from "@/actions/transactions";
 import SavingsClient from "@/components/Savings/SavingsPage";
 import { toast } from "react-toastify";
 
@@ -65,12 +66,15 @@ const Savings = async () => {
   //     status: "Success",
   //   },
   // ];
-  const rows = [];
   const result = await getAccountSummary();
 
   if (!result.success) {
     return "Error while fetching account summary";
   }
+
+  const transactions = await getSavingsTransactions(
+    result.data.soloSavings.accountNo,
+  );
 
   const accountSummary = result.data;
 
@@ -81,9 +85,19 @@ const Savings = async () => {
   const showFundAccountButton =
     hasSoloAccount || hasTargetSavings || hasFamilyVault;
 
+  if (!transactions.success) {
+    return (
+      <SavingsClient
+        rows={[]}
+        accountSummary={accountSummary}
+        showFundAccountButton={showFundAccountButton}
+      />
+    );
+  }
+
   return (
     <SavingsClient
-      rows={rows}
+      rows={[]}
       accountSummary={accountSummary}
       showFundAccountButton={showFundAccountButton}
     />
