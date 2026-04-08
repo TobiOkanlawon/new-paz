@@ -12,9 +12,10 @@ const QuickActionCard: React.FC<QuickActionProps> = ({
   icon,
   text,
   backgroundColor,
+  action,
 }) => {
   return (
-    <div className={styles.quickActionCardContainer}>
+    <div onClick={action} className={styles.quickActionCardContainer}>
       <div className={styles.quickActionCardInnerContainer}>
         <div
           className={styles.quickActionCardIconContainer}

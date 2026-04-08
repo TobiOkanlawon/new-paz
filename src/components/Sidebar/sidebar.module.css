@@ -206,4 +206,27 @@
         padding-bottom: 0;
     }
 }
+@media screen and (max-width: 744px){
+    .sidebarContainerCollapsed{
+        width: 50px;
+        padding: 12px 4px;
+    }
+    .sidebarContainer{
+        padding: 12px 4px;
+    }
+    .optionContainerCollapsed {
+        padding: 8px;
+        margin-bottom: 24px;
+    }
+    .centreContainer {
+        padding: 8px 0;
+    }
+    .toggleIcon, .sidebarIcon {
+        width: 24px !important;
+        height: 24px !important;
+    }
+    .chevron{
+        display: none;
+    }
+}
 

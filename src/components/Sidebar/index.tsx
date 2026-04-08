@@ -213,7 +213,7 @@ export default function Sidebar({
           <div className={styles.centreContainer}>
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<DashboardIcon stroke="#214CCF" />}
+              icon={<DashboardIcon stroke="#214CCF" className={styles.sidebarIcon} />}
               title="Dashboard"
               href="/dashboard"
               active={pathname == "/dashboard"}
@@ -221,7 +221,7 @@ export default function Sidebar({
             />
             <SavingsDropdown
               alt="piggy bank icon"
-              icon={<Piggy fill="transparent" width={24} height={24} />}
+              icon={<Piggy fill="transparent" width={24} height={24} className={styles.sidebarIcon} />}
               collapsed={collapsed}
               pathname={pathname}
               subItems={[
@@ -234,7 +234,7 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<LoansIcon width={24} height={24} />}
+              icon={<LoansIcon width={24} height={24} className={styles.sidebarIcon} />}
               title="Loans"
               // href="/dashboard/loans"
               href="#"
@@ -243,7 +243,7 @@ export default function Sidebar({
             />
             {/*<SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<ThriftIcon width={24} height={24} />}
+              icon={<ThriftIcon width={24} height={24} className={styles.sidebarIcon} />}
               title="Thrifts"
               href="#"
               // href="/dashboard/thrift"
@@ -252,7 +252,7 @@ export default function Sidebar({
               />*/}
             {/*<SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<InvestmentsIcon width={24} height={24} />}
+              icon={<InvestmentsIcon width={24} height={24} className={styles.sidebarIcon} />}
               title="Investments"
               href="#"
               // href="/dashboard/investments"
@@ -261,7 +261,7 @@ export default function Sidebar({
               />*/}
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<SettingsIcon width={24} height={24} />}
+              icon={<SettingsIcon width={24} height={24} className={styles.sidebarIcon} />}
               title="Settings"
               href="/settings"
               active={isSubPath("/settings", pathname)}

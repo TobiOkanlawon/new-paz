@@ -8,7 +8,7 @@
 }
 
 .pageContainerCollapsed {
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 60px 1fr;
 }
 
 .dashboardMain {
@@ -19,7 +19,7 @@
 }
 
 .mainContent {
-  padding: 0px 0px 38px 90px;
+  padding: 0px 0px 38px 65px;
   overflow-y: auto;
 }
 
