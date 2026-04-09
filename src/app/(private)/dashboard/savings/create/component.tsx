@@ -18,7 +18,7 @@ import CreateTargetSaversModal from "@/components/Savings/CreateTargetSavingsMod
 // import Christmas from "../assets/Christmas.png";
 // import Wigs from "../assets/Wigs.png";
 // import Bags from "../assets/Bags.png";
-import Vacation from "@/assets/vacation.svg";
+import Vacation from "@/assets/vacation.png";
 import Car from "@/assets/car.png";
 import House from "@/assets/house.png";
 import School from "@/assets/school.png";
