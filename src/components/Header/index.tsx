@@ -13,7 +13,7 @@ import Notifications from "@/assets/notifications.png";
 import StarIcon from "@/assets/star.png";
 import HeaderDropdown from "../HeaderDropdowns";
 
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Dropdown from "@/assets/dropdown.svg";
 
 const ProfileImage = "/profile.png";
@@ -42,12 +42,6 @@ const quickLinksDropdowns = [
   { label: "Withdraw Funds", href: "/dashboard/withdraw" },
 ];
 
-const profileDropdowns = [
-  { label: "My Profile", href: "/dashboard/profile" },
-  { label: "Settings", href: "/dashboard/settings" },
-  // {label: "Logout", href: "/logout"},
-];
-
 const Header = () => {
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +58,19 @@ const Header = () => {
   const [dropdownPos, setDropDownPos] = useState(0.2)
 
   const notifications = useMemo(() => MOCK, []);
+
+  const handleLogout = async () => {
+    // Dispatch logout event to trigger client-side cleanup
+    window.dispatchEvent(new Event("logout"));
+    // Then call signOut which will redirect to logout endpoint
+    await signOut({ callbackUrl: "/api/auth/logout", redirect: true });
+  };
+
+  const profileDropdowns = useMemo(() => [
+    { label: "My Profile", href: "/dashboard/profile" },
+    { label: "Settings", href: "/dashboard/settings" },
+    { label: "Logout", functions: handleLogout },
+  ], []);
 
   useEffect(() => {
     const updateNavHeight = () => {

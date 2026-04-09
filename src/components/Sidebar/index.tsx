@@ -166,8 +166,11 @@ export default function Sidebar({
   collapsed: boolean;
   action: () => void;
 }) {
-  const handleLogout = () => {
-    signOut();
+  const handleLogout = async () => {
+    // Dispatch logout event to trigger client-side cleanup
+    window.dispatchEvent(new Event("logout"));
+    // Then call signOut which will redirect to logout endpoint
+    await signOut({ callbackUrl: "/api/auth/logout", redirect: true });
   };
 
   const session = useSession();
