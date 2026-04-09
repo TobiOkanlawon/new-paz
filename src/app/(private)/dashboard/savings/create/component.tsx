@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./card.module.css";
 
 // images
-import Rose from "@/assets/noto_rose.svg";
+import Rose from "@/assets/noto_rose.png";
 import { useState } from "react";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
 import {
@@ -19,9 +19,9 @@ import CreateTargetSaversModal from "@/components/Savings/CreateTargetSavingsMod
 // import Wigs from "../assets/Wigs.png";
 // import Bags from "../assets/Bags.png";
 import Vacation from "@/assets/vacation.svg";
-import Car from "@/assets/car.svg";
-import House from "@/assets/house.svg";
-import School from "@/assets/school.svg";
+import Car from "@/assets/car.png";
+import House from "@/assets/house.png";
+import School from "@/assets/school.png";
 // import Rent from "../assets/Rent.png";
 // import School from "../assets/School.png";
 // import Relocation from "../assets/Relocation.png";
