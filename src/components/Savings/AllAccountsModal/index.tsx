@@ -37,8 +37,8 @@ type Props = {
 };
 
 const AllAccountsModal = ({ open, onClose, data, onSelect }: Props) => {
+  console.log("Data", data)
   const { soloSavings, targetSavings } = data;
-
   return (
     <ModalShell open={open} onClose={onClose} title="Fund Account">
       <div className={styles.container}>

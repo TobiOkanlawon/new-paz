@@ -12,6 +12,7 @@ const Dashboard = async () => {
   const { accountSummary } = await getDashboardData();
   const allTransactionsResult = await getAllTransactions();
 
+
   const allTransactions = allTransactionsResult.success
     ? allTransactionsResult.data
     : [];

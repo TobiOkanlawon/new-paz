@@ -61,6 +61,7 @@ const Header = () => {
   const [data, setData] = useState<NotificationDetail | null>(null);
   const [openQuickLinks, setOpenQuickLinks] = useState(false);
   const [openProfileLinks, setOpenProfileLinks] = useState(false);
+  const [dropdownPos, setDropDownPos] = useState(0.2)
 
   const notifications = useMemo(() => MOCK, []);
 
@@ -91,6 +92,24 @@ const Header = () => {
 
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    const updateDropdownPosition = () => {
+      if (navRef.current) {
+        const navwidth = navRef.current.offsetWidth;
+        if (navwidth <= 708) {
+          setDropDownPos(0.2);
+        } else {
+          setDropDownPos(12); // 12rem = 192px
+        }
+      }
+    };
+
+    updateDropdownPosition();
+    window.addEventListener("resize", updateDropdownPosition);
+
+    return () => window.removeEventListener("resize", updateDropdownPosition);
   }, []);
 
   const openNotification = (id: string) => {
@@ -174,7 +193,7 @@ const Header = () => {
         isOpen={openQuickLinks}
         Header="Quick Actions"
         navLinks={quickLinksDropdowns}
-        rightPos="12rem"
+        rightPos={`${dropdownPos}rem`}
       />
       <HeaderDropdown
         isOpen={openProfileLinks}

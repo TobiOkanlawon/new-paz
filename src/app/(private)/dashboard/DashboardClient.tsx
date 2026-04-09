@@ -12,7 +12,15 @@ import QuickActionCard from "@/components/Dashboard/QuickActionCard";
 import BottomLeft from "@/components/Dashboard/BottomLeft";
 import BottomRight from "@/components/Dashboard/BottomRight";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
+import AllAccountsModal from "@/components/Savings/AllAccountsModal";
 import TopUpTargetSavingsModal from "@/components/TopUpTargetSavingsModal";
+import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
+import { toast } from "react-toastify";
+import {
+  createSavingsTopup,
+  createSoloSavingsAccount,
+} from "@/actions/savings";
+import TopUpTransferDetailsModal from "@/components/Savings/TopUpDetailsModal";
 
 interface DashboardClientProps {
   firstName: string;
@@ -37,11 +45,29 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
 }) => {
   const [openWithdraw, setOpenWithdraw] = useState(false);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState<null | {
+  // const [selectedAccount, setSelectedAccount] = useState<null | {
+  //   accountNo: string;
+  //   title: string;
+  // }>(null);
+  const [loading, setLoading] = useState(false);
+  const [fundLoading, setFundLoading] = useState(false);
+
+  const [fundModalOpen, setFundModalOpen] = useState(false);
+  const [topUpModalOpen, setTopUpModalOpen] = useState(false);
+  const [topUpDetailsModalOpen, setTopUpDetailsModalOpen] = useState(false);
+  const [topUpDetails, setTopUpDetails] = useState<{
+    accountName: string;
+    accountNumber: string;
+    bank: { name: string };
+    amount: number;
+    displayText: string;
+  } | null>(null);
+
+  const [selectedAccount, setSelectedAccount] = useState<{
+    type: "solo" | "target";
     accountNo: string;
     title: string;
-  }>(null);
-  const [loading, setLoading] = useState(false);
+  } | null>(null);
 
   const handleTopUp = () => {
       setShowTopUpModal(true);
@@ -50,6 +76,45 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
   const handleWithdraw = () => {
     setOpenWithdraw(true);
   };
+
+  const accountDataForModal = () => {
+    const a: typeof accountSummary = accountSummary;
+    return {
+      soloSavings: a.data.hasSoloAccount ? a.data.soloSavings : undefined,
+      targetSavings: a.data.targetSavings,
+    };
+  };
+
+    const handleSelectAccount = (account: {
+    type: "solo" | "target";
+    accountNo: string;
+    title: string;
+  }) => {
+    setSelectedAccount(account);
+    setFundModalOpen(false);
+    setTopUpModalOpen(true);
+  };
+
+  const handleTopUpConfirm = async ({ amount }: { amount: number }) => {
+      if (!selectedAccount) return;
+  
+      try {
+        const result = await createSavingsTopup({
+          savingsWallet: selectedAccount.accountNo,
+          amount,
+        });
+  
+        if (result.success) {
+          setTopUpModalOpen(false);
+          setTopUpDetails(result.data);
+          setTopUpDetailsModalOpen(true);
+        }
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "An error occurred";
+        toast.error(errorMessage);
+      }
+    };
 
   return (
     <>
@@ -101,7 +166,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           <div className={styles.quickActionCards}>
             <div className={styles.quickActionCardsInnerContainer}>
               <QuickActionCard
-                action={handleTopUp}
+                action={()=>setFundModalOpen(true)}
                 backgroundColor="#EBFFF2"
                 icon={
                   <Piggy
@@ -164,7 +229,31 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
         />
       )}
 
-      {accounts.targetSavings && (
+      <AllAccountsModal
+        open={fundModalOpen}
+        onClose={() => setFundModalOpen(false)}
+        data={accountDataForModal()}
+        onSelect={handleSelectAccount}
+      />
+
+      {selectedAccount && (
+        <TopUpSoloSavingsModal
+          open={topUpModalOpen}
+          onClose={() => setTopUpModalOpen(false)}
+          accountName={selectedAccount.title}
+          currentBalance={
+            selectedAccount.type === "solo"
+              ? accountSummary.soloSavings.amount
+              : (accountSummary.targetSavings.find(
+                  (t: any) => t.accountNo === selectedAccount.accountNo,
+                )?.amount ?? 0)
+          }
+          loading={fundLoading}
+          onConfirm={handleTopUpConfirm}
+        />
+      )}
+
+      {/* {accounts.targetSavings && (
         <TopUpTargetSavingsModal
           open={showTopUpModal}
           onClose={() => setShowTopUpModal(false)}
@@ -188,7 +277,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
             setLoading(false);
           }}
         />
-      )}
+      )} */}
     </>
   );
 };

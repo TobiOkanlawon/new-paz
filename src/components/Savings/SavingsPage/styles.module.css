@@ -296,4 +296,10 @@
   .midSectionRight {
     display: none;
   }
+  .fundAccountButton{
+    display: none;
+  }
+  .savingsCard{
+    width: 100%;
+  }
 }
