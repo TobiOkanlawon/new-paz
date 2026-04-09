@@ -9,14 +9,14 @@ import { usePathname } from "next/navigation";
 
 import Image from "next/image";
 
-import DashboardIcon from "@/assets/dashboard-logo.svg";
+import DashboardIcon from "@/assets/dashboard-logo.png";
 import ToggleIcon from "@/assets/toggle-icon.png";
 import CompoundLogo from "@/assets/compound-logo.png";
-import Piggy from "@/assets/piggy-bank.svg";
-import LoansIcon from "@/assets/wallet.svg";
-import ThriftIcon from "@/assets/thrift.svg";
-import InvestmentsIcon from "@/assets/investments.svg";
-import SettingsIcon from "@/assets/settings.svg";
+import Piggy from "@/assets/piggy-bank.png";
+import LoansIcon from "@/assets/wallet.png";
+import ThriftIcon from "@/assets/thrift.png";
+import InvestmentsIcon from "@/assets/investments.png";
+import SettingsIcon from "@/assets/settings.png";
 // import ProfileImage from "@/assets/profile-dummy.png";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
