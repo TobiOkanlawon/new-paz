@@ -195,10 +195,6 @@
   /* margin-top: auto; */
 }
 
-.loginButton {
-  width: 80px;
-}
-
 .nextButton {
   display: flex;
   align-items: center;

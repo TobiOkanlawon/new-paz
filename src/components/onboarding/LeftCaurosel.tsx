@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import styles from "./LeftStyle.module.css";
 import Button from "../Button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
@@ -88,6 +88,28 @@ const LeftCaurosel: React.FC<Props> = ({ view }) => {
     router.push("/login");
   };
 
+  const handleRegister = () => {
+    router.push("/register");
+  };
+
+  const pathName = usePathname();
+
+  let button: React.ReactNode;
+
+  if (pathName == "/register") {
+    button = (
+      <Button variant="outlined" onClick={handleLogin}>
+        Login
+      </Button>
+    );
+  } else {
+    button = (
+      <Button variant="outlined" onClick={handleRegister}>
+        Register
+      </Button>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.bgContainer}>
@@ -152,11 +174,7 @@ const LeftCaurosel: React.FC<Props> = ({ view }) => {
           <LoggedInView />
         ) : (
           <div className={styles.buttonContainer}>
-            <div className={styles.loginButton}>
-              <Button variant="outlined" onClick={handleLogin}>
-                Login
-              </Button>
-            </div>
+            <div className={styles.loginButton}>{button}</div>
             <button className={styles.nextButton} onClick={goToNext}>
               Next <FaArrowRight />
             </button>
