@@ -1,8 +1,6 @@
 .inputGroup {
-  width: 100%;
-  width: -moz-available; /* Firefox */
-  width: -webkit-fill-available; /* Safari/Chrome */
-  width: fill-available; /* Future unprefixed */
+    width: 100%;
+    width: stretch;
   height: 74px;
   display: flex;
   flex-direction: column;
