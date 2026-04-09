@@ -2,6 +2,8 @@ import "./globals.css";
 import { Poppins, Montserrat, Inter } from "next/font/google";
 import Providers from "@/components/globals/providers";
 import { Metadata } from "next";
+import { Suspense } from "react";
+import { Loading } from "@/components/Loading";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,7 +43,9 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`}
     >
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </Providers>
       </body>
     </html>
   );
