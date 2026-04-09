@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import Button from "@/components/Button";
 import { verifyEmail, resendCode } from "../actions";
 import { toast } from "react-toastify";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../verification.module.css";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 
@@ -15,7 +15,7 @@ const EmailVerification = () => {
   const timeInSeconds = 2 * 60; // two minutes
   const [time, setTime, isDone] = useCountdownTimer(timeInSeconds);
 
-  const inputRefs = useRef([]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const router = useRouter();
 
@@ -41,7 +41,7 @@ const EmailVerification = () => {
     // TODO: ideally, there should be a redirect from the page if there's no email in the URL, but we'll leave it till the backend implementation for the alternate path is up
   }, [params, router]);
 
-  const handleChange = (index, value) => {
+  const handleChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -51,13 +51,16 @@ const EmailVerification = () => {
     }
   };
 
-  const handleKeyDown = (index, e) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  const handlePaste = (e) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
     const pasted = e.clipboardData
       .getData("text")
       .replace(/\D/g, "")
@@ -163,7 +166,9 @@ const EmailVerification = () => {
             {otp.map((digit, i) => (
               <input
                 key={i}
-                ref={(el) => (inputRefs.current[i] = el)}
+                ref={(el) => {
+                  inputRefs.current[i] = el;
+                }}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}

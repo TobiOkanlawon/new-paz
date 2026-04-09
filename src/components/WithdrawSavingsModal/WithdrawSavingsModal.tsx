@@ -15,7 +15,10 @@ type Props = {
   currentSavingsLabel?: string;
   currentSavingsAmount?: number; // e.g. 600000
 
-  onWithdraw?: (payload: { amount: number; source: Source }) => void | Promise<void>;
+  onWithdraw?: (payload: {
+    amount: number;
+    source: Source;
+  }) => void | Promise<void>;
 };
 
 const formatNaira = (n: number) =>
@@ -38,7 +41,8 @@ const WithdrawSavingsModal = ({
     return Number.isFinite(n) ? n : 0;
   }, [amount]);
 
-  const canSubmit = numericAmount > 0 && numericAmount <= currentSavingsAmount && !loading;
+  const canSubmit =
+    numericAmount > 0 && numericAmount <= currentSavingsAmount && !loading;
 
   const setQuick = (n: number) => setAmount(String(n));
 
@@ -48,19 +52,33 @@ const WithdrawSavingsModal = ({
   };
 
   return (
-    <ModalShell open={open} onClose={onClose} title="Withdraw from Savings Account" width={620}>
+    <ModalShell
+      open={open}
+      onClose={onClose}
+      title="Withdraw from Savings Account"
+      width={620}
+    >
       <div className={styles.wrap}>
         <div className={styles.topCard}>
           <div className={styles.topLeft}>
-            <Image src="/images/piggy.png" width={64} height={55} alt="Savings Icon" className={styles.icon} />
+            <Image
+              src="/images/piggy.png"
+              width={64}
+              height={55}
+              alt="Savings Icon"
+              className={styles.icon}
+            />
             <div>
               <p className={styles.topTitle}>{currentSavingsLabel}</p>
-              <p className={styles.topAmount}>{formatNaira(currentSavingsAmount)}</p>
+              <p className={styles.topAmount}>
+                {formatNaira(currentSavingsAmount)}
+              </p>
             </div>
           </div>
         </div>
 
         <Input
+          name="amount"
           label="Withdrawal Amount"
           placeholder="₦ 0.00"
           value={amount}
@@ -71,16 +89,32 @@ const WithdrawSavingsModal = ({
         <div className={styles.quickWrap}>
           <p className={styles.sectionTitle}>Quick Amount</p>
           <div className={styles.quickGrid}>
-            <button className={styles.quickBtn} onClick={() => setQuick(20000)} type="button">
+            <button
+              className={styles.quickBtn}
+              onClick={() => setQuick(20000)}
+              type="button"
+            >
               ₦20,000
             </button>
-            <button className={styles.quickBtn} onClick={() => setQuick(50000)} type="button">
+            <button
+              className={styles.quickBtn}
+              onClick={() => setQuick(50000)}
+              type="button"
+            >
               ₦50,000
             </button>
-            <button className={styles.quickBtn} onClick={() => setQuick(100000)} type="button">
+            <button
+              className={styles.quickBtn}
+              onClick={() => setQuick(100000)}
+              type="button"
+            >
               ₦100,000
             </button>
-            <button className={styles.quickBtn} onClick={() => setQuick(200000)} type="button">
+            <button
+              className={styles.quickBtn}
+              onClick={() => setQuick(200000)}
+              type="button"
+            >
               ₦200,000
             </button>
           </div>
@@ -92,14 +126,28 @@ const WithdrawSavingsModal = ({
             onClick={() => setSource("paz_savings")}
           >
             <div className={styles.sourceIconWrap}>
-             <Image src="/images/wallet.png" width={24} height={24} alt="PAZ Savings Icon" className={styles.sourceIcon} />
+              <Image
+                src="/images/wallet.png"
+                width={24}
+                height={24}
+                alt="PAZ Savings Icon"
+                className={styles.sourceIcon}
+              />
             </div>
             <div className={styles.sourceBody}>
               <p className={styles.sourceTitle}>PAZ Savings</p>
-              <p className={styles.sourceSub}>Balance: {formatNaira(currentSavingsAmount)}</p>
+              <p className={styles.sourceSub}>
+                Balance: {formatNaira(currentSavingsAmount)}
+              </p>
             </div>
             {source === "paz_savings" && (
-                <Image src="/images/check.png" width={15} height={15} alt="Selected" className={styles.checkIcon} />
+              <Image
+                src="/images/check.png"
+                width={15}
+                height={15}
+                alt="Selected"
+                className={styles.checkIcon}
+              />
             )}
           </div>
 
@@ -108,14 +156,26 @@ const WithdrawSavingsModal = ({
             onClick={() => setSource("bank_account")}
           >
             <div className={styles.sourceIconWrap}>
-              <Image src="/images/bank.png" width={24} height={24} alt="PAZ Savings Icon" className={styles.sourceIcon} />
+              <Image
+                src="/images/bank.png"
+                width={24}
+                height={24}
+                alt="PAZ Savings Icon"
+                className={styles.sourceIcon}
+              />
             </div>
             <div className={styles.sourceBody}>
               <p className={styles.sourceTitle}>United Bank of Africa</p>
               <p className={styles.sourceSub}>2006427004</p>
             </div>
             {source === "bank_account" && (
-                <Image src="/images/check.png" width={15} height={15} alt="Selected" className={styles.checkIcon} />
+              <Image
+                src="/images/check.png"
+                width={15}
+                height={15}
+                alt="Selected"
+                className={styles.checkIcon}
+              />
             )}
           </div>
         </div>
@@ -127,7 +187,11 @@ const WithdrawSavingsModal = ({
         )}
 
         <div className={styles.actions}>
-          <Button variant="outlined" onClick={onClose} className={styles.actionBtn}>
+          <Button
+            variant="outlined"
+            onClick={onClose}
+            className={styles.actionBtn}
+          >
             Cancel
           </Button>
 

@@ -97,6 +97,7 @@ const TopUpTargetSavingsModal = ({
         <div className={styles.section}>
           <p className={styles.sectionTitle}>Top up Amount</p>
           <Input
+            name="amount"
             label=""
             placeholder="Enter Amount"
             value={amount}

@@ -16,7 +16,7 @@ export async function getProfile(): Promise<ActionResult<TProfile>>  {
 
     const email = session.user.email
 
-    const res = await apiFetch(`/v1/users/user/get-profile?email=${email}`, {
+    const res = await apiFetch<any>(`/v1/users/user/get-profile?email=${email}`, {
       isProtected: true,
       method: 'POST',
     })
@@ -34,7 +34,7 @@ export async function getProfile(): Promise<ActionResult<TProfile>>  {
 
 }
 
-export async function saveProfile(payload: TProfileFormValues | TProfileWithoutNextOfKin): Promise<ActionResult<any>> {
+export async function saveProfile(payload: any): Promise<ActionResult<any>> {
 
   try {
     const session = await getServerSession();
@@ -45,7 +45,7 @@ export async function saveProfile(payload: TProfileFormValues | TProfileWithoutN
       throw new Error("User is not authenticated")
     }
 
-    const res = await apiFetch(`/v1/users/user/set-profile?email=${user.email}`, {
+    const res = await apiFetch<any>(`/v1/users/user/set-profile?email=${user.email}`, {
       isProtected: true,
       method: "POST",
       body: {

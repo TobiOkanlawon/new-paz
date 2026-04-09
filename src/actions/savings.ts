@@ -1,11 +1,11 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import { ok, fail, ActionResult } from "@/actions/shared";
 import { revalidatePath } from "next/cache";
 import { apiFetch } from "@/libs/api";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 interface CreateSavingsPayload {
   accountName: string;
@@ -49,7 +49,7 @@ export type SavingTopupResponse = {
 };
 
 export async function createSoloSavingsAccount(
-  payload: CreateSavingsPayload,
+  payload: any,
 ): Promise<ActionResult<any>> {
   try {
     const session = await getServerSession(authOptions);
@@ -68,7 +68,7 @@ export async function createSoloSavingsAccount(
       type: "SOLO",
     };
 
-    const res = await apiFetch("/v1/users/user/savings/create-savings", {
+    const res = await apiFetch<any>("/v1/users/user/savings/create-savings", {
       method: "POST",
       isProtected: true,
       body,
@@ -82,7 +82,7 @@ export async function createSoloSavingsAccount(
 }
 
 export async function createTargetSavingsAccount(
-  payload: CreateTargetSavingsPayload): Promise<ActionResult<any>> {
+  payload: any): Promise<ActionResult<any>> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -102,7 +102,7 @@ export async function createTargetSavingsAccount(
       type: "TARGETSAVINGS",
     };
 
-    const res = await apiFetch("/v1/users/user/savings/create-savings", {
+    const res = await apiFetch<any>("/v1/users/user/savings/create-savings", {
       method: "POST",
       isProtected: true,
       body,

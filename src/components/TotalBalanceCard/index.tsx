@@ -98,6 +98,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({
       <p>Save up that money you do want to regret spending</p>
       <div className={styles.modalFormContainer}>
         <Input
+          name="amount"
           label="Top-up amount*"
           placeholder="Enter how much you want to top-up"
           id="amount"
@@ -160,6 +161,7 @@ const TotalBalanceCard: React.FC<TotalBalanceCardProps> = ({
       <p>Get funds from your savings by filling the form below</p>
       <div className={styles.modalFormContainer}>
         <Input
+          name="amount"
           label="Withdrawal amount*"
           placeholder="Enter how much you want to withdraw"
           id="amount"

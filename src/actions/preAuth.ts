@@ -1,9 +1,9 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ok, fail, ActionResult } from "./shared";
 import { apiFetch } from "@/libs/api";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 export async function addAccount(
   accountName: string,
@@ -13,7 +13,7 @@ export async function addAccount(
   try {
     const session = await getServerSession(authOptions);
 
-    const updatedUser = await apiFetch(`/v1/users/fetch/user`, {
+    const updatedUser = await apiFetch<any>(`/v1/users/fetch/user`, {
       isProtected: true,
       method: "POST",
       body: {

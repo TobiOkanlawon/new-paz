@@ -3,8 +3,8 @@
 import { apiFetch } from "@/libs/api";
 import { getServerSession } from "next-auth";
 import { ActionResult, fail, ok } from "./shared";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getProfile } from "./profile";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
@@ -18,7 +18,7 @@ export async function getAccountSummary(): Promise<
   }
   
   try {
-    const data: {accountDetails: TAccountDetails} = await apiFetch(
+    const data: {accountDetails: TAccountDetails} = await apiFetch<any>(
       `/v1/users/user/account-details?email=${session?.user.email}`,
       {
 	isProtected: true,

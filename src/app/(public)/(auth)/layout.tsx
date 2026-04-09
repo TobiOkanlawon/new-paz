@@ -1,4 +1,6 @@
-const Layout = ({ children }) => {
+const Layout: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   return <> {children} </>;
 };
 

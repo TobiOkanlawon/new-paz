@@ -6,7 +6,7 @@ import { ok, fail, ActionResult } from "@/actions/shared";
 export const verifyEmail = async (otp: string, email: string) => {
   
   try {
-    const res = await apiFetch(`/v1/users/verify-otp`, {
+    const res = await apiFetch<any>(`/v1/users/verify-otp`, {
       isProtected: false,
       body: {
         otp,
@@ -39,7 +39,7 @@ export async function resendCode(
   console.log(body);
   
   try {
-    const res = await apiFetch(`/v1/users/send-otp?email=${target}`, {
+    const res = await apiFetch<any>(`/v1/users/send-otp?email=${target}`, {
       isProtected: false,
       body,
       method: "POST",

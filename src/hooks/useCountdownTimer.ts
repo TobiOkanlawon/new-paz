@@ -23,7 +23,7 @@ function useCountdownTimer(timeInMilliseconds: number): ReturnType {
       });
     };
 
-    let timer = setInterval(countDownUntilZero, 1000);
+    const timer = setInterval(countDownUntilZero, 1000);
     return () => clearInterval(timer);
   }, [time]);
 

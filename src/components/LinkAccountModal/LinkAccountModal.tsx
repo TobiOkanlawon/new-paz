@@ -16,7 +16,12 @@ type Props = {
   }) => void | Promise<void>;
 };
 
-const LinkAccountModal = ({ open, onClose, loading = false, onLink }: Props) => {
+const LinkAccountModal = ({
+  open,
+  onClose,
+  loading = false,
+  onLink,
+}: Props) => {
   const [holderName, setHolderName] = useState("");
   const [bankName, setBankName] = useState("United Bank of Africa");
   const [accountNumber, setAccountNumber] = useState("");
@@ -40,9 +45,12 @@ const LinkAccountModal = ({ open, onClose, loading = false, onLink }: Props) => 
   return (
     <ModalShell open={open} onClose={onClose} title="Link Account" width={560}>
       <div className={styles.wrap}>
-        <p className={styles.subtitle}>Enter your details to link your account to Paz</p>
+        <p className={styles.subtitle}>
+          Enter your details to link your account to Paz
+        </p>
 
         <Input
+          name="accountHolderName"
           label="Account Holder Name"
           placeholder="Enter full name"
           value={holderName}
@@ -66,6 +74,7 @@ const LinkAccountModal = ({ open, onClose, loading = false, onLink }: Props) => 
         </div>
 
         <Input
+          name="accountNumber"
           label="Account Number"
           placeholder="2006427004"
           value={accountNumber}
@@ -91,7 +100,11 @@ const LinkAccountModal = ({ open, onClose, loading = false, onLink }: Props) => 
         </div>
 
         <div className={styles.actions}>
-          <Button variant="outlined" onClick={onClose} className={styles.actionBtn}>
+          <Button
+            variant="outlined"
+            onClick={onClose}
+            className={styles.actionBtn}
+          >
             Back
           </Button>
 

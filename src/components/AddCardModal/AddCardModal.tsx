@@ -43,7 +43,9 @@ const AddCardModal = ({ open, onClose, loading = false, onAddCard }: Props) => {
   return (
     <ModalShell open={open} onClose={onClose} title="Add Card" width={560}>
       <div className={styles.wrap}>
-        <p className={styles.subtitle}>Enter your details to add your debit card</p>
+        <p className={styles.subtitle}>
+          Enter your details to add your debit card
+        </p>
 
         <div className={styles.field}>
           <label className={styles.selectLabel}>Card Type</label>
@@ -62,6 +64,7 @@ const AddCardModal = ({ open, onClose, loading = false, onAddCard }: Props) => {
         </div>
 
         <Input
+          name="cardHolder"
           label="Card Holder Name"
           placeholder="Enter full name"
           value={holderName}
@@ -69,6 +72,7 @@ const AddCardModal = ({ open, onClose, loading = false, onAddCard }: Props) => {
         />
 
         <Input
+          name="cardNumber"
           label="Card Number"
           placeholder="Enter card number"
           value={cardNumber}
@@ -77,6 +81,7 @@ const AddCardModal = ({ open, onClose, loading = false, onAddCard }: Props) => {
         />
 
         <Input
+          name="cvv"
           label="Cvv"
           placeholder="Enter cvv number"
           value={cvv}
@@ -86,6 +91,7 @@ const AddCardModal = ({ open, onClose, loading = false, onAddCard }: Props) => {
         />
 
         <Input
+          name="expiryDate"
           label="Expiry Date"
           placeholder="Enter expiry date"
           value={expiry}
@@ -95,7 +101,11 @@ const AddCardModal = ({ open, onClose, loading = false, onAddCard }: Props) => {
         />
 
         <div className={styles.actions}>
-          <Button variant="outlined" onClick={onClose} className={styles.actionBtn}>
+          <Button
+            variant="outlined"
+            onClick={onClose}
+            className={styles.actionBtn}
+          >
             Back
           </Button>
 

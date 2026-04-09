@@ -95,13 +95,13 @@ const BottomRight: React.FC<BottomRightProps> = ({
   const constructCustomTransactionsData = (
     tx: Transaction,
   ): CustomTransactionType => {
-    let amount = Intl.NumberFormat("en-US", {
+    const amount = Intl.NumberFormat("en-US", {
       style: "currency",
       currency: tx.currency,
     }).format(tx.amount);
 
     // basically
-    let subTitle = "Into savings";
+    const subTitle = "Into savings";
     let type: "inbound" | "outbound" = "inbound";
 
     if (tx.description == "VirtualAccountTopUp") {
