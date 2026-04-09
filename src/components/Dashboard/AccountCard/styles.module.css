@@ -1,32 +1,91 @@
-.totalCategories {
-  width: 25.1%;
-  height: 14.26vh;
-  border-radius: 1rem;
-  padding: 0rem 2rem;
+.cardContainer {
+    background-color: #ffffff;
+    padding: 12px 18px;
+    max-width: 350px;
+    min-height: 112px;
+    border-radius: 15px;
+    width: 100%;
 }
 
-.totalCategories h3 {
-  font-family: var(--font-montserrat);
-  font-weight: 700;
-  font-size: 3.83vh;
-  line-height: 16px;
-  letter-spacing: 0px;
-  vertical-align: middle;
-  margin-top: 0rem;
+.topContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.textIcon {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 1.2rem;
+.iconContainer {
+    border-radius: 10px;
+    padding: 6px 9px;
 }
-.textIcon p {
-  font-family: var(--font-poppins);
-  font-weight: 500;
-  font-size: 1.7vh;
-  line-height: 16px;
-  letter-spacing: 0px;
-  vertical-align: middle;
-  margin-bottom: 1.7vh;
+
+.titleText {
+    text-transform: capitalize;
+    color: #878787;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.bottomContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.amountWrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.amountText {
+    color: #2E2E2E;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: clamp(16px, 1.4vw, 22px);
+    font-weight: 500;
+    line-height: 1;
+}
+
+.toggleAmountBtn {
+    border: none;
+    background: transparent;
+    color: #2E2E2E;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ratePill {
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: clamp(12px, 1vw, 18px);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 640px) {
+    .cardContainer {
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    .bottomContainer {
+        gap: 8px;
+    }
+
+    .amountWrap {
+        gap: 6px;
+    }
+
+    .amountText {
+        font-size: 18px;
+    }
+
+    .ratePill {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
 }

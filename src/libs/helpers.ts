@@ -35,7 +35,7 @@ export const formatBirthdayToDateInputFormat = (
 ) => {
   /* This function takes a birthday string in the form dd/mm/yyyy and transforms it to the form yyyy-mm-dd */
 
-  if (!dateFromBackend) return undefined;
+  if (!dateFromBackend) return "";
 
   if (dateFromBackend === "") return "";
   const splitString = dateFromBackend.split("/");
@@ -45,7 +45,7 @@ export const formatBirthdayToDateInputFormat = (
 
 export const addSavings = (accountDetails: TAccountDetails) => {
   return {
-    soloSavings: accountDetails.soloSavings?.Amount || 0,
+    soloSavings: accountDetails.soloSavings?.amount || 0,
     familyVault: accountDetails.familyVault.reduce((p, c) => p + c.amount, 0),
     targetSavings: accountDetails.targetSavings.reduce(
       (p, c) => p + c.amount,
@@ -53,3 +53,33 @@ export const addSavings = (accountDetails: TAccountDetails) => {
     ),
   };
 };
+
+export const getTotalBalance = (
+    account: TAccountDetails,
+    type: "savings" | "investments" | "loans",
+  ) => {
+    let balance = 0;
+
+    switch (type) {
+      case "savings":
+        const hasSoloAccount = !!account.soloSavings;
+        const hasTargetAccount = !!account.targetSavings;
+
+        /* add the amount for target savings and solo savers. Do not add the one for family vault because it may inflate the amount too much */
+
+        if (hasSoloAccount) {
+          balance += account.soloSavings.amount;
+        }
+
+        if (hasTargetAccount) {
+          balance += +account.targetSavings.reduce((p, c) => {
+            return p + c.amount;
+          }, 0);
+        }
+        break;
+      default:
+        break;
+    }
+
+    return balance;
+  };

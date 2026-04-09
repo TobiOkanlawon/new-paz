@@ -1,0 +1,15 @@
+.container {
+    background-color: white;
+    padding: 2px 43px;
+    overflow-x: hidden;
+}
+
+.innerContainer {
+    display: flex;
+    gap: 16px;
+    overflow-x: scroll;
+}
+
+.savingsPlanContainer{
+    margin-left: 43px;
+}

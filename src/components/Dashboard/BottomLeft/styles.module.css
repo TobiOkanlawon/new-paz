@@ -1,0 +1,153 @@
+.savingsPlansTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.savingsPlanInnerContainer {
+  padding: 38px 43px;
+  background-color: white;
+  overflow-x: hidden;
+  border-radius: 15px;
+}
+
+.miniCards {
+    display: flex;
+    gap: 12px;
+    overflow-x: scroll;
+}
+
+@media screen and (max-width: 1200px) {
+  .bottomContainer {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+  }
+
+  .quickActionContainer {
+    margin-top: 24px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .firstNameText {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .subHeadingText {
+    font-size: 14px;
+  }
+
+  .quickActionCardContainer {
+    min-width: 220px;
+    padding: 16px 24px;
+  }
+
+  .savingsPlanInnerContainer {
+    padding: 20px;
+  }
+
+    .miniCards {
+    gap: 12px;
+  }
+
+  .savingsPlansTitleContainer h2,
+  .recentTransactionsTitleContainer h2,
+  .instantSavingsTitleContainer h2,
+  .quickActionContainer h2 {
+    font-size: 22px;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    padding: 16px 12px;
+  }
+
+  .quickActionContainer,
+  .bottomContainer {
+    margin-top: 20px;
+  }
+
+  .quickActionContainer h2 {
+    margin-bottom: 12px;
+  }
+
+  .accountCards {
+    gap: 12px;
+    overflow: visible;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .accountCards > * {
+    flex: 1;
+  }
+
+  .quickActionCardsInnerContainer {
+    gap: 12px;
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .quickActionCardContainer {
+    min-width: 132px;
+    width: 132px;
+    padding: 12px 10px;
+    border-radius: 18px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .quickActionCardInnerContainer {
+    gap: 10px;
+  }
+
+  .quickActionCardInnerContainer p {
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .quickActionCardIconContainer {
+    padding: 8px;
+  }
+
+  .quickActionPager {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .miniCardContainer {
+    max-width: 220px;
+  }
+
+  .savingsPlanInnerContainer {
+    padding: 14px;
+  }
+
+  .savingsPlansTitleContainer h2,
+  .recentTransactionsTitleContainer h2,
+  .instantSavingsTitleContainer h2,
+  .quickActionContainer h2 {
+    font-size: 20px;
+  }
+
+  .savingsPlansTitleContainer a,
+  .recentTransactionsTitleContainer a,
+  .instantSavingsTitleContainer a {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}

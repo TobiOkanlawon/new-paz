@@ -1,0 +1,305 @@
+.container {
+  padding-top: 34px;
+  padding-right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.fundAccountButton {
+  width: fit-content;
+  max-width: 240px;
+}
+
+.heading,
+.midSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.heading {
+  margin-top: 6px;
+}
+
+.headingLeft {
+  min-width: 0;
+}
+
+.firstNameText {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.1;
+  color: #2e2e2e;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.subHeadingText {
+  margin: 8px 0 0;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  color: #878787;
+}
+
+.blockButton {
+  width: 136px;
+}
+.midSectionRight {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  justify-content: end;
+}
+
+.headingRight {
+  display: flex;
+  gap: 8px;
+    align-items: center;
+}
+
+.outlineButton {
+  background-color: transparent;
+  color: #214ccf;
+  border: 1px solid #214ccf;
+  padding: 8px 12px;
+  min-width: 200px;
+  max-width: 240px;
+}
+
+.outlineButton:hover {
+    color: white;
+}
+
+.midsection {
+  margin-top: 12px;
+}
+
+.savingsPlansContainer {
+  margin-top: 8px;
+}
+
+.savingsPlansContainer h2 {
+  margin: 0 0 14px;
+  font-size: 24px;
+  color: #2e2e2e;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.savingsPlanInnerContainer {
+  display: flex;
+  gap: 16px;
+  overflow-x: scroll;
+}
+
+
+.tableControl,
+.tableControlButton {
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #878787;
+  font-size: 14px;
+  padding: 0 12px;
+}
+
+.tableControl {
+  min-width: 180px;
+}
+
+.tableControlButton {
+  white-space: nowrap;
+}
+
+.tableRightControls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.bottomContainerNone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 17rem;
+}
+
+.bottomContainerNone>img{
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1440px) {
+  .firstNameText {
+    font-size: 34px;
+  }
+
+  .subHeadingText {
+    font-size: 22px;
+  }
+
+  .savingsPlansContainer h2 {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    padding: 18px 20px 24px;
+  }
+
+  /* .heading,
+  .midSection {
+    flex-direction: column;
+    align-items: flex-start;
+  } */
+
+  /* .headingRight,
+  .midSectionRight {
+    width: 100%;
+  }
+
+  .headingRight > *,
+  .midSectionRight > * {
+    flex: 1 1 190px;
+  } */
+
+  .savingsPlanInnerContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .tableRightControls {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 14px 12px 20px;
+    gap: 14px;
+  }
+
+  .firstNameText {
+    font-size: 52px;
+  }
+
+  .subHeadingText {
+    font-size: 16px;
+  }
+
+  .headingRight {
+    display: none;
+  }
+
+  .midSection {
+    margin-top: 4px;
+  }
+
+  .midSectionRight {
+    padding: 12px;
+    border-radius: 20px;
+    background: #fff;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .midSectionRight > * {
+    min-width: 0;
+  }
+
+  .savingsPlansContainer {
+    margin-top: 2px;
+  }
+
+  .savingsPlansContainer h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .savingsPlanInnerContainer {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 10px;
+  }
+
+  .savingsPlanInnerContainer::-webkit-scrollbar {
+    display: none;
+  }
+
+  .savingsPlanInnerContainer > * {
+    min-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  .tableRightControls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .tableControl,
+  .tableControlButton {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    padding: 10px 10px 18px;
+  }
+
+  .firstNameText {
+    font-size: 40px;
+  }
+
+  .outlineButton {
+    min-width: 0;
+  }
+
+  .midSectionRight {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .midSectionRight :global(button) {
+    height: 70px;
+    font-size: 12px;
+    padding: 8px;
+    border-radius: 12px;
+    line-height: 1.2;
+  }
+
+  .savingsPlanInnerContainer > * {
+    min-width: 310px;
+  }
+
+  .tableControl,
+  .tableControlButton {
+    height: 38px;
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 1065px) {
+  .headingRight,
+  .midSectionRight {
+    display: none;
+  }
+  .fundAccountButton{
+    display: none;
+  }
+  .savingsCard{
+    width: 100%;
+  }
+}

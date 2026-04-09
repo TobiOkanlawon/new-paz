@@ -74,7 +74,7 @@ const LoanForm: React.FC<Props> = ({ isModalOpen, handleModalClose }) => {
         <Input
           id="purpose"
           label="Purpose of loan"
-          placeholder="input loan purpose"
+          placeholder="Input loan purpose"
           {...formik.getFieldProps("purpose")}
           errors={handleErrorDisplay(formik, "purpose")}
         />

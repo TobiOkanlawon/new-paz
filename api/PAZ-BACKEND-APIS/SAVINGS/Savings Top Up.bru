@@ -1,0 +1,23 @@
+meta {
+  name: Savings Top Up
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/users/user/savings/saving-topup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "savingsWallet": "3729095457",
+    "amount": 10000
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,357 @@
+/* ===== SETTINGS PAGE — REVAMPED ===== */
+
+.page {
+  min-height: 100vh;
+  background: #f7f7f7;
+  padding: 2.4vh 3vw 6vh 3vw;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ── Back button ── */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: none;
+  color: #204d88;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5vh;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 2vh;
+  transition: opacity 0.2s;
+}
+.back:hover { opacity: 0.7; }
+
+/* ── Page hero ── */
+.hero {
+  margin-bottom: 3.2vh;
+}
+.heroTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(22px, 3.4vh, 32px);
+  font-weight: 700;
+  color: #204d88;
+  margin: 0 0 0.4vh;
+}
+.heroSub {
+  font-size: clamp(11px, 1.6vh, 14px);
+  color: #7a8a99;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ── Body layout ── */
+.body {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 2vw;
+  align-items: start;
+}
+
+/* ── Tab sidebar ── */
+.tabs {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #0000000a;
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+}
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1.5vh 1.4rem;
+  background: transparent;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(11px, 1.55vh, 14px);
+  font-weight: 600;
+  color: #7a8a99;
+  cursor: pointer;
+  text-align: left;
+  border-left: 3px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.tab:hover { background: #f0f5ff; color: #3475df; }
+.tabActive {
+  background: linear-gradient(90deg, #e8f0fd 0%, #f5f8ff 100%);
+  color: #3475df;
+  border-left-color: #3475df;
+}
+.tabIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+  background: #eef3fb;
+  transition: background 0.2s;
+}
+.tabActive .tabIcon { background: #dbe8f8; }
+.tabDivider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 0;
+}
+
+/* ── Content panel ── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+}
+
+/* ── Section header ── */
+.sectionTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(13px, 1.9vh, 18px);
+  font-weight: 600;
+  color: #204d88;
+  margin: 0 0 0.5vh;
+}
+.sectionDesc {
+  font-size: clamp(10px, 1.4vh, 12px);
+  color: #7a8a99;
+  margin: 0 0 1.8vh;
+  font-weight: 500;
+}
+
+/* ── Security card ── */
+.secCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 14px #00000009;
+  padding: 1.8vh 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid #eef0f4;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.secCard:hover {
+  box-shadow: 0 6px 24px #3475df14;
+  transform: translateY(-1px);
+}
+
+.secCardLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.secCardIconWrap {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e8f0fd, #d0e2fb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.secCardTitle {
+  font-size: clamp(12px, 1.8vh, 15px);
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 0.25rem;
+}
+.secCardDesc {
+  font-size: clamp(10px, 1.35vh, 12px);
+  color: #8a96a3;
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.secCardBtn {
+  background: linear-gradient(135deg, #3475df, #2563c4);
+  color: #fff;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: clamp(10px, 1.4vh, 12px);
+  padding: 0.65rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.secCardBtn:hover { opacity: 0.88; transform: scale(0.98); }
+
+/* ── OTP toggle card ── */
+.otpCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 14px #00000009;
+  padding: 1.8vh 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid #eef0f4;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.otpCard:hover {
+  box-shadow: 0 6px 24px #3475df14;
+  transform: translateY(-1px);
+}
+
+/* ── Custom toggle ── */
+.toggleWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.toggleLabel {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  cursor: pointer;
+}
+.toggleLabel input { display: none; }
+.toggleTrack {
+  position: absolute;
+  inset: 0;
+  background: #d0d8e4;
+  border-radius: 26px;
+  transition: background 0.3s;
+}
+.toggleLabel input:checked ~ .toggleTrack { background: #3475df; }
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px #0003;
+  transition: transform 0.3s;
+}
+.toggleLabel input:checked ~ .toggleTrack .toggleThumb {
+  transform: translateX(22px);
+}
+.toggleText {
+  font-size: 10px;
+  font-weight: 700;
+  color: #7a8a99;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Support section ── */
+.supportGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4vh;
+}
+.supportCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 14px #00000009;
+  border: 1px solid #eef0f4;
+  padding: 2.2vh 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.supportCard:hover {
+  box-shadow: 0 6px 24px #3475df14;
+  transform: translateY(-2px);
+}
+.supportCardTop {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.supportIconWrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.supportIconBlue { background: linear-gradient(135deg, #e8f0fd, #d0e2fb); }
+.supportIconGreen { background: linear-gradient(135deg, #e8fdf0, #d0fbe2); }
+.supportCardLabel {
+  font-size: clamp(11px, 1.5vh, 13px);
+  color: #8a96a3;
+  font-weight: 500;
+  margin: 0 0 2px;
+}
+.supportCardValue {
+  font-size: clamp(12px, 1.7vh, 15px);
+  color: #2c3e50;
+  font-weight: 700;
+  margin: 0;
+}
+.supportLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #3475df, #2563c4);
+  color: #fff;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: clamp(10px, 1.4vh, 12px);
+  padding: 0.65rem 0;
+  border-radius: 10px;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+.supportLink:hover { opacity: 0.88; }
+
+/* ── Status badge ── */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.badgeActive { background: #e8fdf0; color: #22c55e; }
+.badgeOff { background: #f0f0f0; color: #8a96a3; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .body { grid-template-columns: 1fr; }
+  .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 14px;
+    position: static;
+  }
+  .tabDivider { display: none; }
+  .tab { border-left: none; border-bottom: 3px solid transparent; justify-content: center; }
+  .tabActive { border-bottom-color: #3475df; border-left-color: transparent; }
+  .supportGrid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .page { padding: 2vh 4vw 5vh; }
+  .secCard { flex-direction: column; align-items: flex-start; }
+  .secCardBtn { width: 100%; text-align: center; padding: 0.75rem; }
+  .otpCard { flex-wrap: wrap; }
+}

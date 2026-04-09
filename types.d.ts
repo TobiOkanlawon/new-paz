@@ -24,6 +24,18 @@ type TLoginResponse = {
   user: TUser;
 };
 
+type TAuthUser = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roleId: "1" | "2";
+  isActive: boolean;
+  isBvnVerified: boolean;
+  primaryAccountLinked: boolean;
+  walletAccount: string;
+};
+
 type TAddBVNResponse = {
   "BVN Validated": boolean;
   responseCode: string;
@@ -37,6 +49,7 @@ type AccountType = {
 };
 
 type TProfile = {
+  profileImage: string;
   address: string;
   gender: Gender;
   email: string;
@@ -47,6 +60,15 @@ type TProfile = {
   nextOfKinEmail: string;
   nextOfKinRelationship: string;
   nextOfKinPhoneNumber: string;
+};
+
+type TProfileWithoutNextOfKin = {
+  profileImage: string;
+  address: string;
+  gender: Gender;
+  email: string;
+  birthday: string;
+  phoneNumber: string;
 };
 
 type ProfileResponseData = {
@@ -61,16 +83,19 @@ type APIResponse<T> = {
 } & T;
 
 type SoloSavings = {
-  AccountNo: string;
-  Amount: number;
+  title: string;
+  accountNo: string;
+  amount: number;
 };
 
 type TAccountDetails = {
+  profileImage: string;
+  bankAccount: string;
   totalLoan: number;
   familyVault: FamilyVault[];
   hasSoloAccount: boolean;
   soloSavings: SoloSavings;
-  targetSavings: TTargetSavingsPlan[]
+  targetSavings: TTargetSavingsPlan[];
   firstName: string;
   investmentAmount: number;
   lastName: string;
@@ -92,7 +117,7 @@ type TWalletInfo = {
 };
 
 type TTargetSavingsPlan = {
-  Title: string;
+  title: string;
   description: string;
   amount: number;
   targetAmount: number;
@@ -100,9 +125,7 @@ type TTargetSavingsPlan = {
   accountNo: string;
 };
 
-type Person = {
-  
-};
+type Person = {};
 
 type TFamilyVaultPlan = {
   title: string;
@@ -116,6 +139,20 @@ type TFamilyVaultPlan = {
 type ResetPasswordResponseData = {
   success: boolean;
   message: string;
-  requestId?: string;     // optional but common
-  timestamp?: string;     // optional — ISO date 
-}
+  requestId?: string; // optional but common
+  timestamp?: string; // optional — ISO date
+};
+
+type TAllTransactions = Transaction[];
+
+type Transaction = {
+  id: number;
+  fromAccount: string;
+  toAccount: string;
+  amount: number;
+  currency: string;
+  description: string;
+  reference: string;
+  status: "COMPLETED" | "FAILED";
+  createdAt: string;
+};

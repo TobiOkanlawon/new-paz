@@ -1,0 +1,178 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 25, 0.55);
+  z-index: 9998;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  max-width: 95vw;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  z-index: 9999;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #2E2E2E;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.closeBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #2E2E2E;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  background: #f3f4f6;
+}
+
+.body {
+  padding: 24px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 6px 0 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.metaLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.metaTitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: #2E2E2E;
+  font-family: 'Poppins', sans-serif;
+}
+
+.metaRight {
+  font-size: 14px;
+  color: #878787;
+  font-family: 'Poppins', sans-serif;
+}
+
+.badgeSuccess {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: #22c55e;
+}
+
+.bodyText {
+  font-size: 16px;
+  color: #2C2D2D;
+  line-height: 1.7;
+  padding: 0 0 10px;
+  white-space: pre-wrap;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cancelBtn {
+  width: 82px;
+  min-width: 82px;
+}
+
+.empty {
+  padding: 26px 6px;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  font-family: 'Poppins', sans-serif;
+}
+
+.buttonContainer{
+  width: 82px;
+}
+
+@media screen and (max-width: 560px) {
+  .modal {
+    width: 95vw;
+  }
+
+  .header {
+    padding: 16px 18px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .body {
+    padding: 18px;
+  }
+
+  .metaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 0;
+  }
+
+  .metaTitle {
+    font-size: 13px;
+  }
+
+  .metaRight {
+    font-size: 13px;
+  }
+
+  .bodyText {
+    font-size: 15px;
+  }
+
+  .cancelBtn {
+    width: 82px;
+    min-width: 82px;
+  }
+}

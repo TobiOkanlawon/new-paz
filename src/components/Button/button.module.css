@@ -1,29 +1,89 @@
 .button {
-  font-family: var(--font-montserrat);
-  font-size: 12px;
+  font-family: var(--font-poppins);
+  font-size: 14px;
   font-weight: 500;
   line-height: 100%;
   letter-spacing: 0%;
-  height: 45px;
-  border-radius: 8px;
+  height: 50px;
+  border-radius: 10px;
   border: none;
-  background-color: #3475df;
-  color: #ffffff;
+  padding: 18px;
   width: 100%;
-  margin: 1.7rem 0 1.5rem;
-}
-
-.primaryVariant {
-}
-
-.button:hover {
-  background-color: #8dccfe;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Primary Variant - Blue filled button */
+.primary {
+  background-color: #214ccf;
+  color: #ffffff;
+}
+
+.primary:hover {
+  background-color: #2860c0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 117, 223, 0.4);
+}
+
+.primary:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .button:disabled {
+    cursor: not-allowed;
+}
+
+/* Secondary Variant - White with blue text */
+.secondary {
+  background-color: #ffffff;
+  color: #3475df;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+.secondary:hover {
+  background-color: #f5f8ff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+.secondary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Outlined Variant - White with border */
+.outlined {
+  color: #DFDFDF;
+  background-color: transparent;
+  border: 1px solid #DFDFDF;
+}
+.outlined2 {
+  color: #3475df;
+  background-color: transparent;
+  border: 1px solid #3475df;
+}
+
+.outlined:hover {
+  background-color: #f9f9f9;
+  border-color: #3475df;
+  color: #3475df;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.outlined:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.button:disabled,
+.disabled {
   background-color: #b1b1b1;
+  color: #ffffff;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .spinner {
@@ -48,10 +108,10 @@
   .button {
     padding: 0.75rem;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
     border: none;
     border-radius: 8px;
-    background-color: #3475df;
+    background-color: #214ccf;
     color: white;
   }
 

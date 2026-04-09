@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 import styles from "./layout.module.css";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export default function DashboardLayout({
   children,
@@ -11,16 +13,39 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
+  const pathname = usePathname();
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const toggleCollapsed = () => setCollapsed((prev) => !prev);
+
+  // Close sidebar when route changes
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [pathname]);
 
   return (
-    <>
-      <Navbar onToggleSidebar={toggleSidebar} />
-      <main className={styles.dashboardMain}>
-        <Sidebar isOpen={isSidebarOpen} />
-        <div className={styles.content}>{children}</div>
-      </main>
-    </>
+    <div
+      className={clsx(
+        styles.pageContainer,
+        collapsed && styles.pageContainerCollapsed,
+      )}
+    >
+      <Sidebar
+        isOpen={isSidebarOpen}
+        collapsed={collapsed}
+        action={toggleCollapsed}
+      />
+
+      <div className={styles.dashboardMain}>
+        <Header />
+        <main
+          className={styles.mainContent}
+          onClick={() => setIsSidebarOpen(false)}
+        >
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }

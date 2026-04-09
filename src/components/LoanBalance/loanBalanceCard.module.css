@@ -239,7 +239,7 @@
 }
 @media screen and (max-width: 540px){
     .totalBalanceCard{
-        width: 99%;
+        width: 91vw;
         /* height: 9rem; */
     }
     .totalBalanceCard h3{

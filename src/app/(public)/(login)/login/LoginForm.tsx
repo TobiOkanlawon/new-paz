@@ -1,17 +1,17 @@
 "use client";
-import styles from "./page.module.css";
+import styles from "./loginForm.module.css";
 import * as yup from "yup";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
 import { useFormik } from "formik";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import { handleErrorDisplay } from "@/libs/helpers";
-import { useLogin } from "@/data/mutations/useLogin";
-import { useRouter } from "next/navigation";
-import useUser from "@/store/userStore";
-import useToken from "@/store/tokenStore";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { signIn } from "next-auth/react";
+import { NotVerifiedError } from "@/libs/errors";
 
 const schema = yup.object({
   email: yup
@@ -31,11 +31,19 @@ const schema = yup.object({
 type LoginSchema = yup.InferType<typeof schema>;
 
 const LoginForm = () => {
-  const mutation = useLogin();
   const router = useRouter();
 
-  const { replaceUser } = useUser();
-  const { setToken } = useToken();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("registered") === "true") {
+      toast.success("Account created successfully");
+      router.replace("/login");
+    } else if (searchParams.get("kycComplete") === "true") {
+      toast.success("KYC complete. Log in again");
+      router.replace("/login");
+    }
+  }, [router, searchParams]);
 
   const formik = useFormik<LoginSchema>({
     initialValues: {
@@ -44,20 +52,46 @@ const LoginForm = () => {
       remember: false,
     },
     validationSchema: schema,
-    onSubmit: (values) => {
-      mutation.mutate(values, {
-        onSuccess: (data) => {
-          setToken(data.token);
-          replaceUser(data.user);
-          router.replace("/dashboard");
-        },
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
       });
+
+      if (!result) {
+        toast.error("An error occurred");
+        return;
+      }
+
+      if (result.error) {
+        if (result.error === "EMAIL_NOT_VERIFIED") {
+          router.push("/verification/email");
+          return;
+        }
+
+        if (result.error === "PHONE_NOT_VERIFIED") {
+          router.push("/verification/phone");
+          return;
+        }
+
+        toast.error("Invalid email or password");
+        setErrors({
+          email: "Invalid email or password",
+        });
+        return;
+      }
+
+      if (result.ok) {
+        router.push("/dashboard");
+      }
     },
   });
 
   return (
-    <>
-      <h3>Login to your account</h3>
+    <div className={styles.container}>
+      <h3 className={styles.header}>Login</h3>
+      <p className={styles.headerText}>Enter your email to log in</p>
 
       <form
         action="POST"
@@ -95,29 +129,46 @@ const LoginForm = () => {
             <label htmlFor="remember">Remember me</label>
           </div>
           <div>
-            <Link href="/forgot-password">Forgot Password?</Link>
+            <Link href="/forgot-password" className={styles.forgot}>
+              Forgot Password?
+            </Link>
           </div>
         </div>
         <Button
-          loading={mutation.isPending}
+          loading={formik.isSubmitting}
           type="submit"
           className={styles.primary}
           label="Login"
         >
           Login
         </Button>
+        {/*<Button
+          loading={formik.isSubmitting}
+          type="submit"
+          variant="outlined"
+          className={styles.google}
+          label="Sign up with Google"
+        >
+          <Image
+            src="/images/google.png"
+            height={24}
+            width={24}
+            alt="Google logo"
+          />
+          Sign up with Google
+          </Button>*/}
         <div className={styles.linkContainer}>
           <div className={styles.linkWrapper}>
             <Link
               href="/register"
               className={clsx(" ", styles.createNewAccount)}
             >
-              Create New Account <FaArrowRight size={12} />
+              Don’t have an account? <span>Create one</span>
             </Link>
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

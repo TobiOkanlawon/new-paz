@@ -1,0 +1,130 @@
+.card {
+  display: flex;
+  border-radius: 0px;
+  padding: 21px 16px 13px;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.iconContainer {
+  height: fit-content;
+  border-radius: 10px;
+  padding: 11px 14px;
+  width: 48px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  flex: 1;
+}
+
+.card:first-of-type {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card:last-of-type {
+  border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom: none;
+}
+
+.iconContainer {
+}
+
+.title {
+  color: #2e2e2e;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subTitle,
+.date {
+  color: #878787;
+  font-size: 14px;
+}
+
+.subTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title,
+.subTitle,
+.amount,
+.date {
+  margin: 4px 0px;
+}
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.textContainer {
+  min-width: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .card {
+    padding: 14px 12px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .subTitle,
+  .date,
+  .amount {
+    font-size: 12px;
+  }
+
+  .iconContainer {
+    width: 40px;
+    height: 38px;
+    padding: 8px 10px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    padding: 14px 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .cardLeft {
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .title,
+  .subTitle,
+  .amount,
+  .date {
+    font-size: 12px;
+  }
+
+  .cardRight {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}

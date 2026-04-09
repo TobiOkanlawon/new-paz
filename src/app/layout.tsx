@@ -1,10 +1,13 @@
 import "./globals.css";
 import { Poppins, Montserrat, Inter } from "next/font/google";
 import Providers from "@/components/globals/providers";
+import { Metadata } from "next";
+import { Suspense } from "react";
+import { Loading } from "@/components/Loading";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-poppins",
 });
 
@@ -20,12 +23,12 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "PAZ",
   description: "Powering Dreams",
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
   },
 };
 
@@ -40,7 +43,9 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`}
     >
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </Providers>
       </body>
     </html>
   );

@@ -1,232 +1,105 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import styles from "./savings.module.css";
-import Image, { StaticImageData } from "next/image";
-import { useRouter } from "next/navigation";
-import TotalBalanceCard from "@/components/TotalBalanceCard";
-import { useGetAccountDetails } from "@/data/queries/useGetAccountDetails";
-import useUser from "@/store/userStore";
-import FamilyVaultModal from "@/components/Savings/FamilyVaultModal";
-import { useCreateSoloSaver } from "@/data/mutations/useCreateSoloSaver";
-import { Loading } from "@/components/Loading";
-import { ErrorComponent } from "@/components/Error";
-import TargetSavingsModal from "@/components/Savings/TargetSavingsModal";
-import { addSavings } from "@/libs/helpers";
-import { useGetWallet } from "@/data/queries/useGetWallet";
+import { getAccountSummary } from "@/actions/dashboard";
+import { getSavingsTransactions } from "@/actions/transactions";
+import SavingsClient from "@/components/Savings/SavingsPage";
 
-type Card = {
-  color: string;
-  href: string;
-  header: string;
-  img: string;
-  text: string;
-  handleStart: () => void;
-};
+const Savings = async () => {
+  // const rows = [
+  //   {
+  //     id: "1",
+  //     savingsName: "vacation savings",
+  //     amountTarget: 200000,
+  //     savingsAmount: 50000,
+  //     savingsInterest: "12%",
+  //     amountDebited: 50000,
+  //     dateDebited: "Mon, 21 Dec 2025",
+  //     status: "Success",
+  //   },
+  //   {
+  //     id: "2",
+  //     savingsName: "vacation savings",
+  //     amountTarget: 200000,
+  //     savingsAmount: 50000,
+  //     savingsInterest: "12%",
+  //     amountDebited: 50000,
+  //     dateDebited: "Mon, 21 Dec 2025",
+  //     status: "Pending",
+  //   },
+  //   {
+  //     id: "3",
+  //     savingsName: "vacation savings",
+  //     amountTarget: 200000,
+  //     savingsAmount: 50000,
+  //     savingsInterest: "12%",
+  //     amountDebited: 50000,
+  //     dateDebited: "Mon, 21 Dec 2025",
+  //     status: "Success",
+  //   },
+  //   {
+  //     id: "4",
+  //     savingsName: "vacation savings",
+  //     amountTarget: 200000,
+  //     savingsAmount: 50000,
+  //     savingsInterest: "12%",
+  //     amountDebited: 50000,
+  //     dateDebited: "Mon, 21 Dec 2025",
+  //     status: "Success",
+  //   },
+  //   {
+  //     id: "5",
+  //     savingsName: "vacation savings",
+  //     amountTarget: 200000,
+  //     savingsAmount: 50000,
+  //     savingsInterest: "12%",
+  //     amountDebited: 50000,
+  //     dateDebited: "Mon, 21 Dec 2025",
+  //     status: "Success",
+  //   },
+  //   {
+  //     id: "6",
+  //     savingsName: "vacation savings",
+  //     amountTarget: 200000,
+  //     savingsAmount: 50000,
+  //     savingsInterest: "12%",
+  //     amountDebited: 50000,
+  //     dateDebited: "Mon, 21 Dec 2025",
+  //     status: "Success",
+  //   },
+  // ];
+  const result = await getAccountSummary();
 
-type CardProps = {
-  card: Card;
-};
-
-const SavingsCard: React.FC<CardProps> = ({ card }) => {
-  const router = useRouter();
-  return (
-    <>
-      <div
-        className={styles.cardTypes}
-        key={card.href}
-        style={{ borderColor: card.color }}
-        onClick={() => router.push(card.href)}
-      >
-        <Image src={card.img} alt={card.header} width={100} height={100} />
-        <div>
-          <h4>{card.header}</h4>
-          <p>{card.text}</p>
-          {/* <button className={styles.startNowButton} onClick={card.handleStart}>
-            Start now
-          </button> */}
-        </div>
-      </div>
-    </>
-  );
-};
-
-const Savings = () => {
-  const router = useRouter();
-  const { user } = useUser();
-  const { data, isLoading, error } = useGetAccountDetails(
-    user?.email as string,
-  );
-
-  const {
-    data: walletAccountData,
-    isLoading: i,
-    error: e,
-  } = useGetWallet(user?.email as string);
-
-  // const mutation = useCreateSoloSaver(user?.email as string);
-  const {
-    mutate: createSoloSaver,
-    isPending,
-    isError,
-  } = useCreateSoloSaver(user?.email as string);
-
-  const [modalType, setModalType] = useState<"family" | "target" | null>(null);
-
-  const handleStartClick = (to: string) => {
-    router.push(to);
-  };
-
-  const handleOpenModal = (type: "family" | "target") => {
-    setIsActive(true);
-    setModalType(type);
-  };
-
-  const handleCloseModal = () => {
-    setIsActive(false);
-    setModalType(null);
-  };
-
-  const [isNewSoloSaver, setIsnewSoloSaver] = useState(true);
-  const [isActive, setIsActive] = useState(false);
-
-  const topCards: Card[] = [
-    {
-      img: "/soloUser.png",
-      header: "PAZ Solo Saver",
-      text: "Save money regularly in a locked plan with interest of up to 12% per annum.",
-      href: "/dashboard/savings/solo-saver",
-      color: " #5B86E5",
-      handleStart: () => {},
-    },
-    {
-      img: "/familyVaultCard.png",
-      header: "PAZ Family Vault",
-      text: "Save money together with your loved ones and get interests of up to 16% per annum.",
-      href: "/dashboard/savings/family-vault",
-      color: "#5B86E5",
-      handleStart: () => {},
-    },
-  ];
-
-  useEffect(() => {
-    // Check if data has loaded and there is no solo account
-    if (data && !data.hasSoloAccount) {
-      createSoloSaver({
-        title: "PERSONAL",
-        description: "Solo saver account",
-        currentAmount: 0,
-        walletId: walletAccountData!.walletId,
-        type: "SOLO",
-      });
-    }
-    // Dependencies are now stable and won't cause a loop
-  }, [data, isLoading, createSoloSaver, walletAccountData]);
-
-  if (isLoading || i) return <Loading />;
-
-  if (error || e)
-    return (
-      <ErrorComponent
-        message="An error occured while trying to create a solo saver account"
-        retryFunction={() => {}}
-      />
-    );
-
-  // if (mutation.isPending) {
-  //   return <Loading />;
-  // }
-
-  // if (mutation.isError) {
-  //   return (
-  //     <ErrorComponent
-  //       message="An error occured while trying to create a solo saver account"
-  //       retryFunction={() => {}}
-  //     />
-  //   );
-  // }
-
-  if (isPending) {
-    return <Loading />;
+  if (!result.success) {
+    return "Error while fetching account summary";
   }
 
-  if (isError) {
+  const transactions = await getSavingsTransactions(
+    result.data.soloSavings.accountNo,
+  );
+
+  const accountSummary = result.data;
+
+  const hasSoloAccount = accountSummary.hasSoloAccount;
+  const hasTargetSavings = !!accountSummary.targetSavings;
+  const hasFamilyVault = !!accountSummary.familyVault;
+
+  const showFundAccountButton =
+    hasSoloAccount || hasTargetSavings || hasFamilyVault;
+
+  if (!transactions.success) {
     return (
-      <ErrorComponent
-        message="An error occured while trying to create a solo saver account"
-        retryFunction={() => {}}
+      <SavingsClient
+        rows={[]}
+        accountSummary={accountSummary}
+        showFundAccountButton={showFundAccountButton}
       />
     );
   }
 
-  // the loading state shows in the case that the solo saver account is being created
-  if (!data?.hasSoloAccount) {
-    return <Loading />;
-  }
-
   return (
-    <div className={styles.container}>
-      <h2 className={styles.header}>Savings</h2>
-      <p className={styles.headingText}>Explore all our savings plans here.</p>
-      <TotalBalanceCard
-        money={addSavings(data).soloSavings}
-        header="Total savings"
-      />
-      <div className={styles.saversContainer}>
-        <div className={styles.topCardSet}>
-          {topCards.map((card, idx) => {
-            return <SavingsCard key={card.href || idx} card={card} />;
-          })}
-        </div>
-        <div
-          className={styles.cardTypes}
-          style={{
-            borderColor: "#8338EC",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onClick={() => router.push("/dashboard/savings/target-savings")}
-        >
-          <Image
-            src={"/targetSavingsCard.png"}
-            alt="Target Savings Image"
-            width={100}
-            height={100}
-            style={{ display: "flex", alignSelf: "center" }}
-          />
-          <div>
-            <h4>PAZ Target Saver</h4>
-            <p>
-              Save money regularly in a locked plan with interest of up to 12%
-              per annum.
-            </p>
-            {/* <button
-              className={styles.startNowButton}
-              onClick={() => {
-                if (isNewSoloSaver) {
-                  handleOpenModal("target");
-                  setIsnewSoloSaver(false);
-                } else {
-                  handleStartClick("/dashboard/savings/targetSavings");
-                }
-              }}
-            >
-              Start now
-            </button> */}
-          </div>
-        </div>
-      </div>
-      {isActive && modalType === "family" ? (
-        <FamilyVaultModal
-          isActive={isActive}
-          handleCloseModal={handleCloseModal}
-        />
-      ) : modalType === "target" ? (
-        <TargetSavingsModal
-          isActive={isActive}
-          handleCloseModal={handleCloseModal}
-        />
-      ) : null}
-    </div>
+    <SavingsClient
+      rows={[]}
+      accountSummary={accountSummary}
+      showFundAccountButton={showFundAccountButton}
+    />
   );
 };
 

@@ -1,0 +1,17 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+/**
+ * GET /api/auth/logout
+ * Clears the NextAuth session cookie server-side and redirects to login.
+ * Navigating here (via redirect()) is all that's needed to log a user out.
+ */
+export async function GET() {
+  const cookieStore = await cookies();
+
+  // Clear both the standard and secure NextAuth session cookies
+  cookieStore.delete("next-auth.session-token");
+  cookieStore.delete("__Secure-next-auth.session-token");
+
+  redirect("/login");
+}

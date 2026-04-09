@@ -1,39 +1,79 @@
-import Image, { StaticImageData } from "next/image";
+"use client";
 import styles from "./styles.module.css";
+import ThreeDots from "@/assets/three-dots.svg";
+import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import clsx from "clsx";
-type Props = {
-  className: string;
-  cornerImage: StaticImageData | string;
+
+type AccountCardProps = {
+  icon: React.ReactNode;
+  backgroundColor: string;
+  iconColor: string;
   title: string;
   amount: number;
-  isAmountVisible: boolean;
-  toggleAmountVisibility: () => void;
+  rateBackgroundColor?: string;
+  rateTextColor?: string;
 };
 
-export const AccountCard: React.FC<Props> = ({
+const AccountCard: React.FC<AccountCardProps> = ({
+  icon,
   title,
-  className,
-  isAmountVisible,
-  amount,
-  cornerImage,
-  toggleAmountVisibility,
+  backgroundColor,
+  iconColor: color,
+  amount = 0,
+  rateBackgroundColor = "#E8F8EE",
+  rateTextColor = "#12B76A",
 }) => {
+  const [showAmount, setShowAmount] = useState(true);
+
+  const formattedAmount = (amount: number) => {
+    /* takes a number in naira and formats it to have two decimal points */
+
+    return Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount);
+  };
+
   return (
-    <div className={clsx(styles.totalCategories, className)}>
-      <div className={styles.textIcon}>
-        <p>{title}</p>
-        <Image src={cornerImage} width={40} height={40} alt="Savings" />
-      </div>
-      <h3>
-        ₦ {isAmountVisible ? <>{amount}</> : "****"}{" "}
-        <span
-          style={{ cursor: "pointer", fontSize: "1rem" }}
-          onClick={toggleAmountVisibility}
+    <div className={styles.cardContainer}>
+      <div className={styles.topContainer}>
+        <div
+          style={{ backgroundColor: backgroundColor }}
+          className={styles.iconContainer}
         >
-          {isAmountVisible ? <LuEye /> : <LuEyeOff />}
+          {icon}
+        </div>
+
+        <ThreeDots height={16} width={16} />
+      </div>
+
+      <p className={styles.titleText}>{title}</p>
+
+      <div className={styles.bottomContainer}>
+        <div className={styles.amountWrap}>
+          <span className={styles.amountText}>
+            {showAmount ? `NGN ${formattedAmount(amount)}` : "NGN ••••••"}
+          </span>
+          <button
+            type="button"
+            className={styles.toggleAmountBtn}
+            onClick={() => setShowAmount((prev) => !prev)}
+            aria-label={showAmount ? "Hide amount" : "Show amount"}
+          >
+            {showAmount ? <LuEye size={24} /> : <LuEyeOff size={24} />}
+          </button>
+        </div>
+        {/*
+        <span
+          className={styles.ratePill}
+          style={{ backgroundColor: rateBackgroundColor, color: rateTextColor }}
+        >
+        {//rate > 0 ? `+${rate}%` : `${rate}%`}
         </span>
-      </h3>
+          */}
+      </div>
     </div>
   );
 };
+
+export default AccountCard;
