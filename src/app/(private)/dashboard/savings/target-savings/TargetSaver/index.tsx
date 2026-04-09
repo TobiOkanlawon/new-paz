@@ -150,7 +150,7 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
         <div className={styles.buttonContainer}>
           {!hasTargetSavings && (
             <Link href="/dashboard/savings/create">
-              <Button>Create Savings Plan</Button>
+              <Button style={{ whiteSpace: "nowrap" }}>Create Savings Plan</Button>
             </Link>
           )}
           {hasTargetSavings && (
@@ -175,6 +175,7 @@ const TargetSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
                     setShowAccountSelector(true);
                   }
                 }}
+                style={{ whiteSpace: "nowrap" }}
               >
                 Top Up Account
               </Button>

@@ -44,7 +44,7 @@ const quickLinksDropdowns = [
 
 const profileDropdowns = [
   { label: "My Profile", href: "/dashboard/profile" },
-  { label: "Settings", href: "/settings" },
+  { label: "Settings", href: "/dashboard/settings" },
   // {label: "Logout", href: "/logout"},
 ];
 
@@ -139,7 +139,7 @@ const Header = () => {
         >
           <Image src={StarIcon} alt="red star icon" />
           <p className={styles.quickActionsText}>Quick actions</p>
-          <Dropdown height={16} width={16} />
+          <Image src={Dropdown} alt="dropdown icon" width={16} height={16} />
         </div>
 
         <div className={styles.headerRightRight}>

@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 // import Link from "next/link";
 import Ngn from "@/assets/Ngn.png";
 import Image from "next/image";
@@ -9,6 +11,7 @@ type Props = {
 };
 
 const SavingsWalletCard = ({ amount }: Props) => {
+  const [showAmount, setShowAmount] = useState(true);
   return (
     <div>
       <div className={styles.walletCard}>
@@ -32,8 +35,17 @@ const SavingsWalletCard = ({ amount }: Props) => {
             <p className={styles.balanceLabel}>Available Balance</p>
 
             <div className={styles.balanceRow}>
-              <h1 className={styles.balance}>N {amount}</h1>
-              <span className={styles.eye}>👁</span>
+              <h1 className={styles.balance}>
+                N {showAmount ? amount : "••••••"}
+              </h1>
+              <button
+                type="button"
+                className={styles.toggleBtn}
+                onClick={() => setShowAmount((prev) => !prev)}
+                aria-label={showAmount ? "Hide balance" : "Show balance"}
+              >
+                {showAmount ? <LuEye size={24} /> : <LuEyeOff size={24} />}
+              </button>
             </div>
           </div>
           {/*<div className={styles.walletBottom}>

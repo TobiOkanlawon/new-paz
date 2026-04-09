@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import ThreeDots from "@/assets/three-dots.svg";
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import Image from "next/image";
 
 type AccountCardProps = {
   icon: React.ReactNode;
@@ -44,7 +45,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
           {icon}
         </div>
 
-        <ThreeDots height={16} width={16} />
+        <Image src={ThreeDots} alt="menu" width={16} height={16} />
       </div>
 
       <p className={styles.titleText}>{title}</p>

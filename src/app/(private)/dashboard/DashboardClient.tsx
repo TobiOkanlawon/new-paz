@@ -12,15 +12,7 @@ import QuickActionCard from "@/components/Dashboard/QuickActionCard";
 import BottomLeft from "@/components/Dashboard/BottomLeft";
 import BottomRight from "@/components/Dashboard/BottomRight";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
-import AllAccountsModal from "@/components/Savings/AllAccountsModal";
-import TopUpTargetSavingsModal from "@/components/TopUpTargetSavingsModal";
-import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
-import { toast } from "react-toastify";
-import {
-  createSavingsTopup,
-  createSoloSavingsAccount,
-} from "@/actions/savings";
-import TopUpTransferDetailsModal from "@/components/Savings/TopUpDetailsModal";
+import FundAccountFlow from "@/components/Savings/FundAccountFlow";
 
 interface DashboardClientProps {
   firstName: string;
@@ -44,79 +36,13 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
   accountSummary,
 }) => {
   const [openWithdraw, setOpenWithdraw] = useState(false);
-  const [showTopUpModal, setShowTopUpModal] = useState(false);
-  // const [selectedAccount, setSelectedAccount] = useState<null | {
-  //   accountNo: string;
-  //   title: string;
-  // }>(null);
   const [loading, setLoading] = useState(false);
-  const [fundLoading, setFundLoading] = useState(false);
-
-  const [fundModalOpen, setFundModalOpen] = useState(false);
-  const [topUpModalOpen, setTopUpModalOpen] = useState(false);
-  const [topUpDetailsModalOpen, setTopUpDetailsModalOpen] = useState(false);
-  const [topUpDetails, setTopUpDetails] = useState<{
-    accountName: string;
-    accountNumber: string;
-    bank: { name: string };
-    amount: number;
-    displayText: string;
-  } | null>(null);
-
-  const [selectedAccount, setSelectedAccount] = useState<{
-    type: "solo" | "target";
-    accountNo: string;
-    title: string;
-  } | null>(null);
-
-  const handleTopUp = () => {
-      setShowTopUpModal(true);
-  };
 
   const handleWithdraw = () => {
     setOpenWithdraw(true);
   };
 
-  const accountDataForModal = () => {
-    const a: typeof accountSummary = accountSummary;
-    return {
-      soloSavings: a.data.hasSoloAccount ? a.data.soloSavings : undefined,
-      targetSavings: a.data.targetSavings,
-    };
-  };
-
-    const handleSelectAccount = (account: {
-    type: "solo" | "target";
-    accountNo: string;
-    title: string;
-  }) => {
-    setSelectedAccount(account);
-    setFundModalOpen(false);
-    setTopUpModalOpen(true);
-  };
-
-  const handleTopUpConfirm = async ({ amount }: { amount: number }) => {
-      if (!selectedAccount) return;
-  
-      try {
-        const result = await createSavingsTopup({
-          savingsWallet: selectedAccount.accountNo,
-          amount,
-        });
-  
-        if (result.success) {
-          setTopUpModalOpen(false);
-          setTopUpDetails(result.data);
-          setTopUpDetailsModalOpen(true);
-        }
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "An error occurred";
-        toast.error(errorMessage);
-      }
-    };
-
-    // console.log("Account summary", accountSummary)
+  // console.log("Account summary", accountSummary)
 
   return (
     <>
@@ -133,11 +59,12 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
             backgroundColor="#EBFFF2"
             amount={savingsAmount ?? 0}
             icon={
-              <Piggy
-                fill="transparent"
-                color="#22C55E"
-                height={24}
+              <Image
+                src={Piggy}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
                 width={24}
+                height={24}
               />
             }
             iconColor="#22C55E"
@@ -148,7 +75,13 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           <AccountCard
             backgroundColor="#E0DFFD"
             amount={loanAmount ?? 0}
-            icon={<LoanIcon color="#4F46E5" height={24} width={24} />}
+            icon={<Image
+              src={LoanIcon}
+              alt="Dashboard"
+              className={styles.sidebarIcon}
+              width={24}
+              height={24}
+            />}
             iconColor="#22C55E"
             title="Total Loans (COMING SOON)"
             rateBackgroundColor="#DBF8E8"
@@ -157,45 +90,69 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           <AccountCard
             backgroundColor="#F9EAD1"
             amount={investmentAmount ?? 0}
-            icon={<InvestmentIcon color="#F7B341" height={24} width={24} />}
+            icon={<Image
+              src={InvestmentIcon}
+              alt="Dashboard"
+              className={styles.sidebarIcon}
+              width={24}
+              height={24}
+            />}
             iconColor="#22C55E"
             title="Total Investments (COMING SOON)"
           />
         </div>
 
-        <div className={styles.quickActionContainer}>
-          <h2>Quick Actions</h2>
-          <div className={styles.quickActionCards}>
-            <div className={styles.quickActionCardsInnerContainer}>
-              <QuickActionCard
-                action={()=>setFundModalOpen(true)}
-                backgroundColor="#EBFFF2"
-                icon={
-                  <Piggy
-                    fill="transparent"
-                    color="#22C55E"
-                    height={24}
-                    width={24}
+        <FundAccountFlow
+          accountSummary={accountSummary.data}
+          onCompleted={() => {
+            // Optional: Handle completion if needed
+          }}
+        >
+          {(openFundModal) => (
+            <div className={styles.quickActionContainer}>
+              <h2>Quick Actions</h2>
+              <div className={styles.quickActionCards}>
+                <div className={styles.quickActionCardsInnerContainer}>
+                  <QuickActionCard
+                    action={openFundModal}
+                    backgroundColor="#EBFFF2"
+                    icon={
+                      <Image
+                        src={Piggy}
+                        alt="Dashboard"
+                        className={styles.sidebarIcon}
+                        width={24}
+                        height={24}
+                      />
+                    }
+                    text="Add to Savings"
                   />
-                }
-                text="Add to Savings"
-              />
-              <QuickActionCard
-                action={handleWithdraw}
-                color="#214CCF"
-                backgroundColor="#E9EDFA"
-                icon={<WithdrawIcon height={24} width={24} />}
-                text="Withdraw Funds"
-              />
+                  <QuickActionCard
+                    action={handleWithdraw}
+                    color="#214CCF"
+                    backgroundColor="#E9EDFA"
+                    icon={
+                      <Image
+                        src={WithdrawIcon}
+                        alt="Dashboard"
+                        className={styles.sidebarIcon}
+                        width={24}
+                        height={24}
+                      />
+                    }
+                    text="Withdraw Funds"
+                  />
+                </div>
+              </div>
+              <div className={styles.quickActionPager} aria-hidden="true">
+                <span
+                  className={`${styles.quickActionDot} ${styles.quickActionDotActive}`}
+                />
+                <span className={styles.quickActionDot} />
+              </div>
             </div>
-          </div>
-          <div className={styles.quickActionPager} aria-hidden="true">
-            <span
-              className={`${styles.quickActionDot} ${styles.quickActionDotActive}`}
-            />
-            <span className={styles.quickActionDot} />
-          </div>
-        </div>
+          )}
+        </FundAccountFlow>
 
         {isTransactions ? (
           <div className={styles.bottomContainer}>
@@ -230,56 +187,6 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           onConfirm={({ amount }) => console.log("Withdraw:", amount)}
         />
       )}
-
-      <AllAccountsModal
-        open={fundModalOpen}
-        onClose={() => setFundModalOpen(false)}
-        data={accountDataForModal()}
-        onSelect={handleSelectAccount}
-      />
-
-      {selectedAccount && (
-        <TopUpSoloSavingsModal
-          open={topUpModalOpen}
-          onClose={() => setTopUpModalOpen(false)}
-          accountName={selectedAccount.title}
-          currentBalance={
-            selectedAccount.type === "solo"
-              ? accountSummary.data.soloSavings.amount
-              : (accountSummary.data.targetSavings.find(
-                  (t: any) => t.accountNo === selectedAccount.accountNo,
-                )?.amount ?? 0)
-          }
-          loading={fundLoading}
-          onConfirm={handleTopUpConfirm}
-        />
-      )}
-
-      {/* {accounts.targetSavings && (
-        <TopUpTargetSavingsModal
-          open={showTopUpModal}
-          onClose={() => setShowTopUpModal(false)}
-          accountName={selectedAccount?.title || ""}
-          currentBalance={
-            accounts.targetSavings.find(
-              (p: any) => p.accountNo === selectedAccount?.accountNo,
-            )?.amount || 0
-          }
-          remainingToTarget={(() => {
-            const plan = accounts.targetSavings.find(
-              (p: any) => p.accountNo === selectedAccount?.accountNo,
-            );
-            return plan ? plan.targetAmount - plan.amount : 0;
-          })()}
-          fundingSourceTitle="PAZ Wallet"
-          fundingSourceBalance={0}
-          loading={loading}
-          onConfirm={async ({ amount }) => {
-            if (!selectedAccount) return;
-            setLoading(false);
-          }}
-        />
-      )} */}
     </>
   );
 };

@@ -11,12 +11,9 @@ import TransactionsTable, {
   TransactionRow,
 } from "@/components/TransactionTable/TransactionTable";
 
-import FundAccountModal from "@/components/FundAccountModal/FundAccountModal";
-import AllAccountsModal from "@/components/Savings/AllAccountsModal";
 import QuickActions from "@/components/SavingsQuickActions";
+import FundAccountFlow from "@/components/Savings/FundAccountFlow";
 
-import { openPaystackPopup } from "@/libs/paystack";
-import { getAccountSummary } from "@/actions/dashboard";
 import { getTotalBalance } from "@/libs/helpers";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,13 +25,7 @@ import { HiOutlineLink } from "react-icons/hi";
 
 import Rose from "@/assets/noto_rose.svg";
 import Piggy from "@/assets/piggy-bank.svg";
-import { toast } from "react-toastify";
-import {
-  createSavingsTopup,
-  createSoloSavingsAccount,
-} from "@/actions/savings";
-import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
-import TopUpTransferDetailsModal from "../TopUpDetailsModal";
+import { createSoloSavingsAccount } from "@/actions/savings";
 import CreateSoloSaversModal from "@/components/Savings/CreateSavingsModal";
 
 type Props = {
@@ -48,58 +39,17 @@ const SavingsClient = ({
   rows,
   showFundAccountButton,
 }: Props) => {
-  const [fundModalOpen, setFundModalOpen] = useState(false);
-  const [fundLoading, setFundLoading] = useState(false);
   const [soloSaversModalOpen, setSoloSaversModalOpen] = useState(false);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
 
-  const accountDataForModal = () => {
-    const a: typeof accountSummary = accountSummary;
-    return {
-      soloSavings: a.hasSoloAccount ? a.soloSavings : undefined,
-      targetSavings: a.targetSavings,
-    };
-  };
-
-  const handleSelectAccount = (account: {
-    type: "solo" | "target";
-    accountNo: string;
-    title: string;
-  }) => {
-    setSelectedAccount(account);
-    setFundModalOpen(false);
-    setTopUpModalOpen(true);
-  };
-
-  const handleTopUpConfirm = async ({ amount }: { amount: number }) => {
-    if (!selectedAccount) return;
-
-    try {
-      const result = await createSavingsTopup({
-        savingsWallet: selectedAccount.accountNo,
-        amount,
-      });
-
-      if (result.success) {
-        setTopUpModalOpen(false);
-        setTopUpDetails(result.data);
-        setTopUpDetailsModalOpen(true);
-      }
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "An error occurred";
-      toast.error(errorMessage);
-    }
-  };
-
-  const QuickActionItems = [
+  const getQuickActionItems = (openFundModal: () => void) => [
     {
       id: "fund",
       label: "Fund Account",
       icon: <RiScanLine size={22} />,
-      onClick: () => setFundModalOpen(true),
+      onClick: openFundModal,
     },
     {
       id: "withdraw",
@@ -122,22 +72,6 @@ const SavingsClient = ({
   ];
 
   const showSoloSavers = !accountSummary.hasSoloAccount;
-
-  const [topUpModalOpen, setTopUpModalOpen] = useState(false);
-  const [topUpDetailsModalOpen, setTopUpDetailsModalOpen] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState<{
-    type: "solo" | "target";
-    accountNo: string;
-    title: string;
-  } | null>(null);
-
-  const [topUpDetails, setTopUpDetails] = useState<{
-    accountName: string;
-    accountNumber: string;
-    bank: { name: string };
-    amount: number;
-    displayText: string;
-  } | null>(null);
 
   return (
     <div className={styles.container}>
@@ -162,25 +96,33 @@ const SavingsClient = ({
             amount={getTotalBalance(accountSummary, "savings") ?? 0.0}
           />
         </div>
-        {showFundAccountButton && (
-          <Button
-            onClick={() => {
-              setFundModalOpen(true);
-            }}
-            className={styles.fundAccountButton}
-          >
-            Fund Account
-          </Button>
-        )}
-        <div className={styles.midSectionRight} style={{ display: "none" }}>
-          <Button className={styles.outlineButton}>Add Debit Card</Button>
-          <Button className={styles.blockButton}>Link Account</Button>
-        </div>
+        <FundAccountFlow accountSummary={accountSummary}>
+          {(openFundModal) => (
+            <>
+              {showFundAccountButton && (
+                <Button
+                  onClick={openFundModal}
+                  className={styles.fundAccountButton}
+                >
+                  Fund Account
+                </Button>
+              )}
+              <div className={styles.midSectionRight} style={{ display: "none" }}>
+                <Button className={styles.outlineButton}>Add Debit Card</Button>
+                <Button className={styles.blockButton}>Link Account</Button>
+              </div>
+            </>
+          )}
+        </FundAccountFlow>
       </div>
 
-      <div>
-        <QuickActions actions={QuickActionItems as any} />
-      </div>
+      <FundAccountFlow accountSummary={accountSummary}>
+        {(openFundModal) => (
+          <div>
+            <QuickActions actions={getQuickActionItems(openFundModal) as any} />
+          </div>
+        )}
+      </FundAccountFlow>
 
       <div className={styles.savingsPlansContainer}>
         <h2 className={styles.savingsPlanHeader}>Savings Plans</h2>
@@ -252,34 +194,6 @@ const SavingsClient = ({
           />
         </div>
       )}
-      <AllAccountsModal
-        open={fundModalOpen}
-        onClose={() => setFundModalOpen(false)}
-        data={accountDataForModal()}
-        onSelect={handleSelectAccount}
-      />
-
-      {selectedAccount && (
-        <TopUpSoloSavingsModal
-          open={topUpModalOpen}
-          onClose={() => setTopUpModalOpen(false)}
-          accountName={selectedAccount.title}
-          currentBalance={
-            selectedAccount.type === "solo"
-              ? accountSummary.soloSavings.amount
-              : (accountSummary.targetSavings.find(
-                  (t: any) => t.accountNo === selectedAccount.accountNo,
-                )?.amount ?? 0)
-          }
-          loading={fundLoading}
-          onConfirm={handleTopUpConfirm}
-        />
-      )}
-      <TopUpTransferDetailsModal
-        open={topUpDetailsModalOpen}
-        onClose={() => setTopUpDetailsModalOpen(false)}
-        data={topUpDetails}
-      />
       <CreateSoloSaversModal
         isOpen={soloSaversModalOpen}
         onClose={() => setSoloSaversModalOpen(false)}

@@ -140,7 +140,12 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
         </div>
         <div className={styles.buttonContainer}>
           {!accountDetails.hasSoloAccount && (
-            <Button onClick={handleShowSoloSavingsModal}>Create Savings</Button>
+            <Button 
+              onClick={handleShowSoloSavingsModal}
+              style={{ whiteSpace: "nowrap" }}
+            >
+              Create Savings
+            </Button>
           )}
           {accountDetails.hasSoloAccount && (
             <>
@@ -151,7 +156,10 @@ const SoloSaver: React.FC<Props> = ({ accountDetails, transactions }) => {
               >
                 Withdraw Funds
               </Button>
-              <Button onClick={() => setShowTopUpModal(true)}>
+              <Button 
+                onClick={() => setShowTopUpModal(true)}
+                style={{ whiteSpace: "nowrap" }}
+              >
                 Top Up Account
               </Button>
             </>

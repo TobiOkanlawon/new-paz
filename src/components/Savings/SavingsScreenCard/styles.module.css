@@ -98,6 +98,29 @@
   opacity: 0.85;
 }
 
+.toggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.toggleBtn:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.toggleBtn:active {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
 /* ── Bottom / CTA ── */
 .walletBottom {
   margin-top: 4px;

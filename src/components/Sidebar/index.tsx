@@ -211,7 +211,14 @@ export default function Sidebar({
           <div className={styles.centreContainer}>
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<DashboardIcon stroke="#214CCF" className={styles.sidebarIcon} />}
+              // icon={<DashboardIcon stroke="#214CCF" className={styles.sidebarIcon} />}
+              icon={<Image
+                src={DashboardIcon}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />}
               title="Dashboard"
               href="/dashboard"
               active={pathname == "/dashboard"}
@@ -219,7 +226,13 @@ export default function Sidebar({
             />
             <SavingsDropdown
               alt="piggy bank icon"
-              icon={<Piggy fill="transparent" width={24} height={24} className={styles.sidebarIcon} />}
+              icon={<Image
+                src={Piggy}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />}
               collapsed={collapsed}
               pathname={pathname}
               subItems={[
@@ -232,7 +245,13 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<LoansIcon width={24} height={24} className={styles.sidebarIcon} />}
+              icon={<Image
+                src={LoansIcon}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />}
               title="Loans"
               // href="/dashboard/loans"
               href="#"
@@ -259,10 +278,16 @@ export default function Sidebar({
               />*/}
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<SettingsIcon width={24} height={24} className={styles.sidebarIcon} />}
+              icon={<Image
+                src={SettingsIcon}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />}
               title="Settings"
-              href="/settings"
-              active={isSubPath("/settings", pathname)}
+              href="/dashboard/settings"
+              active={isSubPath("/dashboard/settings", pathname)}
               collapsed={collapsed}
             />
           </div>

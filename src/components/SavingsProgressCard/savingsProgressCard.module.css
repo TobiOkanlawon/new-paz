@@ -1,6 +1,6 @@
 .card {
-    max-width: 480px;
-    min-width: 420px;
+  max-width: 480px;
+  min-width: 280px;
   width: 100%;
   text-align: left;
   border: 1px solid #edf0f6;
@@ -10,60 +10,73 @@
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 18px 50px rgba(16, 24, 40, 0.08);
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease;
 }
 
 .card:disabled {
   cursor: default;
 }
 
+.card:active {
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.12);
+}
+
 .topRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
 }
 
 .name {
   margin: 0;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   color: #2E2E2E;
+  line-height: 1.4;
 }
 
 .sub {
-  margin: 8px 0 0;
-  font-size: 16px;
+  margin: 6px 0 0;
+  font-size: 14px;
   color: #878787;
   font-weight: 400;
   letter-spacing: 0.2px;
+  line-height: 1.4;
 }
 
 .arrow {
-  font-size: 24px;
+  font-size: 20px;
   color: #111827;
   padding: 6px;
   border-radius: 10px;
+  flex-shrink: 0;
 }
 
 .amountRow {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-top: 24px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .amountLeft {
   margin: 0;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   color: #2E2E2E;
+  line-height: 1.4;
 }
 
 .amountRight {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: #878787;
+  line-height: 1.4;
+  flex-shrink: 0;
 }
 
 .progressTrack {
@@ -72,7 +85,7 @@
   background: #f3f4f6;
   border-radius: 999px;
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .progressFill {
@@ -82,18 +95,269 @@
 }
 
 .percentText {
-  margin: 14px 0 0;
-  font-size: 16px;
+  margin: 12px 0 0;
+  font-size: 14px;
   color: #878787;
   font-weight: 400;
+  line-height: 1.4;
 }
 
 .amountRowLeft {
-    display: flex;
-    gap: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .toggleAmountBtn {
-    background-color: transparent;
-    border: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  color: #2E2E2E;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toggleAmountBtn:hover {
+  background-color: rgba(46, 46, 46, 0.08);
+}
+
+.toggleAmountBtn:active {
+  opacity: 0.7;
+}
+
+/* Tablet: 768px - 1024px */
+@media screen and (max-width: 1024px) {
+  .card {
+    max-width: 100%;
+    padding: 24px 24px;
+  }
+
+  .name {
+    font-size: 17px;
+  }
+
+  .sub {
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .amountLeft {
+    font-size: 17px;
+  }
+
+  .amountRight {
+    font-size: 13px;
+  }
+
+  .amountRow {
+    margin-top: 18px;
+  }
+}
+
+/* Large phones: 768px and below */
+@media screen and (max-width: 768px) {
+  .card {
+    max-width: 100%;
+    padding: 22px 20px;
+    border-radius: 16px;
+  }
+
+  .topRow {
+    gap: 10px;
+  }
+
+  .name {
+    font-size: 16px;
+  }
+
+  .sub {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .arrow {
+    font-size: 18px;
+  }
+
+  .amountLeft {
+    font-size: 16px;
+  }
+
+  .amountRight {
+    font-size: 12px;
+  }
+
+  .amountRow {
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .progressTrack {
+    height: 12px;
+    margin-top: 10px;
+  }
+
+  .percentText {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+}
+
+/* Standard phones: 640px and below */
+@media screen and (max-width: 640px) {
+  .card {
+    max-width: 100%;
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .topRow {
+    gap: 8px;
+  }
+
+  .name {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .sub {
+    font-size: 11px;
+    margin-top: 3px;
+    letter-spacing: 0.1px;
+  }
+
+  .arrow {
+    font-size: 18px;
+    padding: 4px;
+  }
+
+  .amountLeft {
+    font-size: 15px;
+  }
+
+  .amountRight {
+    font-size: 11px;
+  }
+
+  .amountRow {
+    margin-top: 14px;
+  }
+
+  .toggleAmountBtn {
+    padding: 3px;
+  }
+
+  .progressTrack {
+    height: 10px;
+    margin-top: 8px;
+  }
+
+  .percentText {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+}
+
+/* Small phones: 480px and below */
+@media screen and (max-width: 480px) {
+  .card {
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+
+  .topRow {
+    gap: 6px;
+  }
+
+  .name {
+    font-size: 14px;
+  }
+
+  .sub {
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  .arrow {
+    font-size: 16px;
+  }
+
+  .amountLeft {
+    font-size: 14px;
+  }
+
+  .amountRight {
+    font-size: 10px;
+  }
+
+  .amountRow {
+    margin-top: 12px;
+  }
+
+  .progressTrack {
+    height: 8px;
+    margin-top: 6px;
+  }
+
+  .percentText {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+}
+
+/* Extra small phones: 380px and below */
+@media screen and (max-width: 380px) {
+  .card {
+    padding: 16px 12px;
+    border-radius: 11px;
+  }
+
+  .topRow {
+    gap: 4px;
+  }
+
+  .name {
+    font-size: 13px;
+  }
+
+  .sub {
+    font-size: 9px;
+    margin-top: 2px;
+  }
+
+  .arrow {
+    font-size: 14px;
+    padding: 2px;
+  }
+
+  .amountLeft {
+    font-size: 13px;
+  }
+
+  .amountRight {
+    font-size: 9px;
+  }
+
+  .amountRow {
+    margin-top: 10px;
+  }
+
+  .toggleAmountBtn {
+    padding: 2px;
+  }
+
+  .progressTrack {
+    height: 6px;
+    margin-top: 4px;
+  }
+
+  .percentText {
+    font-size: 10px;
+    margin-top: 4px;
+  }
 }
