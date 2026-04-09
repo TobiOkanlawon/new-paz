@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./dashboard.module.css";
-import Piggy from "@/assets/piggy-bank.svg";
-import LoanIcon from "@/assets/wallet.svg";
-import InvestmentIcon from "@/assets/investments.svg";
-import WithdrawIcon from "@/assets/withdraw-icon.svg";
+import Piggy from "@/assets/piggy-bank.png";
+import LoanIcon from "@/assets/wallet.png";
+import InvestmentIcon from "@/assets/investments.png";
+import WithdrawIcon from "@/assets/withdraw-icon.png";
 import NoRecord from "@/assets/noRecord.png";
 import AccountCard from "@/components/Dashboard/AccountCard";
 import QuickActionCard from "@/components/Dashboard/QuickActionCard";

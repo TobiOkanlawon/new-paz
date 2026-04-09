@@ -1,6 +1,6 @@
 "use client";
 import styles from "./styles.module.css";
-import ThreeDots from "@/assets/three-dots.svg";
+import ThreeDots from "@/assets/three-dots.png";
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import Image from "next/image";
