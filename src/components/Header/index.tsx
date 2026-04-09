@@ -14,7 +14,7 @@ import StarIcon from "@/assets/star.png";
 import HeaderDropdown from "../HeaderDropdowns";
 
 import { useSession, signOut } from "next-auth/react";
-import Dropdown from "@/assets/dropdown.svg";
+import Dropdown from "@/assets/dropdown.png";
 
 const ProfileImage = "/profile.png";
 
