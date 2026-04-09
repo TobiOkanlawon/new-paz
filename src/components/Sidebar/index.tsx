@@ -244,6 +244,7 @@ export default function Sidebar({
                   title: "Target Savings",
                   href: "/dashboard/savings/target-savings",
                 },
+                { title: "Savings Plan", href: "/dashboard/savings/create" },
               ]}
             />
             <SidebarOption

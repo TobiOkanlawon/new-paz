@@ -1,5 +1,6 @@
 "use client";
 import SavingsPlanMiniCard from "@/components/Savings/SavingsCard";
+import Image from "next/image";
 import styles from "./card.module.css";
 
 // images
@@ -188,7 +189,14 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
         <SavingsPlanMiniCard
           key={index}
           title={item.title}
-          icon={<Icon height={24} width={24} />}
+          icon={
+            <Image
+              src={Icon}
+              alt={item.title}
+              width={24}
+              height={24}
+            />
+          }
           content={description}
           borderColor={item.borderColor}
           imageBackgroundColor={item.imageBackgroundColor || "#E9EDFA"}
@@ -273,7 +281,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mb-10">
+    <div className={styles.savingsCards}>
       <h3 className="text-sm font-semibold text-gray-600 mb-4">{title}</h3>
 
       <div className={styles.innerContainer}>{children}</div>

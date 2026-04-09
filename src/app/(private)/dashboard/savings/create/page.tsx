@@ -26,15 +26,15 @@ const Savings = async () => {
     <div className={styles.container}>
       <div className={styles.heading}>
         <div className={styles.headingLeft}>
-          <h1 className={styles.firstNameText}>Savings</h1>
+          <h1 className={styles.firstNameText}>Savings Plans</h1>
           <p className={styles.subHeadingText}>
             Explore all of our savings plans here
           </p>
         </div>
-        <div className={styles.headingRight}>
+        {/* <div className={styles.headingRight}>
           <Button className={styles.outlineButton}>Withdraw Funds</Button>
           <Button>Fund Account</Button>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.midSection}>
@@ -43,10 +43,10 @@ const Savings = async () => {
             amount={getTotalBalance(accountDetails.data, "savings")}
           />
         </div>
-        <div className={styles.midSectionRight}>
+        {/* <div className={styles.midSectionRight}>
           <Button className={styles.outlineButton}>Add Debit Card</Button>
           <Button className={styles.blockedButton}>Link Account</Button>
-        </div>
+        </div> */}
       </div>
 
       <SavingsPlans showSoloSavers={showSoloSavers} />
