@@ -95,13 +95,13 @@ const BottomRight: React.FC<BottomRightProps> = ({
   const constructCustomTransactionsData = (
     tx: Transaction,
   ): CustomTransactionType => {
-    let amount = Intl.NumberFormat("en-US", {
+    const amount = Intl.NumberFormat("en-US", {
       style: "currency",
       currency: tx.currency,
     }).format(tx.amount);
 
     // basically
-    let subTitle = "Into savings";
+    const subTitle = "Into savings";
     let type: "inbound" | "outbound" = "inbound";
 
     if (tx.description == "VirtualAccountTopUp") {
@@ -165,7 +165,9 @@ const BottomRight: React.FC<BottomRightProps> = ({
         <div className={styles.instantSavingsContainer}>
           <div className={styles.instantSavingsTitleContainer}>
             <h2>Instant Savings</h2>
-            <Link href="#">View All</Link>
+            <Link style={{ display: "none" }} href="#">
+              View All
+            </Link>
           </div>
           <div className={styles.instantSavingsContainer1}>
             {savingsAccounts.soloSavings && (

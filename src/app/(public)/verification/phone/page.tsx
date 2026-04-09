@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Button from "@/components/Button";
 import { verifyEmail as verifyPhone, resendCode } from "../actions";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ const PhoneVerification = () => {
 
   const hasSentRef = useRef(false);
 
-  const handleChange = (index, value) => {
+  const handleChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -32,13 +32,16 @@ const PhoneVerification = () => {
     }
   };
 
-  const handleKeyDown = (index, e) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  const handleResend = async () => {
+  const handleResend = useCallback(async () => {
     // just return if the email does not succeed
     if (!phone || hasSentRef.current) return;
 
@@ -51,9 +54,9 @@ const PhoneVerification = () => {
     }
 
     setOtp(["", "", "", "", "", ""]);
-  };
+  }, [phone, setTime, timeInSeconds]);
 
-  const handlePaste = (e) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
     const pasted = e.clipboardData
       .getData("text")
       .replace(/\D/g, "")
@@ -104,7 +107,7 @@ const PhoneVerification = () => {
     if (!phone) return;
 
     handleResend();
-  }, [phone]);
+  }, [phone, handleResend]);
 
   return (
     <div
@@ -164,7 +167,9 @@ const PhoneVerification = () => {
             {otp.map((digit, i) => (
               <input
                 key={i}
-                ref={(el) => (inputRefs.current[i] = el)}
+                ref={(el) => {
+                  inputRefs.current[i] = el;
+                }}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}

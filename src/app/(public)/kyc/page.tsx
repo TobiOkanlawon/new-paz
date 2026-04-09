@@ -3,7 +3,7 @@ import KYCVerification from "@/components/KYCVerification/kycverifications";
 
 import LeftCaurosel from "@/components/onboarding/LeftCaurosel";
 
-export default function () {
+export default function Page() {
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>

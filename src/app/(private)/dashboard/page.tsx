@@ -2,9 +2,10 @@
 import { getDashboardData } from "@/actions/dashboard";
 import { getTotalBalance } from "@/libs/helpers";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getAllTransactions } from "@/actions/transactions";
+
 import DashboardClient from "./DashboardClient";
+import { getAllTransactions } from "@/actions/transactions";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);

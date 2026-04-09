@@ -1,7 +1,7 @@
 import { apiFetch } from '@/libs/api';
 import { getServerSession } from 'next-auth';
 import { ActionResult, ok, fail } from '@/actions/shared';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 type TransactionsDataResponse = {
   id: number;
@@ -31,7 +31,7 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
   const email = session.user.email;
 
   try {
-    const res: GetAllTransactionsAPIResponse  = await apiFetch(`/v1/users/user/fetch-transactions?email=${email}`, {
+    const res: GetAllTransactionsAPIResponse  = await apiFetch<any>(`/v1/users/user/fetch-transactions?email=${email}`, {
       isProtected: true,
       method: "GET",
     })
@@ -65,7 +65,7 @@ export async function getAllTransactions(accountNo?: string[]): Promise<ActionRe
 };
 
 
-export const getSavingsTransactions = async (accountNo: string) => {
+export const getSavingsTransactions = async (accountNo: string): Promise<ActionResult<TAllTransactions>> => {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
@@ -75,7 +75,7 @@ export const getSavingsTransactions = async (accountNo: string) => {
   const email = session.user.email;
 
   try {
-    const res: GetAllTransactionsAPIResponse  = await apiFetch(`/v1/users/user/savings/fetch-transactions?email=${email}&acctno=${accountNo}`, {
+    const res: GetAllTransactionsAPIResponse  = await apiFetch<any>(`/v1/users/user/savings/fetch-transactions?email=${email}&acctno=${accountNo}`, {
       isProtected: true,
       method: "GET",
     })

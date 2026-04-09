@@ -173,15 +173,15 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
   const description =
     "Save money daily, bi-weekly plan with a purpose in mind.";
 
-  const renderCards = (items, type: "solo" | "target") => {
-    let action;
+  const renderCards = (items: any, type: "solo" | "target") => {
+    let action: any;
     if (type == "solo") {
       action = showCreateSoloSaversModal;
     } else if (type == "target") {
       action = showCreateTargetSaversModal;
     }
 
-    return items.map((item, index) => {
+    return items.map((item: any, index: any) => {
       const Icon = item.image;
 
       return (
@@ -201,26 +201,14 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
 
   const router = useRouter();
 
-  const createSoloSaversAction = async (values: {
-    accountName: string;
-    initialDeposit: number;
-    contributionFrequency: string;
-    contributionAmount: number;
-  }) => {
-    const result = await createSoloSavingsAccount({
+  const createSoloSaversAction = async (values: any) => {
+    return createSoloSavingsAccount({
       accountName: values.accountName,
     });
-    if (!result.success) {
-      toast.error(result.error);
-      return;
-    }
-    toast.success("Savings Plan created");
-    setIsSoloSaversModalVisible(false);
-    router.push("/dashboard/savings/solo-saver");
   };
 
-  const createTargetSaversAction = async (values: any) => {
-    const result = await createTargetSaversAction(values);
+  const createTargetSavings = async (values: any) => {
+    const result = await createTargetSavingsAccount(values);
     if (!result.success) {
       toast.error(result.error);
       return;
@@ -263,7 +251,6 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
            */}
       </div>
       <CreateSoloSaversModal
-        title="Create your Solo Savers Plan"
         isOpen={isSoloSaverModalVisible}
         onClose={() => setIsSoloSaversModalVisible(false)}
         onSubmit={createSoloSaversAction}
@@ -272,13 +259,19 @@ export default function SavingsPlans({ showSoloSavers }: Props) {
         title="Create your Target Savers Plan"
         isOpen={isTargetSaverModalVisible}
         onClose={() => setIsTargetSaversModalVisible(false)}
-        onSubmit={createTargetSavingsAccount}
+        onSubmit={createTargetSavings}
       />
     </div>
   );
 }
 
-function Section({ title, children }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="mb-10">
       <h3 className="text-sm font-semibold text-gray-600 mb-4">{title}</h3>

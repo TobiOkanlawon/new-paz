@@ -7,7 +7,7 @@ const authSecret =
   process.env.AUTH_SECRET ??
   "dev-only-secret-change-me";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const isHttps = req.nextUrl.protocol === "https:";
 
   const token = await getToken({

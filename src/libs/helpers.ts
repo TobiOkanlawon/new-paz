@@ -45,7 +45,7 @@ export const formatBirthdayToDateInputFormat = (
 
 export const addSavings = (accountDetails: TAccountDetails) => {
   return {
-    soloSavings: accountDetails.soloSavings?.Amount || 0,
+    soloSavings: accountDetails.soloSavings?.amount || 0,
     familyVault: accountDetails.familyVault.reduce((p, c) => p + c.amount, 0),
     targetSavings: accountDetails.targetSavings.reduce(
       (p, c) => p + c.amount,

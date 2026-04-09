@@ -6,14 +6,14 @@
 .header{
     font-weight: 700;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
     font-size: 20px;
 }
 .textGroupContainer{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     gap: 7vw;
     margin-top: 1rem;

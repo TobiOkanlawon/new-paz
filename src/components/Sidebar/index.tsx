@@ -40,8 +40,6 @@ const SidebarOption: React.FC<OptionProps> = ({
   href,
   collapsed = false,
 }) => {
-  const Icon = icon;
-
   return (
     <Link className={styles.navLink} href={href}>
       <div
@@ -162,11 +160,11 @@ const SavingsDropdown: React.FC<SavingsDropdownProps> = ({
 export default function Sidebar({
   isOpen,
   collapsed,
-  onToggle,
+  action,
 }: {
   isOpen: boolean;
   collapsed: boolean;
-  onToggle: () => void;
+  action: () => void;
 }) {
   const handleLogout = () => {
     signOut();
@@ -206,7 +204,7 @@ export default function Sidebar({
               )}
               src={ToggleIcon}
               alt="Toggle Icon"
-              onClick={onToggle}
+              onClick={action}
             />
           </div>
 

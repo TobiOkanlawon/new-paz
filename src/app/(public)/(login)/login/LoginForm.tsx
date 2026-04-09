@@ -43,7 +43,7 @@ const LoginForm = () => {
       toast.success("KYC complete. Log in again");
       router.replace("/login");
     }
-  }, []);
+  }, [router, searchParams]);
 
   const formik = useFormik<LoginSchema>({
     initialValues: {

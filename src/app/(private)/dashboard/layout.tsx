@@ -25,8 +25,17 @@ export default function DashboardLayout({
   }, [pathname]);
 
   return (
-    <div className={clsx(styles.pageContainer, collapsed && styles.pageContainerCollapsed)}>
-      <Sidebar isOpen={isSidebarOpen} collapsed={collapsed} onToggle={toggleCollapsed} />
+    <div
+      className={clsx(
+        styles.pageContainer,
+        collapsed && styles.pageContainerCollapsed,
+      )}
+    >
+      <Sidebar
+        isOpen={isSidebarOpen}
+        collapsed={collapsed}
+        action={toggleCollapsed}
+      />
 
       <div className={styles.dashboardMain}>
         <Header />

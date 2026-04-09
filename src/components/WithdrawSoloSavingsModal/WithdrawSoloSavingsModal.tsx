@@ -47,7 +47,8 @@ const WithdrawSoloSavingsModal = ({
   const [amount, setAmount] = useState("");
   const amountNumber = useMemo(() => parseAmount(amount), [amount]);
 
-  const canSubmit = amountNumber > 0 && amountNumber <= currentSavings && !loading;
+  const canSubmit =
+    amountNumber > 0 && amountNumber <= currentSavings && !loading;
 
   const handleQuick = (n: number) => setAmount(String(n));
 
@@ -57,7 +58,12 @@ const WithdrawSoloSavingsModal = ({
   };
 
   return (
-    <ModalShell open={open} onClose={onClose} title="Withdraw from Solo savers" width={980}>
+    <ModalShell
+      open={open}
+      onClose={onClose}
+      title="Withdraw from Solo savers"
+      width={980}
+    >
       <div className={styles.wrap}>
         {/* Account summary row */}
         <div className={styles.summaryRow}>
@@ -68,7 +74,9 @@ const WithdrawSoloSavingsModal = ({
 
           <div className={styles.rightAlign}>
             <p className={styles.label}>Current Savings</p>
-            <p className={styles.value}>{formatMoney(currentSavings, currency)}</p>
+            <p className={styles.value}>
+              {formatMoney(currentSavings, currency)}
+            </p>
           </div>
         </div>
 
@@ -78,6 +86,7 @@ const WithdrawSoloSavingsModal = ({
         <div className={styles.section}>
           <p className={styles.sectionTitle}>Withdrawal Amount</p>
           <Input
+            name="amount"
             label=""
             placeholder={`${currency}0.00`}
             value={amount}
@@ -118,7 +127,11 @@ const WithdrawSoloSavingsModal = ({
 
         {/* Actions */}
         <div className={styles.actions}>
-          <Button variant="outlined" onClick={onClose} className={styles.actionBtn}>
+          <Button
+            variant="outlined"
+            onClick={onClose}
+            className={styles.actionBtn}
+          >
             Cancel
           </Button>
           <Button

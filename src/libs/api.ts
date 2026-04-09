@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { BackendError } from "./errors";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 const BASE_URL = process.env.API_BASE_URL ?? "";
 
@@ -45,7 +45,7 @@ export async function apiFetch<T = unknown>(
 
   const { body, headers: extraHeaders, ...rest } = options;
 
-  let headers: any = {};
+  const headers: any = {};
 
   if (!session?.accessToken && isProtected) {
     redirect("/api/auth/logout");
