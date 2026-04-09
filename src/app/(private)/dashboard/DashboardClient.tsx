@@ -116,6 +116,8 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
       }
     };
 
+    // console.log("Account summary", accountSummary)
+
   return (
     <>
       <div className={styles.container}>
@@ -243,8 +245,8 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           accountName={selectedAccount.title}
           currentBalance={
             selectedAccount.type === "solo"
-              ? accountSummary.soloSavings.amount
-              : (accountSummary.targetSavings.find(
+              ? accountSummary.data.soloSavings.amount
+              : (accountSummary.data.targetSavings.find(
                   (t: any) => t.accountNo === selectedAccount.accountNo,
                 )?.amount ?? 0)
           }
