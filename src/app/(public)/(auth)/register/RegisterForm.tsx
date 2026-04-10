@@ -52,7 +52,7 @@ const RegisterForm = () => {
   });
 
   return (
-    <div style={{"width": "90%"}}>
+    <div style={{ width: "90%" }}>
       <form className={styles.rightSide} onSubmit={formik.handleSubmit}>
         <div className={styles.heading}>
           <h1 className={styles.title}>Create a Secure Account</h1>
@@ -66,7 +66,7 @@ const RegisterForm = () => {
             <Input
               id="first-name"
               label="First Name"
-              placeholder="Esther"
+              placeholder="Enter your first name"
               {...formik.getFieldProps("firstName")}
               errors={handleErrorDisplay(formik, "firstName")}
             />
@@ -76,7 +76,7 @@ const RegisterForm = () => {
             <Input
               id="last-name"
               label="Last Name"
-              placeholder="Williams"
+              placeholder="Enter your last name"
               {...formik.getFieldProps("lastName")}
               errors={handleErrorDisplay(formik, "lastName")}
             />
@@ -88,7 +88,7 @@ const RegisterForm = () => {
             label="Email Address"
             type="email"
             id="email"
-            placeholder="estherwilliams22@gmail.com"
+            placeholder="Enter your email address"
             {...formik.getFieldProps("email")}
             errors={handleErrorDisplay(formik, "email")}
           />
@@ -99,7 +99,7 @@ const RegisterForm = () => {
             label="Phone Number"
             id="phone-number"
             type="tel"
-            placeholder="08023451234"
+            placeholder="0802345****"
             {...formik.getFieldProps("phoneNumber")}
             errors={handleErrorDisplay(formik, "phoneNumber")}
           />
