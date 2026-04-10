@@ -101,7 +101,7 @@ const LoginForm = () => {
         <Input
           label="Email Address"
           type="email"
-          placeholder="Enter your email address"
+          placeholder="you@gmail.com"
           id="email"
           className={styles.email}
           {...formik.getFieldProps("email")}
@@ -111,7 +111,7 @@ const LoginForm = () => {
           <Input
             label="Password"
             type="password"
-            placeholder="Enter your password"
+            placeholder="********"
             id="password"
             // className={styles.password}
             errors={handleErrorDisplay(formik, "password")}

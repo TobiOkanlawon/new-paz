@@ -88,7 +88,7 @@ const RegisterForm = () => {
             label="Email Address"
             type="email"
             id="email"
-            placeholder="Enter your email address"
+            placeholder="you@gmail.com"
             {...formik.getFieldProps("email")}
             errors={handleErrorDisplay(formik, "email")}
           />
