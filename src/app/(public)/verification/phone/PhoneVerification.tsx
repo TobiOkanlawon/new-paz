@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import { verifyEmail as verifyPhone, resendCode } from "../actions";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
+import phoneStyles from "./phoneVerification.module.css";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 
 /* The Phone verification page */
@@ -156,12 +157,7 @@ const PhoneVerification = () => {
 
           {/* OTP Inputs */}
           <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "12px",
-              marginBottom: "36px",
-            }}
+            className={phoneStyles.otpContainer}
             onPaste={handlePaste}
           >
             {otp.map((digit, i) => (
@@ -177,19 +173,9 @@ const PhoneVerification = () => {
                 value={digit}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
-                style={{
-                  width: "48px",
-                  height: "52px",
-                  textAlign: "center",
-                  fontSize: "18px",
-                  fontWeight: "600",
-                  border: digit ? "2px solid #3b5bdb" : "1.5px solid #d0d0d0",
-                  borderRadius: "8px",
-                  outline: "none",
-                  color: "#111",
-                  backgroundColor: digit ? "#f0f3ff" : "white",
-                  transition: "border-color 0.15s, background 0.15s",
-                }}
+                className={`${phoneStyles.otpInput} ${
+                  digit ? phoneStyles.otpInputFilled : ""
+                }`}
               />
             ))}
           </div>

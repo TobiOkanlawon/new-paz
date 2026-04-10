@@ -5,6 +5,7 @@ import { verifyEmail, resendCode } from "../actions";
 import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../verification.module.css";
+import emailStyles from "./emailVerification.module.css";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 
 /* The email verification page */
@@ -155,12 +156,7 @@ const EmailVerification = () => {
 
           {/* OTP Inputs */}
           <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "12px",
-              marginBottom: "36px",
-            }}
+            className={emailStyles.otpContainer}
             onPaste={handlePaste}
           >
             {otp.map((digit, i) => (
@@ -176,19 +172,9 @@ const EmailVerification = () => {
                 value={digit}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
-                style={{
-                  width: "48px",
-                  height: "52px",
-                  textAlign: "center",
-                  fontSize: "18px",
-                  fontWeight: "600",
-                  border: digit ? "2px solid #3b5bdb" : "1.5px solid #d0d0d0",
-                  borderRadius: "8px",
-                  outline: "none",
-                  color: "#111",
-                  backgroundColor: digit ? "#f0f3ff" : "white",
-                  transition: "border-color 0.15s, background 0.15s",
-                }}
+                className={`${emailStyles.otpInput} ${
+                  digit ? emailStyles.otpInputFilled : ""
+                }`}
               />
             ))}
           </div>
