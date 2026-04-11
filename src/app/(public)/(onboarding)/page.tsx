@@ -1,5 +1,7 @@
-import styles from "./onboarding/page.module.css";
+import LeftCarousel from "@/components/onboarding/LeftCaurosel";
+import styles from "./page.module.css";
 import Image from "next/image";
+import PreAuthLayout from "@/components/Layouts/PreAuthLayout";
 
 const Onboarding = () => {
   const keyNotes = [
@@ -31,30 +33,37 @@ const Onboarding = () => {
     },
   ];
   return (
-    <div className={styles.container}>
-      <h2 className={styles.header}>Start your journey with PAZ</h2>
-      <p className={styles.subheader}>
-        Join thousands of people already using PAZ for easy payments, secure
-        authentications and daily use.
-      </p>
+    <PreAuthLayout carousel={<LeftCarousel showSkip={true} />}>
+      <div className={styles.container}>
+        <h2 className={styles.header}>Start your journey with PAZ</h2>
+        <p className={styles.subheader}>
+          Join thousands of people already using PAZ for easy payments, secure
+          authentications and daily use.
+        </p>
 
-      <div className={styles.keyNotesContainer}>
-        {keyNotes.map((note, index) => (
-          <div key={index} className={styles.noteContainer}>
-            <div
-              className={styles.noteImage}
-              style={{ backgroundColor: note.iconBG }}
-            >
-              <Image src={note.icon} alt={note.title} width={26} height={26} />
+        <div className={styles.keyNotesContainer}>
+          {keyNotes.map((note, index) => (
+            <div key={index} className={styles.noteContainer}>
+              <div
+                className={styles.noteImage}
+                style={{ backgroundColor: note.iconBG }}
+              >
+                <Image
+                  src={note.icon}
+                  alt={note.title}
+                  width={26}
+                  height={26}
+                />
+              </div>
+              <div className={styles.noteText}>
+                <h3>{note.title}</h3>
+                <p>{note.description}</p>
+              </div>
             </div>
-            <div className={styles.noteText}>
-              <h3>{note.title}</h3>
-              <p>{note.description}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </PreAuthLayout>
   );
 };
 

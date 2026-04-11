@@ -10,6 +10,7 @@ import Link from "next/link";
 
 type Props = {
   view?: "logged in" | "logged out";
+  showSkip?: boolean;
 };
 
 const SLIDE_DURATION = 6000;
@@ -33,7 +34,7 @@ const LoggedInView = () => {
   );
 };
 
-const LeftCaurosel: React.FC<Props> = ({ view }) => {
+const LeftCaurosel: React.FC<Props> = ({ view, showSkip = false }) => {
   const bgImages = [
     {
       bg: "/images/leftBG11.png",
@@ -121,9 +122,11 @@ const LeftCaurosel: React.FC<Props> = ({ view }) => {
             height={51}
             className={styles.logo}
           />
-          <Link href="/login" className={styles.onboardingSkip}>
-            <p>Skip</p>
-          </Link>
+          {showSkip && (
+            <Link href="/login" className={styles.onboardingSkip}>
+              <p>Skip</p>
+            </Link>
+          )}
         </div>
 
         <div className={styles.onboardingImage}>

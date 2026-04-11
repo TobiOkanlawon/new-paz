@@ -1,10 +1,23 @@
-.container{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.leftContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
     height: 100vh;
-    width: 100%;
-    position: relative;
     overflow: hidden;
+}
+
+.rightContainer{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    overflow: hidden;
+    grid-column: 2;
 }
 
 @media screen and (max-height: 850px) {
