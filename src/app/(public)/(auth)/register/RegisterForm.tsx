@@ -11,12 +11,11 @@ import { RegisterSchema } from "./schema";
 import { registerUser } from "./actions";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const RegisterForm = () => {
   const router = useRouter();
-
-  const session = useSession();
+  const [isTosChecked, setIsTosChecked] = useState<string>("");
 
   const formik = useFormik<yup.InferType<typeof RegisterSchema>>({
     initialValues: {
@@ -133,7 +132,10 @@ const RegisterForm = () => {
             className={styles.tosInput}
             name="tos"
             type="checkbox"
-            value=""
+            value={isTosChecked}
+            onChange={(e) => {
+              setIsTosChecked(!isTosChecked);
+            }}
           />
           <label htmlFor="tos">
             I agree to{" "}
@@ -147,7 +149,11 @@ const RegisterForm = () => {
           </label>
         </div>
 
-        <Button onClick={formik.submitForm} loading={formik.isSubmitting}>
+        <Button
+          disabled={!isTosChecked}
+          onClick={formik.submitForm}
+          loading={formik.isSubmitting}
+        >
           Create Account
         </Button>
       </form>
