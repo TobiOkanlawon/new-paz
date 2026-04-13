@@ -5,5 +5,5 @@ export default async function OnboardingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className={styles.container}>{children}</div>;
+  return <div>{children}</div>;
 }
