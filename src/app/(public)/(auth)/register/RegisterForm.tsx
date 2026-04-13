@@ -15,7 +15,7 @@ import { useState } from "react";
 
 const RegisterForm = () => {
   const router = useRouter();
-  const [isTosChecked, setIsTosChecked] = useState<string>("");
+  const [isTosChecked, setIsTosChecked] = useState<boolean>(false);
 
   const formik = useFormik<yup.InferType<typeof RegisterSchema>>({
     initialValues: {
@@ -132,7 +132,7 @@ const RegisterForm = () => {
             className={styles.tosInput}
             name="tos"
             type="checkbox"
-            value={isTosChecked}
+            checked={isTosChecked}
             onChange={(e) => {
               setIsTosChecked(!isTosChecked);
             }}

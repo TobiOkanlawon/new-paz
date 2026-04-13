@@ -1,11 +1,11 @@
-/* .container{ */
-/*     display: grid; */
-/*     grid-template-columns: 1fr 1fr; */
-/*     height: 100vh; */
-/*     width: 100%; */
-/*     position: relative; */
-/*     overflow: hidden; */
-/* } */
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
 
 .leftContainer {
     position: fixed;
@@ -38,13 +38,13 @@
 
 @media screen and (max-width: 1023px) {
 
-    /* .container { */
-    /*     display: flex; */
-    /*     flex-direction: column; */
-    /*     height: 100vh; */
-    /*     width: 100%; */
-    /*     overflow-y: auto; */
-    /* } */
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        overflow-y: auto;
+    }
     
     .leftContainer {
         position: relative;
