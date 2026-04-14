@@ -13,6 +13,26 @@ import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import { NotVerifiedError } from "@/libs/errors";
 
+// Helper functions for email cookie
+const setEmailCookie = (email: string) => {
+  document.cookie = `rememberedEmail=${encodeURIComponent(email)}; path=/; max-age=${30 * 24 * 60 * 60}`; // 30 days
+};
+
+const getEmailCookie = (): string | null => {
+  const cookies = document.cookie.split(";");
+  for (const cookie of cookies) {
+    const [key, value] = cookie.trim().split("=");
+    if (key === "rememberedEmail") {
+      return decodeURIComponent(value);
+    }
+  }
+  return null;
+};
+
+const clearEmailCookie = () => {
+  document.cookie = "rememberedEmail=; path=/; max-age=0";
+};
+
 const schema = yup.object({
   email: yup
     .string()
@@ -47,9 +67,9 @@ const LoginForm = () => {
 
   const formik = useFormik<LoginSchema>({
     initialValues: {
-      email: "",
+      email: typeof window !== "undefined" ? getEmailCookie() || "" : "",
       password: "",
-      remember: false,
+      remember: typeof window !== "undefined" && getEmailCookie() !== null,
     },
     validationSchema: schema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
@@ -83,6 +103,12 @@ const LoginForm = () => {
       }
 
       if (result.ok) {
+        // Handle remember me - only store email, never password
+        if (values.remember) {
+          setEmailCookie(values.email);
+        } else {
+          clearEmailCookie();
+        }
         router.push("/dashboard");
       }
     },
