@@ -43,8 +43,7 @@ const PhoneVerification = () => {
   };
 
   const handleResend = useCallback(async () => {
-    // just return if the email does not succeed
-    if (!phone || hasSentRef.current) return;
+    if (!phone) return;
 
     const res = await resendCode("phone", phone);
 
@@ -91,24 +90,49 @@ const PhoneVerification = () => {
   };
 
   useEffect(() => {
-    // basically, if there's no email in the URL, then there's actually no way to correlate the OTP with the user
+    const phoneFromParams = params.get("phone");
 
-    const phone = params.get("phone");
+    let resolvedPhone = "";
+    if (phoneFromParams) {
+      localStorage.setItem(
+        "verification_phone",
+        JSON.stringify({ value: phoneFromParams, ts: Date.now() }),
+      );
+      resolvedPhone = phoneFromParams;
 
-    if (phone) {
-      setPhone(phone);
       router.replace("/verification/phone");
+    } else {
+      const stored = localStorage.getItem("verification_phone");
+      if (stored) {
+        try {
+          const { value, ts } = JSON.parse(stored);
+          const isFresh = Date.now() - ts < 10 * 60 * 1000; // 10 mins
+
+          if (isFresh) resolvedPhone = value;
+        } catch (e) {
+          toast.error("Cannot find the user's phone number");
+        }
+      }
     }
-    // TODO: ideally, there should be a redirect from the page if there's no email in the URL, but we'll leave it till the backend implementation for the alternate path is up
-  }, [params, router]);
 
-  useEffect(() => {
-    /* send an OTP once the page opens for the first time, because it doesn't send authomatically from the backend */
+    if (!resolvedPhone) return;
 
-    if (!phone) return;
+    // Prevent running twice (React Strict Mode etc.)
+    if (hasSentRef.current) return;
 
-    handleResend();
-  }, [phone, handleResend]);
+    hasSentRef.current = true;
+
+    setPhone(resolvedPhone);
+
+    // Send OTP
+    resendCode("phone", resolvedPhone).then((res) => {
+      if (!res.success) {
+        toast.error("Failed to send OTP");
+      } else {
+        setTime(timeInSeconds);
+      }
+    });
+  }, [params, router, setTime, timeInSeconds]);
 
   return (
     <div
@@ -156,10 +180,7 @@ const PhoneVerification = () => {
           )}
 
           {/* OTP Inputs */}
-          <div
-            className={phoneStyles.otpContainer}
-            onPaste={handlePaste}
-          >
+          <div className={phoneStyles.otpContainer} onPaste={handlePaste}>
             {otp.map((digit, i) => (
               <input
                 key={i}
