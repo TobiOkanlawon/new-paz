@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { ActionResult, fail, ok } from "./shared";
 import { getProfile } from "./profile";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { redirect } from "next/navigation";
 
 // ─── Response Types ────────────────────────────────────────────────────────────
 
@@ -14,7 +15,7 @@ export async function getAccountSummary(): Promise<
   const session = await getServerSession(authOptions);
   
   if (!session) {
-    throw new Error("user not authenticated")
+    redirect("/api/auth/logout");
   }
   
   try {
@@ -40,7 +41,7 @@ export async function getDashboardData(): Promise<any> {
   const [accountSummary, profileData] = await Promise.all([
     getAccountSummary(),
     getProfile(),
-  ]);
+ ]);
 
   return { accountSummary, profileData };
 }
