@@ -64,6 +64,7 @@
         height: auto;
         grid-column: unset;
         padding-bottom: 40px;
+	padding-top: 18px;
         overflow: visible;
         flex-shrink: 0;
     }
