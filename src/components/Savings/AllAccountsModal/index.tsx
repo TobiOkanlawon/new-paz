@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import { FiChevronRight } from "react-icons/fi";
 import { RiBankLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import Link from "next/link";
 
 type SoloSavings = {
   title: string;
@@ -36,8 +37,33 @@ type Props = {
   }) => void;
 };
 
+const EmptyModalAllAccountsModal = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
+  return (
+    <ModalShell open={open} onClose={onClose} title="Fund Account">
+      <div className={styles.container}>
+        <div className={styles.innerContainer}>
+          <p>You don't have any current savings plans</p>
+          <Link href="/dashboard/savings/create">Create a savings plans</Link>
+        </div>
+      </div>
+    </ModalShell>
+  );
+};
+
 const AllAccountsModal = ({ open, onClose, data, onSelect }: Props) => {
   const { soloSavings, targetSavings } = data;
+
+  if (!soloSavings && !targetSavings) {
+    // when the targetSavings is not created, it is null
+    return <EmptyModalAllAccountsModal open={open} onClose={onClose} />;
+  }
+
   return (
     <ModalShell open={open} onClose={onClose} title="Fund Account">
       <div className={styles.container}>
