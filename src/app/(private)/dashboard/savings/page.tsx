@@ -1,6 +1,7 @@
 import { getAccountSummary } from "@/actions/dashboard";
 import { getSavingsTransactions } from "@/actions/transactions";
 import SavingsClient from "@/components/Savings/SavingsPage";
+import { redirect } from "next/navigation";
 
 const Savings = async () => {
   // const rows = [
@@ -69,6 +70,10 @@ const Savings = async () => {
 
   if (!result.success) {
     return "Error while fetching account summary";
+  }
+
+  if (!result.data.soloSavings) {
+    redirect("/dashboard/savings/create");
   }
 
   const transactions = await getSavingsTransactions(
