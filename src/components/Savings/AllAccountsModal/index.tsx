@@ -6,6 +6,7 @@ import { FiChevronRight } from "react-icons/fi";
 import { RiBankLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 type SoloSavings = {
   title: string;
@@ -48,8 +49,12 @@ const EmptyModalAllAccountsModal = ({
     <ModalShell open={open} onClose={onClose} title="Fund Account">
       <div className={styles.container}>
         <div className={styles.innerContainer}>
-          <p>You don't have any current savings plans</p>
-          <Link href="/dashboard/savings/create">Create a savings plans</Link>
+          <p className={styles.emptyText}>
+            You don't have any current savings plans
+          </p>
+          <Link href="/dashboard/savings/create">
+            <Button>Create a savings plan</Button>
+          </Link>
         </div>
       </div>
     </ModalShell>
