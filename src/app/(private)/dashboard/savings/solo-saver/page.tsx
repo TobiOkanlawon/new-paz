@@ -5,8 +5,9 @@ import {
   getSavingsTransactions,
 } from "@/actions/transactions";
 import SoloSaver from "./SoloSaver";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { getAccountSummary } from "@/actions/dashboard";
+import SoloSavingsEmptyScreen from "@/components/Savings/SoloSavingsEmptyScreen";
 
 export default async function Page() {
   const accountDetails = await getAccountSummary();
@@ -32,6 +33,6 @@ export default async function Page() {
       />
     );
   } else {
-    redirect("/dashboard/savings/create");
+    return <SoloSavingsEmptyScreen />;
   }
 }

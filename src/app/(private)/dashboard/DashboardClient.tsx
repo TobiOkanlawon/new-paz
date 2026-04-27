@@ -42,8 +42,6 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
     setOpenWithdraw(true);
   };
 
-  // console.log("Account summary", accountSummary)
-
   return (
     <>
       <div className={styles.container}>
@@ -75,13 +73,15 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           <AccountCard
             backgroundColor="#E0DFFD"
             amount={loanAmount ?? 0}
-            icon={<Image
-              src={LoanIcon}
-              alt="Dashboard"
-              className={styles.sidebarIcon}
-              width={24}
-              height={24}
-            />}
+            icon={
+              <Image
+                src={LoanIcon}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />
+            }
             iconColor="#22C55E"
             title="Total Loans (COMING SOON)"
             rateBackgroundColor="#DBF8E8"
@@ -90,13 +90,15 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           <AccountCard
             backgroundColor="#F9EAD1"
             amount={investmentAmount ?? 0}
-            icon={<Image
-              src={InvestmentIcon}
-              alt="Dashboard"
-              className={styles.sidebarIcon}
-              width={24}
-              height={24}
-            />}
+            icon={
+              <Image
+                src={InvestmentIcon}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />
+            }
             iconColor="#22C55E"
             title="Total Investments (COMING SOON)"
           />
@@ -176,7 +178,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
         )}
       </div>
 
-      {accounts.targetSavings && (
+      {(accounts.targetSavings || accounts.soloSavings) && (
         <WithdrawSoloSavingsModal
           open={openWithdraw}
           onClose={() => setOpenWithdraw(false)}
