@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import AllAccountsModal from "@/components/Savings/AllAccountsModal";
 import TopUpSoloSavingsModal from "@/components/TopUpSoloSavingsModal/TopUpSoloSavingsModal";
-import TopUpTransferDetailsModal from "../TopUpDetailsModal";
+import TopUpTransferDetailsModal from "@/components/Savings/TopUpDetailsModal";
 import { createSavingsTopup } from "@/actions/savings";
 
 type SelectedAccount = {
@@ -32,9 +32,8 @@ const FundAccountFlow = ({ accountSummary, onCompleted, children }: Props) => {
   const [topUpModalOpen, setTopUpModalOpen] = useState(false);
   const [topUpDetailsModalOpen, setTopUpDetailsModalOpen] = useState(false);
   const [fundLoading, setFundLoading] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState<SelectedAccount | null>(
-    null
-  );
+  const [selectedAccount, setSelectedAccount] =
+    useState<SelectedAccount | null>(null);
   const [topUpDetails, setTopUpDetails] = useState<TopUpDetails | null>(null);
 
   const openFundModal = () => {

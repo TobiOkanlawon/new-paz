@@ -12,7 +12,7 @@ import TransactionsTable, {
 } from "@/components/TransactionTable/TransactionTable";
 
 import QuickActions from "@/components/SavingsQuickActions";
-import FundAccountFlow from "@/components/Savings/FundAccountFlow";
+import FundAccountFlow from "@/components/ModalFlows/FundAccountFlow";
 
 import { getTotalBalance } from "@/libs/helpers";
 import Image from "next/image";
@@ -107,7 +107,10 @@ const SavingsClient = ({
                   Fund Account
                 </Button>
               )}
-              <div className={styles.midSectionRight} style={{ display: "none" }}>
+              <div
+                className={styles.midSectionRight}
+                style={{ display: "none" }}
+              >
                 <Button className={styles.outlineButton}>Add Debit Card</Button>
                 <Button className={styles.blockButton}>Link Account</Button>
               </div>

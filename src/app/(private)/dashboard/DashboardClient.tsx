@@ -12,7 +12,7 @@ import QuickActionCard from "@/components/Dashboard/QuickActionCard";
 import BottomLeft from "@/components/Dashboard/BottomLeft";
 import BottomRight from "@/components/Dashboard/BottomRight";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
-import FundAccountFlow from "@/components/Savings/FundAccountFlow";
+import FundAccountFlow from "@/components/ModalFlows/FundAccountFlow";
 
 interface DashboardClientProps {
   firstName: string;
