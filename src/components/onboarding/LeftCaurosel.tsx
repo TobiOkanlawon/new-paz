@@ -11,6 +11,12 @@ import Link from "next/link";
 type Props = {
   view?: "logged in" | "logged out";
   showSkip?: boolean;
+  /* the afterSlider button controls what happens when a user clicks on the next after they have reached the last page of the carousel
+
+  The intention is to use it to control which page the user redirects to. But with DI.
+
+   */
+  afterSlider?: () => void;
 };
 
 const SLIDE_DURATION = 6000;
@@ -34,7 +40,11 @@ const LoggedInView = () => {
   );
 };
 
-const LeftCaurosel: React.FC<Props> = ({ view, showSkip = false }) => {
+const LeftCaurosel: React.FC<Props> = ({
+  view,
+  afterSlider,
+  showSkip = false,
+}) => {
   const bgImages = [
     {
       bg: "/images/leftBG11.png",
@@ -65,8 +75,25 @@ const LeftCaurosel: React.FC<Props> = ({ view, showSkip = false }) => {
     return () => clearTimeout(timer);
   }, [currentImageIndex, isAutoPlaying, bgImages.length]);
 
+  const handleNext = () => {
+    // goes to the next slider or calls the afterSlider function
+
+    if (!afterSlider) {
+      // preserve old behaviour
+      goToNext();
+      return;
+    }
+
+    if (currentImageIndex + 1 == bgImages.length) {
+      afterSlider();
+    } else {
+      goToNext();
+    }
+  };
+
   const goToNext = useCallback(() => {
     setTimeout(() => {
+      // with this next line, the image index will correspond normally to the images and their positions in the carousel
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
       setAnimationKey((prev) => prev + 1);
       setIsAutoPlaying(true);
@@ -168,7 +195,7 @@ const LeftCaurosel: React.FC<Props> = ({ view, showSkip = false }) => {
           </div>
           <FaChevronRight
             className={styles.chevronIcon}
-            onClick={goToNext}
+            onClick={handleNext}
             style={{ cursor: "pointer" }}
           />
         </div>
@@ -178,7 +205,7 @@ const LeftCaurosel: React.FC<Props> = ({ view, showSkip = false }) => {
         ) : (
           <div className={styles.buttonContainer}>
             <div className={styles.loginButton}>{button}</div>
-            <button className={styles.nextButton} onClick={goToNext}>
+            <button className={styles.nextButton} onClick={handleNext}>
               Next <FaArrowRight />
             </button>
           </div>
