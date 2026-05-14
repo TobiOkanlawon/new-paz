@@ -16,7 +16,7 @@
 
 .cardConainer h2{
     color: #535353;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 700;
     font-style: Bold;
     font-size: 2.13vh;
@@ -27,7 +27,7 @@
 }
 
 .cardConainer p{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     font-style: Medium;
     font-size: 1.9vh;
@@ -38,7 +38,7 @@
 }
 
 .cardConainer h3{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     margin: .6rem 0;
     font-weight: 700;
     font-style: Bold;
@@ -54,7 +54,7 @@
 }
 
 .cardBottom p{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 700;
     font-style: Bold;
     font-size: 1.8vh;

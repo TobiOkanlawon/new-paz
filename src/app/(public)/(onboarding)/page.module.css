@@ -1,6 +1,6 @@
 .container{
     padding: 0 42px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     text-align: center;
     display: flex;
     justify-content: center;

@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   height: 100vh;
   width: 100%;
   position: relative;
@@ -110,13 +110,13 @@
 
 .title {
   color: #2e2e2e;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 600;
   font-size: 32px;
   margin-bottom: 1rem;
 }
 .subHeading {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   color: #878787;
   font-weight: 400;
   font-size: 18px;
@@ -140,7 +140,7 @@
 
 .tosContainer {
   margin: 18px 0px 24px 0px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .tosContainer > label {
@@ -161,7 +161,7 @@
 
 .bottomText {
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 .tosInput {
   accent-color: #214ccf;

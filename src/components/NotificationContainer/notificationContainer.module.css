@@ -9,7 +9,7 @@
     justify-content: space-between;
     align-items: center;    
     margin-bottom: 2.4vh;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: var(--font-montserrat), sans-serif !important;
     gap: 1rem;
 }
 .textcontainer{

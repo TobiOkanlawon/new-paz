@@ -7,7 +7,7 @@
 }
 
 .modalHeader {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 700;
     font-style: Bold;
     font-size: 32px;
@@ -20,7 +20,7 @@
 }
 
 .modalDetails {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 400;
     font-style: Medium;
     font-size: 18px;
@@ -47,7 +47,7 @@
 }
 
 .labels {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     font-style: Medium;
     font-size: 14px;
@@ -59,7 +59,7 @@
 
 .inputs {
     border: 1px solid #D9D9D9;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     font-style: Medium;
     font-size: 12px;
@@ -72,7 +72,7 @@
 }
 
 .bvnGuide {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
@@ -100,7 +100,7 @@
     align-items: center;
     justify-content: center;
     gap: .5rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-family: .9rem;
     color: #204D88;
     cursor: pointer;
@@ -108,7 +108,7 @@
 }
 
 .errorText {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     color: red;
     font-size: 12px;
     margin-top: 4px;

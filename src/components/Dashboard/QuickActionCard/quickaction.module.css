@@ -15,8 +15,8 @@
 
 .quickActionCardsInnerContainer>p{
     font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400    ;
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 400;
 }
 
 .quickActionCardContainer {

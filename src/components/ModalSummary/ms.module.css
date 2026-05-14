@@ -1,5 +1,5 @@
 .loanSummary{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
 }
 .loanSummary h2{
     font-weight: 700;
@@ -34,7 +34,7 @@
     border: none;
     padding: 1rem 1.5rem;
     background-color: #3475DF;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 100%;

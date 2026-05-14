@@ -5,7 +5,7 @@
   border-radius: 4px;
   margin: 8px 0 4px 0;
   overflow: hidden;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
 .progressBarFill {
@@ -19,5 +19,5 @@
   font-size: 1.56vh;
   color: #444;
   white-space: nowrap;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
 }

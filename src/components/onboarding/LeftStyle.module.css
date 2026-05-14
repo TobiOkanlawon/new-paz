@@ -30,7 +30,7 @@
   font-weight: 500;
   line-height: 32px;
   max-width: 400px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   cursor: pointer;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .text {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 400;
   color: #fff;
   font-style: normal;
@@ -207,7 +207,7 @@
   padding: 12px 20px;
   border-radius: 30px;
   min-width: 100px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 1;

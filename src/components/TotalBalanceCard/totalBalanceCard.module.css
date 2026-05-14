@@ -12,7 +12,7 @@
 }
 .totalBalanceCard p{
     font-size: 1.7vh;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     font-style: Medium;
     line-height: 100%;
@@ -22,7 +22,7 @@
 .totalBalanceCard h3{
     font-size: 4.89vh;
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 800;
     font-style: Bold;
     line-height: 46px;
@@ -37,7 +37,7 @@
     width: 100%;
 }
 .contentContainer button{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     height: 5.59vh;
     padding: 1px 15px;
     background-color: #4F85E3;
@@ -85,7 +85,7 @@
 }
 
 .modalContainer{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     text-align: center;
 }
 .modalContainer h2{
@@ -115,7 +115,7 @@
     padding: 13px 27px;
     border-radius: 1rem;
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     font-weight: 700;
     font-style: Bold;
     font-size: 16px;

@@ -1,7 +1,7 @@
 .container{
     margin-left: 6.59vh;
     margin-top: 53px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
 }
 .header{
     font-weight: 700;
