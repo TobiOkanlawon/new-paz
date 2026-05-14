@@ -12,16 +12,20 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(true);
+  const isCollapsedByDefault = () => {
+    const isMobile = window.innerWidth <= 960;
+    return isMobile;
+  };
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(isCollapsedByDefault);
   const pathname = usePathname();
 
-  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const toggleCollapsed = () => setCollapsed((prev) => !prev);
 
   // Close sidebar when route changes
   useEffect(() => {
-    setIsSidebarOpen(false);
+    setIsDropdownOpen(false);
   }, [pathname]);
 
   return (
@@ -32,7 +36,7 @@ export default function DashboardLayout({
       )}
     >
       <Sidebar
-        isOpen={isSidebarOpen}
+        isOpen={isDropdownOpen}
         collapsed={collapsed}
         action={toggleCollapsed}
       />
@@ -41,7 +45,7 @@ export default function DashboardLayout({
         <Header />
         <main
           className={styles.mainContent}
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={() => setIsDropdownOpen(false)}
         >
           {children}
         </main>
