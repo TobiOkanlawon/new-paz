@@ -1,7 +1,9 @@
+"use client";
 import LeftCarousel from "@/components/onboarding/LeftCaurosel";
 import styles from "./page.module.css";
 import Image from "next/image";
 import PreAuthLayout from "@/components/Layouts/PreAuthLayout";
+import { useRouter } from "next/navigation";
 
 const Onboarding = () => {
   const keyNotes = [
@@ -32,8 +34,18 @@ const Onboarding = () => {
       iconBG: "#E0DFFD",
     },
   ];
+
+  const router = useRouter();
+
+  const goToRegisterPage = () => {
+    console.log("I am here");
+    router.push("/register");
+  };
+
   return (
-    <PreAuthLayout carousel={<LeftCarousel showSkip={true} />}>
+    <PreAuthLayout
+      carousel={<LeftCarousel showSkip={true} afterSlider={goToRegisterPage} />}
+    >
       <div className={styles.container}>
         <h2 className={styles.header}>Start your journey with PAZ</h2>
         <p className={styles.subheader}>

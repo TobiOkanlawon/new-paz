@@ -1,232 +1,233 @@
 .sidebarContainer {
-    padding: 18px;
-    background-color: white;
-    width: 280px;
-    transition: width 0.25s ease;
-    z-index: 1000   ;
+  padding: 18px;
+  background-color: white;
+  width: 280px;
+  transition: width 0.25s ease;
+  z-index: 1000;
 }
 
 .sidebarContainerCollapsed {
-    width: 45px;
+  width: 45px;
 }
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 .centreContainer {
-    padding: 16px 0px;
+  padding: 16px 0px;
 }
 
 .optionContainer {
-    border-radius: 15px;
+  border-radius: 15px;
 
-    padding: 12px 18px;
+  padding: 12px 18px;
 
-    color: #2E2E2E;
+  color: #2e2e2e;
 
-    font-family: var(--font-poppins), sans-serif;
-    font-size: 18px;
-    margin-bottom: 16px;
-    transition: padding 0.25s ease;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 18px;
+  margin-bottom: 16px;
+  transition: padding 0.25s ease;
 }
 
 .optionContainerCollapsed {
-    padding: 12px;
-    display: flex;
-    justify-content: center;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
 }
-.navLink{
-    text-decoration: none;
+.navLink {
+  text-decoration: none;
 }
 
 .activeOptionContainer {
-    color: #214CCF;
-    border: 2px solid #214CCF;
-    background-color: #E9EDFA;
+  color: #214ccf;
+  border: 2px solid #214ccf;
+  background-color: #e9edfa;
 }
 
 .optionInnerContainer {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
 }
 
 .sidebarOptionText {
-    color: #2E2E2E;
-    text-decoration: none;
-    font-weight: normal;
-    font-size: 18px;
-    margin: 0;
+  color: #2e2e2e;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 18px;
+  margin: 0;
 }
 
 .sidebarOptionTextActive {
-    color: #214CCF;
+  color: #214ccf;
 }
 
 .headingContainer {
-    max-height: var(--navbar-height);
-    border-bottom: 1px solid #E9EDFA;
-    padding: 14px 0px 14px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  max-height: var(--navbar-height);
+  border-bottom: 1px solid #e9edfa;
+  padding: 14px 0px 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .headingContainerCollapsed {
-    justify-content: center;
-    padding: 14px 0;
+  justify-content: center;
+  padding: 14px 0;
 }
 
 .toggleIcon {
-    cursor: pointer;
-    transition: transform 0.25s ease;
+  cursor: pointer;
+  transition: transform 0.25s ease;
 }
 
 .toggleIconCollapsed {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
-.userInfo{
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.username{
-    margin: 0;
-    font-family: var(--font-poppins), sans-serif;
-    font-size: 18px;
-} 
-.userEmail{
-    margin: 0;
-    font-family: var(--font-poppins), sans-serif;
-    font-size: 12px;
-    color: #6b7280;
+.username {
+  margin: 0;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 18px;
+}
+.userEmail {
+  margin: 0;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 12px;
+  color: #6b7280;
 }
 
 .bottomContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 16px;
-    border-top: 1px solid #E9EDFA;
-    transition: padding 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-top: 1px solid #e9edfa;
+  transition: padding 0.25s ease;
 }
 
 .bottomContainerCollapsed {
-    align-items: center;
-    padding: 16px 8px;
+  align-items: center;
+  padding: 16px 8px;
 }
 
 .bottomContainerCollapsed .logoutButton {
-    justify-content: center;
+  justify-content: center;
 }
 
 .avatar {
-    border-radius: 50%;
-    object-fit: cover;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.logoutButton{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: none;
-    background: transparent;
-    color: #2E2E2E;
-    font-family: var(--font-poppins), sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 10px 0;
-    width: 100%;
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  color: #2e2e2e;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 10px 0;
+  width: 100%;
 }
 
 .logoutButton:hover {
-    color: #ef4444;
+  color: #ef4444;
 }
 
 /* Dropdown styles */
 .dropdownContainer {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .dropdownTrigger {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
 }
 
 .chevron {
-    transition: transform 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
 .chevronOpen {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .subItemsContainer {
-    padding-left: 40px;
-    margin-top: 8px;
+  padding-left: 40px;
+  margin-top: 8px;
 }
 
 .subItem {
-    border-radius: 15px;
-    padding: 12px 18px;
-    margin-bottom: 8px;
-    cursor: pointer;
+  border-radius: 15px;
+  padding: 12px 18px;
+  margin-bottom: 8px;
+  cursor: pointer;
 }
 
 .subItemActive {
-    border: 2px solid #214CCF;
-    background-color: #E9EDFA;
+  border: 2px solid #214ccf;
+  background-color: #e9edfa;
 }
 
 .subItemText {
-    margin: 0;
-    font-family: var(--font-poppins), sans-serif;
-    font-size: 16px;
-    color: #2E2E2E;
+  margin: 0;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 16px;
+  color: #2e2e2e;
 }
 
 .subItemTextActive {
-    color: #214CCF;
+  color: #214ccf;
 }
 
-@media screen and (max-height: 700px) {
-    .bottomContainer{
-        padding-bottom: 0;
-    }
-    .sidebarContainer{
-        padding-bottom: 0;
-    }
+@media screen and (max-width: 700px) {
+  .bottomContainer {
+    padding-bottom: 0;
+  }
+  .sidebarContainer {
+    padding-bottom: 0;
+  }
 }
-@media screen and (max-width: 744px){
-    .sidebarContainerCollapsed{
-        width: 50px;
-        padding: 12px 4px;
-    }
-    .sidebarContainer{
-        padding: 12px 4px;
-    }
-    .optionContainerCollapsed {
-        padding: 8px;
-        margin-bottom: 24px;
-    }
-    .centreContainer {
-        padding: 8px 0;
-    }
-    .toggleIcon, .sidebarIcon {
-        width: 24px !important;
-        height: 24px !important;
-    }
-    /* .chevron{
+@media screen and (max-width: 744px) {
+  .sidebarContainerCollapsed {
+    max-width: 25vw;
+    width: 50px;
+    padding: 12px 4px;
+  }
+  .sidebarContainer {
+    padding: 12px 4px;
+  }
+  .optionContainerCollapsed {
+    padding: 8px;
+    margin-bottom: 24px;
+  }
+  .centreContainer {
+    padding: 8px 0;
+  }
+  .toggleIcon,
+  .sidebarIcon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  /* .chevron{
         display: none;
     } */
 }
-

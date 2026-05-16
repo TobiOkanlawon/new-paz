@@ -1,0 +1,50 @@
+.container {
+  padding-top: 34px;
+  padding-right: 32px;
+  padding-left: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  min-height: 100%;
+}
+
+.headingLeft {
+  min-width: 0;
+}
+
+.bodySection {
+    display: flex;
+    gap: 24px;
+}
+
+.bodySection > p {
+    display: block;
+}
+
+.link > button {
+    display: block;
+}
+
+.button {
+    width: fit-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    padding: 18px 20px 24px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 14px 12px 20px;
+    gap: 14px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    padding: 10px 10px 18px;
+  }
+}
