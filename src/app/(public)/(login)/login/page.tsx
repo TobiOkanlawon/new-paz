@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import LoginForm from "./LoginForm";
 import LeftCaurosel from "@/components/onboarding/LeftCaurosel";
 
-export default function Page() {
+export default async function Page() {
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
