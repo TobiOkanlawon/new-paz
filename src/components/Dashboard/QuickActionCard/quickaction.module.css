@@ -13,9 +13,12 @@
     width: 100%;
 }
 
-.quickActionCardsInnerContainer>p{
-    font-size: 16px;
+.quickActionText {
     font-family: var(--font-poppins), sans-serif;
+}
+
+.quickActionCardsInnerContainer > p {
+    font-size: 16px;
     font-weight: 400;
 }
 
