@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import styles from "./savingsProgressCard.module.css";
 import { FiArrowUpRight } from "react-icons/fi";

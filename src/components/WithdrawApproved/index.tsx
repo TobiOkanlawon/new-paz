@@ -1,3 +1,4 @@
+"use client";
 import React, {useState} from 'react'
 import styles from './WithdrawApproved.module.css'
 import Modal from '../Modal'

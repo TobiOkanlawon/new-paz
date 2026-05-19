@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: start;
+}
+
+.textContainer h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.64px;
+  color: #2e2e2e;
+  margin: 0;
+}
+
+.textContainer p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #878787;
+  margin: 0;
+}
+
+.buttonContainer{
+  max-width: 151px;
+}
+
+/* iPad Mini (768px) */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 32px;
+  }
+
+  .textContainer h1 {
+    font-size: 26px;
+    letter-spacing: -0.52px;
+  }
+
+  .textContainer p {
+    font-size: 16px;
+  }
+}
+
+/* iPad Air (820px) — caught by 768px breakpoint above */
+
+/* iPad Pro (1024px) */
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .container {
+    padding: 28px 40px;
+  }
+
+  .textContainer h1 {
+    font-size: 28px;
+  }
+
+  .textContainer p {
+    font-size: 17px;
+  }
+}
+
+/* Mobile (480px) */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .textContainer h1 {
+    font-size: 22px;
+    letter-spacing: -0.44px;
+  }
+
+  .textContainer p {
+    font-size: 14px;
+  }
+}

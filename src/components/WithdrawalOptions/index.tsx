@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import styles from './WithdrawalOptions.module.css'
 import { LuClock4, LuClock7 } from "react-icons/lu";

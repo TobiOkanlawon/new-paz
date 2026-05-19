@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo, useState } from "react";
 import styles from "./withdrawSoloSavingsModal.module.css";
 import ModalShell from "@/components/ModalShell/ModalShell";

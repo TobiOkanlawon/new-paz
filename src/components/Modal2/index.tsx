@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import styles from "./Modal.module.css";
 import Spinner from "@/components/LoadingSpinner";
@@ -7,6 +8,7 @@ type ModalProps = {
   children: React.ReactNode;
   onClose?: () => void;
   isLoading?: boolean;
+  width?: string | number;
 };
 
 const Modal2 = ({
@@ -14,32 +16,23 @@ const Modal2 = ({
   children,
   onClose,
   isLoading = false,
+  width = 500,
 }: ModalProps) => {
   if (!isOpen) return null;
 
-  if (isLoading) {
-    return (
-      <div className={styles.overlay} onClick={onClose && onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        {onClose && (
-          <button className={styles.closeBtn} onClick={onClose}>
-            ×
-          </button>
-        )}
-          <Spinner />
-        </div>
-      </div>
-    );
-  }
   return (
-    <div className={styles.overlay} onClick={onClose && onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+    <div className={styles.overlay} onClick={onClose}>
+      <div
+        className={styles.modal}
+        style={{ width: typeof width === "number" ? `${width}px` : width }}
+        onClick={(e) => e.stopPropagation()}
+      >
         {onClose && (
           <button className={styles.closeBtn} onClick={onClose}>
             ×
           </button>
         )}
-        {children}
+        {isLoading ? <Spinner /> : children}
       </div>
     </div>
   );

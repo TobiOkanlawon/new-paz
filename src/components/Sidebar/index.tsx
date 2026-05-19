@@ -257,8 +257,7 @@ export default function Sidebar({
                 height={24}
               />}
               title="Loans"
-              // href="/dashboard/loans"
-              href="#"
+              href="/dashboard/loans"
               active={isSubPath("/dashboard/loans", pathname)}
               collapsed={collapsed}
             />

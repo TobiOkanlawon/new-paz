@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2e2e2e;
+  margin: 0;
+}
+
+.uploadArea {
+  border: 1px dashed #dfdfdf;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.uploadArea:hover {
+  border-color: #214ccf;
+}
+
+.uploadText {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #2e2e2e;
+}
+
+.hint {
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  color: #878787;
+}

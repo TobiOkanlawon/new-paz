@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import styles from "./modalShell.module.css";
 import { IoClose } from "react-icons/io5";

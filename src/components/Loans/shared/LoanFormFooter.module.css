@@ -1,0 +1,9 @@
+.footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.footer > * {
+  flex: 1;
+}

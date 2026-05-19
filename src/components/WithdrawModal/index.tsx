@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import styles from "./WithdrawModal.module.css";
 import InputGroup from "../InputGroup";

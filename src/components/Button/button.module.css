@@ -1,13 +1,13 @@
 .button {
   font-family: var(--font-poppins);
-  font-size: 14px;
+  font-size: 16px; /* was 14px */
   font-weight: 500;
-  line-height: 100%;
-  letter-spacing: 0%;
+  line-height: 1.2; /* was 100% */
+  letter-spacing: 0;
   height: 50px;
   border-radius: 10px;
   border: none;
-  padding: 18px;
+  padding: 18px 10px;
   width: 100%;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -31,7 +31,7 @@
 }
 
 .button:disabled {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 /* Secondary Variant - White with blue text */
@@ -53,12 +53,13 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Outlined Variant - White with border */
+/* Outlined Variant */
 .outlined {
-  color: #DFDFDF;
+  color: #dfdfdf;
   background-color: transparent;
-  border: 1px solid #DFDFDF;
+  border: 1px solid #dfdfdf;
 }
+
 .outlined2 {
   color: #3475df;
   background-color: transparent;
@@ -91,38 +92,16 @@
   height: 20px;
   border-top: 3px solid transparent;
   border-radius: 50%;
-  /* animation: spin 0.6s linear infinite; */
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-@media screen and (max-width: 480px) {
-  .button {
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 8px;
-    background-color: #214ccf;
-    color: white;
-  }
-
-  .button:hover {
-    background-color: #8dccfe;
-    cursor: pointer;
-  }
-}
-
+/* removed the 480px breakpoint — it was overriding variant colors with hardcoded primary styles */
 @media screen and (max-width: 700px) {
   .button {
-    width: 100% !important;
+    width: 100%;
   }
 }
