@@ -6,9 +6,9 @@
   flex-direction: column;
   gap: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  min-width: 240px;
-  max-width: 350px;
-  flex: 1;
+  width: 350px;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .topRow {

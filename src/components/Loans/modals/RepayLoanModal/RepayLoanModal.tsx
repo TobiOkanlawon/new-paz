@@ -14,9 +14,8 @@ const RepayLoanModal = ({ isOpen, onClose, onRepay, loading }: Props) => {
   const [amount, setAmount] = useState("");
 
   return (
-    <Modal2 isOpen={isOpen} onClose={onClose} width={440}>
+    <Modal2 isOpen={isOpen} onClose={onClose} width={440} title="Repay Loan">
       <div className={styles.container}>
-        <h2 className={styles.title}>Repay Loan</h2>
 
         <div className={styles.section}>
           <p className={styles.sectionLabel}>Pay with</p>

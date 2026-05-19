@@ -18,9 +18,8 @@ type Props = {
 };
 
 const ApplyForLoanModal = ({ isOpen, onClose, options }: Props) => (
-  <Modal2 isOpen={isOpen} onClose={onClose} width={551}>
+  <Modal2 isOpen={isOpen} onClose={onClose} width={551} title="Apply For Loan">
     <div className={styles.container}>
-      <h2 className={styles.title}>Apply For Loan</h2>
       <div className={styles.list}>
         {options.map((opt) => (
           <div key={opt.title} className={styles.item} onClick={opt.onSelect}>

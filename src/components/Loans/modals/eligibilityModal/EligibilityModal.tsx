@@ -18,9 +18,8 @@ const criteria = [
 
 const EligibilityModal = ({ isOpen, onClose }: Props) => {
   return (
-    <Modal2 isOpen={isOpen} onClose={onClose}>
+    <Modal2 isOpen={isOpen} onClose={onClose} title="Eligibility Criteria">
       <div className={styles.container}>
-        <h2 className={styles.title}>Eligibility Criteria</h2>
         <ul className={styles.list}>
           {criteria.map((item, index) => (
             <li key={index} className={styles.listItem}>

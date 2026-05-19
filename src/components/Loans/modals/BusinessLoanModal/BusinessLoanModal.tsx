@@ -18,9 +18,8 @@ type Props = {
 };
 
 const BusinessLoanModal = ({ isOpen, onClose, options }: Props) => (
-  <Modal2 isOpen={isOpen} onClose={onClose} width={551}>
+  <Modal2 isOpen={isOpen} onClose={onClose} width={551} title="Business Loan">
     <div className={styles.container}>
-      <h2 className={styles.title}>Business Loan</h2>
       <p className={styles.subtitle}>
         Select the kind of business loan you would like to apply for and with all
         necessary documents, and you will be given.
