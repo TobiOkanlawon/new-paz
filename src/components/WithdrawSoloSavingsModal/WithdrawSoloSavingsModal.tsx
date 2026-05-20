@@ -5,6 +5,8 @@ import ModalShell from "@/components/ModalShell/ModalShell";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import FundingSourceCard from "@/components/FundingSourceCard/FundingSourceCard";
+import { DEFAULT_CURRENCY } from "@/globals";
+import { formatMoney } from "@/libs/helpers";
 // import { FiWallet } from "react-icons/fi";
 
 type Props = {
@@ -24,8 +26,7 @@ type Props = {
   onConfirm?: (payload: { amount: number }) => void | Promise<void>;
 };
 
-const formatMoney = (n: number, currency: string) =>
-  `${currency}${n.toLocaleString("en-NG", { maximumFractionDigits: 2 })}`;
+const QUICK_AMOUNTS = [5000, 10000, 15000, 20000];
 
 const parseAmount = (val: string) => {
   const cleaned = val.replace(/[^\d.]/g, "");
@@ -40,8 +41,8 @@ const WithdrawSoloSavingsModal = ({
   currentSavings,
   fundingSourceTitle,
   fundingSourceBalance,
-  currency = "₦",
-  quickAmounts = [5000, 10000, 15000, 20000],
+  currency = DEFAULT_CURRENCY,
+  quickAmounts = QUICK_AMOUNTS,
   loading = false,
   onConfirm,
 }: Props) => {
