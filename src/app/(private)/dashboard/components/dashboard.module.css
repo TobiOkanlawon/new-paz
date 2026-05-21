@@ -13,7 +13,7 @@
   font-size: 32px;
 }
 
-.subHeadingText{
+.subHeadingText {
   font-size: 18px;
   color: #878787;
   margin: 0;
@@ -63,9 +63,9 @@
   margin-top: 44px;
 }
 
-.quickActionContainer>h2{
+.quickActionContainer > h2 {
   font-size: 24px;
-  color: #2E2E2E;
+  color: #2e2e2e;
 }
 
 .quickActionCardsInnerContainer {
@@ -140,7 +140,7 @@
   border-radius: 15px;
 }
 
-.savingsPlanInnerContainerLine h3{
+.savingsPlanInnerContainerLine h3 {
   font-size: 16px;
   font-weight: 500;
   color: #2e2e2e;
@@ -154,38 +154,25 @@
   scrollbar-width: none;
 }
 
-.savingsPlansTitleContainer,
-.recentTransactionsTitleContainer,
-.instantSavingsTitleContainer {
+.savingsPlansTitleContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
-.savingsPlansTitleContainer h2,
-.recentTransactionsTitleContainer h2,
-.instantSavingsTitleContainer h2 {
+
+.savingsPlansTitleContainer h2 {
   font-size: 24px;
   color: #2e2e2e;
   margin-bottom: 16px;
   font-weight: 500;
 }
+
 .savingsPlansTitleContainer a,
-.recentTransactionsTitleContainer a,
-.instantSavingsTitleContainer a {
+.recentTransactionsTitleContainer a {
   font-size: 14px;
   color: #214ccf;
   text-decoration: none;
-}
-
-.recentTransactionsInnerContainer {
-  border-radius: 20px;
-  overflow: hidden;
-  background: #DFDFDF;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  width: 100%;
 }
 
 .miniCardContainer {
@@ -239,16 +226,6 @@
 
 .miniCardTitle {
   font-weight: 400;
-}
-
-.instantSavingsContainer1 {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background-color: #dfdfdf;
-  width: 100%;
-  border-radius: 15px;
-  overflow: hidden;
 }
 
 .bottomRightContainer {
@@ -314,7 +291,6 @@
 
   .savingsPlansTitleContainer h2,
   .recentTransactionsTitleContainer h2,
-  .instantSavingsTitleContainer h2,
   .quickActionContainer h2 {
     font-size: 22px;
     margin: 0;
@@ -331,7 +307,7 @@
     margin-top: 20px;
   }
 
-  .quickActionContainer>h2 {
+  .quickActionContainer > h2 {
     margin-bottom: 20px;
   }
 
@@ -398,14 +374,12 @@
 
   .savingsPlansTitleContainer h2,
   .recentTransactionsTitleContainer h2,
-  .instantSavingsTitleContainer h2,
   .quickActionContainer h2 {
     font-size: 20px;
   }
 
   .savingsPlansTitleContainer a,
-  .recentTransactionsTitleContainer a,
-  .instantSavingsTitleContainer a {
+  .recentTransactionsTitleContainer a {
     font-size: 13px;
     white-space: nowrap;
   }

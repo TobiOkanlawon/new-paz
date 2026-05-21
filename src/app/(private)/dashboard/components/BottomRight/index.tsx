@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import InstantSavingsCard from "@/components/Dashboard/InstantSavingsCard";
-import styles from "@/app/(private)/dashboard/dashboard.module.css";
-import RecentTransactionsCard from "../RecentTransactions";
+import styles from "./bottomright.module.css";
+import RecentTransactionsCard from "@/components/Dashboard/RecentTransactions";
 import Piggy from "@/assets/piggy-bank.svg";
 
 type BottomRightProps = {
@@ -169,7 +169,7 @@ const BottomRight: React.FC<BottomRightProps> = ({
               View All
             </Link>
           </div>
-          <div className={styles.instantSavingsContainer1}>
+          <div className={styles.instantSavingsInnerContainer}>
             {savingsAccounts.soloSavings && (
               <InstantSavingsCard
                 icon={<Piggy color="#22C55E" width={24} height={24} />}

@@ -3,7 +3,7 @@ import { getDashboardData } from "@/actions/dashboard";
 import { getTotalBalance } from "@/libs/helpers";
 import { getServerSession } from "next-auth";
 
-import DashboardClient from "./DashboardClient";
+import DashboardClient from "./components/dashboard";
 import { getAllTransactions } from "@/actions/transactions";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
@@ -12,7 +12,6 @@ const Dashboard = async () => {
 
   const { accountSummary } = await getDashboardData();
   const allTransactionsResult = await getAllTransactions();
-
 
   const allTransactions = allTransactionsResult.success
     ? allTransactionsResult.data
@@ -46,7 +45,7 @@ const Dashboard = async () => {
       isTransactions={isTransactions}
       accounts={accounts}
       allTransactions={allTransactions}
-      accountSummary={accountSummary}
+      accountDetails={accountSummary.data}
     />
   );
 };

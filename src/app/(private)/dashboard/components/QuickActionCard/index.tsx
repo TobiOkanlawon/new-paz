@@ -1,4 +1,4 @@
-import styles from "./quickactioncard.module.css";
+import styles from "./quickaction.module.css";
 
 type QuickActionProps = {
   backgroundColor: string;

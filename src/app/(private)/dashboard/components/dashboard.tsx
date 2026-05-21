@@ -7,13 +7,14 @@ import LoanIcon from "@/assets/wallet.png";
 import InvestmentIcon from "@/assets/investments.png";
 import WithdrawIcon from "@/assets/withdraw-icon.png";
 import NoRecord from "@/assets/noRecord.png";
-import AccountCard from "@/components/Dashboard/AccountCard";
-import QuickActionCard from "@/components/Dashboard/QuickActionCard";
-import BottomLeft from "@/components/Dashboard/BottomLeft";
-import BottomRight from "@/components/Dashboard/BottomRight";
+import AccountCard from "./AccountCard";
+import QuickActionCard from "./QuickActionCard";
+import BottomLeft from "./BottomLeft";
+import BottomRight from "./BottomRight";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
 import FundAccountFlow from "@/components/ModalFlows/FundAccountFlow";
 
+// TODO: do proper types
 interface DashboardClientProps {
   firstName: string;
   savingsAmount: number;
@@ -22,7 +23,7 @@ interface DashboardClientProps {
   isTransactions: boolean;
   accounts: any;
   allTransactions: any[];
-  accountSummary: any;
+  accountDetails: TAccountDetails;
 }
 
 const DashboardClient: React.FC<DashboardClientProps> = ({
@@ -33,10 +34,9 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
   isTransactions,
   accounts,
   allTransactions,
-  accountSummary,
+  accountDetails,
 }) => {
   const [openWithdraw, setOpenWithdraw] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleWithdraw = () => {
     setOpenWithdraw(true);
@@ -105,7 +105,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
         </div>
 
         <FundAccountFlow
-          accountSummary={accountSummary.data}
+          accountSummary={accountDetails}
           onCompleted={() => {
             // Optional: Handle completion if needed
           }}
@@ -158,9 +158,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
 
         {isTransactions ? (
           <div className={styles.bottomContainer}>
-            <BottomLeft
-              showSoloSavings={!accountSummary.data?.hasSoloAccount}
-            />
+            <BottomLeft showSoloSavings={!accountDetails.hasSoloAccount} />
             <BottomRight
               savingsAccounts={accounts}
               transactions={allTransactions}
