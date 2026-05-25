@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Modal2 from "@/components/Modal2";
 import styles from "./BusinessLoanModal.module.css";
@@ -26,7 +27,19 @@ const BusinessLoanModal = ({ isOpen, onClose, options }: Props) => (
       </p>
       <div className={styles.list}>
         {options.map((opt) => (
-          <div key={opt.title} className={styles.item} onClick={opt.onSelect}>
+          <div
+            key={opt.title}
+            className={styles.item}
+            onClick={() => {
+              opt.onSelect && opt.onSelect();
+              try {
+                // debug log to ensure clicks register in the browser console
+                console.log("Business option clicked:", opt.title);
+              } catch (err) {
+                console.error(err);
+              }
+            }}
+          >
             <div className={styles.left}>
               <div className={styles.iconWrapper} style={{ backgroundColor: opt.iconBg }}>
                 {opt.icon}

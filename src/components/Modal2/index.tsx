@@ -17,7 +17,7 @@ const Modal2 = ({
   children,
   onClose,
   isLoading = false,
-  width = 500,
+  width,
   title,
 }: ModalProps) => {
   if (!isOpen) return null;

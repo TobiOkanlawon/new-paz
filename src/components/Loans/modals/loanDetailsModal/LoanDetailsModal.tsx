@@ -15,7 +15,7 @@ type Props = {
 };
 
 const LoanDetailsModal = ({ isOpen, onClose, details }: Props) => (
-  <Modal2 isOpen={isOpen} onClose={onClose} width={400} title="Loan Details">
+  <Modal2 isOpen={isOpen} onClose={onClose} width={551} title="Loan Details">
     <div className={styles.container}>
       <div>
         <p className={styles.subtitle}>View more details about your loan</p>

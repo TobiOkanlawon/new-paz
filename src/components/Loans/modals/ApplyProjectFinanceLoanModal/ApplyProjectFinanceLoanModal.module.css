@@ -25,28 +25,37 @@
   margin: 0;
 }
 
-.checkboxRow {
+.textareaWrapper {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.checkboxLabel {
+.textareaLabel {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
+  font-weight: 400;
   color: #2e2e2e;
 }
 
-.link {
-  color: #214ccf;
-  cursor: pointer;
-  text-decoration: underline;
+.textarea {
+  width: 100%;
+  border: 1px solid #dfdfdf;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #2e2e2e;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  min-height: 100px;
 }
 
-.docFooter {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
+.textarea::placeholder {
+  color: #b1b1b1;
+}
+
+.textarea:focus {
+  border-color: #214ccf;
 }

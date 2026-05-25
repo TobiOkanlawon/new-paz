@@ -27,7 +27,7 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
 
         {step === 0 && (
           <div className={styles.form}>
-            <LoanSelect label="Loan Type" options={["Personal Loan"]} value="Personal Loan" />
+            <LoanSelect label="Loan Type" options={["Personal Loan"]} defaultValue="Personal Loan" />
             <LoanSelect label="Loan Amount" options={["250,000", "500,000"]} placeholder="250,000" />
             <LoanSelect label="Loan Tenure" options={["30 days", "60 days", "90 days"]} placeholder="90 days" />
             <LoanInput label="Purpose of Loan" placeholder="House Rent" />
