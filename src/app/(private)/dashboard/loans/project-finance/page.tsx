@@ -5,8 +5,8 @@ import React from 'react'
 const ProjectFinance = () => {
   return (
     <div>
-      <EmptyPF/>
-      {/* <ProjectFinanceComponent /> */}
+      {/* <EmptyPF/> */}
+      <ProjectFinanceComponent />
     </div>
   )
 }

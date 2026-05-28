@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import Modal2 from "@/components/Modal2";
 import styles from "./RepayLoanModal.module.css";
 import Button from "@/components/Button";
@@ -12,6 +14,18 @@ type Props = {
 
 const RepayLoanModal = ({ isOpen, onClose, onRepay, loading }: Props) => {
   const [amount, setAmount] = useState("");
+
+  // Reset state when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setAmount("");
+    }
+  }, [isOpen]);
+
+  const handleRepayClick = () => {
+    onRepay?.(amount);
+    onClose();
+  };
 
   return (
     <Modal2 isOpen={isOpen} onClose={onClose} width={440} title="Repay Loan">
@@ -43,7 +57,7 @@ const RepayLoanModal = ({ isOpen, onClose, onRepay, loading }: Props) => {
         <Button
           variant="primary"
           loading={loading}
-          onClick={() => onRepay?.(amount)}
+          onClick={handleRepayClick}
         >
           Repay Loan
         </Button>

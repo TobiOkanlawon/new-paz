@@ -1,0 +1,150 @@
+/* Nav style */
+.navContainer {
+    padding: 24px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Hero style */
+.HeroContainer {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 447px;
+}
+
+.HeroImage1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    object-fit: contain;
+}
+
+.HeroImage2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.HeroImage3 {
+    position: absolute;
+    top: 0;
+    right: 12.43vw;
+    z-index: 3;
+}
+
+.textContainer {
+    position: absolute;
+    top: 28.41vh;
+    left: 8.33vw;
+    z-index: 3;
+}
+
+.HeroHeader {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 36px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: #2E2E2E;
+}
+.HeroText {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: #2E2E2E;
+}
+
+/* Terms body styles */
+.termsArticle {
+    padding: 64px 120px;
+}
+
+.termsMainHeader {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #2E2E2E;
+    margin-bottom: 16px;
+}
+
+.termsSubHeader {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: center;
+    color: #214CCF;
+    margin-bottom: 48px;
+}
+
+.termsSectionHeader {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 107.5px;
+    letter-spacing: 0.02em;
+    text-align: justify;
+    color: #667085;
+    margin: 0;
+}
+
+.termsText {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 107.5px;
+    letter-spacing: 0.02em;
+    text-align: justify;
+    color: #667085;
+    margin: 0;
+}
+
+.termsBold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 107.5px;
+    letter-spacing: 0.02em;
+    text-align: justify;
+    color: #667085;
+}
+
+.termsList {
+    list-style: disc;
+    padding-left: 48px;
+    margin: 0;
+}
+
+.termsList li {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 107.5px;
+    letter-spacing: 0.02em;
+    text-align: justify;
+    color: #667085;
+}

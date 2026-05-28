@@ -4,7 +4,6 @@ import styles from './emptyDash.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import LoanHeader from '../loanHeader'
-import { TransactionRow } from '@/components/TransactionTable/TransactionTable';
 import LoanCard from '../loanCard/LoanCard'
 import LoanTypeCard from '../availableLoanCard/AvailableLoanCard'
 import LoansClient from '../LoansClient'
@@ -18,7 +17,26 @@ import AssetFinanceLoanModal from '../modals/AssetFinanceLoanModal/AssetFinanceL
 import MakePaymentModal from '../modals/MakePaymentModal/MakePaymentModal'
 
 const EmptyDash = () => {
-    const rows: TransactionRow[] = [];
+    const rows = [
+        {
+            id: 1,
+            loanType: "Personal Loan",
+            interestAmount: "10.5%",
+            loanAmount: "N 100,000",
+            loanBalance: "N 103,000",
+            date: "Mon, 21 Dec 2025",
+            onActionClick: () => { },
+        },
+        {
+            id: 2,
+            loanType: "Business Loan",
+            interestAmount: "20%",
+            loanAmount: "N 500,000",
+            loanBalance: "N 450,000",
+            date: "Mon, 21 Dec 2025",
+            onActionClick: () => { },
+        },
+    ];
 
     // Application Result state
     const [isApplicationSuccessful, setIsApplicationSuccessful] = useState('pending')
@@ -210,6 +228,7 @@ const EmptyDash = () => {
                     title="Personal Loan"
                     description="Quick and flexible loans for your needs"
                     accentColor="#17A842"
+                    onApply={handlePersonalModalOpen}
                 />
 
                 <LoanTypeCard
@@ -229,6 +248,7 @@ const EmptyDash = () => {
                     title="Business Loan"
                     description="Quick and flexible loans for your needs"
                     accentColor="#E09A1A"
+                    onApply={handleBusinessModalOpen}
                 />
             </div>
             {/* Transactions table handled by a client wrapper to enable pagination and controls */}
