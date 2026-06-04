@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import styles from "./LoanCard.module.css";
-import { LuEye, LuEyeOff, LuEllipsisVertical } from "react-icons/lu"; // ✅ /lu for Lucide
+import { LuEye, LuEyeOff, LuEllipsisVertical } from "react-icons/lu";
 
 type Props = {
   icon: React.ReactNode;
@@ -55,7 +55,10 @@ const LoanCard = ({
         </div>
 
         {bottomRight && (
-          <span className={styles.bottomRight} style={{ color: bottomRightColor }}>
+          <span
+            className={styles.bottomRight}
+            style={{ color: bottomRightColor }}
+          >
             {bottomRight}
           </span>
         )}
