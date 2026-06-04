@@ -9,6 +9,7 @@ type ModalProps = {
   onClose?: () => void;
   isLoading?: boolean;
   width?: string | number;
+  title?: string;
 };
 
 const Modal2 = ({
@@ -16,7 +17,8 @@ const Modal2 = ({
   children,
   onClose,
   isLoading = false,
-  width = 500,
+  width,
+  title,
 }: ModalProps) => {
   if (!isOpen) return null;
 
@@ -27,10 +29,21 @@ const Modal2 = ({
         style={{ width: typeof width === "number" ? `${width}px` : width }}
         onClick={(e) => e.stopPropagation()}
       >
-        {onClose && (
-          <button className={styles.closeBtn} onClick={onClose}>
-            ×
-          </button>
+        {title ? (
+          <div className={styles.header}>
+            <h2 className={styles.title}>{title}</h2>
+            {onClose && (
+              <button className={styles.headerClose} onClick={onClose}>
+                ×
+              </button>
+            )}
+          </div>
+        ) : (
+          onClose && (
+            <button className={styles.closeBtn} onClick={onClose}>
+              ×
+            </button>
+          )
         )}
         {isLoading ? <Spinner /> : children}
       </div>

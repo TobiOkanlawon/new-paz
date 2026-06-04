@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Modal2 from "@/components/Modal2";
 import styles from "./BusinessLoanModal.module.css";
@@ -18,16 +19,27 @@ type Props = {
 };
 
 const BusinessLoanModal = ({ isOpen, onClose, options }: Props) => (
-  <Modal2 isOpen={isOpen} onClose={onClose} width={551}>
+  <Modal2 isOpen={isOpen} onClose={onClose} width={551} title="Business Loan">
     <div className={styles.container}>
-      <h2 className={styles.title}>Business Loan</h2>
       <p className={styles.subtitle}>
         Select the kind of business loan you would like to apply for and with all
         necessary documents, and you will be given.
       </p>
       <div className={styles.list}>
         {options.map((opt) => (
-          <div key={opt.title} className={styles.item} onClick={opt.onSelect}>
+          <div
+            key={opt.title}
+            className={styles.item}
+            onClick={() => {
+              opt.onSelect && opt.onSelect();
+              try {
+                // debug log to ensure clicks register in the browser console
+                console.log("Business option clicked:", opt.title);
+              } catch (err) {
+                console.error(err);
+              }
+            }}
+          >
             <div className={styles.left}>
               <div className={styles.iconWrapper} style={{ backgroundColor: opt.iconBg }}>
                 {opt.icon}

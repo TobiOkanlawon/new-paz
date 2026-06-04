@@ -1,0 +1,43 @@
+.container {
+    padding: 32px 0;
+}
+
+.contentContainer {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.contentContainer h4 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.48px;
+    text-align: center;
+    color: #2E2E2E;
+    padding-bottom: 22px;
+}
+
+.contentContainer p {
+    max-width: 575px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: center;
+    color: #878787;
+    padding-bottom: 23px   ;
+}
+
+.buttonContainer{
+    max-width: 575px;
+    width: 100%;
+}

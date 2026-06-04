@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import Modal2 from "@/components/Modal2";
-import styles from "./RepayLoanModal.module.css";
+import styles from "./MakePaymentModal.module.css";
 import Button from "@/components/Button";
 
 type Props = {
   isOpen: boolean;
   onClose: VoidFunction;
-  onRepay?: (amount: string) => void;
+  onPay?: (amount: string) => void;
   loading?: boolean;
 };
 
-const RepayLoanModal = ({ isOpen, onClose, onRepay, loading }: Props) => {
+const MakePaymentModal = ({ isOpen, onClose, onPay, loading }: Props) => {
   const [amount, setAmount] = useState("");
 
   return (
-    <Modal2 isOpen={isOpen} onClose={onClose} width={440} title="Repay Loan">
+    <Modal2 isOpen={isOpen} onClose={onClose} width={645}>
       <div className={styles.container}>
+        <h2 className={styles.title}>Make Payment</h2>
 
         <div className={styles.section}>
           <p className={styles.sectionLabel}>Pay with</p>
@@ -40,16 +41,14 @@ const RepayLoanModal = ({ isOpen, onClose, onRepay, loading }: Props) => {
           </div>
         </div>
 
-        <Button
-          variant="primary"
-          loading={loading}
-          onClick={() => onRepay?.(amount)}
-        >
-          Repay Loan
-        </Button>
+        <div className={styles.footer}>
+          <Button variant="primary" loading={loading} onClick={() => onPay?.(amount)}>
+            Make Payment
+          </Button>
+        </div>
       </div>
     </Modal2>
   );
 };
 
-export default RepayLoanModal;
+export default MakePaymentModal;

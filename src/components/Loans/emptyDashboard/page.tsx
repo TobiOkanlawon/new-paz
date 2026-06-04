@@ -1,7 +1,8 @@
 'use client'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styles from './emptyDash.module.css'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import LoanHeader from '../loanHeader'
 import { TransactionRow } from '@/components/TransactionTable/TransactionTable';
 import LoanCard from '../loanCard/LoanCard'
@@ -13,6 +14,8 @@ import LoanApplicationResult from '../shared/LoanApplicationResult'
 import ApplyPersonalLoanModal from '../modals/ApplyPersonalLoanModal/ApplyPersonalLoanModal'
 import BusinessLoanModal from '../modals/BusinessLoanModal/BusinessLoanModal'
 import LocalPurchaseOrderModal from '../modals/LocalPurchaseOrderModal/LocalPurchaseOrderModal'
+import AssetFinanceLoanModal from '../modals/AssetFinanceLoanModal/AssetFinanceLoanModal'
+import MakePaymentModal from '../modals/MakePaymentModal/MakePaymentModal'
 
 const EmptyDash = () => {
     const rows: TransactionRow[] = [];
@@ -26,7 +29,7 @@ const EmptyDash = () => {
     const handleApplicationModalOpen = () => {
         setIsApplicationOpen(true)
     }
-    
+
 
     // Quick loan modal state
     const [isQuickLoanModalOpen, setIsQuickLoanModalOpen] = useState(false)
@@ -93,7 +96,18 @@ const EmptyDash = () => {
         handleApplicationModalOpen()
         handleAFLModalClose()
     }
+    const handleAFLModalPayment = () => {
 
+    }
+
+    // Payement loan modal state
+    const [isPaymentLoanModalOpen, setIsPaymentLoanModalOpen] = useState(false)
+    const handlePaymentModalOpen = () => {
+        setIsPaymentLoanModalOpen(true);
+    }
+    const handlePaymentModalClose = () => {
+        setIsPaymentLoanModalOpen(false)
+    }
 
     // Apply loan modal state
     const [isApplyForLoanModalOpen, setIsApplyForLoanModalOpen] = useState(false)
@@ -109,45 +123,50 @@ const EmptyDash = () => {
             iconBg: '#E9EDFA',
             title: 'Quick Loan',
             description: 'Apply for a quick loan and get it in minutes',
-            onSelect: () => {handleQuickModalOpen()}
+            onSelect: () => { handleQuickModalOpen() }
         },
         {
             icon: (<Image src="/icon/moneyHand.svg" alt="money Hand" width={15} height={14} />),
             iconBg: '#EBFFF2',
             title: 'Personal Loan',
             description: 'Apply for a personal loan and get it in minutes',
-            onSelect: () => {handlePersonalModalOpen()}
+            onSelect: () => { handleAFLModalOpen() }
         },
         {
             icon: (<Image src="/icon/briefcase.svg" alt="money bag" width={15} height={14} />),
             iconBg: '#FFF3DF',
             title: 'Business Loan',
             description: 'Apply for business loan for any purpose and get it.',
-            onSelect: () => {handleBusinessModalOpen()}
+            onSelect: () => { handleBusinessModalOpen() }
         },
     ]
-    
+
+    const router = useRouter()
+    const handleProjectFinanceRedirect = () => {
+        router.push('/dashboard/loans/project-finance')
+    }
     const businessOptions = [
         {
             icon: (<Image src="/icon/briefcase.svg" alt="money bag" width={15} height={14} />),
             iconBg: '#FFF3DF',
             title: 'Local Purchase Order',
             description: 'Apply for an LPO  loan for your business and get it.',
-            onSelect: () => {handleLPOModalOpen()}
+            onSelect: () => { handleLPOModalOpen() }
         },
         {
             icon: (<Image src="/icon/briefcase.svg" alt="money bag" width={15} height={14} />),
             iconBg: '#FFF3DF',
             title: 'Asset Finance',
             description: 'Apply for an Asset finance for your business and get it.',
-            onSelect: () => {handleBusinessModalOpen()}
+            onSelect: () => { handleAFLModalOpen() }
+
         },
         {
             icon: (<Image src="/icon/briefcase.svg" alt="money bag" width={15} height={14} />),
             iconBg: '#FFF3DF',
             title: 'Project Finance',
             description: 'Apply for a Project Finance for your business and get it.',
-            onSelect: () => {handleBusinessModalOpen()}
+            onSelect: () => { handleProjectFinanceRedirect() }
         },
     ]
 
@@ -215,11 +234,13 @@ const EmptyDash = () => {
             {/* Transactions table handled by a client wrapper to enable pagination and controls */}
             <LoansClient rows={rows} />
 
-            <ApplyForLoanModal isOpen={isApplyForLoanModalOpen} onClose={handleApplyModalClose} options={loanOptions}/>
+            <ApplyForLoanModal isOpen={isApplyForLoanModalOpen} onClose={handleApplyModalClose} options={loanOptions} />
             <ApplyQuickLoanModal isOpen={isQuickLoanModalOpen} onClose={handleQuickModalClose} onSubmit={handleQuickModalSubmit} />
             <ApplyPersonalLoanModal isOpen={isPersonalLoanModalOpen} onClose={handlePersonalModalClose} onSubmit={handlePersonalModalSubmit} />
             <BusinessLoanModal isOpen={isBusinessLoanModalOpen} onClose={handleBusinessModalClose} options={businessOptions} />
-            <LocalPurchaseOrderModal isOpen={isLPOLoanModalOpen} onClose={handleLPOModalClose} onSubmit={handleLPOModalSubmit}/>
+            <LocalPurchaseOrderModal isOpen={isLPOLoanModalOpen} onClose={handleLPOModalClose} onSubmit={handleLPOModalSubmit} />
+            <AssetFinanceLoanModal isOpen={isAFLLoanModalOpen} onClose={handleAFLModalClose} onMakePayment={handlePaymentModalOpen} onSubmit={handleAFLModalSubmit} />
+            <MakePaymentModal isOpen={isPaymentLoanModalOpen} onClose={handlePaymentModalClose} onPay={() => { handlePaymentModalClose() }} />
             <LoanApplicationResult status='pending' isOpen={isApplicationOpen} onClose={handleApplicationModalClose} onBack={handleApplicationModalClose} />
         </div>
     )

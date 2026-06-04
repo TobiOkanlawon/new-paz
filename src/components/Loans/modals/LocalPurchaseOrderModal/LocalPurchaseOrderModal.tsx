@@ -21,9 +21,8 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
   return (
-    <Modal2 isOpen={isOpen} onClose={onClose} width={647}>
+    <Modal2 isOpen={isOpen} onClose={onClose} width={647} title="Local Purchase Order">
       <div className={styles.container}>
-        <h2 className={styles.title}>Local Purchase Order</h2>
         <LoanTabs tabs={TABS} activeTab={step} />
 
         {step === 0 && (

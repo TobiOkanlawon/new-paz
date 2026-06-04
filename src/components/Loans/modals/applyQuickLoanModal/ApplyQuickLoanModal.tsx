@@ -32,9 +32,8 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
   return (
-    <Modal2 isOpen={isOpen} onClose={onClose} width={627}>
+    <Modal2 isOpen={isOpen} onClose={onClose} width={627} title="Apply For Quick Loan">
       <div className={styles.container}>
-        <h2 className={styles.title}>Apply For Quick Loan</h2>
         <LoanTabs tabs={TABS} activeTab={step} />
 
         {step === 0 && (

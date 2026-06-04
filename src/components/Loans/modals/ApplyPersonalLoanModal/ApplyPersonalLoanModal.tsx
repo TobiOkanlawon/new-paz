@@ -21,14 +21,13 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
   return (
-    <Modal2 isOpen={isOpen} onClose={onClose} width={647}>
+    <Modal2 isOpen={isOpen} onClose={onClose} width={647} title="Apply For Personal Loan">
       <div className={styles.container}>
-        <h2 className={styles.title}>Apply For Personal Loan</h2>
         <LoanTabs tabs={TABS} activeTab={step} />
 
         {step === 0 && (
           <div className={styles.form}>
-            <LoanSelect label="Loan Type" options={["Personal Loan"]} value="Personal Loan" />
+            <LoanSelect label="Loan Type" options={["Personal Loan"]} defaultValue="Personal Loan" />
             <LoanSelect label="Loan Amount" options={["250,000", "500,000"]} placeholder="250,000" />
             <LoanSelect label="Loan Tenure" options={["30 days", "60 days", "90 days"]} placeholder="90 days" />
             <LoanInput label="Purpose of Loan" placeholder="House Rent" />
