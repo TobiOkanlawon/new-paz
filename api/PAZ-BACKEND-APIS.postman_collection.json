@@ -1,0 +1,1447 @@
+{
+  "info": {
+    "_postman_id": "d027cf94-5151-4f9b-a9b3-6ff9ef56f3e8",
+    "name": "PAZ-BACKEND-APIS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "9156456",
+    "_collection_link": "https://go.postman.co/collection/9156456-d027cf94-5151-4f9b-a9b3-6ff9ef56f3e8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "WALLET",
+      "item": [
+        {
+          "name": "GET WALLET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/wallets/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallets",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET WALLETS",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET WALLET BY WALLETID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/fetch/I9012510256",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "fetch",
+                "I9012510256"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET WALLET BY PHONENUMBER",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/retrieve-wallet/09012510256",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "retrieve-wallet",
+                "09012510256"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "WALLET CREDIT",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\":\"2000\",\n    \"accountNo\":\"I9012510256\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/credit",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "credit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "WALLET DEBIT",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\":\"100\",\n    \"accountNo\":\"I9012510256\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/debit",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "debit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LIEN WALLET",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"lienAmount\":\"100\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/lien/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "lien",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADD PND TO A WALLET",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pndReason\":\"Fraud\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/add-pnd/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "add-pnd",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADD PNC TO A WALLET",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pncReason\":\"Fraud\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/pnc/add-pnc/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "pnc",
+                "add-pnc",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REMOVE PND FROM WALLET",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pndReason\":\"Fraud\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/pnd/remove-pnd/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "pnd",
+                "remove-pnd",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REMOVE PNC FROM WALLET",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pncReason\":\"OK\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/remove-pnc/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "remove-pnc",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATEWALLETACCOUNT",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\":\"Jide\",\n    \"lastName\":\"Tunde\",\n    \"otherName\":\"Rupe\",\n    \"phoneNumber\":\"08065212988\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/wallet/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "wallet",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "LOANS",
+      "item": [
+        {
+          "name": "GET LOANS",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/loans/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loans",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET LOAN",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/loans/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loans",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LOAN APPLICATION",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "LOAN APPLICATION",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzc5OTI5MDg3LCJpZCI6NTEsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.MSFabHyGF6HQvEcTQCaGKh8I1zmxY67hps6EHwYSp_0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"purpose\":\"wig\",\n    \"amount\":20000,\n    \"tenor\":\"30\",\n    \"walletId\": \"6928661744\",\n    \"loanType\": \"QUICK_LOAN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/loan/request/apply",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loan",
+                "request",
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LOAN UPDATE",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzc5OTM1NDAxLCJpZCI6NTEsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.MwvnOeNzxd0Af6CAHMrIlYp7lX1VluAnHcG4xZfpiyY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"request\":{\n        \"fullName\":\"Godwin James\",\n        \"emailAddress\":\"egbobright@gmail.com\",\n        \"phoneNumber\":\"09013310256\",\n        \"dateOfBirth\":\"21/09/1990\",\n        \"BVN\":\"22296036246\"\n    },\n     \"nextId\": \"IPE-6960983786\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/loan/request/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loan",
+                "request",
+                "update"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "LOAN UPDATE-employ(Quick)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"request\":{\n        \"monthlyIncome\":200000,\n        \"employmentStatus\":\"employed\"\n    },\n     \"nextId\": \"EMP-9973765889\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/loan/request/update",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "loan",
+                    "request",
+                    "update"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "Content-Type, Authorization"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, PUT, DELETE, OPTIONS"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 28 May 2026 01:17:33 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "158"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"response\": {\n        \"responseCode\": \"00\",\n        \"responseMessage\": \"loan request updated successfully\",\n        \"responseData\": {\n            \"nextId\": \"IPE-4862801778\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "LOAN UPDATE guarantor(Quick)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzc5OTM1NDAxLCJpZCI6NTEsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.MwvnOeNzxd0Af6CAHMrIlYp7lX1VluAnHcG4xZfpiyY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"request\":{\n        \"name\":\"Chuks Eledo\",\n        \"phoneNumber\": \"09013310255\"\n    },\n     \"nextId\": \"IGU-260106713\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/loan/request/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loan",
+                "request",
+                "update"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "LOAN UPDATE-employ(Quick)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"request\":{\n        \"monthlyIncome\":200000,\n        \"employmentStatus\":\"employed\"\n    },\n     \"nextId\": \"EMP-9973765889\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/loan/request/update",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "loan",
+                    "request",
+                    "update"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "Content-Type, Authorization"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, PUT, DELETE, OPTIONS"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 28 May 2026 01:17:33 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "158"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"response\": {\n        \"responseCode\": \"00\",\n        \"responseMessage\": \"loan request updated successfully\",\n        \"responseData\": {\n            \"nextId\": \"IPE-4862801778\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "LOAN UPDATE-employ",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzc5OTI5MDg3LCJpZCI6NTEsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.MSFabHyGF6HQvEcTQCaGKh8I1zmxY67hps6EHwYSp_0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"purpose\":\"wig\",\n    \"amount\":20000,\n    \"tenor\":\"30\",\n    \"walletId\": \"6928661744\",\n    \"loanType\": \"QUICK_LOAN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/loan/request/apply",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loan",
+                "request",
+                "apply"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "LOAN UPDATE-employ(Quick)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"request\":{\n        \"monthlyIncome\":200000,\n        \"employmentStatus\":\"employed\"\n    },\n     \"nextId\": \"EMP-9973765889\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/loan/request/update",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "loan",
+                    "request",
+                    "update"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Headers",
+                  "value": "Content-Type, Authorization"
+                },
+                {
+                  "key": "Access-Control-Allow-Methods",
+                  "value": "GET, POST, PUT, DELETE, OPTIONS"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 28 May 2026 01:17:33 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "158"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"response\": {\n        \"responseCode\": \"00\",\n        \"responseMessage\": \"loan request updated successfully\",\n        \"responseData\": {\n            \"nextId\": \"IPE-4862801778\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "LOAN APPROVAL :ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"approved\": true,\n    \"amount\":\"200\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/loan/request/approval/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loan",
+                "request",
+                "approval",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LOAN CUSTOMER CONSENT",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzc5OTQ3ODQ2LCJpZCI6NTEsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.8G-06uO0ZtBWileW4kaqq8q762dkKZWqjA1Y5qDmbDs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"consent\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/loan/request/consent/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loan",
+                "request",
+                "consent",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LoanProducts",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzYwMjAyMTAyLCJpZCI6MSwiaXNzIjoicGF6d2FsbGV0Iiwicm9sZSI6MX0.V-AqFquQ2YTXUy6mlCuATNyLRREoiSrm_p_JGWulA9E",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\":\"SOLO\",\n    \"code\":\"41245\",\n    \"description\":\"Solo Saving\",\n    \"interest\":\"0.001\",\n    \"additionalFee\":\"0.0\"\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/savings/saving-product-creation",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "savings",
+                "saving-product-creation"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SAVINGS",
+      "item": [
+        {
+          "name": "GET SAVINGS",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/loans/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loans",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET SAVING",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/v1/loans/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "loans",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LOAN APPLICATION",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE SAVINGS",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHQxQGdtYWlsLmNvbSIsImV4dCI6MTc1NjgyMDAxNiwiaWQiOjAsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.w3a2l8-W1CjvPI_WATZwBdRVPv1fSaCmxWx5iHf3-wo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\":\"PERSONAL\",\n    \"description\":\"saving for rent\",\n    \"currentAmount\":0.0,\n    \"walletId\":\"0854962312\",\n    \"duration\":\"6 months\",\n    \"targetAmount\":1000000,\n    \"frequency\":\"Yearly\",\n    \"type\":\"TARGETSAVINGS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/users/user/create-savings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "users",
+                "user",
+                "create-savings"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "SOLO",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\":\"PERSONAL\",\n    \"description\":\"saving for rent\",\n    \"currentAmount\":0.0,\n    \"walletId\":\"0854962312\",\n    \"type\":\"SOLO\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/users/user/create-savings",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "users",
+                    "user",
+                    "create-savings"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 02 Sep 2025 20:25:37 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "70"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"responseCode\": \"00\",\n    \"responseMessage\": \"Successfully created\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "CREATE SAVINGS Copy",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHQxQGdtYWlsLmNvbSIsImV4dCI6MTc1NjgyMDAxNiwiaWQiOjAsImlzcyI6InBhendhbGxldCIsInJvbGUiOjJ9.w3a2l8-W1CjvPI_WATZwBdRVPv1fSaCmxWx5iHf3-wo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\":\"PERSONAL\",\n    \"description\":\"saving for rent\",\n    \"currentAmount\":0.0,\n    \"walletId\":\"0854962312\",\n    \"duration\":\"6 months\",\n    \"targetAmount\":1000000,\n    \"frequency\":\"Yearly\",\n    \"type\":\"TARGETSAVINGS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/users/user/create-savings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "users",
+                "user",
+                "create-savings"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "SOLO",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\":\"PERSONAL\",\n    \"description\":\"saving for rent\",\n    \"currentAmount\":0.0,\n    \"walletId\":\"0854962312\",\n    \"type\":\"SOLO\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/users/user/create-savings",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "users",
+                    "user",
+                    "create-savings"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 02 Sep 2025 20:25:37 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "70"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"responseCode\": \"00\",\n    \"responseMessage\": \"Successfully created\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PARTNERS",
+      "item": [
+        {
+          "name": "CREATE PARTNER",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"partnerName\":\"PAZ2\",\n    \"collectionAccount\":\"00439243583\",\n    \"settlementAccount\":\"00343456652\",\n    \"phoneNumber\":\"08056788352\"\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/partner/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "partner",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "USERS",
+      "item": [
+        {
+          "name": "UserCreation",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"mobileNumber\":\"08064120026\",\r\n    \"firstName\":\"Ogechukwu\",\r\n    \"lastName\":\"Egbo\",\r\n    \"email\":\"egbobright1@gmail.com\",\r\n    \"password\":\"Password@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/users/signup",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "users",
+                "signup"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "UserCreationSuccess",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"mobileNumber\":\"08064120026\",\r\n    \"firstName\":\"Ogechukwu\",\r\n    \"lastName\":\"Egbo\",\r\n    \"email\":\"egbobright1@gmail.com\",\r\n    \"password\":\"Password@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/users/signup",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "users",
+                    "signup"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Location",
+                  "value": "/v1/users/"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 02 Sep 2025 11:30:56 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "98"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"User created\": true,\n    \"responseCode\": \"00\",\n    \"responseMessage\": \"User successfully created\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Login Copy",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "AddBVN",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVnYm9icmlnaHRAZ21haWwuY29tIiwiZXh0IjoxNzUzOTczNTgyLCJpZCI6MCwiaXNzIjoicGF6d2FsbGV0Iiwicm9sZSI6Mn0.vRvfV7JNy9PmMfp9oIVh4A7brz7SXJ1WPNz-vlT7HBQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"bvn\":\"22296036246\",\r\n\t\"dob\":\"21/09/2000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/v1/users/user/verify-bvn?email=egbobright@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "v1",
+                "users",
+                "user",
+                "verify-bvn"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "egbobright@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "AddBVNSuccess",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"bvn\":\"22296036246\",\r\n\t\"dob\":\"21/09/2000\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/users/user/verify-bvn?email=egbobright1@gmail.com",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "users",
+                    "user",
+                    "verify-bvn"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "egbobright1@gmail.com"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Location",
+                  "value": "/v1/users/verify-bvn/22296036246"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 02 Sep 2025 19:08:16 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "100"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"BVN Validated\": true,\n    \"responseCode\": \"00\",\n    \"responseMessage\": \"BVN Successfully validated\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "AddAccount",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "AddAccountSuccess",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"accountName\":\"Bright Egbo\",\r\n    \"accountNo\":\"0236342901\",\r\n    \"bankName\":\"Wema Bank\",\r\n    \"walletId\":\"0854962312\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:4000/v1/users/user/add-account",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "4000",
+                  "path": [
+                    "v1",
+                    "users",
+                    "user",
+                    "add-account"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 03 Sep 2025 16:13:25 GMT"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "84"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"responseCode\": \"00\",\n    \"responseMessage\": \"Primary account successfully added\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
