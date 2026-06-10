@@ -8,9 +8,20 @@ type Props = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   rightElement?: React.ReactNode;
-};
+} & React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
-const LoanInput = ({ label, placeholder, type = "text", value, onChange, rightElement }: Props) => (
+const LoanInput = ({
+  label,
+  placeholder,
+  type = "text",
+  value,
+  onChange,
+  rightElement,
+  ...rest
+}: Props) => (
   <div className={styles.wrapper}>
     <label className={styles.label}>{label}</label>
     <div className={styles.inputRow}>
@@ -20,6 +31,7 @@ const LoanInput = ({ label, placeholder, type = "text", value, onChange, rightEl
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        {...rest}
       />
       {rightElement && <span className={styles.right}>{rightElement}</span>}
     </div>

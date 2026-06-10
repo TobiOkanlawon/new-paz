@@ -1,12 +1,16 @@
 "use client";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import style from "./emptyInstant.module.css";
 import LoanHeader from "../loanHeader";
 import Image from "next/image";
 import Button from "@/components/Button";
 import EligibilityModal from "../modals/eligibilityModal/EligibilityModal";
 
-const EmptyInstant = () => {
+type Props = {
+  setIsDashboardVisible: React.Dispatch<SetStateAction<boolean>>;
+};
+
+const EmptyInstant: React.FC<Props> = ({ setIsDashboardVisible }) => {
   const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
 
   return (
@@ -39,6 +43,7 @@ const EmptyInstant = () => {
       <EligibilityModal
         isOpen={isEligibilityOpen}
         onClose={() => setIsEligibilityOpen(false)}
+        navigateToNext={() => setIsDashboardVisible(true)}
       />
     </div>
   );

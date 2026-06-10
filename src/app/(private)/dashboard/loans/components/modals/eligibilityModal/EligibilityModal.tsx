@@ -2,10 +2,12 @@ import React from "react";
 import Modal2 from "@/components/Modal2";
 import styles from "./EligibilityModal.module.css";
 import { LuCircleCheckBig } from "react-icons/lu";
+import Button from "@/components/Button";
 
 type Props = {
   isOpen: boolean;
   onClose?: () => void;
+  navigateToNext: () => void;
 };
 
 const criteria = [
@@ -16,7 +18,7 @@ const criteria = [
   "Valid phone number and email address",
 ];
 
-const EligibilityModal = ({ isOpen, onClose }: Props) => {
+const EligibilityModal = ({ isOpen, onClose, navigateToNext }: Props) => {
   return (
     <Modal2 isOpen={isOpen} onClose={onClose} title="Eligibility Criteria">
       <div className={styles.container}>
@@ -28,6 +30,10 @@ const EligibilityModal = ({ isOpen, onClose }: Props) => {
             </li>
           ))}
         </ul>
+
+        <div className={styles.bottomContainer}>
+          <Button onClick={navigateToNext}>Get an instant loan</Button>
+        </div>
       </div>
     </Modal2>
   );
