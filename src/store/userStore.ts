@@ -1,16 +1,21 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
+
+const DEFAULT_PROFILE_IMAGE = "/profile.png";
 
 interface UserStore {
   user: TUser | null;
+  profileImage: string;
   setUser: (updatedFields: Partial<TUser>) => void;
   replaceUser: (newUser: TUser) => void;
+  setProfileImage: (url: string) => void;
 }
 
 const useUser = create<UserStore>()(
   persist(
     (set) => ({
       user: null,
+      profileImage: DEFAULT_PROFILE_IMAGE,
 
       setUser: (updatedFields) =>
         set((state) => {
@@ -31,10 +36,13 @@ const useUser = create<UserStore>()(
         set(() => ({
           user: newUser,
         })),
+
+      setProfileImage: (url) => set({ profileImage: url }),
     }),
     {
       name: "user-storage",
-      partialize: (state) => ({ user: state.user }),
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ user: state.user, profileImage: state.profileImage }),
     },
   ),
 );

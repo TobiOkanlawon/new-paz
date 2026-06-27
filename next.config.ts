@@ -66,6 +66,16 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
+  // Configure allowed image domains
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.r2.dev",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

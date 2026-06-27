@@ -5,6 +5,7 @@ import { getProfile } from "@/actions/profile";
 
 export default async function Page() {
   const result = await getProfile();
+  console.log('Results: ', result)
 
   if (!result.success) {
     return <div>Failed to load account</div>;
