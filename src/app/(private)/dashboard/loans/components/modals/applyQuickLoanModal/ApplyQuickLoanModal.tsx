@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import Modal2 from "@/components/Modal2";
 import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
+import {
+  applyForLoan,
+  submitLoanEmploymentDetails,
+  submitLoanPersonalInfo,
+} from "@/actions/loans";
 import styles from "./ApplyQuickLoanModal.module.css";
+import Input from "@/components/Input";
 
 const TABS = ["Loan Details", "Employment", "Personal Information"];
 
@@ -17,7 +24,6 @@ type Props = {
 };
 
 const initialValues = {
-  loanType: "Quick Loan",
   loanAmount: "",
   loanTenure: "",
   loanPurpose: "",
@@ -30,19 +36,22 @@ const initialValues = {
   bvn: "",
 };
 
-// Per-step schemas — Formik will only validate the active step's fields
 const stepSchemas = [
   Yup.object({
-    loanType: Yup.string().required("Loan type is required"),
-    loanAmount: Yup.string().required("Loan amount is required"),
+    loanAmount: Yup.number()
+      .required("Loan amount is required")
+      .positive()
+      .max(100000, "You cannot take higher than 100,000 on quick loans")
+      .min(1000),
     loanTenure: Yup.string().required("Loan tenure is required"),
     loanPurpose: Yup.string().required("Purpose of loan is required"),
   }),
   Yup.object({
     employmentStatus: Yup.string().required("Employment status is required"),
-    monthlyIncome: Yup.string()
-      .required("Monthly income is required")
-      .matches(/^\d[\d,]*$/, "Enter a valid income amount"),
+    monthlyIncome: Yup.number()
+      .positive()
+      .required("Monthly income is required"),
+    //.matches(/^\d[\d,]*$/, "Enter a valid income amount"),
   }),
   Yup.object({
     fullName: Yup.string()
@@ -61,23 +70,131 @@ const stepSchemas = [
   }),
 ];
 
+// Strips commas from income strings like "200,000" before sending to the API
+const parseIncome = (value: string): number => Number(value.replace(/,/g, ""));
+
+// Strips "days" suffix from tenure strings like "30 days" → "30"
+const parseTenor = (value: string): string =>
+  value.replace(/\s*days?/i, "").trim();
+
 const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
   const [step, setStep] = useState(0);
+  // nextId is threaded through each API step — not owned by Formik
+  // const [nextId, setNextId] = useState<string | null>(null);
+
+  const [nextId, setNextId] = useState<string | null>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const isLastStep = step === TABS.length - 1;
 
+  const resetModal = () => {
+    setStep(0);
+    setNextId(null);
+    setIsLoading(false);
+  };
+
+  const handleClose = () => {
+    resetModal();
+    onClose();
+  };
+
+  // Validates the current step's fields, then runs the corresponding API call.
+  // On success it advances the step and stores the returned nextId.
+  // On the final step it calls onSubmit and closes the modal.
   const handleNext = async (
+    values: typeof initialValues,
     validateForm: () => Promise<Record<string, string>>,
     setTouched: (fields: Record<string, boolean>) => void,
   ) => {
+    // 1. Validate current step
     const errors = await validateForm();
     if (Object.keys(errors).length > 0) {
-      // Touch all fields in the current step to surface errors
       const stepFields = Object.keys(stepSchemas[step].fields);
       setTouched(Object.fromEntries(stepFields.map((f) => [f, true])));
       return;
     }
-    setStep((s) => Math.min(s + 1, TABS.length - 1));
+
+    setIsLoading(true);
+
+    try {
+      // Step 0 — Loan Details → POST /v1/loan/request/apply
+      if (step === 0) {
+        const result = await applyForLoan({
+          purpose: values.loanPurpose,
+          amount: parseIncome(values.loanAmount),
+          tenor: parseTenor(values.loanTenure),
+          loanType: "QUICK_LOAN",
+        });
+
+        if (!result.success) {
+          toast.error("Failed to submit loan details. Please try again.");
+          return;
+        }
+
+        toast.success("Loan initialized successfully");
+        setNextId(result.data.nextId);
+        setStep(1);
+        return;
+      }
+
+      // Step 1 — Employment → POST /v1/loan/request/update (EMP- nextId)
+      if (step === 1) {
+        if (!nextId) {
+          toast.error("Session error. Please restart the application.");
+          return;
+        }
+
+        const result = await submitLoanEmploymentDetails({
+          monthlyIncome: parseIncome(values.monthlyIncome),
+          employmentStatus: values.employmentStatus.toLowerCase(),
+          nextId,
+        });
+
+        if (!result.success) {
+          toast.error("Failed to submit employment details. Please try again.");
+          return;
+        }
+
+        setNextId(result.data.nextId);
+        setStep(2);
+        return;
+      }
+
+      // Step 2 (last) — Personal Info → POST /v1/loan/request/update (IPE- nextId)
+      if (step === 2) {
+        if (!nextId) {
+          toast.error("Session error. Please restart the application.");
+          return;
+        }
+
+        const result = await submitLoanPersonalInfo({
+          fullName: values.fullName,
+          emailAddress: values.email,
+          phoneNumber: values.phone,
+          dateOfBirth: values.dob,
+          BVN: values.bvn,
+          nextId,
+        });
+
+        if (!result.success) {
+          toast.error(
+            "Failed to submit personal information. Please try again.",
+          );
+          return;
+        }
+
+        // TODO: the success step, should bring up the sucess modal
+        toast.success(
+          "Loan application submitted! You'll be notified once it's reviewed.",
+        );
+        onSubmit?.();
+        handleClose();
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const back = () => setStep((s) => Math.max(s - 1, 0));
@@ -85,7 +202,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
   return (
     <Modal2
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       width={627}
       title="Apply For Quick Loan"
     >
@@ -94,9 +211,9 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
         validationSchema={stepSchemas[step]}
         validateOnChange={false}
         validateOnBlur
-        onSubmit={(values, { setSubmitting }) => {
-          onSubmit?.();
-          setSubmitting(false);
+        onSubmit={() => {
+          // Final submission is handled inside handleNext above.
+          // Formik's onSubmit is intentionally left empty.
         }}
       >
         {({
@@ -107,7 +224,6 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
           handleBlur,
           validateForm,
           setTouched,
-          isSubmitting,
         }) => (
           <Form>
             <div className={styles.container}>
@@ -115,21 +231,13 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
 
               {step === 0 && (
                 <div className={styles.form}>
-                  <LoanSelect
-                    label="Loan Type"
-                    options={["Quick Loan"]}
-                    value={values.loanType}
-                    onChange={handleChange("loanType")}
-                    onBlur={handleBlur("loanType")}
-                    error={touched.loanType ? errors.loanType : undefined}
-                  />
-                  <LoanSelect
+                  <Input
                     label="Loan Amount"
-                    options={["20,000", "50,000", "100,000"]}
+                    max="100000"
                     value={values.loanAmount}
                     onChange={handleChange("loanAmount")}
                     onBlur={handleBlur("loanAmount")}
-                    placeholder="20,000"
+                    placeholder="Select an amount"
                     error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
                   <LoanSelect
@@ -138,7 +246,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     value={values.loanTenure}
                     onChange={handleChange("loanTenure")}
                     onBlur={handleBlur("loanTenure")}
-                    placeholder="30 days"
+                    placeholder="Select a loan tenure"
                     error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
                   <LoanInput
@@ -160,14 +268,14 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     value={values.employmentStatus}
                     onChange={handleChange("employmentStatus")}
                     onBlur={handleBlur("employmentStatus")}
-                    placeholder="Employed"
+                    placeholder="Selct your employment status"
                     error={
                       touched.employmentStatus
                         ? errors.employmentStatus
                         : undefined
                     }
                   />
-                  <LoanInput
+                  <Input
                     label="Monthly Income"
                     placeholder="500,000"
                     value={values.monthlyIncome}
@@ -184,7 +292,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                 <div className={styles.form}>
                   <LoanInput
                     label="Full Name"
-                    placeholder="Esther Williams"
+                    placeholder="Jane Doe"
                     value={values.fullName}
                     onChange={handleChange("fullName")}
                     onBlur={handleBlur("fullName")}
@@ -192,7 +300,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                   />
                   <LoanInput
                     label="Email Address"
-                    placeholder="Estherwilliams22@gmail.com"
+                    placeholder="email@domain.com"
                     type="email"
                     value={values.email}
                     onChange={handleChange("email")}
@@ -229,14 +337,9 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
 
               <LoanFormFooter
                 onBack={back}
-                onContinue={
-                  isLastStep
-                    ? undefined // let the Form's submit handle it
-                    : () => handleNext(validateForm, setTouched)
-                }
+                onContinue={() => handleNext(values, validateForm, setTouched)}
                 continueLabel={isLastStep ? "Submit" : "Continue"}
-                isSubmitting={isSubmitting}
-                isSubmitButton={isLastStep}
+                loading={isLoading}
               />
             </div>
           </Form>

@@ -130,7 +130,7 @@ const EmptyDash = () => {
             iconBg: '#EBFFF2',
             title: 'Personal Loan',
             description: 'Apply for a personal loan and get it in minutes',
-            onSelect: () => { handleAFLModalOpen() }
+            onSelect: () => { handlePersonalModalOpen() }
         },
         {
             icon: (<Image src="/icon/briefcase.svg" alt="money bag" width={15} height={14} />),
@@ -210,6 +210,7 @@ const EmptyDash = () => {
                     title="Personal Loan"
                     description="Quick and flexible loans for your needs"
                     accentColor="#17A842"
+                    onApply={handlePersonalModalOpen}
                 />
 
                 <LoanTypeCard
@@ -229,6 +230,7 @@ const EmptyDash = () => {
                     title="Business Loan"
                     description="Quick and flexible loans for your needs"
                     accentColor="#E09A1A"
+                    onApply={handleBusinessModalOpen}
                 />
             </div>
             {/* Transactions table handled by a client wrapper to enable pagination and controls */}

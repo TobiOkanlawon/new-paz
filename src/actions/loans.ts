@@ -45,6 +45,43 @@ export type LoanConsentResponse = {
 };
 
 // ---------------------------------------------------------------------------
+// GET /v1/user/loan/pending?walletId={walletId}
+// Retrieve pending loan request (used to resume abandoned requests)
+// Success response example:
+// {
+//   "data": { ... },
+//   "responseCode": "00",
+//   "responseMessage": "loan request successfully retrieved"
+// }
+// No-pending response example:
+// {
+//   "responseCode": 400,
+//   "responseMessage": "no pending loan request found"
+// }
+
+type PendingLoanData = {
+  Amount: number;
+  Approved: boolean;
+  ApprovedAmount: number;
+  Consent: boolean;
+  Purpose: string;
+  Tenor: string;
+  OtherInfo: string; // e.g. nextId like IPE-6977222064
+};
+
+type PendingLoanApiResponse = {
+  responseCode: string | number;
+  responseMessage?: string;
+  data?: PendingLoanData;
+};
+
+export type PendingLoanResponse = {
+  pending: boolean;
+  data?: PendingLoanData;
+  message?: string;
+};
+
+// ---------------------------------------------------------------------------
 // Step 1 — Apply for the loan
 // POST /v1/loan/request/apply
 // ---------------------------------------------------------------------------
@@ -53,7 +90,7 @@ export interface ApplyForLoanPayload {
   purpose: string;
   amount: number;
   tenor: string;
-  loanType?: string; // defaults to QUICK_LOAN
+  loanType: string;
 }
 
 export async function applyForLoan(
@@ -72,7 +109,7 @@ export async function applyForLoan(
       amount: payload.amount,
       tenor: payload.tenor,
       walletId,
-      loanType: payload.loanType ?? "QUICK_LOAN",
+      loanType: payload.loanType,
     };
 
     const res = await apiFetch<LoanApplyApiResponse>("/v1/loan/request/apply", {
@@ -81,9 +118,18 @@ export async function applyForLoan(
       body,
     });
 
-    return ok({
-      nextId: res.response.responseData.nextId,
-    });
+    const code = res?.response?.responseCode;
+    const message = res?.response?.responseMessage;
+    const nextId = res?.response?.responseData?.nextId;
+
+    if (code !== "00") {
+      return fail({
+        success: false,
+        error: new Error(message || "Failed to apply for loan"),
+      });
+    }
+
+    return ok({ nextId: nextId });
   } catch (e) {
     return fail({ success: false, error: e });
   }
@@ -267,6 +313,40 @@ export async function submitLoanConsent(
     return ok({
       success: res.responseCode === "00",
       message: res.responseMessage,
+    });
+  } catch (e) {
+    return fail({ success: false, error: e });
+  }
+}
+
+export async function getPendingLoan(): Promise<
+  ActionResult<PendingLoanResponse>
+> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated and no walletId provided");
+    }
+
+    const walletId = session!.user.walletAccount;
+
+    const url = `/v1/user/loan/pending?walletId=${walletId}`;
+
+    const res = await apiFetch<PendingLoanApiResponse>(url, {
+      method: "GET",
+      isProtected: true,
+    });
+
+    const code = String(res?.responseCode ?? "");
+
+    if (code === "00") {
+      return ok({ pending: true, data: res.data });
+    }
+
+    // no pending or other non-success response
+    return ok({
+      pending: false,
+      message: res.responseMessage || "no pending loan request",
     });
   } catch (e) {
     return fail({ success: false, error: e });
