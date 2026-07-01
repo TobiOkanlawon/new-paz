@@ -24,26 +24,38 @@
   height: 100vh;
   z-index: 2;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   grid-column: 2;
 }
 
-.rightSide {
+/* width:90% wrapper used to live inline on the component; centralizing it
+here lets us cap it on wide screens and keep margin-top/bottom auto so the
+form stays vertically centered when it fits, but never clips at the top
+when it's taller than the viewport (which align-items/justify-content
+centering would do under overflow). */
+.formWrapper {
+  width: 90%;
+  max-width: 800px;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 48px 0;
+  box-sizing: border-box;
 }
+
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
 @media screen and (max-height: 850px) {
-  .rightContainer {
-    padding-top: 0;
-    align-items: center;
-  }
-  .logo {
-    width: 75px;
-  }
-  .bgImages {
-    height: 21rem;
+  .formWrapper {
+    padding: 24px 0;
   }
 }
 
@@ -68,18 +80,21 @@
     width: 100%;
     height: auto;
     grid-column: unset;
-    padding-bottom: 40px;
     overflow: visible;
     flex-shrink: 0;
   }
+  .formWrapper {
+    width: 100%;
+    padding: 32px 24px 40px;
+    margin: 0;
+  }
   .halfWidthInputsContainer {
     flex-direction: column;
-    gap: 0px !important;
+    gap: 20px;
     justify-content: center;
     width: 100%;
   }
   .shortInputGroup {
-    /* max-width: 606px !important; */
     width: 100%;
   }
 }
@@ -111,7 +126,7 @@
 .title {
   color: #2e2e2e;
   font-family: var(--font-poppins), sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 32px;
   margin-bottom: 1rem;
 }
@@ -130,6 +145,10 @@
   gap: 24px;
 }
 
+.inputGroup {
+  width: 100%;
+}
+
 .shortInputGroup {
   width: 100%;
 }
@@ -141,10 +160,14 @@
 .tosContainer {
   margin: 18px 0px 24px 0px;
   font-family: var(--font-poppins), sans-serif;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .tosContainer > label {
-  margin-left: 8px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .orContainer {
@@ -157,15 +180,21 @@
 
 .linkText {
   text-decoration: none;
+  color: #214ccf;
+  font-weight: 500;
 }
 
 .bottomText {
   text-align: center;
   font-family: var(--font-poppins), sans-serif;
+  margin-top: 24px;
 }
 .tosInput {
   accent-color: #214ccf;
   background-color: #e9edfa;
+  flex-shrink: 0;
+  margin-top: 3px;
+  cursor: pointer;
 }
 
 /* .left { */

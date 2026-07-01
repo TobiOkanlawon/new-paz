@@ -64,7 +64,7 @@
 .input::placeholder {
   font-family: var(--font-poppins), sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
   color: #aaa;
@@ -86,9 +86,3 @@
 
 /* REMOVED: All media queries that were causing inconsistent input widths. */
 /* The component is now fully responsive based on its parent container's width. */
-
-@media screen and (min-width: 1440px) {
-  .input::placeholder {
-    font-size: 16px;
-  }
-}
