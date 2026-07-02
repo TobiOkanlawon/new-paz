@@ -22,7 +22,7 @@ type TopUpDetails = {
 };
 
 type Props = {
-  accountSummary: any;
+  accountSummary: Partial<TAccountDetails>;
   onCompleted?: (details: TopUpDetails) => void;
   children?: (openFundModal: () => void) => React.ReactNode;
 };

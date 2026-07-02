@@ -12,7 +12,7 @@
 }
 
 .label {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #2C2D2D;
@@ -25,7 +25,7 @@
   gap: 10px;
   font-size: 14px;
   color: #2E2E2E;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   margin-bottom: 12px;
 }
 

@@ -43,6 +43,9 @@ export const formatBirthdayToDateInputFormat = (
   return `${splitString[2]}-${splitString[1]}-${splitString[0]}`;
 };
 
+export const formatMoney = (n: number, currency: string) =>
+  `${currency}${n.toLocaleString("en-NG", { maximumFractionDigits: 2 })}`;
+
 export const addSavings = (accountDetails: TAccountDetails) => {
   return {
     soloSavings: accountDetails.soloSavings?.amount || 0,

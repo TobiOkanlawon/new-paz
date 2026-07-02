@@ -65,7 +65,7 @@
     border: none;
     border-radius: 15px;
     font-size: 15.2px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     white-space: nowrap;
 }
 

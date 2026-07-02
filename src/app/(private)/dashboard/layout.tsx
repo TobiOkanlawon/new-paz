@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./layout.module.css";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import ProfileHydrator from "@/components/ProfileHydrator";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -12,16 +13,21 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const toggleCollapsed = () => setCollapsed((prev) => !prev);
+  const toggleMobile = () => setMobileOpen((prev) => !prev);
 
-  // Close sidebar when route changes
   useEffect(() => {
-    setIsSidebarOpen(false);
+    setCollapsed(window.innerWidth <= 960);
+  }, []);
+
+  useEffect(() => {
+    setIsDropdownOpen(false);
+    setMobileOpen(false);
   }, [pathname]);
 
   return (
@@ -31,17 +37,27 @@ export default function DashboardLayout({
         collapsed && styles.pageContainerCollapsed,
       )}
     >
+      <ProfileHydrator />
       <Sidebar
-        isOpen={isSidebarOpen}
+        isOpen={isDropdownOpen}
         collapsed={collapsed}
         action={toggleCollapsed}
+        mobileOpen={mobileOpen}
+        onMobileClose={() => setMobileOpen(false)}
       />
 
+      {mobileOpen && (
+        <div
+          className={styles.mobileBackdrop}
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
       <div className={styles.dashboardMain}>
-        <Header />
+        <Header onMenuClick={toggleMobile} />
         <main
           className={styles.mainContent}
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={() => setIsDropdownOpen(false)}
         >
           {children}
         </main>

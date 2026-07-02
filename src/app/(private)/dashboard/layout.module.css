@@ -7,6 +7,14 @@
   transition: grid-template-columns 0.25s ease;
 }
 
+.mobileBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
 .pageContainerCollapsed {
   grid-template-columns: 60px 1fr;
 }
@@ -23,29 +31,14 @@
   overflow-y: auto;
 }
 
-@media screen and (max-width: 1201px) {
-  /* .dashboardMain {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  } */
-
-  .dashboardMain > aside {
-    position: fixed;
-    left: 0;
-    top: var(--navbar-height, 0px);
-    height: calc(100vh - var(--navbar-height, 0px));
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 10;
+@media screen and (max-width: 960px) {
+  .pageContainer {
+    grid-template-columns: 1fr;
+    height: 100vh;
   }
 
-  .dashboardMain > aside.open {
-    transform: translateX(0);
-  }
-
-  .mainContent {
-    flex: 1;
+  .mobileBackdrop {
+    display: block;
   }
 }
 

@@ -1,6 +1,6 @@
 .card {
   display: grid;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   grid-template-columns: 1fr 1fr;
   border-radius: 10px;
   border: 1px solid #acb5bd;
@@ -16,7 +16,7 @@
 
 .amountHeader {
   color: #243d7d;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 40px;
   font-weight: bold;
 }

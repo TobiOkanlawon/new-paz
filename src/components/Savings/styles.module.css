@@ -19,7 +19,7 @@
 
 .modalHeader h1 {
   color: #243d7d;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 700;
   font-size: 24px;
   margin: 0 0 8px 0;
@@ -27,7 +27,7 @@
 
 .modalHeader p {
   color: #555;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 500;
   font-size: 16px;
   margin: 0;
@@ -53,7 +53,7 @@
 .formGroup label {
   display: block;
   color: #292727;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 8px;
@@ -70,7 +70,7 @@
 
 /* Select Input */
 .selectInput {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 14px;
   border: 1px solid #d9d9d9;
   width: 100%;
@@ -108,7 +108,7 @@
   color: #3475df;
   border: 1px solid #3475df;
   border-radius: 8px;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;

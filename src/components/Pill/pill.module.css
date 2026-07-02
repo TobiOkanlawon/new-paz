@@ -46,7 +46,7 @@
 .content {
     display: inline-block;
     font-size: 14px;
-    font-family: "Montserrat", sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     line-height: 1.2;
     white-space: nowrap;

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "../profile.module.css";
 import Image from "next/image";
 import Modal from "@/components/Modal";
@@ -18,6 +18,8 @@ import * as Yup from "yup";
 import { formatBirthdayToDateInputFormat } from "@/libs/helpers";
 import { toast } from "react-toastify";
 import { saveProfile } from "@/actions/profile";
+import { uploadProfileImageAction } from "@/actions/uploadProfileImage";
+import useUser from "@/store/userStore";
 
 const schema = Yup.object();
 
@@ -76,8 +78,21 @@ const Field = ({ label, icon, required, children }: FieldProps) => (
 /* ── Main component ── */
 
 const Profile: React.FC<Props> = ({ data }) => {
+  const profileImage = useUser((state) => state.profileImage);
+  const setProfileImage = useUser((state) => state.setProfileImage);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileName, setFileName] = useState("No file chosen");
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Seed the store from API data on mount
+  useEffect(() => {
+    if (data?.profileImage) {
+      setProfileImage(data.profileImage);
+    }
+  }, [data?.profileImage]);
 
   const formik = useFormik<TProfileFormValues>({
     enableReinitialize: true,
@@ -140,6 +155,70 @@ So, we'll have to remove the next of kin data--iff the next of kin data is prese
     setFileName(file ? file.name : "No file chosen");
   };
 
+  const handleUploadPhoto = async () => {
+    const fileInput = fileInputRef.current;
+    const file = fileInput?.files?.[0];
+
+    if (!file) {
+      setUploadError("Please select a file first");
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      // Use email as unique identifier since id doesn't exist on TProfile
+      const userId = data?.email ? String(data.email) : "user";
+      formData.append("userId", userId);
+
+      const result = await uploadProfileImageAction(formData);
+
+      if (result.success && result.imageUrl) {
+        // Mirror the same next-of-kin exclusion used in onSubmit:
+        // the backend rejects the request if next of kin is re-submitted after it's already set.
+        const imagePayload = data.nextOfKinFirstName
+          ? {
+              postalAddress: formik.values.postalAddress,
+              birthday: formik.values.birthday,
+              gender: formik.values.gender,
+              emailAddress: formik.values.emailAddress,
+              phoneNumber: formik.values.phoneNumber,
+              profileImage: result.imageUrl,
+            }
+          : { ...formik.values, profileImage: result.imageUrl };
+
+        const updatedProfile = await saveProfile(imagePayload);
+
+        if (!updatedProfile.success) {
+          throw new Error(updatedProfile.error);
+        }
+
+        setProfileImage(result.imageUrl);
+        toast.success("Profile photo uploaded successfully");
+        setIsModalOpen(false);
+        setFileName("No file chosen");
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      } else if (result.success) {
+        throw new Error("Upload succeeded but returned no image URL");
+      } else {
+        setUploadError(result.error || "Upload failed");
+        toast.error(result.error || "Upload failed");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Upload failed";
+      setUploadError(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <div className={styles.page}>
       <form onSubmit={formik.handleSubmit}>
@@ -149,11 +228,13 @@ So, we'll have to remove the next of kin data--iff the next of kin data is prese
             <div className={styles.avatarWrap}>
               <div className={styles.avatarRing}>
                 <Image
-                  src="/profile.png"
+                  key={profileImage}
+                  src={profileImage}
                   alt="Profile"
                   width={68}
                   height={68}
                   className={styles.avatarImg}
+                  priority
                 />
               </div>
               <div
@@ -358,19 +439,28 @@ So, we'll have to remove the next of kin data--iff the next of kin data is prese
           <span className={styles.fileChooseBtn}>Choose File</span>
           <span className={styles.fileName}>{fileName}</span>
           <input
+            ref={fileInputRef}
             id="profileInput"
             type="file"
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFileChange}
+            disabled={isUploading}
           />
         </label>
+        {uploadError && (
+          <p style={{ color: "red", fontSize: "12px", marginTop: "8px", textAlign: "center" }}>
+            {uploadError}
+          </p>
+        )}
         <button
           type="button"
           className={styles.submitBtn}
           style={{ width: "100%", justifyContent: "center" }}
+          onClick={handleUploadPhoto}
+          disabled={isUploading}
         >
-          Upload Photo
+          {isUploading ? "Uploading..." : "Upload Photo"}
         </button>
       </Modal>
     </div>

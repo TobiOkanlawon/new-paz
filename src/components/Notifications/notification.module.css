@@ -2,7 +2,7 @@
 }
 
 .header {
-  font-family: "montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 3.4vh;
   margin: 2.2vh 0 !important;
   color: #204d88;

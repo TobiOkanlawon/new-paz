@@ -1,5 +1,5 @@
 .modalContainer{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     margin: 0;
 }
 .modalContainer h2{
@@ -28,7 +28,7 @@
     color: #292727;
 }
 .modalContainer input::placeholder{
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     font-style: Medium;
     font-size: 14px;
@@ -51,7 +51,7 @@
     border-radius: 10px;
     color: #fff;
     padding: .6rem 1rem;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     font-weight: 700;
     font-style: Bold;
     font-size: 16px;
@@ -89,7 +89,7 @@
 }
 .addCard input::placeholder{
     color: #292727;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 100%;

@@ -2,11 +2,11 @@
 
 import { getServerSession } from 'next-auth';
 import { apiFetch } from '@/libs/api';
+import { formatBirthdayToBackendFormat } from '@/libs/helpers';
 
 import { ok, fail, ActionResult } from "@/actions/shared";
-import { TProfileFormValues } from '@/app/(private)/dashboard/profile/Profile';
 
-export async function getProfile(): Promise<ActionResult<TProfile>>  {
+export async function getProfile(): Promise<ActionResult<TProfile>> {
   try {
     const session = await getServerSession()
 
@@ -21,14 +21,18 @@ export async function getProfile(): Promise<ActionResult<TProfile>>  {
       method: 'POST',
     })
 
-    
-    const profileImage = res.profile["profile-image"] || "";
+
+    const profileImage =
+      res.profile["profile-image"] ||
+      res.profile.profileImage ||
+      res.profile.profile_image ||
+      "";
 
     delete res.profile["profile-image"];
-    
-    const data: TProfile = {...res.profile, profileImage};
+
+    const data: TProfile = { ...res.profile, profileImage };
     return ok(data)
-  } catch(e) {
+  } catch (e) {
     return fail(e)
   }
 
@@ -40,7 +44,7 @@ export async function saveProfile(payload: any): Promise<ActionResult<any>> {
     const session = await getServerSession();
 
     const user = session?.user;
-    
+
     if (!user) {
       throw new Error("User is not authenticated")
     }
@@ -49,73 +53,22 @@ export async function saveProfile(payload: any): Promise<ActionResult<any>> {
       isProtected: true,
       method: "POST",
       body: {
-	address: payload.postalAddress,
-	gender: payload.gender,
-	email: payload.emailAddress,
-	birthday: payload.birthday,
-	phoneNumber: payload.phoneNumber,
-	nextOfKinFirstName: payload.nextOfKinFirstName,
-	nextOfKinLastName: payload.nextOfKinLastName,
-	nextOfKinEmail: payload.nextOfKinEmail,
-	nextOfKinRelationship: payload.relationship,
-	nextOfKinPhoneNumber: payload.nextOfKinPhoneNumber,
+        "profile-image": payload.profileImage,
+        address: payload.postalAddress,
+        gender: payload.gender,
+        email: payload.emailAddress,
+        birthday: formatBirthdayToBackendFormat(payload.birthday),
+        phoneNumber: payload.phoneNumber,
+        nextOfKinFirstName: payload.nextOfKinFirstName,
+        nextOfKinLastName: payload.nextOfKinLastName,
+        nextOfKinEmail: payload.nextOfKinEmail,
+        nextOfKinRelationship: payload.relationship,
+        nextOfKinPhoneNumber: payload.nextOfKinPhoneNumber,
       },
     });
-  
-    return ok({success: true});
-  } catch(e) {
+
+    return ok(res);
+  } catch (e) {
     return fail(e)
   }
 };
-
-export async function uploadProfileImage(formData: FormData) {
-  try {
-    const file = formData.get("file") as File;
-
-    if (!file) {
-      return {
-        success: false,
-        error: "No file provided",
-      };
-    }
-
-    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID!;
-    const apiToken = process.env.CLOUDFLARE_IMAGES_TOKEN!;
-
-    const cloudflareForm = new FormData();
-    cloudflareForm.append("file", file);
-
-    const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${accountId}/images/v1`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiToken}`,
-        },
-        body: cloudflareForm,
-      }
-    );
-
-    const result = await response.json();
-
-    if (!result.success) {
-      return {
-        success: false,
-        error: result.errors?.[0]?.message || "Upload failed",
-      };
-    }
-
-    return {
-      success: true,
-      imageId: result.result.id,
-      imageUrl: result.result.variants[0], // public image url
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      success: false,
-      error: "Image upload failed",
-    };
-  }
-}

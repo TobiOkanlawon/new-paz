@@ -89,7 +89,7 @@
 }
 
 .modalTitle {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: clamp(17px, 2.2vh, 20px);
   font-weight: 700;
   color: #ffffff;
@@ -99,7 +99,7 @@
 }
 
 .modalSubtitle {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: clamp(10px, 1.35vh, 12px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.72);
@@ -146,7 +146,7 @@
 }
 
 .fieldLabel {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 10px;
   font-weight: 700;
   color: #4e5a66;
@@ -192,7 +192,7 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: clamp(12px, 1.5vh, 13px);
   font-weight: 500;
   color: #2c3e50;
@@ -222,7 +222,7 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: clamp(12px, 1.5vh, 13px);
   font-weight: 500;
   color: #2c3e50;
@@ -239,7 +239,7 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: clamp(12px, 1.5vh, 13px);
   font-weight: 500;
   color: #2c3e50;
@@ -261,7 +261,7 @@
 
 /* Error message */
 .errorMsg {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 10px;
   font-weight: 600;
   color: #ef4444;
@@ -302,7 +302,7 @@
   justify-content: space-between;
 }
 .strengthLabel {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -315,7 +315,7 @@
   margin-top: 0.1rem;
 }
 .hint {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 10px;
   font-weight: 600;
   display: flex;
@@ -347,7 +347,7 @@
   background: linear-gradient(135deg, #3475df, #2563c4);
   color: #fff;
   border: none;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: clamp(12px, 1.6vh, 14px);
   height: 50px;
@@ -408,14 +408,14 @@
   margin-bottom: 0.4rem;
 }
 .successTitle {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #204d88;
   margin: 0;
 }
 .successSub {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 12px;
   color: #7a8a99;
   font-weight: 500;
@@ -428,7 +428,7 @@
   background: linear-gradient(135deg, #3475df, #2563c4);
   color: #fff;
   border: none;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 13px;
   height: 46px;
@@ -462,7 +462,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 11px;
   font-weight: 700;
   color: #8a96a3;
@@ -480,7 +480,7 @@
   color: #fff;
 }
 .stepText {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 9px;
   font-weight: 700;
   color: #b0bac5;
@@ -513,7 +513,7 @@
   gap: 0.7rem;
 }
 .qCardLabel {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 10px;
   font-weight: 700;
   color: #3475df;
@@ -533,7 +533,7 @@
   border-radius: 12px;
   border: 1.5px solid #d0ddf5;
   background: transparent;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 13px;
   color: #3475df;

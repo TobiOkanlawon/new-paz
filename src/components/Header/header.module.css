@@ -1,9 +1,32 @@
 .header {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     padding: 20px 24px;
     background-color: #FAFAFA;
     border-bottom: 0.5px solid #DFDFDF;
+}
+
+.mobileLogo {
+    display: none;
+    align-items: center;
+    margin-right: auto;
+}
+
+.mobileMenuBtn {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+
+.mobileMenuText {
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 14px;
+    color: #2e2e2e;
 }
 
 .headerRight {
@@ -21,6 +44,12 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    cursor: pointer;
+}
+
+.profileAvatar {
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .quickActionsContainer {
@@ -63,27 +92,27 @@
     border: 2px solid #FAFAFA;
 }
 
-@media screen and (max-width: 768px) {
-    .header {
-        padding: 12px 16px;
+@media screen and (max-width: 960px) {
+    .mobileLogo {
+        display: flex;
     }
 
-    .headerRightRight {
-        padding: 12px;
-        gap: 12px;
+    .mobileMenuBtn {
+        display: flex;
     }
 
     .quickActionsContainer {
-        padding: 12px;
-        gap: 6px;
-    }
-
-    .quickActionsText {
         display: none;
     }
 
-    .profileFirstName {
+    .headerRightRight {
         display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        padding: 12px 16px;
     }
 }
 

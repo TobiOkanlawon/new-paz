@@ -5,10 +5,11 @@ import styles from "./topUpSoloSavingsModal.module.css";
 import ModalShell from "@/components/ModalShell/ModalShell";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { handleErrorDisplay } from "@/libs/helpers";
+import { formatMoney, handleErrorDisplay } from "@/libs/helpers";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { DEFAULT_CURRENCY } from "@/globals";
 
 type Props = {
   open: boolean;
@@ -24,8 +25,7 @@ type Props = {
   onConfirm?: (payload: { amount: number }) => void | Promise<void>;
 };
 
-const formatMoney = (n: number, currency: string) =>
-  `${currency}${n.toLocaleString("en-NG", { maximumFractionDigits: 2 })}`;
+const QUICK_AMOUNTS = [5000, 10000, 15000, 20000];
 
 const parseAmount = (val: string) => {
   const cleaned = val.replace(/[^\d.]/g, "");
@@ -45,8 +45,8 @@ const TopUpSoloSavingsModal = ({
   onClose,
   accountName,
   currentBalance,
-  currency = "₦",
-  quickAmounts = [5000, 10000, 15000, 20000],
+  currency = DEFAULT_CURRENCY,
+  quickAmounts = QUICK_AMOUNTS,
   loading = false,
   onConfirm,
 }: Props) => {

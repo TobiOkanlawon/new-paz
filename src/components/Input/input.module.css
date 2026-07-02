@@ -5,7 +5,7 @@
 }
 
 .label {
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
@@ -22,7 +22,7 @@
 }
 
 .input {
-  font-family: var(--font-montserrat);
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
@@ -62,9 +62,9 @@
 }
 
 .input::placeholder {
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
   color: #aaa;
@@ -77,7 +77,7 @@
 .error {
     color: var(--error-red);
     font-size: 0.8rem;
-    font-family: "Inter", Arial, sans-serif;
+    font-family: var(--font-inter), Arial, sans-serif;
 }
 
 .errorInput {
@@ -86,9 +86,3 @@
 
 /* REMOVED: All media queries that were causing inconsistent input widths. */
 /* The component is now fully responsive based on its parent container's width. */
-
-@media screen and (min-width: 1440px) {
-  .input::placeholder {
-    font-size: 16px;
-  }
-}

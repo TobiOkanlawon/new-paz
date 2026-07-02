@@ -18,7 +18,7 @@ body{
 }
 
 .left h1{
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 700;
   font-size: 46px;
   line-height: 40px;
@@ -28,7 +28,7 @@ body{
 }
 
 .left p{
-  font-family: var(--font-montserrat);
+  font-family: var(--font-montserrat), sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 26px;
@@ -58,7 +58,7 @@ body{
   width: 40vw;
 }
 .right h3{
-  font-family: Poppins;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 700;
   font-size: 24px;
   line-height: 60px;

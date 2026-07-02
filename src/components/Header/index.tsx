@@ -11,12 +11,12 @@ import NotificationDetailModal, {
 import Notifications from "@/assets/notifications.png";
 // import ProfileImage from "@/assets/profile-dummy.png";
 import StarIcon from "@/assets/star.png";
+import CompoundLogo from "@/assets/compound-logo.png";
 import HeaderDropdown from "../HeaderDropdowns";
 
 import { useSession, signOut } from "next-auth/react";
 import Dropdown from "@/assets/dropdown.png";
-
-const ProfileImage = "/profile.png";
+import useUser from "@/store/userStore";
 
 const MOCK: NotificationItem[] = [
   {
@@ -42,10 +42,11 @@ const quickLinksDropdowns = [
   { label: "Withdraw Funds", href: "/dashboard/withdraw" },
 ];
 
-const Header = () => {
+const Header = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const navRef = useRef<HTMLDivElement>(null);
 
   const session = useSession();
+  const profileImage = useUser((state) => state.profileImage);
 
   const firstName = session.data?.user.firstName;
 
@@ -135,6 +136,10 @@ const Header = () => {
 
   return (
     <div ref={navRef} className={styles.header}>
+      <div className={styles.mobileLogo}>
+        <Image src={CompoundLogo} alt="PAZ Logo" height={32} />
+      </div>
+
       <nav className={styles.headerRight}>
         <div
           onClick={(event) => {
@@ -148,6 +153,11 @@ const Header = () => {
           <p className={styles.quickActionsText}>Quick actions</p>
           <Image src={Dropdown} alt="dropdown icon" width={16} height={16} />
         </div>
+
+        <button className={styles.mobileMenuBtn} onClick={onMenuClick} aria-label="Open menu">
+          <span className={styles.mobileMenuText}>Menu</span>
+          <Image src={Dropdown} alt="menu" width={16} height={16} />
+        </button>
 
         <div className={styles.headerRightRight}>
           <button
@@ -173,10 +183,11 @@ const Header = () => {
             className={styles.profileContainer}
           >
             <Image
-              height={20}
-              width={20}
-              src={ProfileImage}
+              height={32}
+              width={32}
+              src={profileImage}
               alt="Profile Image"
+              className={styles.profileAvatar}
             />
             <p className={styles.profileFirstName}>{firstName}</p>
           </div>

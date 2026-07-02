@@ -17,7 +17,7 @@
   color: #111;
   background-color: white;
   transition: border-color 0.15s, background 0.15s;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   cursor: text;
 }
 

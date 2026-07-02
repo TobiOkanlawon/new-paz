@@ -4,8 +4,7 @@ import {
   // getAllTransactions,
   getSavingsTransactions,
 } from "@/actions/transactions";
-import SoloSaver from "./SoloSaver";
-// import { redirect } from "next/navigation";
+import SoloSaver from "./components/soloSaver";
 import { getAccountSummary } from "@/actions/dashboard";
 import SoloSavingsEmptyScreen from "@/components/Savings/SoloSavingsEmptyScreen";
 

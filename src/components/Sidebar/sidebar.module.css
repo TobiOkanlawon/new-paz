@@ -1,7 +1,7 @@
 .sidebarContainer {
   padding: 18px;
   background-color: white;
-  width: 280px;
+  width: 275px;
   transition: width 0.25s ease;
   z-index: 1000;
 }
@@ -198,36 +198,234 @@
   color: #214ccf;
 }
 
-@media screen and (max-width: 700px) {
-  .bottomContainer {
-    padding-bottom: 0;
-  }
-  .sidebarContainer {
-    padding-bottom: 0;
-  }
+.mobileCloseBtn {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1;
 }
-@media screen and (max-width: 744px) {
-  .sidebarContainerCollapsed {
-    max-width: 25vw;
-    width: 50px;
-    padding: 12px 4px;
-  }
+
+.mobileOnly {
+  display: none;
+}
+
+.mobileBottomSection {
+  display: none;
+}
+
+.mobileBellBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.mobileProfileTrigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+
+.mobileProfileInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobileProfileName {
+  margin: 0;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobileProfileEmail {
+  margin: 0;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobileProfileDropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: #1e2d50;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 160px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.mobileProfileDropdownItem {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  color: white;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobileProfileDropdownItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (max-width: 960px) {
   .sidebarContainer {
-    padding: 12px 4px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: unset;
+    width: 280px;
+    height: 91%;
+    padding: 56px 20px 28px 24px;
+    background: linear-gradient(to bottom, #214CCF, #2A3656, #0D152C);
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px 0 0 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1001;
   }
-  .optionContainerCollapsed {
-    padding: 8px;
-    margin-bottom: 24px;
+
+  .sidebarContainerCollapsed {
+    width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
   }
+
+  .mobileSidebarOpen {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .mobileCloseBtn {
+    display: flex;
+  }
+
+  /* topContainer scrolls so the bottom section is never pushed off screen */
+  .topContainer {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+
+  .topContainer::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Tighten vertical spacing on mobile */
+  .optionContainer {
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
   .centreContainer {
     padding: 8px 0;
   }
-  .toggleIcon,
-  .sidebarIcon {
-    width: 24px !important;
-    height: 24px !important;
+
+  /* Hide desktop-only elements */
+  .headingContainer,
+  .desktopOnly {
+    display: none;
   }
-  /* .chevron{
-        display: none;
-    } */
+
+  /* Show mobile-only elements */
+  .mobileOnly {
+    display: block;
+  }
+
+  .mobileBottomSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+  }
+
+  .mobileBellBtn img,
+  .mobileProfileDropdownItem img {
+    filter: brightness(0) invert(1);
+  }
+
+  .mobileProfileName {
+    color: white;
+  }
+
+  .mobileProfileEmail {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  /* White text throughout */
+  .sidebarOptionText,
+  .username,
+  .userEmail,
+  .subItemText {
+    color: white;
+  }
+
+  /* White icons via filter */
+  .sidebarIcon {
+    filter: brightness(0) invert(1);
+  }
+
+  .logoutButton {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .logoutButton img {
+    filter: brightness(0) invert(1);
+  }
+
+  .logoutButton:hover {
+    color: white;
+  }
+
+  /* White chevron */
+  .chevron path {
+    stroke: white;
+  }
+
+  /* Active state on dark background */
+  .activeOptionContainer {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .sidebarOptionTextActive,
+  .subItemTextActive {
+    color: white;
+  }
+
+  .subItemActive {
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
 }

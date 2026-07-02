@@ -7,7 +7,7 @@
 }
 .header{
     margin: 0 0 1rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     color: #2E2E2E;
     font-size: 32px;
     font-weight: 600;
@@ -17,7 +17,7 @@
     margin-bottom: 18px;
     color: #878787;
     font-weight: 400;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
 }
 .form{
     width: 80%;
@@ -34,14 +34,14 @@
 }
 
 .remember{
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     font-size: 14px;
     font-weight: 400;
     margin-right: 8px;
 }
 
 .forgot{
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #214CCF;
@@ -65,7 +65,7 @@
 }
 
 .createNewAccount{
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #2E2E2E;
