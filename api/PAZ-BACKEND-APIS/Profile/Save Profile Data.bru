@@ -5,23 +5,24 @@ meta {
 }
 
 post {
-  url: {{protocol}}://{{url}}/v1/users/user/set-profile?email=tobiinlondon34@gmail.com
+  url: {{protocol}}://{{url}}/v1/users/user/set-profile?email=leviudoh17@gmail.com
   body: json
   auth: inherit
 }
 
 params:query {
-  email: tobiinlondon34@gmail.com
+  email: leviudoh17@gmail.com
 }
 
 body:json {
   {
-      "address": "Plot 83, Alagbole Akute Road, Akute, Ogun State"
+    "profile-image": "https://pub-159493cc5b9148d3b0ab6e2aabd31d15.r2.dev/profiles/leviudoh17%40gmail.com-1782689838497-PXL_20241222_111954779.PORTRAIT1.jpg"
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
 
 docs {

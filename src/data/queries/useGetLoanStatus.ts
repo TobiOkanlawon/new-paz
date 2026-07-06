@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 type GetLoanStatusResponse = {
+  id?: string;
   Amount: number;
   Approved: boolean;
   ApprovedAmount: number;
@@ -22,5 +23,6 @@ export const useGetLoanStatus = (walletId: string) => {
         });
     },
     enabled: !!walletId,
+    refetchInterval: 15000,
   });
 };
