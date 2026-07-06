@@ -120,7 +120,6 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     options={["Quick Loan"]}
                     value={values.loanType}
                     onChange={handleChange("loanType")}
-                    onBlur={handleBlur("loanType")}
                     error={touched.loanType ? errors.loanType : undefined}
                   />
                   <LoanSelect
@@ -128,7 +127,6 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     options={["20,000", "50,000", "100,000"]}
                     value={values.loanAmount}
                     onChange={handleChange("loanAmount")}
-                    onBlur={handleBlur("loanAmount")}
                     placeholder="20,000"
                     error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
@@ -137,7 +135,6 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     options={["30 days", "60 days", "90 days"]}
                     value={values.loanTenure}
                     onChange={handleChange("loanTenure")}
-                    onBlur={handleBlur("loanTenure")}
                     placeholder="30 days"
                     error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
@@ -159,7 +156,6 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     options={["Employed", "Self-employed", "Unemployed"]}
                     value={values.employmentStatus}
                     onChange={handleChange("employmentStatus")}
-                    onBlur={handleBlur("employmentStatus")}
                     placeholder="Employed"
                     error={
                       touched.employmentStatus

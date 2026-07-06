@@ -7,6 +7,8 @@ type Props = {
   onContinue?: VoidFunction;
   continueLabel?: string;
   loading?: boolean;
+  isSubmitting?: boolean;
+  isSubmitButton?: boolean;
 };
 
 const LoanFormFooter = ({
@@ -14,10 +16,19 @@ const LoanFormFooter = ({
   onContinue,
   continueLabel = "Continue",
   loading = false,
+  isSubmitting = false,
+  isSubmitButton = false,
 }: Props) => (
   <div className={styles.footer}>
-    <Button variant="outlined2" onClick={onBack}>Back</Button>
-    <Button variant="primary" onClick={onContinue} loading={loading}>
+    <Button variant="outlined2" onClick={onBack} type="button">
+      Back
+    </Button>
+    <Button
+      variant="primary"
+      onClick={isSubmitButton ? undefined : onContinue}
+      loading={loading || isSubmitting}
+      type={isSubmitButton ? "submit" : "button"}
+    >
       {continueLabel}
     </Button>
   </div>

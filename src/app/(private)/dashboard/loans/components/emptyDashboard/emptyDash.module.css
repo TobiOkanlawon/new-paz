@@ -7,6 +7,18 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* hide horizontal scrollbar across browsers while preserving scroll */
+.loanCardContainer {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+.loanCardContainer::-webkit-scrollbar {
+  height: 0; /* Chrome, Safari, Opera */
 }
 
 .subtitle {

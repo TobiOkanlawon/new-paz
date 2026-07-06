@@ -5,7 +5,7 @@ import TransactionsTable, { TransactionRow } from "@/components/TransactionTable
 import styles from "./emptyDashboard/emptyDash.module.css";
 import Image from "next/image";
 import NoRecord from "@/assets/noRecord.png";
-import ActiveLoansTable from "./ActiveLoanTable/ActiveLoansTable";
+import ActiveLoansTable from "@/components/Loans/ActiveLoanTable/ActiveLoansTable";
 
 type Props = {
   rows: [];

@@ -8,8 +8,8 @@ import {
 } from "react-icons/lu";
 import { PiReceiptLight } from "react-icons/pi";
 import { MdChevronRight } from "react-icons/md";
-import LoanDetailsModal from "../modals/loanDetailsModal/LoanDetailsModal";
-import RepayLoanModal from "../modals/RepayLoanModal/RepayLoanModal";
+import LoanDetailsModal from '@/app/(private)/dashboard/loans/components/modals/loanDetailsModal/LoanDetailsModal';
+import RepayLoanModal from "@/app/(private)/dashboard/loans/components//modals/RepayLoanModal/RepayLoanModal";
 import LoanRepaidCard from "../modals/LoanRepaidCardModal/LoanRepaidCard";
 
 export type ActiveLoanRow = {

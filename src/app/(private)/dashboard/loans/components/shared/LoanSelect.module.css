@@ -30,6 +30,17 @@
   border-color: #214ccf;
 }
 
-.option{
+.error {
+  border-color: #d92d20;
+}
+
+.errorMessage {
+  color: #d92d20;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: "Poppins", sans-serif;
+}
+
+.option {
   width: 100%;
 }

@@ -8,17 +8,24 @@ type Props = {
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   placeholder?: string;
+  error?: string;
 };
 
-const LoanSelect = ({ label, options, value, defaultValue, onChange, placeholder }: Props) => (
+const LoanSelect = ({ label, options, value, defaultValue, onChange, placeholder, error }: Props) => (
   <div className={styles.wrapper}>
     <label className={styles.label}>{label}</label>
-    <select className={styles.select} value={value} defaultValue={defaultValue} onChange={onChange}>
+    <select
+      className={`${styles.select} ${error ? styles.error : ""}`}
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange}
+    >
       {placeholder && <option className={styles.option} value="">{placeholder}</option>}
       {options.map((opt) => (
         <option className={styles.option} key={opt} value={opt}>{opt}</option>
       ))}
     </select>
+    {error && <span className={styles.errorMessage}>{error}</span>}
   </div>
 );
 
