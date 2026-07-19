@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './emptyDash.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -17,16 +17,22 @@ import LocalPurchaseOrderModal from '../modals/LocalPurchaseOrderModal/LocalPurc
 import AssetFinanceLoanModal from '../modals/AssetFinanceLoanModal/AssetFinanceLoanModal'
 import MakePaymentModal from '../modals/MakePaymentModal/MakePaymentModal'
 
-const EmptyDash = () => {
+type Props = {
+    autoOpenApply?: boolean;
+    onAutoOpenApplyHandled?: VoidFunction;
+};
+
+const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled }: Props) => {
     const rows: TransactionRow[] = [];
 
     // Application Result state
-    const [isApplicationSuccessful, setIsApplicationSuccessful] = useState('pending')
+    const [applicationStatus, setApplicationStatus] = useState<'success' | 'pending' | 'unsuccessful'>('pending')
     const [isApplicationOpen, setIsApplicationOpen] = useState(false)
     const handleApplicationModalClose = () => {
         setIsApplicationOpen(false)
     }
-    const handleApplicationModalOpen = () => {
+    const handleApplicationModalOpen = (status: 'success' | 'pending' | 'unsuccessful') => {
+        setApplicationStatus(status)
         setIsApplicationOpen(true)
     }
 
@@ -41,7 +47,7 @@ const EmptyDash = () => {
         setIsQuickLoanModalOpen(false)
     }
     const handleQuickModalSubmit = () => {
-        handleApplicationModalOpen();
+        handleApplicationModalOpen('success');
         handleQuickModalClose()
     }
 
@@ -55,7 +61,7 @@ const EmptyDash = () => {
         setIsPersonalLoanModalOpen(false)
     }
     const handlePersonalModalSubmit = () => {
-        handleApplicationModalOpen();
+        handleApplicationModalOpen('success');
         handlePersonalModalClose()
     }
 
@@ -79,7 +85,7 @@ const EmptyDash = () => {
         setIsLPOLoanModalOpen(false)
     }
     const handleLPOModalSubmit = () => {
-        handleApplicationModalOpen()
+        handleApplicationModalOpen('success')
         handleLPOModalClose()
     }
 
@@ -93,7 +99,7 @@ const EmptyDash = () => {
         setIsAFLLoanModalOpen(false)
     }
     const handleAFLModalSubmit = () => {
-        handleApplicationModalOpen()
+        handleApplicationModalOpen('success')
         handleAFLModalClose()
     }
     const handleAFLModalPayment = () => {
@@ -117,6 +123,14 @@ const EmptyDash = () => {
     const handleApplyModalOpen = () => {
         setIsApplyForLoanModalOpen(true)
     }
+
+    // Auto-open the apply modal when arriving here straight after passing eligibility
+    useEffect(() => {
+        if (autoOpenApply) {
+            setIsApplyForLoanModalOpen(true)
+            onAutoOpenApplyHandled?.()
+        }
+    }, [autoOpenApply, onAutoOpenApplyHandled])
     const loanOptions = [
         {
             icon: (<Image src="/icon/walletAdd.svg" alt="Add money" width={15} height={14} />),
@@ -166,7 +180,8 @@ const EmptyDash = () => {
             iconBg: '#FFF3DF',
             title: 'Project Finance',
             description: 'Apply for a Project Finance for your business and get it.',
-            onSelect: () => { handleProjectFinanceRedirect() }
+            comingSoon: true,
+            onSelect: () => { /* intentionally disabled - coming soon */ }
         },
     ]
 
@@ -243,7 +258,7 @@ const EmptyDash = () => {
             <LocalPurchaseOrderModal isOpen={isLPOLoanModalOpen} onClose={handleLPOModalClose} onSubmit={handleLPOModalSubmit} />
             <AssetFinanceLoanModal isOpen={isAFLLoanModalOpen} onClose={handleAFLModalClose} onMakePayment={handlePaymentModalOpen} onSubmit={handleAFLModalSubmit} />
             <MakePaymentModal isOpen={isPaymentLoanModalOpen} onClose={handlePaymentModalClose} onPay={() => { handlePaymentModalClose() }} />
-            <LoanApplicationResult status='pending' isOpen={isApplicationOpen} onClose={handleApplicationModalClose} onBack={handleApplicationModalClose} />
+            <LoanApplicationResult status={applicationStatus} isOpen={isApplicationOpen} onClose={handleApplicationModalClose} onBack={handleApplicationModalClose} />
         </div>
     )
 }

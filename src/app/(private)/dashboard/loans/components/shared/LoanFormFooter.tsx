@@ -21,7 +21,7 @@ const LoanFormFooter = ({
     <Button variant="outlined2" onClick={onBack}>Back</Button>
     <Button
       variant="primary"
-      onClick={isSubmitButton ? undefined : onContinue}
+      onClick={onContinue}
       loading={loading}
       type={isSubmitButton ? "submit" : "button"}
     >

@@ -9,6 +9,7 @@
     margin-top: 24px;
     overflow-x: auto;
     overflow-y: hidden;
+    gap: 1rem;
 }
 
 /* hide horizontal scrollbar across browsers while preserving scroll */

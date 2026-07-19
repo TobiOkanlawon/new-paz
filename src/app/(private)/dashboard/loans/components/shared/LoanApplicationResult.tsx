@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./LoanApplicationResult.module.css";
 import Modal2 from "@/components/Modal2";
 import Button from "@/components/Button";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { PiWarningFill } from "react-icons/pi";
 
 type Props = {
-  status: "success" | "pending";
+  status: "success" | "pending" | "unsuccessful";
   onBack?: VoidFunction;
   isOpen: boolean;
   onClose: VoidFunction;
@@ -21,7 +21,12 @@ const config = {
   pending: {
     icon: <PiWarningFill size={48} color="#E09A1A" />,
     title: "Loan Application",
-    message: "Your loan application is currently pending for review.",
+    message: "Your loan application is currently pending.",
+  },
+  unsuccessful: {
+    icon: <BsXCircleFill size={48} color="#E05C5C" />,
+    title: "Loan Application",
+    message: "Your loan application was not successful",
   },
 };
 

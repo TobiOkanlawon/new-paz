@@ -76,6 +76,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // Server Actions default to a 1MB body limit; loan/profile document uploads
+  // allow files up to 5MB, so raise the ceiling to accommodate multipart overhead.
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "6mb",
+    },
+  },
 };
 
 export default nextConfig;

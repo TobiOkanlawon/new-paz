@@ -105,7 +105,7 @@ const LoginForm = () => {
       if (result.ok) {
         // Handle remember me - only store email, never password
         if (values.remember) {
-          setEmailCookie(values.email);
+          // setEmailCookie(values.email);
         } else {
           clearEmailCookie();
         }
@@ -145,7 +145,7 @@ const LoginForm = () => {
           />
         </div>
         <div className={styles.formBottom}>
-          <div className={styles.rememberMe}>
+          {/* <div className={styles.rememberMe}>
             <input
               type="checkbox"
               className={styles.remember}
@@ -153,7 +153,7 @@ const LoginForm = () => {
               {...formik.getFieldProps("remember")}
             />
             <label htmlFor="remember">Remember me</label>
-          </div>
+          </div> */}
           <div>
             <Link href="/forgot-password" className={styles.forgot}>
               Forgot Password?

@@ -32,7 +32,7 @@ const EligibilityModal = ({ isOpen, onClose, navigateToNext }: Props) => {
         </ul>
 
         <div className={styles.bottomContainer}>
-          <Button onClick={navigateToNext}>Get an instant loan</Button>
+          <Button onClick={navigateToNext}>Get a loan</Button>
         </div>
       </div>
     </Modal2>

@@ -1,0 +1,228 @@
+{
+  "info": {
+    "name": "Loan API",
+    "description": "Collection of loan-related endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create Loan Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"productCode\": \"\",\n  \"narration\": \"\",\n  \"interestRate\": \"\",\n  \"managementFee\": \"\",\n  \"adminFee\": \"\",\n  \"productName\": \"\",\n  \"tenor\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/loan-product-creation",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "loan-product-creation"]
+        }
+      }
+    },
+    {
+      "name": "Update Loan Product",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/update-loan-product",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "update-loan-product"]
+        }
+      }
+    },
+    {
+      "name": "Pending Loan Requests",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/v1/user/loan/request/pending",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "user", "loan", "request", "pending"]
+        }
+      }
+    },
+    {
+      "name": "Customer Loans",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/v1/user/loan/pending",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "user", "loan", "pending"]
+        }
+      }
+    },
+    {
+      "name": "Liquidate Loan",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/liquidate-loan",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "liquidate-loan"]
+        }
+      }
+    },
+    {
+      "name": "Create Loan Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/request/apply",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "request", "apply"]
+        }
+      }
+    },
+    {
+      "name": "Update Loan Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/request/update",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "request", "update"]
+        }
+      }
+    },
+    {
+      "name": "Create Loan Request (Upload) v2",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "{{base_url}}/v2/loan/request/apply",
+          "host": ["{{base_url}}"],
+          "path": ["v2", "loan", "request", "apply"]
+        }
+      }
+    },
+    {
+      "name": "Loans Attached To Wallet",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/v1/loans/:id",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loans", ":id"],
+          "variable": [
+            { "key": "id", "value": "" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "All Loans",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/v1/loans",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loans"]
+        }
+      }
+    },
+    {
+      "name": "Approve Loan Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/request/approval/:id",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "request", "approval", ":id"],
+          "variable": [
+            { "key": "id", "value": "" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Consent To Approved Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/request/consent/:id",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "request", "consent", ":id"],
+          "variable": [
+            { "key": "id", "value": "" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Validate Loan",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/loan/validate-loan",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "loan", "validate-loan"]
+        }
+      }
+    }
+  ]
+}

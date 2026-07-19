@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import React, { useEffect, useRef, useState } from "react";
+import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Modal2 from "@/components/Modal2";
@@ -7,6 +7,7 @@ import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
+import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
 import {
   applyForLoan,
   submitLoanEmploymentDetails,
@@ -84,6 +85,20 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
 
   const [nextId, setNextId] = useState<string | null>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const formikRef = useRef<FormikProps<typeof initialValues>>(null);
+  const prefill = usePersonalInfoPrefill(isOpen);
+
+  useEffect(() => {
+    if (!prefill || !formikRef.current) return;
+
+    const { values, setFieldValue } = formikRef.current;
+
+    if (!values.fullName && prefill.fullName) setFieldValue("fullName", prefill.fullName);
+    if (!values.email && prefill.email) setFieldValue("email", prefill.email);
+    if (!values.phone && prefill.phone) setFieldValue("phone", prefill.phone);
+    if (!values.dob && prefill.dob) setFieldValue("dob", prefill.dob);
+  }, [prefill]);
 
   const isLastStep = step === TABS.length - 1;
 
@@ -207,6 +222,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
       title="Apply For Quick Loan"
     >
       <Formik
+        innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={stepSchemas[step]}
         validateOnChange={false}
@@ -233,12 +249,13 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                 <div className={styles.form}>
                   <Input
                     label="Loan Amount"
+                    name="loanAmount"
                     max="100000"
                     value={values.loanAmount}
                     onChange={handleChange("loanAmount")}
                     onBlur={handleBlur("loanAmount")}
                     placeholder="Select an amount"
-                    error={touched.loanAmount ? errors.loanAmount : undefined}
+                    errors={touched.loanAmount ? errors.loanAmount : undefined}
                   />
                   <LoanSelect
                     label="Loan Tenure"
@@ -247,7 +264,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     onChange={handleChange("loanTenure")}
                     onBlur={handleBlur("loanTenure")}
                     placeholder="Select a loan tenure"
-                    error={touched.loanTenure ? errors.loanTenure : undefined}
+                    // error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
                   <LoanInput
                     label="Purpose of Loan"
@@ -269,19 +286,20 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     onChange={handleChange("employmentStatus")}
                     onBlur={handleBlur("employmentStatus")}
                     placeholder="Selct your employment status"
-                    error={
-                      touched.employmentStatus
-                        ? errors.employmentStatus
-                        : undefined
-                    }
+                    // error={
+                    //   touched.employmentStatus
+                    //     ? errors.employmentStatus
+                    //     : undefined
+                    // }
                   />
                   <Input
                     label="Monthly Income"
-                    placeholder="500,000"
+                    placeholder="Enter Monthly Income"
                     value={values.monthlyIncome}
                     onChange={handleChange("monthlyIncome")}
                     onBlur={handleBlur("monthlyIncome")}
-                    error={
+                    name="monthlyIncome"
+                    errors={
                       touched.monthlyIncome ? errors.monthlyIncome : undefined
                     }
                   />

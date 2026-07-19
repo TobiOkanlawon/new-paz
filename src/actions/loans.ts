@@ -131,7 +131,7 @@ export async function applyForLoan(
 
     return ok({ nextId: nextId });
   } catch (e) {
-    return fail({ success: false, error: e });
+    return fail(e);
   }
 }
 
@@ -182,7 +182,7 @@ export async function submitLoanPersonalInfo(
       nextId: res.response.responseData.nextId,
     });
   } catch (e) {
-    return fail({ success: false, error: e });
+    return fail(e);
   }
 }
 
@@ -227,7 +227,7 @@ export async function submitLoanEmploymentDetails(
       nextId: res.response.responseData.nextId,
     });
   } catch (e) {
-    return fail({ success: false, error: e });
+    return fail(e);
   }
 }
 
@@ -272,7 +272,101 @@ export async function submitLoanGuarantorDetails(
       nextId: res.response.responseData.nextId,
     });
   } catch (e) {
-    return fail({ success: false, error: e });
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Asset Finance — Submit asset type details
+// POST /v1/loan/request/update
+// ---------------------------------------------------------------------------
+
+export interface SubmitAssetDetailsPayload {
+  assetName: string;
+  assetAmount: number;
+  nextId: string;
+}
+
+export async function submitLoanAssetDetails(
+  payload: SubmitAssetDetailsPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        assetName: payload.assetName,
+        assetAmount: payload.assetAmount,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Local Purchase Order — Submit company information
+// POST /v1/loan/request/update
+// ---------------------------------------------------------------------------
+
+export interface SubmitCompanyDetailsPayload {
+  businessName: string;
+  businessEmail: string;
+  businessPhone: string;
+  cacNumber: string;
+  nextId: string;
+}
+
+export async function submitLoanCompanyDetails(
+  payload: SubmitCompanyDetailsPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        businessName: payload.businessName,
+        businessEmail: payload.businessEmail,
+        businessPhone: payload.businessPhone,
+        cacNumber: payload.cacNumber,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
   }
 }
 
@@ -315,7 +409,7 @@ export async function submitLoanConsent(
       message: res.responseMessage,
     });
   } catch (e) {
-    return fail({ success: false, error: e });
+    return fail(e);
   }
 }
 
@@ -349,6 +443,6 @@ export async function getPendingLoan(): Promise<
       message: res.responseMessage || "no pending loan request",
     });
   } catch (e) {
-    return fail({ success: false, error: e });
+    return fail(e);
   }
 }

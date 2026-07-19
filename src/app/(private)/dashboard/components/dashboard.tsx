@@ -83,7 +83,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
               />
             }
             iconColor="#22C55E"
-            title="Total Loans (COMING SOON)"
+            title="Total Loans"
             rateBackgroundColor="#DBF8E8"
             rateTextColor="#12B76A"
           />

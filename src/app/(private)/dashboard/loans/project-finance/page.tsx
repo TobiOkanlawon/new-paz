@@ -1,5 +1,5 @@
-import EmptyPF from '@/components/Loans/EmptyPF/emptyPF'
-import ProjectFinanceComponent from '@/components/Loans/ProjectFinance/ProjectFinance'
+import EmptyPF from '../components/EmptyPF/emptyPF'
+import ProjectFinanceComponent from '../components/ProjectFinance/ProjectFinance'
 import React from 'react'
 
 const ProjectFinance = () => {

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import React, { useEffect, useRef, useState } from "react";
+import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Modal2 from "@/components/Modal2";
@@ -8,12 +8,15 @@ import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import DocumentUpload from "../../shared/DocumentUpload";
+import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
 import TermsAndConditionModal from "../TermsAndConditionModal/TermsAndConditionModal";
 import {
   applyForLoan,
   submitLoanPersonalInfo,
   submitLoanGuarantorDetails,
+  submitLoanAssetDetails,
 } from "@/actions/loans";
+import { uploadLoanDocumentAction } from "@/actions/uploadLoanDocuments";
 import styles from "./AssetFinanceLoanModal.module.css";
 import Button from "@/components/Button";
 
@@ -80,11 +83,48 @@ const stepSchemas = [
 const parseAmount = (value: string): number => Number(value.replace(/,/g, ""));
 const parseTenor = (value: string): string => value.replace(/\s*months?/i, "").trim();
 
+const documentLabels = {
+  identityProof: "Identity Proof (National Identity Number)",
+  accountProof: "Account Proof (Bank Statement)",
+  assetProof: "Asset Proof (Invoice)",
+} as const;
+
+type DocumentKey = keyof typeof documentLabels;
+type DocumentState = { name: string; url: string | null; uploading: boolean };
+type LoanDocumentsState = Record<DocumentKey, DocumentState>;
+type LoanDocumentErrors = Record<DocumentKey, string>;
+
+const emptyDocumentState: DocumentState = { name: "", url: null, uploading: false };
+
 const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Props) => {
   const [step, setStep] = useState(0);
   const [nextId, setNextId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
+  const [documents, setDocuments] = useState<LoanDocumentsState>({
+    identityProof: { ...emptyDocumentState },
+    accountProof: { ...emptyDocumentState },
+    assetProof: { ...emptyDocumentState },
+  });
+  const [documentErrors, setDocumentErrors] = useState<LoanDocumentErrors>({
+    identityProof: "",
+    accountProof: "",
+    assetProof: "",
+  });
+
+  const formikRef = useRef<FormikProps<typeof initialValues>>(null);
+  const prefill = usePersonalInfoPrefill(isOpen);
+
+  useEffect(() => {
+    if (!prefill || !formikRef.current) return;
+
+    const { values, setFieldValue } = formikRef.current;
+
+    if (!values.fullName && prefill.fullName) setFieldValue("fullName", prefill.fullName);
+    if (!values.email && prefill.email) setFieldValue("email", prefill.email);
+    if (!values.phone && prefill.phone) setFieldValue("phone", prefill.phone);
+    if (!values.dob && prefill.dob) setFieldValue("dob", prefill.dob);
+  }, [prefill]);
 
   const isLastStep = step === TABS.length - 1;
 
@@ -92,11 +132,67 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
     setStep(0);
     setNextId(null);
     setIsLoading(false);
+    setDocuments({
+      identityProof: { ...emptyDocumentState },
+      accountProof: { ...emptyDocumentState },
+      assetProof: { ...emptyDocumentState },
+    });
+    setDocumentErrors({ identityProof: "", accountProof: "", assetProof: "" });
   };
 
   const handleClose = () => {
     resetModal();
     onClose();
+  };
+
+  const handleDocumentSelect = async (key: DocumentKey, file: File) => {
+    if (!nextId) {
+      setDocumentErrors((current) => ({
+        ...current,
+        [key]: "Session error. Please restart the application.",
+      }));
+      return;
+    }
+
+    setDocumentErrors((current) => ({ ...current, [key]: "" }));
+    setDocuments((current) => ({
+      ...current,
+      [key]: { name: file.name, url: null, uploading: true },
+    }));
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("loanType", "ASSET_FINANCE_LOAN");
+    formData.append("nextId", nextId);
+    formData.append("fieldName", key);
+
+    const result = await uploadLoanDocumentAction(formData);
+
+    if (!result.success) {
+      setDocuments((current) => ({ ...current, [key]: { ...emptyDocumentState } }));
+      setDocumentErrors((current) => ({
+        ...current,
+        [key]: result.error || "Upload failed. Please try again.",
+      }));
+      return;
+    }
+
+    setDocuments((current) => ({
+      ...current,
+      [key]: { name: file.name, url: result.data.documentUrl, uploading: false },
+    }));
+  };
+
+  const validateDocuments = () => {
+    const nextErrors: LoanDocumentErrors = {
+      identityProof: documents.identityProof.url ? "" : `${documentLabels.identityProof} is required`,
+      accountProof: documents.accountProof.url ? "" : `${documentLabels.accountProof} is required`,
+      assetProof: documents.assetProof.url ? "" : `${documentLabels.assetProof} is required`,
+    };
+
+    setDocumentErrors(nextErrors);
+
+    return Object.values(nextErrors).every((error) => error === "");
   };
 
   const handleNext = async (
@@ -134,8 +230,25 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
         return;
       }
 
-      // Step 1 — Asset Type (no API call, just advance)
+      // Step 1 — Asset Type
       if (step === 1) {
+        if (!nextId) {
+          toast.error("Session error. Please restart the application.");
+          return;
+        }
+
+        const result = await submitLoanAssetDetails({
+          assetName: values.assetName,
+          assetAmount: parseAmount(values.assetAmount),
+          nextId,
+        });
+
+        if (!result.success) {
+          toast.error(result.error || "Failed to submit asset details. Please try again.");
+          return;
+        }
+
+        setNextId(result.data.nextId);
         setStep(2);
         return;
       }
@@ -191,6 +304,21 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
 
       // Step 4 (last) — Documents
       if (step === 4) {
+        if (!nextId) {
+          toast.error("Session error. Please restart the application.");
+          return;
+        }
+
+        if (Object.values(documents).some((doc) => doc.uploading)) {
+          toast.error("Please wait for document uploads to finish.");
+          return;
+        }
+
+        if (!validateDocuments()) {
+          toast.error("Please upload the required documents before submitting.");
+          return;
+        }
+
         toast.success("Loan application submitted! You'll be notified once it's reviewed.");
         onSubmit?.();
         handleClose();
@@ -208,6 +336,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
     <>
       <Modal2 isOpen={isOpen} onClose={handleClose} width={647}>
         <Formik
+          innerRef={formikRef}
           initialValues={initialValues}
           validationSchema={stepSchemas[step]}
           validateOnChange={false}
@@ -229,7 +358,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                       onChange={handleChange("loanAmount")}
                       onBlur={handleBlur("loanAmount")}
                       placeholder="Select a valid loan amount"
-                      error={touched.loanAmount ? errors.loanAmount : undefined}
+                      // error={touched.loanAmount ? errors.loanAmount : undefined}
                     />
                     <LoanSelect
                       label="Loan Tenure"
@@ -238,7 +367,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                       onChange={handleChange("loanTenure")}
                       onBlur={handleBlur("loanTenure")}
                       placeholder="Select a loan tenure"
-                      error={touched.loanTenure ? errors.loanTenure : undefined}
+                      // error={touched.loanTenure ? errors.loanTenure : undefined}
                     />
                     <LoanInput
                       label="Purpose of Loan"
@@ -259,12 +388,12 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                       value={values.assetName}
                       onChange={handleChange("assetName")}
                       onBlur={handleBlur("assetName")}
-                      placeholder="Car"
-                      error={touched.assetName ? errors.assetName : undefined}
+                      placeholder="Put in Asset Name"
+                      // error={touched.assetName ? errors.assetName : undefined}
                     />
                     <LoanInput
                       label="Asset Amount"
-                      placeholder="2,000,000"
+                      placeholder="Put in Asset Amount"
                       value={values.assetAmount}
                       onChange={handleChange("assetAmount")}
                       onBlur={handleBlur("assetAmount")}
@@ -330,7 +459,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                     />
                     <LoanInput
                       label="BVN Number"
-                      placeholder="Enter Number"
+                      placeholder="Enter BVN Number"
                       value={values.bvn}
                       onChange={handleChange("bvn")}
                       onBlur={handleBlur("bvn")}
@@ -351,7 +480,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                     />
                     <LoanInput
                       label="Phone Number"
-                      placeholder="08099631681"
+                      placeholder="Guarantor Phone Number"
                       value={values.guarantorPhone}
                       onChange={handleChange("guarantorPhone")}
                       onBlur={handleBlur("guarantorPhone")}
@@ -366,9 +495,57 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                       Please upload the required documents to complete your loan application.
                       All documents should be clear and legible.
                     </p>
-                    <DocumentUpload label="Identity Proof (National Identity Number)" />
-                    <DocumentUpload label="Account Proof (Bank Statement)" />
-                    <DocumentUpload label="Asset Proof (Invoice)" />
+                    <DocumentUpload
+                      label={documentLabels.identityProof}
+                      fileName={documents.identityProof.name}
+                      uploading={documents.identityProof.uploading}
+                      uploaded={Boolean(documents.identityProof.url)}
+                      onFileChange={(file, error) => {
+                        if (error) {
+                          setDocumentErrors((current) => ({ ...current, identityProof: error }));
+                          return;
+                        }
+
+                        if (file) {
+                          handleDocumentSelect("identityProof", file);
+                        }
+                      }}
+                      error={documentErrors.identityProof}
+                    />
+                    <DocumentUpload
+                      label={documentLabels.accountProof}
+                      fileName={documents.accountProof.name}
+                      uploading={documents.accountProof.uploading}
+                      uploaded={Boolean(documents.accountProof.url)}
+                      onFileChange={(file, error) => {
+                        if (error) {
+                          setDocumentErrors((current) => ({ ...current, accountProof: error }));
+                          return;
+                        }
+
+                        if (file) {
+                          handleDocumentSelect("accountProof", file);
+                        }
+                      }}
+                      error={documentErrors.accountProof}
+                    />
+                    <DocumentUpload
+                      label={documentLabels.assetProof}
+                      fileName={documents.assetProof.name}
+                      uploading={documents.assetProof.uploading}
+                      uploaded={Boolean(documents.assetProof.url)}
+                      onFileChange={(file, error) => {
+                        if (error) {
+                          setDocumentErrors((current) => ({ ...current, assetProof: error }));
+                          return;
+                        }
+
+                        if (file) {
+                          handleDocumentSelect("assetProof", file);
+                        }
+                      }}
+                      error={documentErrors.assetProof}
+                    />
                     <div className={styles.docFooter}>
                       <Button variant="primary" onClick={onMakePayment}>
                         Make Payment

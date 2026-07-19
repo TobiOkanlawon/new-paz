@@ -39,3 +39,41 @@ export async function uploadProfileImage(
     throw new Error('Failed to upload profile image');
   }
 }
+
+type LoanDocumentMeta = {
+  loanType: string;
+  nextId: string;
+  fieldName: string;
+};
+
+export async function uploadLoanDocument(
+  file: File,
+  meta: LoanDocumentMeta
+): Promise<string> {
+  try {
+    const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+    const fileName = `loan-documents/${meta.loanType}/${meta.nextId}/${meta.fieldName}-${Date.now()}-${sanitizedFileName}`;
+
+    const arrayBuffer = await file.arrayBuffer();
+
+    const command = new PutObjectCommand({
+      Bucket: process.env.CLOUDFLARE_R2_BUCKET_NAME,
+      Key: fileName,
+      Body: new Uint8Array(arrayBuffer),
+      ContentType: file.type,
+      Metadata: {
+        'uploaded-at': new Date().toISOString(),
+        'loan-type': meta.loanType,
+        'next-id': meta.nextId,
+        'field-name': meta.fieldName,
+      },
+    });
+
+    await s3Client.send(command);
+
+    return `${process.env.NEXT_PUBLIC_CLOUDFLARE_R2_URL}/${fileName}`;
+  } catch (error) {
+    console.error('Error uploading loan document:', error);
+    throw new Error('Failed to upload loan document');
+  }
+}
