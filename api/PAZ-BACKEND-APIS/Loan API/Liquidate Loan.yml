@@ -1,0 +1,27 @@
+info:
+  name: Liquidate Loan
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: "{{base_url}}/v1/loan/liquidate-loan"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"walletAccount\": \"\",\r
+
+      \  \"amount\": 0\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

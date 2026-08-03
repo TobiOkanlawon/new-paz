@@ -1,0 +1,26 @@
+meta {
+  name: Validate Loan
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{protocol}}://{{url}}/v1/loan/validate-loan
+  body: json
+  auth: inherit
+}
+
+body:json {
+  // GUESS — payload shape unconfirmed. Start empty, read the 400 error
+  // for required field names, then fill in. Best guesses based on the
+  // confirmed BVN-is-the-eligibility-gate rule:
+  {
+    "walletId": "{{walletId}}",
+    "BVN": "22222222222"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

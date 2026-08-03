@@ -7,29 +7,42 @@ import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
-import DocumentUpload from "../../shared/DocumentUpload";
+// Documents step disabled for now — not a step for personal loans currently.
+// Don't delete, just commented out — see the "Documents" step below.
+// import DocumentUpload from "../../shared/DocumentUpload";
 import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
+import { PERSONAL_LOAN_PURPOSE_OPTIONS } from "../../shared/loanPurposeOptions";
+import { useLoanResume } from "../../shared/useLoanResume";
+import { formatAmountInput } from "../../shared/formatAmountInput";
+import { buildTenureOptions, parseTenureDays } from "../../shared/loanTenure";
 import {
   applyForLoan,
   submitLoanEmploymentDetails,
   submitLoanPersonalInfo,
   submitLoanGuarantorDetails,
+  type LoanProduct,
 } from "@/actions/loans";
-import { uploadLoanDocumentAction } from "@/actions/uploadLoanDocuments";
+// import { uploadLoanDocumentAction } from "@/actions/uploadLoanDocuments";
 import styles from "./ApplyPersonalLoanModal.module.css";
+
+const RESUME_STEP_MAP = { EMP: 1, IPE: 2, IGU: 3 };
+const RESUME_FALLBACK_STEP = 1;
 
 const TABS = [
   "Loan Details",
   "Employment",
   "Personal Information",
   "Guarantor",
-  "Documents",
+  // "Documents", // disabled for now — not a step for personal loans currently
 ];
+
+const FALLBACK_TENURE_OPTIONS = ["30 days", "60 days", "90 days"];
 
 type Props = {
   isOpen: boolean;
   onClose: VoidFunction;
   onSubmit?: VoidFunction;
+  loanProduct?: LoanProduct;
 };
 
 const initialValues = {
@@ -51,7 +64,9 @@ const initialValues = {
 const stepSchemas = [
   Yup.object({
     loanType: Yup.string().required("Loan type is required"),
-    loanAmount: Yup.string().required("Loan amount is required"),
+    loanAmount: Yup.string()
+      .required("Loan amount is required")
+      .matches(/^\d[\d,]*$/, "Enter a valid loan amount"),
     loanTenure: Yup.string().required("Loan tenure is required"),
     loanPurpose: Yup.string().required("Purpose of loan is required"),
   }),
@@ -80,35 +95,39 @@ const stepSchemas = [
 ];
 
 const parseIncome = (value: string): number => Number(value.replace(/,/g, ""));
-const parseTenor = (value: string): string => value.replace(/\s*days?/i, "").trim();
 
-const documentLabels = {
-  identityProof: "Identity Proof (National Identity Number)",
-  accountProof: "Account Proof (Bank Statement)",
-} as const;
+// Documents step disabled for now — not a step for personal loans currently.
+// Don't delete, just commented out.
+// const documentLabels = {
+//   identityProof: "Identity Proof (National Identity Number)",
+//   accountProof: "Account Proof (Bank Statement)",
+// } as const;
+//
+// type DocumentKey = keyof typeof documentLabels;
+// type DocumentState = { name: string; url: string | null; uploading: boolean };
+// type LoanDocumentsState = Record<DocumentKey, DocumentState>;
+// type LoanDocumentErrors = Record<DocumentKey, string>;
+//
+// const emptyDocumentState: DocumentState = { name: "", url: null, uploading: false };
 
-type DocumentKey = keyof typeof documentLabels;
-type DocumentState = { name: string; url: string | null; uploading: boolean };
-type LoanDocumentsState = Record<DocumentKey, DocumentState>;
-type LoanDocumentErrors = Record<DocumentKey, string>;
-
-const emptyDocumentState: DocumentState = { name: "", url: null, uploading: false };
-
-const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
+const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit, loanProduct }: Props) => {
   const [step, setStep] = useState(0);
   const [nextId, setNextId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [documents, setDocuments] = useState<LoanDocumentsState>({
-    identityProof: { ...emptyDocumentState },
-    accountProof: { ...emptyDocumentState },
-  });
-  const [documentErrors, setDocumentErrors] = useState<LoanDocumentErrors>({
-    identityProof: "",
-    accountProof: "",
-  });
+  const tenureOptions = buildTenureOptions(loanProduct?.tenor, FALLBACK_TENURE_OPTIONS);
+  // Documents step disabled for now — not a step for personal loans currently.
+  // const [documents, setDocuments] = useState<LoanDocumentsState>({
+  //   identityProof: { ...emptyDocumentState },
+  //   accountProof: { ...emptyDocumentState },
+  // });
+  // const [documentErrors, setDocumentErrors] = useState<LoanDocumentErrors>({
+  //   identityProof: "",
+  //   accountProof: "",
+  // });
 
   const formikRef = useRef<FormikProps<typeof initialValues>>(null);
   const prefill = usePersonalInfoPrefill(isOpen);
+  const resume = useLoanResume(isOpen, RESUME_STEP_MAP, RESUME_FALLBACK_STEP);
 
   useEffect(() => {
     if (!prefill || !formikRef.current) return;
@@ -121,17 +140,25 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
     if (!values.dob && prefill.dob) setFieldValue("dob", prefill.dob);
   }, [prefill]);
 
+  useEffect(() => {
+    if (!resume) return;
+    setNextId(resume.nextId);
+    setStep(resume.step);
+    toast.info("Resuming your previous loan application.");
+  }, [resume]);
+
   const isLastStep = step === TABS.length - 1;
 
   const resetModal = () => {
     setStep(0);
     setNextId(null);
     setIsLoading(false);
-    setDocuments({
-      identityProof: { ...emptyDocumentState },
-      accountProof: { ...emptyDocumentState },
-    });
-    setDocumentErrors({ identityProof: "", accountProof: "" });
+    // Documents step disabled for now — not a step for personal loans currently.
+    // setDocuments({
+    //   identityProof: { ...emptyDocumentState },
+    //   accountProof: { ...emptyDocumentState },
+    // });
+    // setDocumentErrors({ identityProof: "", accountProof: "" });
   };
 
   const handleClose = () => {
@@ -139,54 +166,56 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
     onClose();
   };
 
-  const handleDocumentSelect = async (key: DocumentKey, file: File) => {
-    if (!nextId) {
-      setDocumentErrors((current) => ({
-        ...current,
-        [key]: "Session error. Please restart the application.",
-      }));
-      return;
-    }
-
-    setDocumentErrors((current) => ({ ...current, [key]: "" }));
-    setDocuments((current) => ({
-      ...current,
-      [key]: { name: file.name, url: null, uploading: true },
-    }));
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("loanType", "PERSONAL_LOAN");
-    formData.append("nextId", nextId);
-    formData.append("fieldName", key);
-
-    const result = await uploadLoanDocumentAction(formData);
-
-    if (!result.success) {
-      setDocuments((current) => ({ ...current, [key]: { ...emptyDocumentState } }));
-      setDocumentErrors((current) => ({
-        ...current,
-        [key]: result.error || "Upload failed. Please try again.",
-      }));
-      return;
-    }
-
-    setDocuments((current) => ({
-      ...current,
-      [key]: { name: file.name, url: result.data.documentUrl, uploading: false },
-    }));
-  };
-
-  const validateDocuments = () => {
-    const nextErrors: LoanDocumentErrors = {
-      identityProof: documents.identityProof.url ? "" : `${documentLabels.identityProof} is required`,
-      accountProof: documents.accountProof.url ? "" : `${documentLabels.accountProof} is required`,
-    };
-
-    setDocumentErrors(nextErrors);
-
-    return Object.values(nextErrors).every((error) => error === "");
-  };
+  // Documents step disabled for now — not a step for personal loans currently.
+  // Don't delete, just commented out.
+  // const handleDocumentSelect = async (key: DocumentKey, file: File) => {
+  //   if (!nextId) {
+  //     setDocumentErrors((current) => ({
+  //       ...current,
+  //       [key]: "Session error. Please restart the application.",
+  //     }));
+  //     return;
+  //   }
+  //
+  //   setDocumentErrors((current) => ({ ...current, [key]: "" }));
+  //   setDocuments((current) => ({
+  //     ...current,
+  //     [key]: { name: file.name, url: null, uploading: true },
+  //   }));
+  //
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("loanType", "PERSONAL_LOAN");
+  //   formData.append("nextId", nextId);
+  //   formData.append("fieldName", key);
+  //
+  //   const result = await uploadLoanDocumentAction(formData);
+  //
+  //   if (!result.success) {
+  //     setDocuments((current) => ({ ...current, [key]: { ...emptyDocumentState } }));
+  //     setDocumentErrors((current) => ({
+  //       ...current,
+  //       [key]: result.error || "Upload failed. Please try again.",
+  //     }));
+  //     return;
+  //   }
+  //
+  //   setDocuments((current) => ({
+  //     ...current,
+  //     [key]: { name: file.name, url: result.data.documentUrl, uploading: false },
+  //   }));
+  // };
+  //
+  // const validateDocuments = () => {
+  //   const nextErrors: LoanDocumentErrors = {
+  //     identityProof: documents.identityProof.url ? "" : `${documentLabels.identityProof} is required`,
+  //     accountProof: documents.accountProof.url ? "" : `${documentLabels.accountProof} is required`,
+  //   };
+  //
+  //   setDocumentErrors(nextErrors);
+  //
+  //   return Object.values(nextErrors).every((error) => error === "");
+  // };
 
   const handleNext = async (
     values: typeof initialValues,
@@ -208,7 +237,7 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
         const result = await applyForLoan({
           purpose: values.loanPurpose,
           amount: parseIncome(values.loanAmount),
-          tenor: parseTenor(values.loanTenure),
+          tenor: parseTenureDays(values.loanTenure),
           loanType: "PERSONAL_LOAN",
         });
 
@@ -272,7 +301,7 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
         return;
       }
 
-      // Step 3 — guarantor
+      // Step 3 (last, for now — Documents step disabled) — guarantor
       if (step === 3) {
         if (!nextId) {
           toast.error("Session error. Please restart the application.");
@@ -291,31 +320,36 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
         }
 
         setNextId(result.data.nextId);
-        setStep(4);
-        return;
-      }
-
-      // Step 4 (last) — documents
-      if (step === 4) {
-        if (!nextId) {
-          toast.error("Session error. Please restart the application.");
-          return;
-        }
-
-        if (Object.values(documents).some((doc) => doc.uploading)) {
-          toast.error("Please wait for document uploads to finish.");
-          return;
-        }
-
-        if (!validateDocuments()) {
-          toast.error("Please upload the required documents before submitting.");
-          return;
-        }
-
         toast.success("Loan application submitted! You'll be notified once it's reviewed.");
         onSubmit?.();
         handleClose();
+        return;
       }
+
+      // Documents step disabled for now — not a step for personal loans currently.
+      // Don't delete, just commented out. Guarantor (step 3) is the final step
+      // above until this is re-enabled.
+      // // Step 4 (last) — documents
+      // if (step === 4) {
+      //   if (!nextId) {
+      //     toast.error("Session error. Please restart the application.");
+      //     return;
+      //   }
+      //
+      //   if (Object.values(documents).some((doc) => doc.uploading)) {
+      //     toast.error("Please wait for document uploads to finish.");
+      //     return;
+      //   }
+      //
+      //   if (!validateDocuments()) {
+      //     toast.error("Please upload the required documents before submitting.");
+      //     return;
+      //   }
+      //
+      //   toast.success("Loan application submitted! You'll be notified once it's reviewed.");
+      //   onSubmit?.();
+      //   handleClose();
+      // }
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -335,37 +369,49 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
         validateOnBlur
         onSubmit={() => {}}
       >
-        {({ values, errors, touched, handleChange, handleBlur, validateForm, setTouched }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          validateForm,
+          setTouched,
+          setFieldValue,
+        }) => (
           <Form>
             <div className={styles.container}>
               <LoanTabs tabs={TABS} activeTab={step} />
 
               {step === 0 && (
                 <div className={styles.form}>
-                  <LoanSelect
+                  <LoanInput
                     label="Loan Amount"
-                    options={["250,000", "500,000", "1,000,000"]}
+                    placeholder="Enter loan amount"
+                    inputMode="numeric"
                     value={values.loanAmount}
-                    onChange={handleChange("loanAmount")}
+                    onChange={(e) =>
+                      setFieldValue("loanAmount", formatAmountInput(e.target.value))
+                    }
                     onBlur={handleBlur("loanAmount")}
-                    placeholder="Select an amount"
-                    // error={touched.loanAmount ? errors.loanAmount : undefined}
+                    error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
                   <LoanSelect
                     label="Loan Tenure"
-                    options={["30 days", "60 days", "90 days"]}
+                    options={tenureOptions}
                     value={values.loanTenure}
                     onChange={handleChange("loanTenure")}
                     onBlur={handleBlur("loanTenure")}
                     placeholder="Select a loan tenure"
-                    // error={touched.loanTenure ? errors.loanTenure : undefined}
+                    error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
-                  <LoanInput
+                  <LoanSelect
                     label="Purpose of Loan"
-                    placeholder="Working capital"
+                    options={PERSONAL_LOAN_PURPOSE_OPTIONS}
                     value={values.loanPurpose}
                     onChange={handleChange("loanPurpose")}
                     onBlur={handleBlur("loanPurpose")}
+                    placeholder="Select a purpose"
                     error={touched.loanPurpose ? errors.loanPurpose : undefined}
                   />
                 </div>
@@ -380,7 +426,7 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     onChange={handleChange("employmentStatus")}
                     onBlur={handleBlur("employmentStatus")}
                     placeholder="Select an employemnt status"
-                    // error={touched.employmentStatus ? errors.employmentStatus : undefined}
+                    error={touched.employmentStatus ? errors.employmentStatus : undefined}
                   />
                   <LoanInput
                     label="Monthly Income"
@@ -461,6 +507,8 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                 </div>
               )}
 
+              {/* Documents step disabled for now — not a step for personal loans
+                  currently. Don't delete, just commented out.
               {step === 4 && (
                 <div className={styles.form}>
                   <p className={styles.docNote}>
@@ -502,6 +550,7 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                   />
                 </div>
               )}
+              */}
 
               <LoanFormFooter
                 onBack={back}

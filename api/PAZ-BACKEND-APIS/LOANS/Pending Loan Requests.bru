@@ -1,0 +1,20 @@
+meta {
+  name: Pending Loan Requests
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{protocol}}://{{url}}/v1/user/loan/request/pending?walletId={{walletId}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  walletId: {{walletId}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

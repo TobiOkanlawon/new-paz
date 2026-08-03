@@ -1,0 +1,33 @@
+info:
+  name: Create Loan Request
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{base_url}}/v1/loan/request/apply"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"purpose\": \"\",\r
+
+      \  \"amount\": 0,\r
+
+      \  \"tenor\": \"\",\r
+
+      \  \"walletId\": \"\",\r
+
+      \  \"loanType\": \"\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

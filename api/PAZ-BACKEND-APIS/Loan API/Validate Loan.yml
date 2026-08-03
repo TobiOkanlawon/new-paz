@@ -1,0 +1,21 @@
+info:
+  name: Validate Loan
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: "{{base_url}}/v1/loan/validate-loan"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

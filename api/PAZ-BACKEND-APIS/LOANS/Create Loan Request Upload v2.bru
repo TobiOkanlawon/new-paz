@@ -1,0 +1,30 @@
+meta {
+  name: Create Loan Request Upload v2
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{protocol}}://{{url}}/v2/loan/request/apply
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  // GUESS — field names unconfirmed. Text fields mirror the confirmed v1
+  // apply body (LOAN APPLICATION_1.bru); file field names guess at the
+  // DocumentUpload keys already used in the frontend wizards
+  // (identityProof / accountProof). Send with just the text fields first
+  // to see if files are optional or required on this call.
+  purpose: First Loan
+  amount: 1000000
+  tenor: 90
+  loanType: PERSONAL_LOAN
+  identityProof: @file()
+  accountProof: @file()
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

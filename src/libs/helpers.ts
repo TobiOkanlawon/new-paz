@@ -80,6 +80,9 @@ export const getTotalBalance = (
           }, 0);
         }
         break;
+      case "loans":
+        balance = account.totalLoan || 0;
+        break;
       default:
         break;
     }

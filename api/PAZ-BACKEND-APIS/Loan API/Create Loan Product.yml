@@ -1,0 +1,30 @@
+info:
+  name: Create Loan Product
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{base_url}}/v1/loan/loan-product-creation"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "productCode": "",
+        "narration": "",
+        "interestRate": "",
+        "managementFee": "",
+        "adminFee": "",
+        "productName": "",
+        "tenor": ""
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

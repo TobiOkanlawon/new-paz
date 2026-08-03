@@ -1,0 +1,29 @@
+info:
+  name: Consent To Approved Request
+  type: http
+  seq: 11
+
+http:
+  method: POST
+  url: "{{base_url}}/v1/loan/request/consent/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: "{\r
+
+      \    \"consent\": true//false\r
+
+      } "
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

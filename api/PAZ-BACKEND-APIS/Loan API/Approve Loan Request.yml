@@ -1,0 +1,31 @@
+info:
+  name: Approve Loan Request
+  type: http
+  seq: 10
+
+http:
+  method: POST
+  url: "{{base_url}}/v1/loan/request/approval/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: "{//admin only\r
+
+      \    \"approved\":true, //false\r
+
+      \    \"amount\":\"\" //approved amount\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

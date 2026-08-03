@@ -47,11 +47,17 @@ export type LoanConsentResponse = {
 // ---------------------------------------------------------------------------
 // GET /v1/user/loan/pending?walletId={walletId}
 // Retrieve pending loan request (used to resume abandoned requests)
-// Success response example:
+// Success response example (in-progress application, not yet disbursed):
 // {
 //   "data": { ... },
 //   "responseCode": "00",
 //   "responseMessage": "loan request successfully retrieved"
+// }
+// Success response example (already approved & disbursed loan):
+// {
+//   "loan": { "AmountDisbursed": 50000, "TotalPayable": 50000, ... },
+//   "responseCode": "00",
+//   "responseMessage": "Successfully retrieved"
 // }
 // No-pending response example:
 // {
@@ -59,7 +65,7 @@ export type LoanConsentResponse = {
 //   "responseMessage": "no pending loan request found"
 // }
 
-type PendingLoanData = {
+export type PendingLoanData = {
   Amount: number;
   Approved: boolean;
   ApprovedAmount: number;
@@ -69,15 +75,29 @@ type PendingLoanData = {
   OtherInfo: string; // e.g. nextId like IPE-6977222064
 };
 
+export type ActiveLoanData = {
+  AmountLiquidated: number;
+  TotalPayable: number;
+  AmountDisbursed: number;
+  BookDate: string;
+  MaturityDate: string;
+  ProductName: string;
+  Tenor: string;
+  InterestRate: string;
+  MonthlyPayment: number;
+};
+
 type PendingLoanApiResponse = {
   responseCode: string | number;
   responseMessage?: string;
   data?: PendingLoanData;
+  loan?: ActiveLoanData;
 };
 
 export type PendingLoanResponse = {
   pending: boolean;
   data?: PendingLoanData;
+  loan?: ActiveLoanData;
   message?: string;
 };
 
@@ -102,7 +122,23 @@ export async function applyForLoan(
       throw new Error("User not authenticated");
     }
 
-    const walletId = session.user.walletAccount;
+    // session.user.walletAccount is captured once at login and never
+    // refreshed — a user who links their wallet/account after logging in
+    // (e.g. via the account-setup gate) keeps a stale/empty value for the
+    // rest of that session, which JSON.stringify then drops from the
+    // request body entirely. Fetch the current value instead, same as
+    // addAccount() in src/actions/preAuth.ts does for the same reason.
+    const updatedUser = await apiFetch<any>("/v1/users/fetch/user", {
+      isProtected: true,
+      method: "POST",
+      body: { email: session.user.email },
+    });
+
+    const walletId = updatedUser?.user?.wallet_account;
+
+    if (!walletId) {
+      return fail("Wallet account is missing on your profile. Please complete account setup first.");
+    }
 
     const body = {
       purpose: payload.purpose,
@@ -322,6 +358,54 @@ export async function submitLoanAssetDetails(
 }
 
 // ---------------------------------------------------------------------------
+// Asset Finance — Submit document URLs
+// POST /v1/loan/request/update
+// Body field names per backend's DocumentAssetDTO (identityProof, bankStatement, invoice)
+// ---------------------------------------------------------------------------
+
+export interface SubmitAssetFinanceDocumentsPayload {
+  identityProof: string;
+  bankStatement: string;
+  invoice: string;
+  nextId: string;
+}
+
+export async function submitAssetFinanceDocuments(
+  payload: SubmitAssetFinanceDocumentsPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        identityProof: payload.identityProof,
+        bankStatement: payload.bankStatement,
+        invoice: payload.invoice,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Local Purchase Order — Submit company information
 // POST /v1/loan/request/update
 // ---------------------------------------------------------------------------
@@ -434,7 +518,7 @@ export async function getPendingLoan(): Promise<
     const code = String(res?.responseCode ?? "");
 
     if (code === "00") {
-      return ok({ pending: true, data: res.data });
+      return ok({ pending: true, data: res.data, loan: res.loan });
     }
 
     // no pending or other non-success response
@@ -442,6 +526,129 @@ export async function getPendingLoan(): Promise<
       pending: false,
       message: res.responseMessage || "no pending loan request",
     });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// GET /v1/user/loan/request/pending?walletId={walletId}
+// Distinct from /v1/user/loan/pending above — this lists a wallet's pending
+// loan *requests* (applications in progress), confirmed live by backend.
+// Response shape is not yet confirmed to have per-item examples, so item
+// fields are inferred from the sibling /v1/user/loan/pending shape.
+// ---------------------------------------------------------------------------
+
+type PendingLoanRequestsApiResponse = {
+  responseCode: string | number;
+  responseMessage?: string;
+  data?: PendingLoanData | PendingLoanData[] | null;
+};
+
+export type PendingLoanRequestsResponse = {
+  requests: PendingLoanData[];
+};
+
+export async function getPendingLoanRequests(): Promise<
+  ActionResult<PendingLoanRequestsResponse>
+> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated and no walletId provided");
+    }
+
+    const walletId = session.user.walletAccount;
+
+    const res = await apiFetch<PendingLoanRequestsApiResponse>(
+      `/v1/user/loan/request/pending?walletId=${walletId}`,
+      {
+        method: "GET",
+        isProtected: true,
+      },
+    );
+
+    const code = String(res?.responseCode ?? "");
+
+    if (code !== "00" || !res.data) {
+      return ok({ requests: [] });
+    }
+
+    const requests = Array.isArray(res.data) ? res.data : [res.data];
+
+    return ok({ requests });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// GET /v1/loan/fetch-loan-product
+// Lists active loan products. Each product carries fixed terms (interest
+// rate, fees, tenor) — Tenor is a single upper-limit value per product, not
+// a selectable range.
+// ---------------------------------------------------------------------------
+
+export type LoanProduct = {
+  productName: string;
+  productCode: string;
+  description: string;
+  interestRate: number;
+  managementFee: number;
+  adminFee: number;
+  insurance: number;
+  tenor: number;
+};
+
+type LoanProductApiResponse = {
+  responseCode: string | number;
+  responseMessage?: string;
+  data?: Array<{
+    ProductName: string;
+    ProductCode: string;
+    Description: string;
+    InterestRate: string;
+    ManagementFee: string;
+    AdminFee: string;
+    Insurance: string;
+    Tenor: string;
+  }>;
+};
+
+export type LoanProductsResponse = {
+  products: LoanProduct[];
+};
+
+export async function getLoanProducts(): Promise<
+  ActionResult<LoanProductsResponse>
+> {
+  try {
+    const res = await apiFetch<LoanProductApiResponse>(
+      "/v1/loan/fetch-loan-product",
+      {
+        method: "GET",
+        isProtected: true,
+      },
+    );
+
+    const code = String(res?.responseCode ?? "");
+
+    if (code !== "00" || !res.data) {
+      return ok({ products: [] });
+    }
+
+    const products = res.data.map((p) => ({
+      productName: p.ProductName,
+      productCode: p.ProductCode,
+      description: p.Description,
+      interestRate: Number(p.InterestRate),
+      managementFee: Number(p.ManagementFee),
+      adminFee: Number(p.AdminFee),
+      insurance: Number(p.Insurance),
+      tenor: Number(p.Tenor),
+    }));
+
+    return ok({ products });
   } catch (e) {
     return fail(e);
   }

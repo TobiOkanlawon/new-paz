@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import React, { useEffect, useRef, useState } from "react";
+import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Modal2 from "@/components/Modal2";
@@ -8,21 +8,32 @@ import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import DocumentUpload from "../../shared/DocumentUpload";
+import { LPO_LOAN_PURPOSE_OPTIONS } from "../../shared/loanPurposeOptions";
+import { useLoanResume } from "../../shared/useLoanResume";
+import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
+import { formatAmountInput } from "../../shared/formatAmountInput";
+import { buildTenureOptions, parseTenureDays } from "../../shared/loanTenure";
 import {
   applyForLoan,
   submitLoanPersonalInfo,
   submitLoanCompanyDetails,
+  type LoanProduct,
 } from "@/actions/loans";
 import { uploadLoanDocumentAction } from "@/actions/uploadLoanDocuments";
 import styles from "./LocalPurchaseOrderModal.module.css";
 
+const RESUME_STEP_MAP = { IPE: 1 };
+const RESUME_FALLBACK_STEP = 1;
 
 const TABS = ["Loan Details", "Director's Information", "Company's Information", "Documents"];
+
+const FALLBACK_TENURE_OPTIONS = ["30 days", "90 days", "180 days"];
 
 type Props = {
   isOpen: boolean;
   onClose: VoidFunction;
   onSubmit?: VoidFunction;
+  loanProduct?: LoanProduct;
 };
 
 const initialValues = {
@@ -32,6 +43,7 @@ const initialValues = {
   directorName: "",
   directorEmail: "",
   directorPhone: "",
+  directorDob: "",
   directorBvn: "",
   businessName: "",
   businessEmail: "",
@@ -41,7 +53,9 @@ const initialValues = {
 
 const stepSchemas = [
   Yup.object({
-    loanAmount: Yup.string().required("Loan amount is required"),
+    loanAmount: Yup.string()
+      .required("Loan amount is required")
+      .matches(/^\d[\d,]*$/, "Enter a valid loan amount"),
     loanTenure: Yup.string().required("Loan tenure is required"),
     loanPurpose: Yup.string().required("Purpose of loan is required"),
   }),
@@ -51,6 +65,7 @@ const stepSchemas = [
     directorPhone: Yup.string()
       .required("Phone number is required")
       .matches(/^0\d{10}$/, "Enter a valid 11-digit Nigerian phone number"),
+    directorDob: Yup.string().required("Date of birth is required"),
     directorBvn: Yup.string().required("BVN is required").matches(/^\d{11}$/),
   }),
   Yup.object({
@@ -65,7 +80,6 @@ const stepSchemas = [
 ];
 
 const parseAmount = (value: string): number => Number(value.replace(/,/g, ""));
-const parseTenor = (value: string): string => value.replace(/\s*months?/i, "").trim();
 
 const documentLabels = {
   lpoProof: "LPO Proof (Local Purchase Order)",
@@ -79,10 +93,11 @@ type LoanDocumentErrors = Record<DocumentKey, string>;
 
 const emptyDocumentState: DocumentState = { name: "", url: null, uploading: false };
 
-const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
+const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Props) => {
   const [step, setStep] = useState(0);
   const [nextId, setNextId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const tenureOptions = buildTenureOptions(loanProduct?.tenor, FALLBACK_TENURE_OPTIONS);
   const [documents, setDocuments] = useState<LoanDocumentsState>({
     lpoProof: { ...emptyDocumentState },
     addressProof: { ...emptyDocumentState },
@@ -93,6 +108,27 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
   });
 
   const isLastStep = step === TABS.length - 1;
+  const formikRef = useRef<FormikProps<typeof initialValues>>(null);
+  const prefill = usePersonalInfoPrefill(isOpen);
+  const resume = useLoanResume(isOpen, RESUME_STEP_MAP, RESUME_FALLBACK_STEP);
+
+  useEffect(() => {
+    if (!prefill || !formikRef.current) return;
+
+    const { values, setFieldValue } = formikRef.current;
+
+    if (!values.directorName && prefill.fullName) setFieldValue("directorName", prefill.fullName);
+    if (!values.directorEmail && prefill.email) setFieldValue("directorEmail", prefill.email);
+    if (!values.directorPhone && prefill.phone) setFieldValue("directorPhone", prefill.phone);
+    if (!values.directorDob && prefill.dob) setFieldValue("directorDob", prefill.dob);
+  }, [prefill]);
+
+  useEffect(() => {
+    if (!resume) return;
+    setNextId(resume.nextId);
+    setStep(resume.step);
+    toast.info("Resuming your previous loan application.");
+  }, [resume]);
 
   const resetModal = () => {
     setStep(0);
@@ -185,12 +221,11 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
         const result = await applyForLoan({
           purpose: values.loanPurpose,
           amount: parseAmount(values.loanAmount),
-          tenor: parseTenor(values.loanTenure),
+          tenor: parseTenureDays(values.loanTenure),
           loanType: "LOCAL_PURCHASE_ORDER",
         });
 
         if (!result.success) {
-          console.log(result)
           toast.error("Failed to initialize loan. Please try again.");
           return;
         }
@@ -212,7 +247,7 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
           fullName: values.directorName,
           emailAddress: values.directorEmail,
           phoneNumber: values.directorPhone,
-          dateOfBirth: "", // Not required for LPO, can be empty
+          dateOfBirth: values.directorDob,
           BVN: values.directorBvn,
           nextId,
         });
@@ -285,43 +320,56 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
   return (
     <Modal2 isOpen={isOpen} onClose={handleClose} width={647} title="Local Purchase Order">
       <Formik
+        innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={stepSchemas[step]}
         validateOnChange={false}
         validateOnBlur
         onSubmit={() => {}}
       >
-        {({ values, errors, touched, handleChange, handleBlur, validateForm, setTouched }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          validateForm,
+          setTouched,
+          setFieldValue,
+        }) => (
           <Form>
             <div className={styles.container}>
               <LoanTabs tabs={TABS} activeTab={step} />
 
               {step === 0 && (
                 <div className={styles.form}>
-                  <LoanSelect
+                  <LoanInput
                     label="Loan Amount"
-                    options={["500,000", "1,000,000"]}
+                    placeholder="Enter loan amount"
+                    inputMode="numeric"
                     value={values.loanAmount}
-                    onChange={handleChange("loanAmount")}
+                    onChange={(e) =>
+                      setFieldValue("loanAmount", formatAmountInput(e.target.value))
+                    }
                     onBlur={handleBlur("loanAmount")}
-                    placeholder="Enter Loan Amount"
-                    // error={touched.loanAmount ? errors.loanAmount : undefined}
+                    error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
                   <LoanSelect
                     label="Loan Tenure"
-                    options={["3 months", "6 months", "12 months"]}
+                    options={tenureOptions}
                     value={values.loanTenure}
                     onChange={handleChange("loanTenure")}
                     onBlur={handleBlur("loanTenure")}
-                    placeholder="Enter When You Wish To Complete Loan Payement"
-                    // error={touched.loanTenure ? errors.loanTenure : undefined}
+                    placeholder="Select a loan tenure"
+                    error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
-                  <LoanInput
+                  <LoanSelect
                     label="Purpose of Loan"
-                    placeholder="Business expansion"
+                    options={LPO_LOAN_PURPOSE_OPTIONS}
                     value={values.loanPurpose}
                     onChange={handleChange("loanPurpose")}
                     onBlur={handleBlur("loanPurpose")}
+                    placeholder="Select a purpose"
                     error={touched.loanPurpose ? errors.loanPurpose : undefined}
                   />
                 </div>
@@ -353,6 +401,15 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     onChange={handleChange("directorPhone")}
                     onBlur={handleBlur("directorPhone")}
                     error={touched.directorPhone ? errors.directorPhone : undefined}
+                  />
+                  <LoanInput
+                    label="Date of Birth"
+                    placeholder="MM/DD/YY"
+                    type="date"
+                    value={values.directorDob}
+                    onChange={handleChange("directorDob")}
+                    onBlur={handleBlur("directorDob")}
+                    error={touched.directorDob ? errors.directorDob : undefined}
                   />
                   <LoanInput
                     label="BVN Number"

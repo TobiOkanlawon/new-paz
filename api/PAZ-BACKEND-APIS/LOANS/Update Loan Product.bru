@@ -1,0 +1,31 @@
+meta {
+  name: Update Loan Product
+  type: http
+  seq: 10
+}
+
+put {
+  url: {{protocol}}://{{url}}/v1/loan/update-loan-product
+  body: json
+  auth: inherit
+}
+
+body:json {
+  // GUESS — mirrors the confirmed Create Loan Product body (LoanProducts.bru).
+  // productCode is likely how the backend identifies which product to update,
+  // since there's no :id in the URL. Do not send real product data here —
+  // this is shared admin state, not per-user.
+  {
+    "productCode": "001",
+    "narration": "pay day loan",
+    "interestRate": "0.5",
+    "managementFee": "0.01",
+    "adminFee": "0.002",
+    "productName": "PayDay"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

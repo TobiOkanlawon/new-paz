@@ -1,0 +1,31 @@
+info:
+  name: Update Loan Product
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: "{{base_url}}/v1/loan/update-loan-product"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"interestRate\": \"\",\r
+
+      \  \"managementFee\": \"\",\r
+
+      \  \"adminFee\": \"\",\r
+
+      \  \"tenor\": \"\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

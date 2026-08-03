@@ -33,10 +33,9 @@
 }
 .heroTitle {
   font-family: var(--font-poppins), sans-serif;
-  font-size: 32px;
+  font-size: clamp(22px, 3.4vh, 32px);
   line-height: 1.4;
   color: #2e2e2e;
-  font-size: clamp(22px, 3.4vh, 32px);
   font-weight: 700;
   margin: 0 0 0.4vh;
 }
@@ -47,29 +46,30 @@
   margin: 0;
 }
 
-/* ── Body layout ── */
+/* ── Body layout (tabs stacked above content) ── */
 .body {
-  display: grid;
-  grid-template-columns: 230px 1fr;
-  gap: 2vw;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4vh;
 }
 
-/* ── Tab sidebar ── */
+/* ── Tab bar ── */
 .tabs {
+  display: flex;
+  align-items: stretch;
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 16px #0000000a;
   overflow: hidden;
-  position: sticky;
-  top: 20px;
+  width: 80%;
 }
 .tab {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
-  width: 100%;
-  padding: 1.5vh 1.4rem;
+  flex: 1;
+  padding: 1.6vh 1.4rem;
   background: transparent;
   border: none;
   font-family: var(--font-montserrat), sans-serif;
@@ -77,8 +77,8 @@
   font-weight: 600;
   color: #7a8a99;
   cursor: pointer;
-  text-align: left;
-  border-left: 3px solid transparent;
+  text-align: center;
+  border-bottom: 3px solid transparent;
   transition:
     background 0.2s,
     color 0.2s,
@@ -89,9 +89,9 @@
   color: #3475df;
 }
 .tabActive {
-  background: linear-gradient(90deg, #e8f0fd 0%, #f5f8ff 100%);
+  background: linear-gradient(180deg, #f5f8ff 0%, #e8f0fd 100%);
   color: #3475df;
-  border-left-color: #3475df;
+  border-bottom-color: #3475df;
 }
 .tabIcon {
   width: 34px;
@@ -109,16 +109,16 @@
   background: #dbe8f8;
 }
 .tabDivider {
-  height: 1px;
+  width: 1px;
   background: #f0f0f0;
   margin: 0;
 }
 
-/* ── Content panel ── */
+/* ── Content panel (cards side by side) ── */
 .panel {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.6vh 1.4rem;
 }
 
 /* ── Section header ── */
@@ -128,12 +128,14 @@
   font-weight: 600;
   color: #2e2e2e;
   margin: 0 0 0.5vh;
+  grid-column: 1 / -1;
 }
 .sectionDesc {
   font-size: clamp(10px, 1.4vh, 12px);
   color: #2e2e2e;
   margin: 0 0 1.8vh;
   font-weight: 500;
+  grid-column: 1 / -1;
 }
 
 /* ── Security card ── */
@@ -141,10 +143,9 @@
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 14px #00000009;
-  padding: 1.8vh 1.6rem;
+  padding: 2.2vh 1.4rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1rem;
   border: 1px solid #eef0f4;
   transition:
@@ -153,7 +154,7 @@
 }
 .secCard:hover {
   box-shadow: 0 6px 24px #3475df14;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .secCardLeft {

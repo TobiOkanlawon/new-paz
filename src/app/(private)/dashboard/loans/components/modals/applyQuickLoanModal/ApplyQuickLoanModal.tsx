@@ -8,20 +8,31 @@ import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
+import { QUICK_LOAN_PURPOSE_OPTIONS } from "../../shared/loanPurposeOptions";
+import { useLoanResume } from "../../shared/useLoanResume";
+import { formatAmountInput } from "../../shared/formatAmountInput";
+import { buildTenureOptions, parseTenureDays } from "../../shared/loanTenure";
 import {
   applyForLoan,
   submitLoanEmploymentDetails,
   submitLoanPersonalInfo,
+  type LoanProduct,
 } from "@/actions/loans";
 import styles from "./ApplyQuickLoanModal.module.css";
 import Input from "@/components/Input";
 
+const RESUME_STEP_MAP = { EMP: 1, IPE: 2 };
+const RESUME_FALLBACK_STEP = 1;
+
 const TABS = ["Loan Details", "Employment", "Personal Information"];
+
+const FALLBACK_TENURE_OPTIONS = ["30 days", "60 days", "90 days"];
 
 type Props = {
   isOpen: boolean;
   onClose: VoidFunction;
   onSubmit?: VoidFunction;
+  loanProduct?: LoanProduct;
 };
 
 const initialValues = {
@@ -39,11 +50,18 @@ const initialValues = {
 
 const stepSchemas = [
   Yup.object({
-    loanAmount: Yup.number()
+    loanAmount: Yup.string()
       .required("Loan amount is required")
-      .positive()
-      .max(100000, "You cannot take higher than 100,000 on quick loans")
-      .min(1000),
+      .matches(/^\d[\d,]*$/, "Enter a valid loan amount")
+      .test(
+        "range",
+        "Loan amount must be between 1,000 and 100,000",
+        (value) => {
+          if (!value) return false;
+          const amount = Number(value.replace(/,/g, ""));
+          return amount >= 1000 && amount <= 100000;
+        },
+      ),
     loanTenure: Yup.string().required("Loan tenure is required"),
     loanPurpose: Yup.string().required("Purpose of loan is required"),
   }),
@@ -74,20 +92,16 @@ const stepSchemas = [
 // Strips commas from income strings like "200,000" before sending to the API
 const parseIncome = (value: string): number => Number(value.replace(/,/g, ""));
 
-// Strips "days" suffix from tenure strings like "30 days" → "30"
-const parseTenor = (value: string): string =>
-  value.replace(/\s*days?/i, "").trim();
-
-const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
+const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit, loanProduct }: Props) => {
   const [step, setStep] = useState(0);
+  const tenureOptions = buildTenureOptions(loanProduct?.tenor, FALLBACK_TENURE_OPTIONS);
   // nextId is threaded through each API step — not owned by Formik
-  // const [nextId, setNextId] = useState<string | null>(null);
-
-  const [nextId, setNextId] = useState<string | null>();
+  const [nextId, setNextId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const formikRef = useRef<FormikProps<typeof initialValues>>(null);
   const prefill = usePersonalInfoPrefill(isOpen);
+  const resume = useLoanResume(isOpen, RESUME_STEP_MAP, RESUME_FALLBACK_STEP);
 
   useEffect(() => {
     if (!prefill || !formikRef.current) return;
@@ -99,6 +113,13 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
     if (!values.phone && prefill.phone) setFieldValue("phone", prefill.phone);
     if (!values.dob && prefill.dob) setFieldValue("dob", prefill.dob);
   }, [prefill]);
+
+  useEffect(() => {
+    if (!resume) return;
+    setNextId(resume.nextId);
+    setStep(resume.step);
+    toast.info("Resuming your previous loan application.");
+  }, [resume]);
 
   const isLastStep = step === TABS.length - 1;
 
@@ -137,7 +158,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
         const result = await applyForLoan({
           purpose: values.loanPurpose,
           amount: parseIncome(values.loanAmount),
-          tenor: parseTenor(values.loanTenure),
+          tenor: parseTenureDays(values.loanTenure),
           loanType: "QUICK_LOAN",
         });
 
@@ -198,7 +219,6 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
           return;
         }
 
-        // TODO: the success step, should bring up the sucess modal
         toast.success(
           "Loan application submitted! You'll be notified once it's reviewed.",
         );
@@ -240,6 +260,7 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
           handleBlur,
           validateForm,
           setTouched,
+          setFieldValue,
         }) => (
           <Form>
             <div className={styles.container}>
@@ -247,31 +268,33 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
 
               {step === 0 && (
                 <div className={styles.form}>
-                  <Input
+                  <LoanInput
                     label="Loan Amount"
-                    name="loanAmount"
-                    max="100000"
+                    placeholder="Enter loan amount"
+                    inputMode="numeric"
                     value={values.loanAmount}
-                    onChange={handleChange("loanAmount")}
+                    onChange={(e) =>
+                      setFieldValue("loanAmount", formatAmountInput(e.target.value))
+                    }
                     onBlur={handleBlur("loanAmount")}
-                    placeholder="Select an amount"
-                    errors={touched.loanAmount ? errors.loanAmount : undefined}
+                    error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
                   <LoanSelect
                     label="Loan Tenure"
-                    options={["30 days", "60 days", "90 days"]}
+                    options={tenureOptions}
                     value={values.loanTenure}
                     onChange={handleChange("loanTenure")}
                     onBlur={handleBlur("loanTenure")}
                     placeholder="Select a loan tenure"
-                    // error={touched.loanTenure ? errors.loanTenure : undefined}
+                    error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
-                  <LoanInput
+                  <LoanSelect
                     label="Purpose of Loan"
-                    placeholder="Wig"
+                    options={QUICK_LOAN_PURPOSE_OPTIONS}
                     value={values.loanPurpose}
                     onChange={handleChange("loanPurpose")}
                     onBlur={handleBlur("loanPurpose")}
+                    placeholder="Select a purpose"
                     error={touched.loanPurpose ? errors.loanPurpose : undefined}
                   />
                 </div>
@@ -286,11 +309,11 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit }: Props) => {
                     onChange={handleChange("employmentStatus")}
                     onBlur={handleBlur("employmentStatus")}
                     placeholder="Selct your employment status"
-                    // error={
-                    //   touched.employmentStatus
-                    //     ? errors.employmentStatus
-                    //     : undefined
-                    // }
+                    error={
+                      touched.employmentStatus
+                        ? errors.employmentStatus
+                        : undefined
+                    }
                   />
                   <Input
                     label="Monthly Income"

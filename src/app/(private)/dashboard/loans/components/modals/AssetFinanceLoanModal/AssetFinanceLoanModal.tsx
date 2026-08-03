@@ -9,25 +9,37 @@ import LoanInput from "../../shared/LoanInput";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import DocumentUpload from "../../shared/DocumentUpload";
 import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
+import { ASSET_FINANCE_PURPOSE_OPTIONS } from "../../shared/loanPurposeOptions";
+import { useLoanResume } from "../../shared/useLoanResume";
+import { formatAmountInput } from "../../shared/formatAmountInput";
+import { buildTenureOptions, parseTenureDays } from "../../shared/loanTenure";
 import TermsAndConditionModal from "../TermsAndConditionModal/TermsAndConditionModal";
 import {
   applyForLoan,
   submitLoanPersonalInfo,
   submitLoanGuarantorDetails,
   submitLoanAssetDetails,
+  submitAssetFinanceDocuments,
+  type LoanProduct,
 } from "@/actions/loans";
 import { uploadLoanDocumentAction } from "@/actions/uploadLoanDocuments";
 import styles from "./AssetFinanceLoanModal.module.css";
-import Button from "@/components/Button";
+// "Make Payment" button disabled for now — see the docFooter block below.
+// import Button from "@/components/Button";
 
+const RESUME_STEP_MAP = { IPE: 2, IGU: 3 };
+const RESUME_FALLBACK_STEP = 1;
 
 const TABS = ["Loan Details", "Asset Type", "Personal Information", "Guarantor", "Documents"];
+
+const FALLBACK_TENURE_OPTIONS = ["90 days", "180 days", "365 days"];
 
 type Props = {
   isOpen: boolean;
   onClose: VoidFunction;
   onSubmit?: VoidFunction;
   onMakePayment?: VoidFunction;
+  loanProduct?: LoanProduct;
 };
 
 const initialValues = {
@@ -48,7 +60,9 @@ const initialValues = {
 
 const stepSchemas = [
   Yup.object({
-    loanAmount: Yup.string().required("Loan amount is required"),
+    loanAmount: Yup.string()
+      .required("Loan amount is required")
+      .matches(/^\d[\d,]*$/, "Enter a valid loan amount"),
     loanTenure: Yup.string().required("Loan tenure is required"),
     loanPurpose: Yup.string().required("Purpose of loan is required"),
   }),
@@ -81,7 +95,6 @@ const stepSchemas = [
 ];
 
 const parseAmount = (value: string): number => Number(value.replace(/,/g, ""));
-const parseTenor = (value: string): string => value.replace(/\s*months?/i, "").trim();
 
 const documentLabels = {
   identityProof: "Identity Proof (National Identity Number)",
@@ -96,10 +109,11 @@ type LoanDocumentErrors = Record<DocumentKey, string>;
 
 const emptyDocumentState: DocumentState = { name: "", url: null, uploading: false };
 
-const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Props) => {
+const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanProduct }: Props) => {
   const [step, setStep] = useState(0);
   const [nextId, setNextId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const tenureOptions = buildTenureOptions(loanProduct?.tenor, FALLBACK_TENURE_OPTIONS);
   const [termsOpen, setTermsOpen] = useState(false);
   const [documents, setDocuments] = useState<LoanDocumentsState>({
     identityProof: { ...emptyDocumentState },
@@ -114,6 +128,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
 
   const formikRef = useRef<FormikProps<typeof initialValues>>(null);
   const prefill = usePersonalInfoPrefill(isOpen);
+  const resume = useLoanResume(isOpen, RESUME_STEP_MAP, RESUME_FALLBACK_STEP);
 
   useEffect(() => {
     if (!prefill || !formikRef.current) return;
@@ -125,6 +140,13 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
     if (!values.phone && prefill.phone) setFieldValue("phone", prefill.phone);
     if (!values.dob && prefill.dob) setFieldValue("dob", prefill.dob);
   }, [prefill]);
+
+  useEffect(() => {
+    if (!resume) return;
+    setNextId(resume.nextId);
+    setStep(resume.step);
+    toast.info("Resuming your previous loan application.");
+  }, [resume]);
 
   const isLastStep = step === TABS.length - 1;
 
@@ -215,8 +237,8 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
         const result = await applyForLoan({
           purpose: values.loanPurpose,
           amount: parseAmount(values.loanAmount),
-          tenor: parseTenor(values.loanTenure),
-          loanType: "ASSET_FINANCE_LOAN",
+          tenor: parseTenureDays(values.loanTenure),
+          loanType: "ASSET_FINANCE",
         });
 
         if (!result.success) {
@@ -319,6 +341,18 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
           return;
         }
 
+        const result = await submitAssetFinanceDocuments({
+          identityProof: documents.identityProof.url as string,
+          bankStatement: documents.accountProof.url as string,
+          invoice: documents.assetProof.url as string,
+          nextId,
+        });
+
+        if (!result.success) {
+          toast.error(result.error || "Failed to submit documents. Please try again.");
+          return;
+        }
+
         toast.success("Loan application submitted! You'll be notified once it's reviewed.");
         onSubmit?.();
         handleClose();
@@ -334,7 +368,7 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
 
   return (
     <>
-      <Modal2 isOpen={isOpen} onClose={handleClose} width={647}>
+      <Modal2 isOpen={isOpen} onClose={handleClose} width={647} title="Asset Finance Loan">
         <Formik
           innerRef={formikRef}
           initialValues={initialValues}
@@ -343,38 +377,49 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
           validateOnBlur
           onSubmit={() => {}}
         >
-          {({ values, errors, touched, handleChange, handleBlur, validateForm, setTouched }) => (
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            validateForm,
+            setTouched,
+            setFieldValue,
+          }) => (
             <Form>
               <div className={styles.container}>
-                <h2 className={styles.title}>Asset Finance Loan</h2>
                 <LoanTabs tabs={TABS} activeTab={step} />
 
                 {step === 0 && (
                   <div className={styles.form}>
-                    <LoanSelect
+                    <LoanInput
                       label="Loan Amount"
-                      options={["2,000,000", "5,000,000"]}
+                      placeholder="Enter loan amount"
+                      inputMode="numeric"
                       value={values.loanAmount}
-                      onChange={handleChange("loanAmount")}
+                      onChange={(e) =>
+                        setFieldValue("loanAmount", formatAmountInput(e.target.value))
+                      }
                       onBlur={handleBlur("loanAmount")}
-                      placeholder="Select a valid loan amount"
-                      // error={touched.loanAmount ? errors.loanAmount : undefined}
+                      error={touched.loanAmount ? errors.loanAmount : undefined}
                     />
                     <LoanSelect
                       label="Loan Tenure"
-                      options={["3 months", "6 months", "9 months", "12 months"]}
+                      options={tenureOptions}
                       value={values.loanTenure}
                       onChange={handleChange("loanTenure")}
                       onBlur={handleBlur("loanTenure")}
                       placeholder="Select a loan tenure"
-                      // error={touched.loanTenure ? errors.loanTenure : undefined}
+                      error={touched.loanTenure ? errors.loanTenure : undefined}
                     />
-                    <LoanInput
+                    <LoanSelect
                       label="Purpose of Loan"
-                      placeholder="Asset Purchase"
+                      options={ASSET_FINANCE_PURPOSE_OPTIONS}
                       value={values.loanPurpose}
                       onChange={handleChange("loanPurpose")}
                       onBlur={handleBlur("loanPurpose")}
+                      placeholder="Select a purpose"
                       error={touched.loanPurpose ? errors.loanPurpose : undefined}
                     />
                   </div>
@@ -389,13 +434,16 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                       onChange={handleChange("assetName")}
                       onBlur={handleBlur("assetName")}
                       placeholder="Put in Asset Name"
-                      // error={touched.assetName ? errors.assetName : undefined}
+                      error={touched.assetName ? errors.assetName : undefined}
                     />
                     <LoanInput
                       label="Asset Amount"
                       placeholder="Put in Asset Amount"
+                      inputMode="numeric"
                       value={values.assetAmount}
-                      onChange={handleChange("assetAmount")}
+                      onChange={(e) =>
+                        setFieldValue("assetAmount", formatAmountInput(e.target.value))
+                      }
                       onBlur={handleBlur("assetAmount")}
                       error={touched.assetAmount ? errors.assetAmount : undefined}
                     />
@@ -547,9 +595,14 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment }: Pro
                       error={documentErrors.assetProof}
                     />
                     <div className={styles.docFooter}>
+                      {/* "Make Payment" disabled for now — doesn't belong on an
+                          unsubmitted, not-yet-approved application. Don't delete,
+                          just commented out; belongs on an active loan's
+                          repayment flow instead (see RepayLoanModal).
                       <Button variant="primary" onClick={onMakePayment}>
                         Make Payment
                       </Button>
+                      */}
                       <LoanFormFooter
                         onBack={back}
                         onContinue={() => handleNext(values, validateForm, setTouched)}

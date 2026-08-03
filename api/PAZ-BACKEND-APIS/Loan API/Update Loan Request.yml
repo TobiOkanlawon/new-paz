@@ -1,0 +1,27 @@
+info:
+  name: Update Loan Request
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: "{{base_url}}/v1/loan/request/update"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"request\": {},\r
+
+      \  \"nextId\": \"\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

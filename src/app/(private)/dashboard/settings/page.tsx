@@ -145,52 +145,50 @@ const SettingsPage = () => {
             <>
               <p className={styles.sectionTitle}>Get in Touch</p>
               <p className={styles.sectionDesc}>
-                We're here to help — reach out via any channel below
+                We're here to help, reach out via any channel below
               </p>
 
-              <div className={styles.supportGrid}>
-                {/* Phone */}
-                <div className={styles.supportCard}>
-                  <div className={styles.supportCardTop}>
-                    <div
-                      className={`${styles.supportIconWrap} ${styles.supportIconBlue}`}
-                    >
-                      <LuPhone size={24} />
-                    </div>
-                    <div>
-                      <p className={styles.supportCardLabel}>
-                        Customer Care Line
-                      </p>
-                      <p className={styles.supportCardValue}>0904 422 3377</p>
-                    </div>
-                  </div>
-                  <a href="tel:09044223377" className={styles.supportLink}>
-                    Call Now →
-                  </a>
-                </div>
-
-                {/* Email */}
-                <div className={styles.supportCard}>
-                  <div className={styles.supportCardTop}>
-                    <div
-                      className={`${styles.supportIconWrap} ${styles.supportIconGreen}`}
-                    >
-                      <LuMail size={24} />
-                    </div>
-                    <div>
-                      <p className={styles.supportCardLabel}>Send Us a Mail</p>
-                      <p className={styles.supportCardValue}>
-                        inquiry@mypazfinance.com
-                      </p>
-                    </div>
-                  </div>
-                  <a
-                    href="mailto:inquiry@mypazfinance.com"
-                    className={styles.supportLink}
+              {/* Phone */}
+              <div className={styles.supportCard}>
+                <div className={styles.supportCardTop}>
+                  <div
+                    className={`${styles.supportIconWrap} ${styles.supportIconBlue}`}
                   >
-                    Send Email →
-                  </a>
+                    <LuPhone size={24} />
+                  </div>
+                  <div>
+                    <p className={styles.supportCardLabel}>
+                      Customer Care Line
+                    </p>
+                    <p className={styles.supportCardValue}>0904 422 3377</p>
+                  </div>
                 </div>
+                <a href="tel:09044223377" className={styles.supportLink}>
+                  Call Now →
+                </a>
+              </div>
+
+              {/* Email */}
+              <div className={styles.supportCard}>
+                <div className={styles.supportCardTop}>
+                  <div
+                    className={`${styles.supportIconWrap} ${styles.supportIconGreen}`}
+                  >
+                    <LuMail size={24} />
+                  </div>
+                  <div>
+                    <p className={styles.supportCardLabel}>Send Us a Mail</p>
+                    <p className={styles.supportCardValue}>
+                      inquiry@mypazfinance.com
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href="mailto:inquiry@mypazfinance.com"
+                  className={styles.supportLink}
+                >
+                  Send Email →
+                </a>
               </div>
             </>
           )}

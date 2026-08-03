@@ -1,0 +1,28 @@
+meta {
+  name: Liquidate Loan
+  type: http
+  seq: 9
+}
+
+put {
+  url: {{protocol}}://{{url}}/v1/loan/liquidate-loan
+  body: json
+  auth: inherit
+}
+
+body:json {
+  // GUESS — payload shape unconfirmed. No :id in the URL, so whatever
+  // identifies the loan must live in the body. Try walletId first (used
+  // elsewhere for the pending-loan lookup); if the error complains about
+  // a missing loan identifier, try nextId or a loanId field instead —
+  // "OtherInfo" in GET /v1/user/loan/pending holds a value shaped like
+  // "IPE-6977222064" which may be the same identifier this expects.
+  {
+    "walletId": "{{walletId}}"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
