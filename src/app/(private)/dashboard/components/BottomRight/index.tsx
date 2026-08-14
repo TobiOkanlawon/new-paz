@@ -66,6 +66,9 @@ const BottomRight: React.FC<BottomRightProps> = ({
   transactions,
   savingsAccounts,
 }) => {
+  const recentTransactions = transactions ?? [];
+  const targetSavings = savingsAccounts?.targetSavings ?? [];
+
   type CustomTransactionType = {
     id: string;
     title: string;
@@ -123,7 +126,7 @@ const BottomRight: React.FC<BottomRightProps> = ({
   return (
     <div className={styles.bottomRightContainer}>
       <div>
-        {transactions && (
+        {recentTransactions.length > 0 && (
           <div className={styles.recentTransactionsContainer}>
             <div className={styles.recentTransactionsTitleContainer}>
               <h2>Recent Transactions</h2>
@@ -131,37 +134,35 @@ const BottomRight: React.FC<BottomRightProps> = ({
                 View All
               </Link>
             </div>
-            {transactions && (
-              <div
-                id="#home-bound-recent-transactions-container"
-                className={styles.recentTransactionsInnerContainer}
-              >
-                {transactions.slice(0, 2).map((t) => {
-                  const tx = constructCustomTransactionsData(t);
-                  return (
-                    <RecentTransactionsCard
-                      title={tx.title}
-                      subTitle={tx.subTitle}
-                      status={tx.type}
-                      amount={tx.amount}
-                      date={tx.date}
-                      key={tx.id}
-                    />
-                  );
-                })}
-                {/*<RecentTransactionsCard
-                title="Transfer to Savings"
-                subTitle="Monthly Savings"
-                status="outbound"
-                amount="N100,000.00"
-                date="Today, 10:00 A.M"
-                />*/}
-              </div>
-            )}
+            <div
+              id="#home-bound-recent-transactions-container"
+              className={styles.recentTransactionsInnerContainer}
+            >
+              {recentTransactions.slice(0, 2).map((t) => {
+                const tx = constructCustomTransactionsData(t);
+                return (
+                  <RecentTransactionsCard
+                    title={tx.title}
+                    subTitle={tx.subTitle}
+                    status={tx.type}
+                    amount={tx.amount}
+                    date={tx.date}
+                    key={tx.id}
+                  />
+                );
+              })}
+              {/*<RecentTransactionsCard
+              title="Transfer to Savings"
+              subTitle="Monthly Savings"
+              status="outbound"
+              amount="N100,000.00"
+              date="Today, 10:00 A.M"
+              />*/}
+            </div>
           </div>
         )}
       </div>
-      {savingsAccounts && (
+      {/* {savingsAccounts && (
         <div className={styles.instantSavingsContainer}>
           <div className={styles.instantSavingsTitleContainer}>
             <h2>Instant Savings</h2>
@@ -180,7 +181,7 @@ const BottomRight: React.FC<BottomRightProps> = ({
                 onClick={() => routeToSoloSavings()}
               />
             )}
-            {savingsAccounts.targetSavings
+            {targetSavings
               .slice(0, 2)
               .map((plan: TTargetSavingsPlan) => {
                 return (
@@ -197,7 +198,7 @@ const BottomRight: React.FC<BottomRightProps> = ({
               })}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

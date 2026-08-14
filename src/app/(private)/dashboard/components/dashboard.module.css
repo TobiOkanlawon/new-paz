@@ -43,8 +43,8 @@
   color: #2e2e2e;
   margin-top: 44px;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  grid-column-gap: 24px;
+  /* grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  grid-column-gap: 24px; */
   width: 100%;
 }
 
@@ -313,13 +313,15 @@
 
   .accountCards {
     gap: 12px;
-    overflow: visible;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .accountCards > * {
-    flex: 1;
+    flex: 0 0 240px;
+    scroll-snap-align: start;
   }
 
   .quickActionCardsInnerContainer {

@@ -23,6 +23,8 @@ const Loan = async () => {
     ? pendingLoanRequests.data.requests.length > 0
     : false;
 
+  // console.log("Pending Loan Requests: ", pendingLoanRequests.data.requests)
+
   const products = loanProducts.success ? loanProducts.data.products : [];
 
   return (

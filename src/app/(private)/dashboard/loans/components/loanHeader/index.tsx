@@ -7,9 +7,18 @@ interface LoanHeaderProps {
   desc: string;
   buttonText?: string;
   buttonAction?: VoidFunction;
+  secondaryButtonText?: string;
+  secondaryButtonAction?: VoidFunction;
 }
 
-const LoanHeader = ({ title, desc, buttonText, buttonAction }: LoanHeaderProps) => {
+const LoanHeader = ({
+  title,
+  desc,
+  buttonText,
+  buttonAction,
+  secondaryButtonText,
+  secondaryButtonAction,
+}: LoanHeaderProps) => {
   return (
     <div className={style.container}>
       <div className={style.textContainer}>
@@ -17,6 +26,11 @@ const LoanHeader = ({ title, desc, buttonText, buttonAction }: LoanHeaderProps) 
         <p>{desc}</p>
       </div>
       <div className={style.buttonContainer}>
+        {secondaryButtonText && (
+          <Button variant="outlined" onClick={secondaryButtonAction}>
+            {secondaryButtonText}
+          </Button>
+        )}
         {buttonText && (
           <Button onClick={buttonAction}>{buttonText}</Button>
         )}

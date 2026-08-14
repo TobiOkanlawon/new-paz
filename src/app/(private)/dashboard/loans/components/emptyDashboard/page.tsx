@@ -17,6 +17,7 @@ import BusinessLoanModal from '../modals/BusinessLoanModal/BusinessLoanModal'
 import LocalPurchaseOrderModal from '../modals/LocalPurchaseOrderModal/LocalPurchaseOrderModal'
 import AssetFinanceLoanModal from '../modals/AssetFinanceLoanModal/AssetFinanceLoanModal'
 import MakePaymentModal from '../modals/MakePaymentModal/MakePaymentModal'
+import RepayLoanModal from '../modals/RepayLoanModal/RepayLoanModal'
 import type { ActiveLoanData, LoanProduct } from '@/actions/loans'
 import { findLoanProduct, formatTenureRange } from '../shared/loanTenure'
 
@@ -63,10 +64,6 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     // Quick loan modal state
     const [isQuickLoanModalOpen, setIsQuickLoanModalOpen] = useState(false)
     const handleQuickModalOpen = () => {
-        if (hasPendingLoanRequest) {
-            toast.error("You already have a loan request pending. Please wait for it to be resolved before applying for another loan.");
-            return;
-        }
         setIsApplyForLoanModalOpen(false);
         setIsQuickLoanModalOpen(true);
     }
@@ -81,10 +78,6 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     // Personal loan modal state
     const [isPersonalLoanModalOpen, setIsPersonalLoanModalOpen] = useState(false)
     const handlePersonalModalOpen = () => {
-        if (hasPendingLoanRequest) {
-            toast.error("You already have a loan request pending. Please wait for it to be resolved before applying for another loan.");
-            return;
-        }
         setIsApplyForLoanModalOpen(false);
         setIsPersonalLoanModalOpen(true);
     }
@@ -99,10 +92,6 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     // Business loan modal state
     const [isBusinessLoanModalOpen, setIsBusinessLoanModalOpen] = useState(false)
     const handleBusinessModalOpen = () => {
-        if (hasPendingLoanRequest) {
-            toast.error("You already have a loan request pending. Please wait for it to be resolved before applying for another loan.");
-            return;
-        }
         setIsApplyForLoanModalOpen(false);
         setIsBusinessLoanModalOpen(true);
     }
@@ -146,6 +135,18 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     const handlePaymentModalClose = () => {
         setIsPaymentLoanModalOpen(false)
     }
+
+    // Repay loan modal state
+    const [isRepayLoanModalOpen, setIsRepayLoanModalOpen] = useState(false)
+    const handleRepayModalOpen = () => {
+        setIsRepayLoanModalOpen(true);
+    }
+    const handleRepayModalClose = () => {
+        setIsRepayLoanModalOpen(false)
+    }
+    const outstandingBalance = activeLoan
+        ? activeLoan.TotalPayable - activeLoan.AmountLiquidated
+        : 0
 
     // Apply loan modal state
     const [isApplyForLoanModalOpen, setIsApplyForLoanModalOpen] = useState(false)
@@ -219,7 +220,14 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
 
     return (
         <div className={styles.container}>
-            <LoanHeader title='Loans' desc='Manage your loans and explore financing options' buttonText='Apply for a loan' buttonAction={handleApplyModalOpen} />
+            <LoanHeader
+                title='Loans'
+                desc='Manage your loans and explore financing options'
+                buttonText='Apply for a loan'
+                buttonAction={handleApplyModalOpen}
+                secondaryButtonText={outstandingBalance > 0 ? 'Repay Loan' : undefined}
+                secondaryButtonAction={handleRepayModalOpen}
+            />
             <div className={styles.loanCardContainer}>
                 <LoanCard
                     icon={<Image src="/icon/moneyBag.svg" alt="money bag" width={24} height={24} />}
@@ -294,6 +302,7 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
             <LocalPurchaseOrderModal isOpen={isLPOLoanModalOpen} onClose={handleLPOModalClose} onSubmit={handleLPOModalSubmit} loanProduct={lpoProduct} />
             <AssetFinanceLoanModal isOpen={isAFLLoanModalOpen} onClose={handleAFLModalClose} onMakePayment={handlePaymentModalOpen} onSubmit={handleAFLModalSubmit} loanProduct={assetFinanceProduct} />
             <MakePaymentModal isOpen={isPaymentLoanModalOpen} onClose={handlePaymentModalClose} onPay={() => { handlePaymentModalClose() }} />
+            <RepayLoanModal isOpen={isRepayLoanModalOpen} onClose={handleRepayModalClose} outstandingBalance={outstandingBalance} />
             <LoanApplicationResult status={applicationStatus} isOpen={isApplicationOpen} onClose={handleApplicationModalClose} onBack={handleApplicationModalClose} />
         </div>
     )

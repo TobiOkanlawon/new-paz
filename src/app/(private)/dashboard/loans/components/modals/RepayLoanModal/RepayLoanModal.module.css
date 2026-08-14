@@ -26,14 +26,53 @@
   margin: 0;
 }
 
-.radioOption {
+.summary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8f9fc;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  color: #878787;
+}
+
+.value {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e2e2e;
+}
+
+.walletSource {
+  border: 1px solid #dfdfdf;
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 44px;
   display: flex;
   align-items: center;
-  gap: 8px;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   color: #2e2e2e;
-  cursor: pointer;
+  background: #f8f9fc;
+}
+
+.error {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  color: #e05c5c;
+  margin: 0;
 }
 
 .amountInput {
@@ -44,10 +83,6 @@
   border-radius: 8px;
   padding: 0 12px;
   height: 44px;
-}
-
-.flag {
-  font-size: 16px;
 }
 
 .currency {

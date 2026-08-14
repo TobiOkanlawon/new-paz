@@ -21,6 +21,7 @@ import NotificationsIcon from "@/assets/notifications.png";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import useUser from "@/store/userStore";
+import FundWalletFlow from "@/components/ModalFlows/FundWalletFlow";
 
 type OptionProps = {
   active: boolean;
@@ -156,67 +157,103 @@ const SavingsDropdown: React.FC<SavingsDropdownProps> = ({
   );
 };
 
-const quickActionLinks = [
-  { title: "Save Now", href: "/dashboard/savings" },
-  { title: "Apply for a Loan", href: "/dashboard/loans" },
-  { title: "Invest Now", href: "/dashboard/investments" },
-  { title: "Withdraw Funds", href: "/dashboard/withdraw" },
-];
+type QuickActionItem =
+  | { title: string; href: string }
+  | { title: string; action: () => void };
 
-const SidebarQuickActions: React.FC<{ collapsed: boolean }> = ({ collapsed }) => {
+const SidebarQuickActions: React.FC<{ collapsed: boolean }> = ({
+  collapsed,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={styles.dropdownContainer}>
-      <div
-        className={clsx(
-          styles.optionContainer,
-          styles.dropdownTrigger,
-          collapsed && styles.optionContainerCollapsed,
-        )}
-        onClick={() => setIsOpen((p) => !p)}
-      >
-        <div className={styles.optionInnerContainer}>
-          <Image
-            src={StarIcon}
-            alt="Quick actions"
-            className={styles.sidebarIcon}
-            width={24}
-            height={24}
-          />
-          {!collapsed && <p className={styles.sidebarOptionText}>Quick actions</p>}
-        </div>
-        {!collapsed && (
-          <svg
-            className={clsx(styles.chevron, isOpen && styles.chevronOpen)}
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6 9L12 15L18 9"
-              stroke="#2E2E2E"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
-      </div>
-      {!collapsed && isOpen && (
-        <div className={styles.subItemsContainer}>
-          {quickActionLinks.map((item) => (
-            <Link key={item.href} href={item.href} className={styles.navLink}>
-              <div className={styles.subItem}>
-                <p className={styles.subItemText}>{item.title}</p>
+    <FundWalletFlow>
+      {(openFundWalletModal) => {
+        const quickActionLinks: QuickActionItem[] = [
+          { title: "Save Now", href: "/dashboard/savings" },
+          { title: "Apply for a Loan", href: "/dashboard/loans" },
+          {
+            title: "Fund Wallet",
+            action: () => {
+              setIsOpen(false);
+              openFundWalletModal();
+            },
+          },
+          { title: "Withdraw Funds", href: "/dashboard/withdraw" },
+        ];
+
+        return (
+          <div className={styles.dropdownContainer}>
+            <div
+              className={clsx(
+                styles.optionContainer,
+                styles.dropdownTrigger,
+                collapsed && styles.optionContainerCollapsed,
+              )}
+              onClick={() => setIsOpen((p) => !p)}
+            >
+              <div className={styles.optionInnerContainer}>
+                <Image
+                  src={StarIcon}
+                  alt="Quick actions"
+                  className={styles.sidebarIcon}
+                  width={24}
+                  height={24}
+                />
+                {!collapsed && (
+                  <p className={styles.sidebarOptionText}>Quick actions</p>
+                )}
               </div>
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
+              {!collapsed && (
+                <svg
+                  className={clsx(styles.chevron, isOpen && styles.chevronOpen)}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 9L12 15L18 9"
+                    stroke="#2E2E2E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+            </div>
+            {!collapsed && isOpen && (
+              <div className={styles.subItemsContainer}>
+                {quickActionLinks.map((item) =>
+                  "href" in item ? (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      className={styles.navLink}
+                    >
+                      <div className={styles.subItem}>
+                        <p className={styles.subItemText}>{item.title}</p>
+                      </div>
+                    </Link>
+                  ) : (
+                    <div
+                      key={item.title}
+                      className={styles.navLink}
+                      onClick={item.action}
+                    >
+                      <div className={styles.subItem}>
+                        <p className={styles.subItemText}>{item.title}</p>
+                      </div>
+                    </div>
+                  ),
+                )}
+              </div>
+            )}
+          </div>
+        );
+      }}
+    </FundWalletFlow>
   );
 };
 
@@ -290,7 +327,9 @@ export default function Sidebar({
               isActuallyCollapsed && styles.headingContainerCollapsed,
             )}
           >
-            {!isActuallyCollapsed && <Image src={CompoundLogo} alt="Compound Logo" />}
+            {!isActuallyCollapsed && (
+              <Image src={CompoundLogo} alt="Compound Logo" />
+            )}
             <Image
               className={clsx(
                 styles.toggleIcon,
@@ -305,13 +344,15 @@ export default function Sidebar({
           <div className={styles.centreContainer}>
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<Image
-                src={DashboardIcon}
-                alt="Dashboard"
-                className={styles.sidebarIcon}
-                width={24}
-                height={24}
-              />}
+              icon={
+                <Image
+                  src={DashboardIcon}
+                  alt="Dashboard"
+                  className={styles.sidebarIcon}
+                  width={24}
+                  height={24}
+                />
+              }
               title="Dashboard"
               href="/dashboard"
               active={pathname == "/dashboard"}
@@ -319,13 +360,15 @@ export default function Sidebar({
             />
             <SavingsDropdown
               alt="piggy bank icon"
-              icon={<Image
-                src={Piggy}
-                alt="Savings"
-                className={styles.sidebarIcon}
-                width={24}
-                height={24}
-              />}
+              icon={
+                <Image
+                  src={Piggy}
+                  alt="Savings"
+                  className={styles.sidebarIcon}
+                  width={24}
+                  height={24}
+                />
+              }
               collapsed={isActuallyCollapsed}
               pathname={pathname}
               subItems={[
@@ -339,13 +382,15 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<Image
-                src={LoansIcon}
-                alt="Loans"
-                className={styles.sidebarIcon}
-                width={24}
-                height={24}
-              />}
+              icon={
+                <Image
+                  src={LoansIcon}
+                  alt="Loans"
+                  className={styles.sidebarIcon}
+                  width={24}
+                  height={24}
+                />
+              }
               title="Loans"
               href="/dashboard/loans"
               active={isSubPath("/dashboard/loans", pathname)}
@@ -353,13 +398,15 @@ export default function Sidebar({
             />
             <SidebarOption
               alt="a four-sectioned square with curved edges"
-              icon={<Image
-                src={SettingsIcon}
-                alt="Settings"
-                className={styles.sidebarIcon}
-                width={24}
-                height={24}
-              />}
+              icon={
+                <Image
+                  src={SettingsIcon}
+                  alt="Settings"
+                  className={styles.sidebarIcon}
+                  width={24}
+                  height={24}
+                />
+              }
               title="Settings"
               href="/dashboard/settings"
               active={isSubPath("/dashboard/settings", pathname)}
@@ -409,7 +456,12 @@ export default function Sidebar({
         {/* Mobile bottom — bell + avatar/name/email dropdown trigger */}
         <div className={styles.mobileBottomSection}>
           <button className={styles.mobileBellBtn} aria-label="Notifications">
-            <Image src={NotificationsIcon} alt="Notifications" width={22} height={22} />
+            <Image
+              src={NotificationsIcon}
+              alt="Notifications"
+              width={22}
+              height={22}
+            />
           </button>
 
           <div
@@ -428,7 +480,10 @@ export default function Sidebar({
               <p className={styles.mobileProfileEmail}>{email}</p>
             </div>
             <svg
-              className={clsx(styles.chevron, mobileProfileOpen && styles.chevronOpen)}
+              className={clsx(
+                styles.chevron,
+                mobileProfileOpen && styles.chevronOpen,
+              )}
               width="16"
               height="16"
               viewBox="0 0 24 24"
@@ -446,7 +501,10 @@ export default function Sidebar({
 
           {mobileProfileOpen && (
             <div className={styles.mobileProfileDropdown}>
-              <Link href="/dashboard/profile" className={styles.mobileProfileDropdownItem}>
+              <Link
+                href="/dashboard/profile"
+                className={styles.mobileProfileDropdownItem}
+              >
                 My Profile
               </Link>
               <button
@@ -458,7 +516,6 @@ export default function Sidebar({
             </div>
           )}
         </div>
-
       </nav>
     </aside>
   );

@@ -6,6 +6,7 @@ import Modal2 from "@/components/Modal2";
 import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
+import LoanTenureField from "../../shared/LoanTenureField";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
 import { QUICK_LOAN_PURPOSE_OPTIONS } from "../../shared/loanPurposeOptions";
@@ -279,13 +280,12 @@ const ApplyQuickLoanModal = ({ isOpen, onClose, onSubmit, loanProduct }: Props) 
                     onBlur={handleBlur("loanAmount")}
                     error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
-                  <LoanSelect
-                    label="Loan Tenure"
+                  <LoanTenureField
                     options={tenureOptions}
+                    maxTenorDays={loanProduct?.tenor}
                     value={values.loanTenure}
-                    onChange={handleChange("loanTenure")}
+                    onChange={(v) => setFieldValue("loanTenure", v)}
                     onBlur={handleBlur("loanTenure")}
-                    placeholder="Select a loan tenure"
                     error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
                   <LoanSelect

@@ -319,7 +319,8 @@ export async function submitLoanGuarantorDetails(
 
 export interface SubmitAssetDetailsPayload {
   assetName: string;
-  assetAmount: number;
+  amount: number;
+  consent: boolean;
   nextId: string;
 }
 
@@ -335,7 +336,8 @@ export async function submitLoanAssetDetails(
     const body = {
       request: {
         assetName: payload.assetName,
-        assetAmount: payload.assetAmount,
+        amount: payload.amount,
+        consent: payload.consent,
       },
       nextId: payload.nextId,
     };
@@ -406,14 +408,120 @@ export async function submitAssetFinanceDocuments(
 }
 
 // ---------------------------------------------------------------------------
+// Asset Finance — Submit personal information
+// POST /v1/loan/request/update  (nextId prefix: IPE-)
+// Same step as submitLoanPersonalInfo, but Asset Finance's confirmed DTO
+// wants a lowercase "bvn" key — kept as its own action rather than adding a
+// casing flag to the shared one, since Quick Loan/Personal Loan's contract
+// for this step is still unconfirmed and shouldn't change alongside it.
+// ---------------------------------------------------------------------------
+
+export interface SubmitAssetFinancePersonalInfoPayload {
+  fullName: string;
+  emailAddress: string;
+  phoneNumber: string;
+  dateOfBirth: string; // format: DD/MM/YYYY
+  bvn: string;
+  nextId: string;
+}
+
+export async function submitAssetFinancePersonalInfo(
+  payload: SubmitAssetFinancePersonalInfoPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        fullName: payload.fullName,
+        emailAddress: payload.emailAddress,
+        phoneNumber: payload.phoneNumber,
+        dateOfBirth: payload.dateOfBirth,
+        bvn: payload.bvn,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Asset Finance — Submit guarantor details
+// POST /v1/loan/request/update  (nextId prefix: IGU-)
+// Same step as submitLoanGuarantorDetails, but Asset Finance's confirmed DTO
+// additionally requires the guarantor's identityProof document URL — kept
+// as its own action since Personal Loan's guarantor step is unconfirmed and
+// has no document upload UI for this yet.
+// ---------------------------------------------------------------------------
+
+export interface SubmitAssetFinanceGuarantorDetailsPayload {
+  name: string;
+  phoneNumber: string;
+  identityProof: string;
+  nextId: string;
+}
+
+export async function submitAssetFinanceGuarantorDetails(
+  payload: SubmitAssetFinanceGuarantorDetailsPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        name: payload.name,
+        phoneNumber: payload.phoneNumber,
+        identityProof: payload.identityProof,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Local Purchase Order — Submit company information
 // POST /v1/loan/request/update
 // ---------------------------------------------------------------------------
 
 export interface SubmitCompanyDetailsPayload {
   businessName: string;
-  businessEmail: string;
-  businessPhone: string;
+  emailAddress: string;
+  phoneNumber: string;
   cacNumber: string;
   nextId: string;
 }
@@ -430,9 +538,107 @@ export async function submitLoanCompanyDetails(
     const body = {
       request: {
         businessName: payload.businessName,
-        businessEmail: payload.businessEmail,
-        businessPhone: payload.businessPhone,
+        emailAddress: payload.emailAddress,
+        phoneNumber: payload.phoneNumber,
         cacNumber: payload.cacNumber,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Local Purchase Order — Submit director's information
+// POST /v1/loan/request/update  (nextId prefix: IPE-)
+// Confirmed directors DTO has no dateOfBirth field (unlike the generic
+// personal-info step) and wants a lowercase "bvn" key — kept as its own
+// action rather than reusing submitLoanPersonalInfo.
+// ---------------------------------------------------------------------------
+
+export interface SubmitLpoDirectorInfoPayload {
+  fullName: string;
+  emailAddress: string;
+  phoneNumber: string;
+  bvn: string;
+  nextId: string;
+}
+
+export async function submitLpoDirectorInfo(
+  payload: SubmitLpoDirectorInfoPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        fullName: payload.fullName,
+        emailAddress: payload.emailAddress,
+        phoneNumber: payload.phoneNumber,
+        bvn: payload.bvn,
+      },
+      nextId: payload.nextId,
+    };
+
+    const res = await apiFetch<LoanUpdateApiResponse>(
+      "/v1/loan/request/update",
+      {
+        method: "POST",
+        isProtected: true,
+        body,
+      },
+    );
+
+    return ok({
+      nextId: res.response.responseData.nextId,
+    });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Local Purchase Order — Submit document URLs
+// POST /v1/loan/request/update
+// Body field names per backend's confirmed DTO (lpoProof, bankStatement)
+// ---------------------------------------------------------------------------
+
+export interface SubmitLpoDocumentsPayload {
+  lpoProof: string;
+  bankStatement: string;
+  nextId: string;
+}
+
+export async function submitLpoDocuments(
+  payload: SubmitLpoDocumentsPayload,
+): Promise<ActionResult<LoanUpdateResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const body = {
+      request: {
+        lpoProof: payload.lpoProof,
+        bankStatement: payload.bankStatement,
       },
       nextId: payload.nextId,
     };
@@ -492,6 +698,73 @@ export async function submitLoanConsent(
       success: res.responseCode === "00",
       message: res.responseMessage,
     });
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// POST /v1/loan/liquidate-loan
+// Repays (fully or partially, per the "part payments allowed" business rule)
+// the caller's active loan from their PAZ wallet. The wire payload's
+// `deductfromwallet` flag implies a non-wallet repayment path may exist
+// later, but only wallet-funded repayment is wired today.
+// ---------------------------------------------------------------------------
+
+type LiquidateLoanApiResponse = {
+  responseCode: string | number;
+  responseMessage?: string;
+};
+
+export type LiquidateLoanResponse = {
+  message?: string;
+};
+
+export async function liquidateLoan(
+  amount: number,
+): Promise<ActionResult<LiquidateLoanResponse>> {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      throw new Error("User not authenticated");
+    }
+
+    // session.user.walletAccount is captured once at login and never
+    // refreshed (see applyForLoan above for the full explanation) — fetch
+    // the current value instead of trusting the session's.
+    const updatedUser = await apiFetch<any>("/v1/users/fetch/user", {
+      isProtected: true,
+      method: "POST",
+      body: { email: session.user.email },
+    });
+
+    const walletAccount = updatedUser?.user?.wallet_account;
+
+    if (!walletAccount) {
+      return fail("Wallet account is missing on your profile. Please complete account setup first.");
+    }
+
+    const res = await apiFetch<LiquidateLoanApiResponse>(
+      "/v1/loan/liquidate-loan",
+      {
+        method: "POST",
+        isProtected: true,
+        body: {
+          walletAccount,
+          amount,
+          deductfromwallet: true,
+        },
+      },
+    );
+
+    if (String(res?.responseCode ?? "") !== "00") {
+      return fail(res?.responseMessage || "Failed to repay loan, please try again");
+    }
+
+    revalidatePath("/dashboard/loans");
+    revalidatePath("/dashboard");
+
+    return ok({ message: res.responseMessage });
   } catch (e) {
     return fail(e);
   }

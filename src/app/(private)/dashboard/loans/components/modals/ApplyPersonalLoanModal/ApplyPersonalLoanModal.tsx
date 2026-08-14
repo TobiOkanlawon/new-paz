@@ -6,6 +6,7 @@ import Modal2 from "@/components/Modal2";
 import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
+import LoanTenureField from "../../shared/LoanTenureField";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 // Documents step disabled for now — not a step for personal loans currently.
 // Don't delete, just commented out — see the "Documents" step below.
@@ -396,13 +397,12 @@ const ApplyPersonalLoanModal = ({ isOpen, onClose, onSubmit, loanProduct }: Prop
                     onBlur={handleBlur("loanAmount")}
                     error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
-                  <LoanSelect
-                    label="Loan Tenure"
+                  <LoanTenureField
                     options={tenureOptions}
+                    maxTenorDays={loanProduct?.tenor}
                     value={values.loanTenure}
-                    onChange={handleChange("loanTenure")}
+                    onChange={(v) => setFieldValue("loanTenure", v)}
                     onBlur={handleBlur("loanTenure")}
-                    placeholder="Select a loan tenure"
                     error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
                   <LoanSelect

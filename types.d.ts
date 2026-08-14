@@ -100,6 +100,7 @@ type TAccountDetails = {
   investmentAmount: number;
   lastName: string;
   userName: string;
+  walletAmount: number;
 };
 
 type TAddAccountResponse = {

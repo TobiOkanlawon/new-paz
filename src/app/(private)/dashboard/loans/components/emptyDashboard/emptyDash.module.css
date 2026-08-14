@@ -2,6 +2,27 @@
     padding: 36px 49px;
 }
 
+/* iPad Pro (1024px) */
+@media screen and (max-width: 1024px) {
+    .container {
+        padding: 28px 40px;
+    }
+}
+
+/* iPad Mini (768px) */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 24px 32px;
+    }
+}
+
+/* Mobile (480px) */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+}
+
 .loanCardContainer {
     display: flex;
     justify-content: space-between;

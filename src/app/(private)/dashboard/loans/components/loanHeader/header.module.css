@@ -35,7 +35,10 @@
 }
 
 .buttonContainer{
-  max-width: 171px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 
 /* iPad Mini (768px) */

@@ -5,6 +5,7 @@ import styles from "./dashboard.module.css";
 import Piggy from "@/assets/piggy-bank.png";
 import LoanIcon from "@/assets/wallet.png";
 import InvestmentIcon from "@/assets/investments.png";
+import StashIcon from "@/assets/Ngn.png";
 import WithdrawIcon from "@/assets/withdraw-icon.png";
 import NoRecord from "@/assets/noRecord.png";
 import AccountCard from "./AccountCard";
@@ -102,6 +103,23 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
             iconColor="#22C55E"
             title="Total Investments (COMING SOON)"
           />
+          <AccountCard
+            backgroundColor="#E9EDFA"
+            amount={accountDetails?.walletAmount ?? 0}
+            icon={
+              <Image
+                src={StashIcon}
+                alt="Dashboard"
+                className={styles.sidebarIcon}
+                width={24}
+                height={24}
+              />
+            }
+            iconColor="#214CCF"
+            title="Stash"
+            rateBackgroundColor="#E9EDFA"
+            rateTextColor="#214CCF"
+          />
         </div>
 
         <FundAccountFlow
@@ -158,7 +176,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
 
         {isTransactions ? (
           <div className={styles.bottomContainer}>
-            <BottomLeft showSoloSavings={!accountDetails.hasSoloAccount} />
+            {/* <BottomLeft showSoloSavings={!accountDetails.hasSoloAccount} /> */}
             <BottomRight
               savingsAccounts={accounts}
               transactions={allTransactions}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPendingLoan } from "@/actions/loans";
+import { getPendingLoan, getPendingLoanRequests } from "@/actions/loans";
 
 export type LoanResumeState = {
   nextId: string;
@@ -28,6 +28,16 @@ export type LoanResumeState = {
  * this can't verify the pending record actually belongs to the wizard
  * being opened. Safe only because entry points are gated to block opening
  * a different loan type while one is already pending (see EmptyDash).
+ *
+ * `GET /v1/user/loan/pending` (`getPendingLoan`) has a confirmed gap: a
+ * request that's only had its `apply` step submitted (nothing past that)
+ * isn't visible there yet, even though `GET /v1/user/loan/request/pending`
+ * (`getPendingLoanRequests`) already returns it — confirmed live 2026-08-08
+ * against a real freshly-applied LPO request. Falling back to the requests
+ * endpoint when the primary one has nothing means a just-initialized
+ * application can still be resumed instead of being permanently orphaned
+ * (blocked from new applications by the single-active-loan gate, but
+ * invisible to resume).
  */
 export function useLoanResume(
   isOpen: boolean,
@@ -44,10 +54,19 @@ export function useLoanResume(
 
     let cancelled = false;
 
-    getPendingLoan().then((result) => {
+    getPendingLoan().then(async (result) => {
       if (cancelled) return;
 
-      const otherInfo = result.success ? result.data.data?.OtherInfo : undefined;
+      let otherInfo = result.success ? result.data.data?.OtherInfo : undefined;
+
+      if (!otherInfo) {
+        const requestsResult = await getPendingLoanRequests();
+        if (cancelled) return;
+        otherInfo = requestsResult.success
+          ? requestsResult.data.requests[0]?.OtherInfo
+          : undefined;
+      }
+
       if (!otherInfo) {
         setResume(null);
         return;

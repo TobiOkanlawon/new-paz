@@ -104,9 +104,12 @@ const EmailVerification = () => {
       return;
     }
 
-    toast.success("Email verification successful");
+    toast.success("Email verification successful. Log in");
 
-    router.push(`/verification/phone?phone=${phone}`);
+    // Phone verification is temporarily disabled on the backend, so onboarding
+    // skips straight to login after email verification instead of routing
+    // through /verification/phone.
+    router.push("/login");
   };
 
   return (

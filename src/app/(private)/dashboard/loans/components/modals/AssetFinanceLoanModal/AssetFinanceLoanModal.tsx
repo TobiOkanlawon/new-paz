@@ -6,6 +6,7 @@ import Modal2 from "@/components/Modal2";
 import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
+import LoanTenureField from "../../shared/LoanTenureField";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import DocumentUpload from "../../shared/DocumentUpload";
 import { usePersonalInfoPrefill } from "../../shared/usePersonalInfoPrefill";
@@ -16,8 +17,8 @@ import { buildTenureOptions, parseTenureDays } from "../../shared/loanTenure";
 import TermsAndConditionModal from "../TermsAndConditionModal/TermsAndConditionModal";
 import {
   applyForLoan,
-  submitLoanPersonalInfo,
-  submitLoanGuarantorDetails,
+  submitAssetFinancePersonalInfo,
+  submitAssetFinanceGuarantorDetails,
   submitLoanAssetDetails,
   submitAssetFinanceDocuments,
   type LoanProduct,
@@ -125,6 +126,13 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
     accountProof: "",
     assetProof: "",
   });
+  // Guarantor's identity proof — a separate document from the step-4 trio
+  // above (that's the applicant's documents), required by the guarantor
+  // step's confirmed DTO.
+  const [guarantorDocument, setGuarantorDocument] = useState<DocumentState>({
+    ...emptyDocumentState,
+  });
+  const [guarantorDocumentError, setGuarantorDocumentError] = useState("");
 
   const formikRef = useRef<FormikProps<typeof initialValues>>(null);
   const prefill = usePersonalInfoPrefill(isOpen);
@@ -160,11 +168,39 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
       assetProof: { ...emptyDocumentState },
     });
     setDocumentErrors({ identityProof: "", accountProof: "", assetProof: "" });
+    setGuarantorDocument({ ...emptyDocumentState });
+    setGuarantorDocumentError("");
   };
 
   const handleClose = () => {
     resetModal();
     onClose();
+  };
+
+  const handleGuarantorDocumentSelect = async (file: File) => {
+    if (!nextId) {
+      setGuarantorDocumentError("Session error. Please restart the application.");
+      return;
+    }
+
+    setGuarantorDocumentError("");
+    setGuarantorDocument({ name: file.name, url: null, uploading: true });
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("loanType", "ASSET_FINANCE_LOAN");
+    formData.append("nextId", nextId);
+    formData.append("fieldName", "guarantorIdentityProof");
+
+    const result = await uploadLoanDocumentAction(formData);
+
+    if (!result.success) {
+      setGuarantorDocument({ ...emptyDocumentState });
+      setGuarantorDocumentError(result.error || "Upload failed. Please try again.");
+      return;
+    }
+
+    setGuarantorDocument({ name: file.name, url: result.data.documentUrl, uploading: false });
   };
 
   const handleDocumentSelect = async (key: DocumentKey, file: File) => {
@@ -261,7 +297,8 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
 
         const result = await submitLoanAssetDetails({
           assetName: values.assetName,
-          assetAmount: parseAmount(values.assetAmount),
+          amount: parseAmount(values.assetAmount),
+          consent: values.agreedToTerms,
           nextId,
         });
 
@@ -282,12 +319,12 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
           return;
         }
 
-        const result = await submitLoanPersonalInfo({
+        const result = await submitAssetFinancePersonalInfo({
           fullName: values.fullName,
           emailAddress: values.email,
           phoneNumber: values.phone,
           dateOfBirth: values.dob,
-          BVN: values.bvn,
+          bvn: values.bvn,
           nextId,
         });
 
@@ -308,9 +345,21 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
           return;
         }
 
-        const result = await submitLoanGuarantorDetails({
+        if (guarantorDocument.uploading) {
+          toast.error("Please wait for the document upload to finish.");
+          return;
+        }
+
+        if (!guarantorDocument.url) {
+          setGuarantorDocumentError("Guarantor's identity proof is required");
+          toast.error("Please upload the guarantor's identity proof before continuing.");
+          return;
+        }
+
+        const result = await submitAssetFinanceGuarantorDetails({
           name: values.guarantorName,
           phoneNumber: values.guarantorPhone,
+          identityProof: guarantorDocument.url,
           nextId,
         });
 
@@ -404,13 +453,12 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
                       onBlur={handleBlur("loanAmount")}
                       error={touched.loanAmount ? errors.loanAmount : undefined}
                     />
-                    <LoanSelect
-                      label="Loan Tenure"
+                    <LoanTenureField
                       options={tenureOptions}
+                      maxTenorDays={loanProduct?.tenor}
                       value={values.loanTenure}
-                      onChange={handleChange("loanTenure")}
+                      onChange={(v) => setFieldValue("loanTenure", v)}
                       onBlur={handleBlur("loanTenure")}
-                      placeholder="Select a loan tenure"
                       error={touched.loanTenure ? errors.loanTenure : undefined}
                     />
                     <LoanSelect
@@ -533,6 +581,23 @@ const AssetFinanceLoanModal = ({ isOpen, onClose, onSubmit, onMakePayment, loanP
                       onChange={handleChange("guarantorPhone")}
                       onBlur={handleBlur("guarantorPhone")}
                       error={touched.guarantorPhone ? errors.guarantorPhone : undefined}
+                    />
+                    <DocumentUpload
+                      label="Guarantor's Identity Proof"
+                      fileName={guarantorDocument.name}
+                      uploading={guarantorDocument.uploading}
+                      uploaded={Boolean(guarantorDocument.url)}
+                      onFileChange={(file, error) => {
+                        if (error) {
+                          setGuarantorDocumentError(error);
+                          return;
+                        }
+
+                        if (file) {
+                          handleGuarantorDocumentSelect(file);
+                        }
+                      }}
+                      error={guarantorDocumentError}
                     />
                   </div>
                 )}

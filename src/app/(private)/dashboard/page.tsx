@@ -18,11 +18,12 @@ const Dashboard = async () => {
       getPendingLoan(),
     ]);
 
+  console.log("Account Summary: ", accountSummary);
   const allTransactions = allTransactionsResult.success
     ? allTransactionsResult.data
     : [];
 
-  if (!accountSummary.success) {
+  if (!accountSummary?.success) {
     throw new Error("failed to get account summary");
   }
 
@@ -32,14 +33,18 @@ const Dashboard = async () => {
   const firstName = session?.user?.firstName as string;
   const savingsAmount = getTotalBalance(accountSummary.data, "savings");
 
+
   // totalLoan (account-details) isn't always in sync with the loan-pending
   // endpoint's disbursed-loan record, so fall back to that when it's 0.
   const activeLoan = pendingLoan.success ? pendingLoan.data.loan : undefined;
-  const loanAmount =
-    getTotalBalance(accountSummary.data, "loans") ||
-    activeLoan?.AmountDisbursed ||
-    0;
-
+  let loanAmount =
+  getTotalBalance(accountSummary.data, "loans") ||
+  // activeLoan?.AmountDisbursed ||
+  0;
+  if (activeLoan){
+    loanAmount = activeLoan?.TotalPayable - activeLoan?.AmountLiquidated;
+  }
+  
   const investmentAmount = getTotalBalance(accountSummary.data, "investments");
 
   const accounts = {

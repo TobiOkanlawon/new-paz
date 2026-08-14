@@ -6,6 +6,7 @@ import Modal2 from "@/components/Modal2";
 import LoanTabs from "../../shared/LoanTabs";
 import LoanSelect from "../../shared/LoanSelect";
 import LoanInput from "../../shared/LoanInput";
+import LoanTenureField from "../../shared/LoanTenureField";
 import LoanFormFooter from "../../shared/LoanFormFooter";
 import DocumentUpload from "../../shared/DocumentUpload";
 import { LPO_LOAN_PURPOSE_OPTIONS } from "../../shared/loanPurposeOptions";
@@ -15,8 +16,9 @@ import { formatAmountInput } from "../../shared/formatAmountInput";
 import { buildTenureOptions, parseTenureDays } from "../../shared/loanTenure";
 import {
   applyForLoan,
-  submitLoanPersonalInfo,
+  submitLpoDirectorInfo,
   submitLoanCompanyDetails,
+  submitLpoDocuments,
   type LoanProduct,
 } from "@/actions/loans";
 import { uploadLoanDocumentAction } from "@/actions/uploadLoanDocuments";
@@ -43,7 +45,6 @@ const initialValues = {
   directorName: "",
   directorEmail: "",
   directorPhone: "",
-  directorDob: "",
   directorBvn: "",
   businessName: "",
   businessEmail: "",
@@ -65,7 +66,6 @@ const stepSchemas = [
     directorPhone: Yup.string()
       .required("Phone number is required")
       .matches(/^0\d{10}$/, "Enter a valid 11-digit Nigerian phone number"),
-    directorDob: Yup.string().required("Date of birth is required"),
     directorBvn: Yup.string().required("BVN is required").matches(/^\d{11}$/),
   }),
   Yup.object({
@@ -120,7 +120,6 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Pro
     if (!values.directorName && prefill.fullName) setFieldValue("directorName", prefill.fullName);
     if (!values.directorEmail && prefill.email) setFieldValue("directorEmail", prefill.email);
     if (!values.directorPhone && prefill.phone) setFieldValue("directorPhone", prefill.phone);
-    if (!values.directorDob && prefill.dob) setFieldValue("directorDob", prefill.dob);
   }, [prefill]);
 
   useEffect(() => {
@@ -243,12 +242,11 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Pro
           return;
         }
 
-        const result = await submitLoanPersonalInfo({
+        const result = await submitLpoDirectorInfo({
           fullName: values.directorName,
           emailAddress: values.directorEmail,
           phoneNumber: values.directorPhone,
-          dateOfBirth: values.directorDob,
-          BVN: values.directorBvn,
+          bvn: values.directorBvn,
           nextId,
         });
 
@@ -271,8 +269,8 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Pro
 
         const result = await submitLoanCompanyDetails({
           businessName: values.businessName,
-          businessEmail: values.businessEmail,
-          businessPhone: values.businessPhone,
+          emailAddress: values.businessEmail,
+          phoneNumber: values.businessPhone,
           cacNumber: values.cacNumber,
           nextId,
         });
@@ -301,6 +299,17 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Pro
 
         if (!validateDocuments()) {
           toast.error("Please upload the required documents before submitting.");
+          return;
+        }
+
+        const result = await submitLpoDocuments({
+          lpoProof: documents.lpoProof.url as string,
+          bankStatement: documents.addressProof.url as string,
+          nextId,
+        });
+
+        if (!result.success) {
+          toast.error(result.error || "Failed to submit documents. Please try again.");
           return;
         }
 
@@ -354,13 +363,12 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Pro
                     onBlur={handleBlur("loanAmount")}
                     error={touched.loanAmount ? errors.loanAmount : undefined}
                   />
-                  <LoanSelect
-                    label="Loan Tenure"
+                  <LoanTenureField
                     options={tenureOptions}
+                    maxTenorDays={loanProduct?.tenor}
                     value={values.loanTenure}
-                    onChange={handleChange("loanTenure")}
+                    onChange={(v) => setFieldValue("loanTenure", v)}
                     onBlur={handleBlur("loanTenure")}
-                    placeholder="Select a loan tenure"
                     error={touched.loanTenure ? errors.loanTenure : undefined}
                   />
                   <LoanSelect
@@ -401,15 +409,6 @@ const LocalPurchaseOrderModal = ({ isOpen, onClose, onSubmit, loanProduct }: Pro
                     onChange={handleChange("directorPhone")}
                     onBlur={handleBlur("directorPhone")}
                     error={touched.directorPhone ? errors.directorPhone : undefined}
-                  />
-                  <LoanInput
-                    label="Date of Birth"
-                    placeholder="MM/DD/YY"
-                    type="date"
-                    value={values.directorDob}
-                    onChange={handleChange("directorDob")}
-                    onBlur={handleBlur("directorDob")}
-                    error={touched.directorDob ? errors.directorDob : undefined}
                   />
                   <LoanInput
                     label="BVN Number"

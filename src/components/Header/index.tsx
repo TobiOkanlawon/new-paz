@@ -17,6 +17,7 @@ import HeaderDropdown from "../HeaderDropdowns";
 import { useSession, signOut } from "next-auth/react";
 import Dropdown from "@/assets/dropdown.png";
 import useUser from "@/store/userStore";
+import FundWalletFlow from "@/components/ModalFlows/FundWalletFlow";
 
 const MOCK: NotificationItem[] = [
   {
@@ -35,13 +36,6 @@ const MOCK: NotificationItem[] = [
   },
 ];
 
-const quickLinksDropdowns = [
-  { label: "Save Now", href: "/dashboard/savings" },
-  { label: "Apply for a Loan", href: "/dashboard/loans" },
-  { label: "Invest Now", href: "/dashboard/investments" },
-  { label: "Withdraw Funds", href: "/dashboard/withdraw" },
-];
-
 const Header = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +50,7 @@ const Header = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const [data, setData] = useState<NotificationDetail | null>(null);
   const [openQuickLinks, setOpenQuickLinks] = useState(false);
   const [openProfileLinks, setOpenProfileLinks] = useState(false);
-  const [dropdownPos, setDropDownPos] = useState(0.2)
+  const [dropdownPos, setDropDownPos] = useState(0.2);
 
   const notifications = useMemo(() => MOCK, []);
 
@@ -67,11 +61,14 @@ const Header = ({ onMenuClick }: { onMenuClick?: () => void }) => {
     await signOut({ callbackUrl: "/api/auth/logout", redirect: true });
   };
 
-  const profileDropdowns = useMemo(() => [
-    { label: "My Profile", href: "/dashboard/profile" },
-    { label: "Settings", href: "/dashboard/settings" },
-    { label: "Logout", functions: handleLogout },
-  ], []);
+  const profileDropdowns = useMemo(
+    () => [
+      { label: "My Profile", href: "/dashboard/profile" },
+      { label: "Settings", href: "/dashboard/settings" },
+      { label: "Logout", functions: handleLogout },
+    ],
+    [],
+  );
 
   useEffect(() => {
     const updateNavHeight = () => {
@@ -135,90 +132,118 @@ const Header = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   };
 
   return (
-    <div ref={navRef} className={styles.header}>
-      <div className={styles.mobileLogo}>
-        <Image src={CompoundLogo} alt="PAZ Logo" height={32} />
-      </div>
-
-      <nav className={styles.headerRight}>
-        <div
-          onClick={(event) => {
-            event.stopPropagation();
-            setOpenQuickLinks((prev) => !prev);
-            setOpenProfileLinks(false);
-          }}
-          className={styles.quickActionsContainer}
-        >
-          <Image src={StarIcon} alt="red star icon" />
-          <p className={styles.quickActionsText}>Quick actions</p>
-          <Image src={Dropdown} alt="dropdown icon" width={16} height={16} />
-        </div>
-
-        <button className={styles.mobileMenuBtn} onClick={onMenuClick} aria-label="Open menu">
-          <span className={styles.mobileMenuText}>Menu</span>
-          <Image src={Dropdown} alt="menu" width={16} height={16} />
-        </button>
-
-        <div className={styles.headerRightRight}>
-          <button
-            className={styles.notificationBtn}
-            onClick={() => {
+    <FundWalletFlow>
+      {(openFundWalletModal) => {
+        const quickLinksDropdowns = [
+          { label: "Save Now", href: "/dashboard/savings" },
+          { label: "Apply for a Loan", href: "/dashboard/loans" },
+          {
+            label: "Fund Wallet",
+            functions: () => {
               setOpenQuickLinks(false);
-              setOpenProfileLinks(false);
-              setOpenList(true);
-            }}
-            aria-label="Open notifications"
-          >
-            <Image src={Notifications} alt="Notifications" />
-            {notifications.some((n) => !n.read) && (
-              <span className={styles.notificationDot} />
-            )}
-          </button>
-          <div
-            onClick={(event) => {
-              event.stopPropagation();
-              setOpenProfileLinks((prev) => !prev);
-              setOpenQuickLinks(false);
-            }}
-            className={styles.profileContainer}
-          >
-            <Image
-              height={32}
-              width={32}
-              src={profileImage}
-              alt="Profile Image"
-              className={styles.profileAvatar}
+              openFundWalletModal();
+            },
+          },
+          { label: "Withdraw Funds", href: "/dashboard/withdraw" },
+        ];
+
+        return (
+          <div ref={navRef} className={styles.header}>
+            <div className={styles.mobileLogo}>
+              <Image src={CompoundLogo} alt="PAZ Logo" height={32} />
+            </div>
+
+            <nav className={styles.headerRight}>
+              <div
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setOpenQuickLinks((prev) => !prev);
+                  setOpenProfileLinks(false);
+                }}
+                className={styles.quickActionsContainer}
+              >
+                <Image src={StarIcon} alt="red star icon" />
+                <p className={styles.quickActionsText}>Quick actions</p>
+                <Image
+                  src={Dropdown}
+                  alt="dropdown icon"
+                  width={16}
+                  height={16}
+                />
+              </div>
+
+              <button
+                className={styles.mobileMenuBtn}
+                onClick={onMenuClick}
+                aria-label="Open menu"
+              >
+                <span className={styles.mobileMenuText}>Menu</span>
+                <Image src={Dropdown} alt="menu" width={16} height={16} />
+              </button>
+
+              <div className={styles.headerRightRight}>
+                <button
+                  className={styles.notificationBtn}
+                  onClick={() => {
+                    setOpenQuickLinks(false);
+                    setOpenProfileLinks(false);
+                    setOpenList(true);
+                  }}
+                  aria-label="Open notifications"
+                >
+                  <Image src={Notifications} alt="Notifications" />
+                  {notifications.some((n) => !n.read) && (
+                    <span className={styles.notificationDot} />
+                  )}
+                </button>
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setOpenProfileLinks((prev) => !prev);
+                    setOpenQuickLinks(false);
+                  }}
+                  className={styles.profileContainer}
+                >
+                  <Image
+                    height={32}
+                    width={32}
+                    src={profileImage}
+                    alt="Profile Image"
+                    className={styles.profileAvatar}
+                  />
+                  <p className={styles.profileFirstName}>{firstName}</p>
+                </div>
+              </div>
+            </nav>
+
+            <NotificationsModal
+              open={openList}
+              onClose={() => setOpenList(false)}
+              notifications={notifications}
+              onMarkAllRead={() => console.log("mark all read")}
+              onOpenNotification={openNotification}
             />
-            <p className={styles.profileFirstName}>{firstName}</p>
+
+            <NotificationDetailModal
+              open={openDetail}
+              onClose={() => setOpenDetail(false)}
+              data={data}
+            />
+            <HeaderDropdown
+              isOpen={openQuickLinks}
+              Header="Quick Actions"
+              navLinks={quickLinksDropdowns}
+              rightPos={`${dropdownPos}rem`}
+            />
+            <HeaderDropdown
+              isOpen={openProfileLinks}
+              Header="My Account"
+              navLinks={profileDropdowns}
+            />
           </div>
-        </div>
-      </nav>
-
-      <NotificationsModal
-        open={openList}
-        onClose={() => setOpenList(false)}
-        notifications={notifications}
-        onMarkAllRead={() => console.log("mark all read")}
-        onOpenNotification={openNotification}
-      />
-
-      <NotificationDetailModal
-        open={openDetail}
-        onClose={() => setOpenDetail(false)}
-        data={data}
-      />
-      <HeaderDropdown
-        isOpen={openQuickLinks}
-        Header="Quick Actions"
-        navLinks={quickLinksDropdowns}
-        rightPos={`${dropdownPos}rem`}
-      />
-      <HeaderDropdown
-        isOpen={openProfileLinks}
-        Header="My Account"
-        navLinks={profileDropdowns}
-      />
-    </div>
+        );
+      }}
+    </FundWalletFlow>
   );
 };
 

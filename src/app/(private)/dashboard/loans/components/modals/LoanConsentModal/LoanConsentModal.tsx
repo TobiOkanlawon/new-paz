@@ -1,35 +1,39 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { BsCheckCircleFill } from "react-icons/bs";
 import Modal2 from "@/components/Modal2";
 import Button from "@/components/Button";
-import useUser from "@/store/userStore";
-import { useGetWallet } from "@/data/queries/useGetWallet";
-import { useGetLoanStatus } from "@/data/queries/useGetLoanStatus";
+import {
+  useGetPendingLoanRequests,
+  isFinalizedLoanId,
+} from "@/data/queries/useGetPendingLoanRequests";
 import useConsentToLoan from "@/data/mutations/useConsentToLoan";
 import TermsAndConditionModal from "../TermsAndConditionModal/TermsAndConditionModal";
 import styles from "./LoanConsentModal.module.css";
 
 const LoanConsentModal = () => {
-  const user = useUser((state) => state.user);
   const queryClient = useQueryClient();
 
-  const { data: wallet } = useGetWallet(user?.email ?? "");
-  const { data: loanStatus } = useGetLoanStatus(wallet?.walletId ?? "");
+  const { data: pendingRequests } = useGetPendingLoanRequests();
 
   const [agreed, setAgreed] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  useEffect(() => {
-    if (loanStatus) console.log("loan/pending response:", loanStatus);
-  }, [loanStatus]);
+  // Approved-and-awaiting-consent request whose OtherInfo has settled into a
+  // bare numeric loan id (see isFinalizedLoanId) rather than a step token.
+  const approvedLoan = pendingRequests?.find(
+    (request) =>
+      request.Approved && !request.Consent && isFinalizedLoanId(request.OtherInfo),
+  );
 
-  const consentMutation = useConsentToLoan(loanStatus?.id ?? "");
+  const loanId = approvedLoan?.OtherInfo ?? "";
 
-  const isOpen = Boolean(loanStatus?.Approved) && !loanStatus?.Consent && !dismissed;
+  const consentMutation = useConsentToLoan(loanId);
+
+  const isOpen = Boolean(approvedLoan) && !dismissed;
 
   const handleCancel = () => {
     setDismissed(true);
@@ -43,7 +47,7 @@ const LoanConsentModal = () => {
       {
         onSuccess: () => {
           toast("Loan offer accepted");
-          queryClient.invalidateQueries({ queryKey: ["get-loan-status"] });
+          queryClient.invalidateQueries({ queryKey: ["get-pending-loan-requests"] });
         },
         onError: () => {
           toast("Could not accept loan offer, please try again");
@@ -66,7 +70,7 @@ const LoanConsentModal = () => {
             <div className={styles.row}>
               <span className={styles.label}>Loan Amount :</span>
               <span className={styles.value}>
-                ₦{(loanStatus?.ApprovedAmount ?? loanStatus?.Amount ?? 0).toLocaleString()}
+                ₦{(approvedLoan?.ApprovedAmount || approvedLoan?.Amount || 0).toLocaleString()}
               </span>
             </div>
             <div className={styles.row}>
@@ -75,7 +79,7 @@ const LoanConsentModal = () => {
             </div>
             <div className={styles.row}>
               <span className={styles.label}>Repayment Period :</span>
-              <span className={styles.value}>{loanStatus?.Tenor ?? "—"}</span>
+              <span className={styles.value}>{approvedLoan?.Tenor ?? "—"}</span>
             </div>
             <div className={styles.divider} />
             <div className={styles.row}>
