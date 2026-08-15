@@ -101,14 +101,14 @@ const FundAccountFlow = ({ accountSummary, onCompleted, children }: Props) => {
         onSelect={handleSelectAccount}
       />
 
-      {selectedAccount && (
+      {/* {selectedAccount && (
         <TopUpSoloSavingsModal
           open={topUpModalOpen}
           onClose={() => setTopUpModalOpen(false)}
           accountName={selectedAccount.title}
           currentBalance={
             selectedAccount.type === "solo"
-              ? accountSummary.soloSavings.amount
+              ? accountSummary?.soloSavings.amount
               : (accountSummary.targetSavings.find(
                   (t: any) => t.accountNo === selectedAccount.accountNo,
                 )?.amount ?? 0)
@@ -116,7 +116,7 @@ const FundAccountFlow = ({ accountSummary, onCompleted, children }: Props) => {
           loading={fundLoading}
           onConfirm={handleTopUpConfirm}
         />
-      )}
+      )} */}
 
       <TopUpTransferDetailsModal
         open={topUpDetailsModalOpen}
