@@ -9,7 +9,7 @@ import { saveProfile } from '@/actions/profile'
 import { useSession } from 'next-auth/react'
 import useUser from '@/store/userStore'
 
-const filledState = () => {
+const FilledState = () => {
   const { data: session } = useSession()
   const profileImage = useUser((state) => state.profileImage)
   const setProfileImage = useUser((state) => state.setProfileImage)
@@ -160,4 +160,4 @@ const filledState = () => {
   )
 }
 
-export default filledState
+export default FilledState
