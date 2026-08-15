@@ -35,9 +35,10 @@ const EmptyInstant: React.FC<Props> = ({ onEligible }) => {
         </div>
         <Button
           variant="primary"
-          children="Check Eligibility"
           onClick={() => setIsEligibilityOpen(true)}
-        />
+        >
+          Check Eligibility
+        </Button>
       </div>
 
       <EligibilityModal
