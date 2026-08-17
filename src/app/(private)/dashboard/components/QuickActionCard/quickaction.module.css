@@ -30,6 +30,18 @@
     width: 100%;
     max-width: 258px;
     flex-shrink: 0;
+    cursor: pointer;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.comingSoon {
+    font-size: 11px;
+    color: #878787;
+    font-weight: 400;
 }
 
 .quickActionCardIconContainer {

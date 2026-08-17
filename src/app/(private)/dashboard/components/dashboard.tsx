@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "./dashboard.module.css";
 import Piggy from "@/assets/piggy-bank.png";
 import LoanIcon from "@/assets/wallet.png";
@@ -12,8 +13,8 @@ import AccountCard from "./AccountCard";
 import QuickActionCard from "./QuickActionCard";
 import BottomLeft from "./BottomLeft";
 import BottomRight from "./BottomRight";
-import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
 import FundAccountFlow from "@/components/ModalFlows/FundAccountFlow";
+import FundWalletFlow from "@/components/ModalFlows/FundWalletFlow";
 
 import { HiOutlineCash } from "react-icons/hi";
 
@@ -39,11 +40,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
   allTransactions,
   accountDetails,
 }) => {
-  const [openWithdraw, setOpenWithdraw] = useState(false);
-
-  const handleWithdraw = () => {
-    setOpenWithdraw(true);
-  };
+  const router = useRouter();
 
   return (
     <>
@@ -126,57 +123,82 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           />
         </div>
 
-        <FundAccountFlow
-          accountSummary={accountDetails}
-          onCompleted={() => {
-            // Optional: Handle completion if needed
-          }}
-        >
-          {(openFundModal) => (
-            <div className={styles.quickActionContainer}>
-              <h2>Quick Actions</h2>
-              <div className={styles.quickActionCards}>
-                <div className={styles.quickActionCardsInnerContainer}>
-                  <QuickActionCard
-                    action={openFundModal}
-                    backgroundColor="#EBFFF2"
-                    icon={
-                      <Image
-                        src={Piggy}
-                        alt="Dashboard"
-                        className={styles.sidebarIcon}
-                        width={24}
-                        height={24}
+        <FundWalletFlow>
+          {(openFundWalletModal) => (
+            <FundAccountFlow
+              accountSummary={accountDetails}
+              onCompleted={() => {
+                // Optional: Handle completion if needed
+              }}
+            >
+              {(openFundModal) => (
+                <div className={styles.quickActionContainer}>
+                  <h2>Quick Actions</h2>
+                  <div className={styles.quickActionCards}>
+                    <div className={styles.quickActionCardsInnerContainer}>
+                      <QuickActionCard
+                        action={openFundModal}
+                        backgroundColor="#EBFFF2"
+                        icon={
+                          <Image
+                            src={Piggy}
+                            alt="Dashboard"
+                            className={styles.sidebarIcon}
+                            width={24}
+                            height={24}
+                          />
+                        }
+                        text="Add to Savings"
                       />
-                    }
-                    text="Add to Savings"
-                  />
-                  <QuickActionCard
-                    action={handleWithdraw}
-                    color="#214CCF"
-                    backgroundColor="#E9EDFA"
-                    icon={
-                      <Image
-                        src={WithdrawIcon}
-                        alt="Dashboard"
-                        className={styles.sidebarIcon}
-                        width={24}
-                        height={24}
+                      <QuickActionCard
+                        action={openFundWalletModal}
+                        backgroundColor="#E9EDFA"
+                        icon={<HiOutlineCash style={{ fontSize: "24px", color: "#214CCF" }} />}
+                        text="Fund Wallet"
                       />
-                    }
-                    text="Withdraw Funds"
-                  />
+                      <QuickActionCard
+                        action={() => router.push("/dashboard/loans")}
+                        backgroundColor="#E0DFFD"
+                        icon={
+                          <Image
+                            src={LoanIcon}
+                            alt="Dashboard"
+                            className={styles.sidebarIcon}
+                            width={24}
+                            height={24}
+                          />
+                        }
+                        text="Get a Loan"
+                      />
+                      <QuickActionCard
+                        action={() => {}}
+                        disabled
+                        color="#214CCF"
+                        backgroundColor="#E9EDFA"
+                        icon={
+                          <Image
+                            src={WithdrawIcon}
+                            alt="Dashboard"
+                            className={styles.sidebarIcon}
+                            width={24}
+                            height={24}
+                          />
+                        }
+                        text="Withdraw Funds"
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.quickActionPager} aria-hidden="true">
+                    <span
+                      className={`${styles.quickActionDot} ${styles.quickActionDotActive}`}
+                    />
+                    <span className={styles.quickActionDot} />
+                  </div>
                 </div>
-              </div>
-              <div className={styles.quickActionPager} aria-hidden="true">
-                <span
-                  className={`${styles.quickActionDot} ${styles.quickActionDotActive}`}
-                />
-                <span className={styles.quickActionDot} />
-              </div>
-            </div>
+              )}
+            </FundAccountFlow>
           )}
-        </FundAccountFlow>
+        </FundWalletFlow>
 
         {isTransactions ? (
           <div className={styles.bottomContainer}>
@@ -197,18 +219,6 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
           </div>
         )}
       </div>
-
-      {(accounts.targetSavings || accounts.soloSavings) && (
-        <WithdrawSoloSavingsModal
-          open={openWithdraw}
-          onClose={() => setOpenWithdraw(false)}
-          accountName="Valentine Savings"
-          currentSavings={100000}
-          fundingSourceTitle="PAZ Savings"
-          fundingSourceBalance={500000}
-          onConfirm={({ amount }) => console.log("Withdraw:", amount)}
-        />
-      )}
     </>
   );
 };

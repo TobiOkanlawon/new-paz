@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import styles from "./quickaction.module.css";
 
 type QuickActionProps = {
@@ -6,6 +7,7 @@ type QuickActionProps = {
   text: string;
   icon: React.ReactNode;
   color?: string;
+  disabled?: boolean;
 };
 
 const QuickActionCard: React.FC<QuickActionProps> = ({
@@ -13,9 +15,16 @@ const QuickActionCard: React.FC<QuickActionProps> = ({
   text,
   backgroundColor,
   action,
+  disabled = false,
 }) => {
   return (
-    <div onClick={action} className={styles.quickActionCardContainer}>
+    <div
+      onClick={disabled ? undefined : action}
+      className={clsx(styles.quickActionCardContainer, {
+        [styles.disabled]: disabled,
+      })}
+      aria-disabled={disabled}
+    >
       <div className={styles.quickActionCardInnerContainer}>
         <div
           className={styles.quickActionCardIconContainer}
@@ -23,7 +32,10 @@ const QuickActionCard: React.FC<QuickActionProps> = ({
         >
           {icon}
         </div>
-        <p className={styles.quickActionText}>{text}</p>
+        <p className={styles.quickActionText}>
+          {text}
+          {disabled && <span className={styles.comingSoon}> (Coming Soon)</span>}
+        </p>
       </div>
     </div>
   );
