@@ -27,7 +27,7 @@ const LoanHeader = ({
       </div>
       <div className={style.buttonContainer}>
         {secondaryButtonText && (
-          <Button variant="outlined" onClick={secondaryButtonAction}>
+          <Button variant="outlined2" onClick={secondaryButtonAction}>
             {secondaryButtonText}
           </Button>
         )}

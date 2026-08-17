@@ -15,6 +15,8 @@ import BottomRight from "./BottomRight";
 import WithdrawSoloSavingsModal from "@/components/WithdrawSoloSavingsModal/WithdrawSoloSavingsModal";
 import FundAccountFlow from "@/components/ModalFlows/FundAccountFlow";
 
+import { HiOutlineCash } from "react-icons/hi";
+
 // TODO: do proper types
 interface DashboardClientProps {
   firstName: string;
@@ -54,6 +56,25 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
         </div>
 
         <div className={styles.accountCards}>
+          <AccountCard
+            backgroundColor="#E9EDFA"
+            amount={accountDetails?.walletAmount ?? 0}
+            icon={
+              // <Image
+              //   src={StashIcon}
+              //   alt="Dashboard"
+              //   className={styles.sidebarIcon}
+              //   width={24}
+              //   height={24}
+              // />
+               <HiOutlineCash style={{fontSize: "24px"}} />
+            }
+            iconColor="#214CCF"
+            title="Stash"
+            rateBackgroundColor="#E9EDFA"
+            rateTextColor="#214CCF"
+          />
+
           <AccountCard
             backgroundColor="#EBFFF2"
             amount={savingsAmount ?? 0}
@@ -102,23 +123,6 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
             }
             iconColor="#22C55E"
             title="Total Investments (COMING SOON)"
-          />
-          <AccountCard
-            backgroundColor="#E9EDFA"
-            amount={accountDetails?.walletAmount ?? 0}
-            icon={
-              <Image
-                src={StashIcon}
-                alt="Dashboard"
-                className={styles.sidebarIcon}
-                width={24}
-                height={24}
-              />
-            }
-            iconColor="#214CCF"
-            title="Stash"
-            rateBackgroundColor="#E9EDFA"
-            rateTextColor="#214CCF"
           />
         </div>
 
