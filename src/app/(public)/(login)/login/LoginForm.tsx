@@ -95,6 +95,20 @@ const LoginForm = () => {
           return;
         }
 
+        if (result.error === "NETWORK_ERROR") {
+          toast.error(
+            "Couldn't reach the server. Check your connection and try again",
+          );
+          return;
+        }
+
+        if (result.error.startsWith("BACKEND_ERROR:")) {
+          const message = result.error.slice("BACKEND_ERROR:".length);
+          toast.error(message);
+          setErrors({ email: message });
+          return;
+        }
+
         toast.error("Invalid email or password");
         setErrors({
           email: "Invalid email or password",

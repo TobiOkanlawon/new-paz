@@ -5,6 +5,15 @@ import { ok, fail, ActionResult } from "@/actions/shared";
 import { revalidatePath } from "next/cache";
 import { apiFetch } from "@/libs/api";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { BackendError } from "@/libs/errors";
+
+// The backend answers "you have no pending loan / pending request" with an
+// HTTP-level 4xx (not a 200 with a "00" body), so apiFetch throws a
+// BackendError for what is actually a normal, expected state rather than a
+// real failure. Recognize that shape so it doesn't get logged/reported as
+// one.
+const isNoPendingLoanError = (e: unknown) =>
+  e instanceof BackendError && /no pending/i.test(e.message);
 
 type LoanUpdateApiResponse = {
   response: {
@@ -779,7 +788,23 @@ export async function getPendingLoan(): Promise<
       throw new Error("User not authenticated and no walletId provided");
     }
 
-    const walletId = session!.user.walletAccount;
+    // session.user.walletAccount is captured once at login and never
+    // refreshed (see applyForLoan above for the full explanation) — fetch
+    // the current value instead of trusting the session's.
+    const updatedUser = await apiFetch<any>("/v1/users/fetch/user", {
+      isProtected: true,
+      method: "POST",
+      body: { email: session.user.email },
+    });
+
+    const walletId = updatedUser?.user?.wallet_account;
+
+    if (!walletId) {
+      return ok({
+        pending: false,
+        message: "Wallet account is missing on your profile.",
+      });
+    }
 
     const url = `/v1/user/loan/pending?walletId=${walletId}`;
 
@@ -800,6 +825,9 @@ export async function getPendingLoan(): Promise<
       message: res.responseMessage || "no pending loan request",
     });
   } catch (e) {
+    if (isNoPendingLoanError(e)) {
+      return ok({ pending: false, message: (e as BackendError).message });
+    }
     return fail(e);
   }
 }
@@ -851,6 +879,9 @@ export async function getPendingLoanRequests(): Promise<
 
     return ok({ requests });
   } catch (e) {
+    if (isNoPendingLoanError(e)) {
+      return ok({ requests: [] });
+    }
     return fail(e);
   }
 }

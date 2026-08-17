@@ -17,8 +17,6 @@ const Dashboard = async () => {
       getAllTransactions(),
       getPendingLoan(),
     ]);
-
-  console.log("Account Summary: ", accountSummary);
   const allTransactions = allTransactionsResult.success
     ? allTransactionsResult.data
     : [];

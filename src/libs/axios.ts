@@ -40,8 +40,8 @@ axiosInstance.interceptors.response.use(
     // responseMessage, "invalid token provided"
 
     if (
-      data.responseCode === 400 &&
-      data.responseMessage == "invalid token provided"
+      data?.responseCode === 400 &&
+      data?.responseMessage == "invalid token provided"
     ) {
       window.dispatchEvent(new Event("logout"))
     }
@@ -49,6 +49,6 @@ axiosInstance.interceptors.response.use(
     if (!error.response) {
       toast.error("An error occured");
     }
-    return Promise.reject(data);
+    return Promise.reject(data ?? error);
   },
 );

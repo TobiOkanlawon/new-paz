@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import DashboardShell from "./DashboardShell";
 import AccountGate from "./AccountGate/AccountGate";
 import LoanConsentModal from "../loans/components/modals/LoanConsentModal/LoanConsentModal";
+import OverdueLoanModal from "../loans/components/modals/OverdueLoanModal/OverdueLoanModal";
 
 type Props = {
   initialIsBvnVerified: boolean;
@@ -34,6 +35,7 @@ export default function DashboardGateShell({
   return (
     <>
       <LoanConsentModal />
+      <OverdueLoanModal />
       <DashboardShell>{children}</DashboardShell>
     </>
   );

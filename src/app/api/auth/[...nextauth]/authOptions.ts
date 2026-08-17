@@ -42,8 +42,21 @@ export const authOptions: NextAuthOptions = {
             } else if (e.message === "phone number not verified") {
               throw new Error("PHONE_NOT_VERIFIED");
             }
+
+            // Any other backend-reported error (wrong credentials, locked
+            // account, etc.) — surface the real message instead of masking
+            // it. NextAuth passes thrown error.message straight through to
+            // signIn()'s result.error on the client (see
+            // node_modules/next-auth/core/routes/callback.js), so this is
+            // safe to read back verbatim in LoginForm.
+            throw new Error(`BACKEND_ERROR:${e.message}`);
           }
-          throw e;
+
+          // Not a BackendError means the request to the backend itself
+          // failed (network error, timeout, DNS failure, non-JSON response,
+          // etc.) rather than the backend rejecting the credentials — don't
+          // let this collapse into "Invalid email or password".
+          throw new Error("NETWORK_ERROR");
         }
 
         /*
