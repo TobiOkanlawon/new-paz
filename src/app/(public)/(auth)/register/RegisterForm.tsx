@@ -140,7 +140,7 @@ const RegisterForm = () => {
           <label htmlFor="tos">
             I agree to{" "}
             <Link className={styles.linkText} href="/tos">
-              terms and Condition
+              Terms and Condition
             </Link>
           </label>
         </div>
