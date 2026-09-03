@@ -4,11 +4,6 @@
   color: #737b87;
 }
 
-.backRow {
-  width: min(100% - 32px, 720px);
-  margin: 0 auto;
-}
-
 /* =========================
    HERO
 ========================= */
@@ -28,11 +23,18 @@
   margin: 0 auto;
 }
 
-.logo {
+.topBar {
   position: absolute;
   top: clamp(14px, 2vw, 24px);
   left: clamp(16px, 4vw, 48px);
+  right: clamp(16px, 4vw, 48px);
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -40,6 +42,20 @@
   color: #5485e8;
   font-size: clamp(8px, 1vw, 12px);
   font-weight: 700;
+}
+
+.backButton {
+  width: auto;
+  height: auto;
+
+  padding: 8px 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: clamp(11px, 1.3vw, 14px);
+  border-radius: 8px;
 }
 
 .logoMark {
