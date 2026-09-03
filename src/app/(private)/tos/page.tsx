@@ -1,5 +1,6 @@
 import styles from "./terms.module.css";
 import Image from "next/image";
+import Back from "@/components/BackContainer";
 
 type SectionProps = {
     title: string;
@@ -18,6 +19,10 @@ function Section({ title, children }: SectionProps) {
 export default function TermsPage() {
     return (
         <main className={styles.page}>
+            <div className={styles.backRow}>
+                <Back />
+            </div>
+
             <section className={styles.hero}>
                 <Image
                     src={'/tos/tosHero1.png'}
@@ -40,7 +45,7 @@ export default function TermsPage() {
                 <div className={styles.heroInner}>
                     <div className={styles.logo}>
                         <Image
-                            src={'/PazLogo2.png'}
+                            src={'/PAZLogo2.png'}
                             alt="Paz logo"
                             width={100}
                             height={35}
