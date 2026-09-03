@@ -12,6 +12,31 @@ export function handleErrorDisplay<T>(
   return formik.errors[name] as string;
 }
 
+export const calculateAge = (
+  dob: string | undefined,
+): number | null => {
+  /* Takes a yyyy-mm-dd date-of-birth string (the format a native <input
+  type="date"> emits) and returns the person's current age in whole years,
+  or null if the input isn't a parseable date. */
+
+  if (!dob) return null;
+
+  const birthDate = new Date(dob);
+  if (isNaN(birthDate.getTime())) return null;
+
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) age -= 1;
+
+  return age;
+};
+
 export const formatBirthdayToBackendFormat = (
   birthdayInput: string | undefined,
 ) => {

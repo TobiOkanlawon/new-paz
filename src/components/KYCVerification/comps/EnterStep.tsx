@@ -1,7 +1,7 @@
 import styles from "../kycverification.module.css";
 import * as yup from "yup";
 import Input from "@/components/Input";
-import { handleErrorDisplay } from "@/libs/helpers";
+import { handleErrorDisplay, calculateAge } from "@/libs/helpers";
 import { useFormik } from "formik";
 import { verifyBvnAction } from "@/app/(public)/kyc/actions";
 import { toast } from "react-toastify";
@@ -14,7 +14,17 @@ const schema = yup.object({
     .required("BVN is required")
     .matches(/^\d{11}$/, "BVN must be exactly 11 digits"),
 
-  dob: yup.string().required("Date of birth is required"),
+  dob: yup
+    .string()
+    .required("Date of birth is required")
+    .test(
+      "is-18-or-older",
+      "You must be 18 years or older",
+      (value) => {
+        const age = calculateAge(value);
+        return age !== null && age >= 18;
+      },
+    ),
 });
 
 const EnterStep = ({
@@ -87,6 +97,17 @@ const EnterStep = ({
             type="date"
             label="Date of Birth"
             {...formik.getFieldProps("dob")}
+            onChange={(e) => {
+              formik.handleChange(e);
+
+              const age = calculateAge(e.target.value);
+              if (age !== null && age < 18) {
+                toast.error(
+                  "You must be 18 years or older to use this service.",
+                  { toastId: "under-age" },
+                );
+              }
+            }}
             errors={handleErrorDisplay(formik, "dob")}
           />
         </div>

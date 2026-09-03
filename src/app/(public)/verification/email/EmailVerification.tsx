@@ -13,7 +13,7 @@ const EmailVerification = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const timeInSeconds = 2 * 60; // two minutes
+  const timeInSeconds = 1 * 60; // one minute
   const [time, setTime, isDone] = useCountdownTimer(timeInSeconds);
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);

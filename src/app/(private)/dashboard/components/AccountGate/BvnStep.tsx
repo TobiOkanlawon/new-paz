@@ -6,7 +6,11 @@ import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import Button from "@/components/Button";
 import LoanInput from "../../loans/components/shared/LoanInput";
-import { handleErrorDisplay, formatBirthdayToBackendFormat } from "@/libs/helpers";
+import {
+  handleErrorDisplay,
+  formatBirthdayToBackendFormat,
+  calculateAge,
+} from "@/libs/helpers";
 import { verifyBvnAction } from "@/app/(public)/kyc/actions";
 import styles from "./AccountGate.module.css";
 
@@ -14,7 +18,16 @@ const schema = Yup.object({
   bvn: Yup.string()
     .required("BVN is required")
     .matches(/^\d{11}$/, "BVN must be exactly 11 digits"),
-  dob: Yup.string().required("Date of birth is required"),
+  dob: Yup.string()
+    .required("Date of birth is required")
+    .test(
+      "is-18-or-older",
+      "You must be 18 years or older",
+      (value) => {
+        const age = calculateAge(value);
+        return age !== null && age >= 18;
+      },
+    ),
 });
 
 type Props = {
@@ -71,7 +84,16 @@ const BvnStep = ({ onVerified }: Props) => {
         name="dob"
         type="date"
         value={formik.values.dob}
-        onChange={formik.handleChange}
+        onChange={(e) => {
+          formik.handleChange(e);
+
+          const age = calculateAge(e.target.value);
+          if (age !== null && age < 18) {
+            toast.error("You must be 18 years or older to use this service.", {
+              toastId: "under-age",
+            });
+          }
+        }}
         onBlur={formik.handleBlur}
         error={handleErrorDisplay(formik, "dob")}
       />
