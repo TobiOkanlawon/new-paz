@@ -11,7 +11,20 @@ import { RegisterSchema } from "./schema";
 import { registerUser } from "./actions";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Session-only draft so a trip to the Terms & Conditions page doesn't force
+// the user to retype everything on return. Passwords are deliberately left
+// out of the draft.
+const DRAFT_KEY = "register-form-draft";
+
+type RegisterDraft = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  tosChecked: boolean;
+};
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -42,6 +55,7 @@ const RegisterForm = () => {
         return;
       }
 
+      sessionStorage.removeItem(DRAFT_KEY);
       toast.success("Sign up successful");
 
       router.replace(
@@ -49,6 +63,48 @@ const RegisterForm = () => {
       );
     },
   });
+
+  // Restore whatever was filled in before the user navigated away, e.g. to
+  // read the Terms & Conditions page.
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(DRAFT_KEY);
+      if (!saved) return;
+
+      const draft: Partial<RegisterDraft> = JSON.parse(saved);
+      formik.setValues((prev) => ({
+        ...prev,
+        firstName: draft.firstName ?? prev.firstName,
+        lastName: draft.lastName ?? prev.lastName,
+        email: draft.email ?? prev.email,
+        phoneNumber: draft.phoneNumber ?? prev.phoneNumber,
+      }));
+      setIsTosChecked(!!draft.tosChecked);
+    } catch {
+      sessionStorage.removeItem(DRAFT_KEY);
+    }
+    // Restore once on mount only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep the draft in sync as the user types, so it's there whenever they
+  // come back.
+  useEffect(() => {
+    const draft: RegisterDraft = {
+      firstName: formik.values.firstName,
+      lastName: formik.values.lastName,
+      email: formik.values.email,
+      phoneNumber: formik.values.phoneNumber,
+      tosChecked: isTosChecked,
+    };
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  }, [
+    formik.values.firstName,
+    formik.values.lastName,
+    formik.values.email,
+    formik.values.phoneNumber,
+    isTosChecked,
+  ]);
 
   return (
     <div className={styles.formWrapper}>
