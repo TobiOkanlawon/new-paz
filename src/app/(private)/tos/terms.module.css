@@ -24,11 +24,14 @@
 }
 
 .topBar {
-  position: absolute;
-  top: clamp(14px, 2vw, 24px);
-  left: clamp(16px, 4vw, 48px);
-  right: clamp(16px, 4vw, 48px);
+  /* Needs its own stacking context above the decorative hero images
+     (heroImage z-index 3, heroCopy z-index 4) — without `position` set,
+     z-index does nothing and those images' bounding boxes swallow clicks
+     meant for the back button, even where they look transparent. */
+  position: relative;
+  z-index: 5;
 
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,17 +47,22 @@
   font-weight: 700;
 }
 
-.backButton {
-  width: auto;
+/* Scoped to .topBar so this reliably wins over the shared Button's own
+   font-size, regardless of CSS module import/bundling order. */
+.topBar .backButton {
+  width: 6rem;
   height: auto;
 
-  padding: 8px 16px;
+  padding: 8px 0;
 
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
 
-  font-size: clamp(11px, 1.3vw, 14px);
+  /* Fluid across the full range instead of two flat steps: ~11px at
+     narrow phone widths, scaling smoothly up to ~14px by desktop. */
+  font-size: clamp(11px, 9.8px + 0.35vw, 14px);
   border-radius: 8px;
 }
 
@@ -369,8 +377,23 @@
   }
 }
 
-@media (max-width: 768px){
-  .hero{
+@media (max-width: 768px) {
+  .heroImage,
+  .heroImage2,
+  .heroCopy,
+  .artwork {
     display: none;
+  }
+
+  .hero {
+    height: auto;
+  }
+
+  .heroInner {
+    height: auto;
+  }
+
+  .topBar {
+    padding: 14px 16px;
   }
 }

@@ -65,7 +65,11 @@ const RegisterForm = () => {
   });
 
   // Restore whatever was filled in before the user navigated away, e.g. to
-  // read the Terms & Conditions page.
+  // read the Terms & Conditions page. Reading sessionStorage has to happen
+  // in an effect (it isn't available during SSR), and re-applying the same
+  // saved draft a second time — e.g. under React Strict Mode's dev-only
+  // double-invoke of effects — is harmless since nothing else writes to
+  // the draft during mount.
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem(DRAFT_KEY);
@@ -87,24 +91,23 @@ const RegisterForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Keep the draft in sync as the user types, so it's there whenever they
-  // come back.
-  useEffect(() => {
+  // Persist directly from each change handler rather than reactively via a
+  // `useEffect` watching formik.values — an effect-based approach fires on
+  // mount (before the restore effect's state update has landed) and can
+  // clobber the just-restored draft with the form's blank initial values.
+  // `overrides` carries the field that just changed, since formik.values
+  // in this render's closure won't reflect it yet.
+  const persistDraft = (overrides: Partial<RegisterDraft> = {}) => {
     const draft: RegisterDraft = {
       firstName: formik.values.firstName,
       lastName: formik.values.lastName,
       email: formik.values.email,
       phoneNumber: formik.values.phoneNumber,
       tosChecked: isTosChecked,
+      ...overrides,
     };
     sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-  }, [
-    formik.values.firstName,
-    formik.values.lastName,
-    formik.values.email,
-    formik.values.phoneNumber,
-    isTosChecked,
-  ]);
+  };
 
   return (
     <div className={styles.formWrapper}>
@@ -123,6 +126,10 @@ const RegisterForm = () => {
               label="First Name"
               placeholder="Enter your first name"
               {...formik.getFieldProps("firstName")}
+              onChange={(e) => {
+                formik.handleChange(e);
+                persistDraft({ firstName: e.target.value });
+              }}
               errors={handleErrorDisplay(formik, "firstName")}
             />
           </div>
@@ -133,6 +140,10 @@ const RegisterForm = () => {
               label="Last Name"
               placeholder="Enter your last name"
               {...formik.getFieldProps("lastName")}
+              onChange={(e) => {
+                formik.handleChange(e);
+                persistDraft({ lastName: e.target.value });
+              }}
               errors={handleErrorDisplay(formik, "lastName")}
             />
           </div>
@@ -145,6 +156,10 @@ const RegisterForm = () => {
             id="email"
             placeholder="you@gmail.com"
             {...formik.getFieldProps("email")}
+            onChange={(e) => {
+              formik.handleChange(e);
+              persistDraft({ email: e.target.value });
+            }}
             errors={handleErrorDisplay(formik, "email")}
           />
         </div>
@@ -156,6 +171,10 @@ const RegisterForm = () => {
             type="tel"
             placeholder="0802345****"
             {...formik.getFieldProps("phoneNumber")}
+            onChange={(e) => {
+              formik.handleChange(e);
+              persistDraft({ phoneNumber: e.target.value });
+            }}
             errors={handleErrorDisplay(formik, "phoneNumber")}
           />
         </div>
@@ -189,8 +208,10 @@ const RegisterForm = () => {
             name="tos"
             type="checkbox"
             checked={isTosChecked}
-            onChange={(e) => {
-              setIsTosChecked(!isTosChecked);
+            onChange={() => {
+              const checked = !isTosChecked;
+              setIsTosChecked(checked);
+              persistDraft({ tosChecked: checked });
             }}
           />
           <label htmlFor="tos">
