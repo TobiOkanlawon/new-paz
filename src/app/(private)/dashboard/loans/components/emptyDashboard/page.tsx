@@ -61,11 +61,35 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     }
 
 
+    // Blocks opening any "apply" entry point while the user already has a
+    // loan relationship in progress — an outstanding active loan takes
+    // priority in the message over a merely-pending application, since
+    // repaying it is the one that actually unblocks new applications.
+    const guardApply = (openFn: VoidFunction) => {
+        if (outstandingBalance > 0) {
+            toast.error(
+                "You have an active loan. Please repay it before applying for a new one.",
+            );
+            return;
+        }
+
+        if (hasPendingLoanRequest) {
+            toast.error(
+                "You already have a loan application pending approval. Please wait for it to be reviewed before applying again.",
+            );
+            return;
+        }
+
+        openFn();
+    };
+
     // Quick loan modal state
     const [isQuickLoanModalOpen, setIsQuickLoanModalOpen] = useState(false)
     const handleQuickModalOpen = () => {
-        setIsApplyForLoanModalOpen(false);
-        setIsQuickLoanModalOpen(true);
+        guardApply(() => {
+            setIsApplyForLoanModalOpen(false);
+            setIsQuickLoanModalOpen(true);
+        });
     }
     const handleQuickModalClose = () => {
         setIsQuickLoanModalOpen(false)
@@ -78,8 +102,10 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     // Personal loan modal state
     const [isPersonalLoanModalOpen, setIsPersonalLoanModalOpen] = useState(false)
     const handlePersonalModalOpen = () => {
-        setIsApplyForLoanModalOpen(false);
-        setIsPersonalLoanModalOpen(true);
+        guardApply(() => {
+            setIsApplyForLoanModalOpen(false);
+            setIsPersonalLoanModalOpen(true);
+        });
     }
     const handlePersonalModalClose = () => {
         setIsPersonalLoanModalOpen(false)
@@ -92,8 +118,10 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
     // Business loan modal state
     const [isBusinessLoanModalOpen, setIsBusinessLoanModalOpen] = useState(false)
     const handleBusinessModalOpen = () => {
-        setIsApplyForLoanModalOpen(false);
-        setIsBusinessLoanModalOpen(true);
+        guardApply(() => {
+            setIsApplyForLoanModalOpen(false);
+            setIsBusinessLoanModalOpen(true);
+        });
     }
     const handleBusinessModalClose = () => {
         setIsBusinessLoanModalOpen(false)
@@ -154,7 +182,7 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
         setIsApplyForLoanModalOpen(false)
     }
     const handleApplyModalOpen = () => {
-        setIsApplyForLoanModalOpen(true)
+        guardApply(() => setIsApplyForLoanModalOpen(true));
     }
 
     // Auto-open the apply modal when arriving here straight after passing eligibility
@@ -223,7 +251,17 @@ const EmptyDash = ({ autoOpenApply = false, onAutoOpenApplyHandled, hasPendingLo
             <LoanHeader
                 title='Loans'
                 desc='Manage your loans and explore financing options'
-                buttonText='Apply for a loan'
+                // No apply button at all while there's an active loan to repay;
+                // a pending (not yet approved) application shows a disabled-looking
+                // amber indicator instead of the normal apply button.
+                buttonText={
+                    outstandingBalance > 0
+                        ? undefined
+                        : hasPendingLoanRequest
+                            ? 'Pending Loan'
+                            : 'Apply for a loan'
+                }
+                buttonVariant={hasPendingLoanRequest && outstandingBalance <= 0 ? 'pending' : 'primary'}
                 buttonAction={handleApplyModalOpen}
                 secondaryButtonText={outstandingBalance > 0 ? 'Repay Loan' : undefined}
                 secondaryButtonAction={handleRepayModalOpen}

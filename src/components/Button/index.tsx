@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 type Props = {
   label?: string;
-  variant?: "primary" | "secondary" | "outlined" | "outlined2";
+  variant?: "primary" | "secondary" | "outlined" | "outlined2" | "pending";
   loading?: boolean;
   children?: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -27,6 +27,7 @@ const Button = ({
     secondary: styles.secondary,
     outlined: styles.outlined,
     outlined2: styles.outlined2,
+    pending: styles.pending,
   }[variant];
 
   return (

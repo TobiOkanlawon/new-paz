@@ -7,6 +7,7 @@ interface LoanHeaderProps {
   desc: string;
   buttonText?: string;
   buttonAction?: VoidFunction;
+  buttonVariant?: "primary" | "pending";
   secondaryButtonText?: string;
   secondaryButtonAction?: VoidFunction;
 }
@@ -16,6 +17,7 @@ const LoanHeader = ({
   desc,
   buttonText,
   buttonAction,
+  buttonVariant = "primary",
   secondaryButtonText,
   secondaryButtonAction,
 }: LoanHeaderProps) => {
@@ -32,7 +34,9 @@ const LoanHeader = ({
           </Button>
         )}
         {buttonText && (
-          <Button onClick={buttonAction}>{buttonText}</Button>
+          <Button variant={buttonVariant} onClick={buttonAction}>
+            {buttonText}
+          </Button>
         )}
       </div>
     </div>

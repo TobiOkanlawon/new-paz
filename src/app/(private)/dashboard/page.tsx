@@ -1,6 +1,6 @@
 "use server";
 import { getDashboardData } from "@/actions/dashboard";
-import { getPendingLoan } from "@/actions/loans";
+import { getPendingLoan, getPendingLoanRequests } from "@/actions/loans";
 import { getTotalBalance } from "@/libs/helpers";
 import { getServerSession } from "next-auth";
 
@@ -11,11 +11,12 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
 
-  const [{ accountSummary }, allTransactionsResult, pendingLoan] =
+  const [{ accountSummary }, allTransactionsResult, pendingLoan, pendingLoanRequests] =
     await Promise.all([
       getDashboardData(),
       getAllTransactions(),
       getPendingLoan(),
+      getPendingLoanRequests(),
     ]);
   const allTransactions = allTransactionsResult.success
     ? allTransactionsResult.data
@@ -35,6 +36,12 @@ const Dashboard = async () => {
   // totalLoan (account-details) isn't always in sync with the loan-pending
   // endpoint's disbursed-loan record, so fall back to that when it's 0.
   const activeLoan = pendingLoan.success ? pendingLoan.data.loan : undefined;
+  const hasOutstandingActiveLoan = Boolean(
+    activeLoan && activeLoan.TotalPayable - activeLoan.AmountLiquidated > 0,
+  );
+  const hasPendingLoanRequest = pendingLoanRequests.success
+    ? pendingLoanRequests.data.requests.length > 0
+    : false;
   let loanAmount =
   getTotalBalance(accountSummary.data, "loans") ||
   // activeLoan?.AmountDisbursed ||
@@ -60,6 +67,8 @@ const Dashboard = async () => {
       accounts={accounts}
       allTransactions={allTransactions}
       accountDetails={accountSummary.data}
+      hasOutstandingActiveLoan={hasOutstandingActiveLoan}
+      hasPendingLoanRequest={hasPendingLoanRequest}
     />
   );
 };

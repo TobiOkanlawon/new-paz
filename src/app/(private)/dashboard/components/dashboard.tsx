@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import styles from "./dashboard.module.css";
 import Piggy from "@/assets/piggy-bank.png";
 import LoanIcon from "@/assets/wallet.png";
@@ -28,6 +29,8 @@ interface DashboardClientProps {
   accounts: any;
   allTransactions: any[];
   accountDetails: TAccountDetails;
+  hasOutstandingActiveLoan?: boolean;
+  hasPendingLoanRequest?: boolean;
 }
 
 const DashboardClient: React.FC<DashboardClientProps> = ({
@@ -39,8 +42,26 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
   accounts,
   allTransactions,
   accountDetails,
+  hasOutstandingActiveLoan = false,
+  hasPendingLoanRequest = false,
 }) => {
   const router = useRouter();
+
+  const handleGetLoan = () => {
+    if (hasOutstandingActiveLoan) {
+      toast.error(
+        "You have an active loan. Please repay it before applying for a new one.",
+      );
+    } else if (hasPendingLoanRequest) {
+      toast.error(
+        "You already have a loan application pending approval. Please wait for it to be reviewed before applying again.",
+      );
+    }
+
+    // Still navigate either way — the Loans page shows the correct
+    // repay/pending state and is never a dead end.
+    router.push("/dashboard/loans");
+  };
 
   return (
     <>
@@ -157,7 +178,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({
                         text="Fund Wallet"
                       />
                       <QuickActionCard
-                        action={() => router.push("/dashboard/loans")}
+                        action={handleGetLoan}
                         backgroundColor="#E0DFFD"
                         icon={
                           <Image

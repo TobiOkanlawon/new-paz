@@ -17,7 +17,13 @@ const LoanDashboardClient = ({
   initialActiveLoan,
   initialLoanProducts,
 }: Props) => {
-  const [isDashboardVisible, setIsDashboardVisible] = useState(initialHasActiveLoan);
+  // A pending (not-yet-approved) application has no active loan yet, but
+  // still needs the status/gating view rather than the plain eligibility
+  // flow — otherwise a user with a pending request could walk right back
+  // into applying for a second loan.
+  const [isDashboardVisible, setIsDashboardVisible] = useState(
+    initialHasActiveLoan || initialHasPendingLoanRequest,
+  );
   const [autoOpenApply, setAutoOpenApply] = useState(false);
 
   const handleEligible = () => {
